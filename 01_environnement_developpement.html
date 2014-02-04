@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>L'environnement de développement</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+	<nav><script>document.write(document.title)</script> - EPSI B3 2013/2014 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a></nav>
+
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		
+		<section>
+			<p>L'objectif de cette première partie du cours est <strong>la mise en place de l'environnement de développement</strong> 
+			pour réaliser les développements d'applications Java EE.</p>
+			<p>Pour cela, vous aurez au moins besoin :</p>
+			<ul>
+				<li>du kit Java de développement</li>
+				<li>d'un environnment de développement : par exemple Eclipse</li>
+				<li>d'un serveur d'application Java EE</li>
+			</ul>
+		</section>
+		
+		<section>
+			<h2>Téléchargement des outils</h2>
+			<p>La liste des outils requis est :</p>
+			<dl>
+				<dt>Java 7 JDK</dt>
+				<dd>Le kit de développement Java 7<br/>
+				<em><a class="explicit" target="download" href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html">
+				http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
+				</a></em>
+				<aside>
+					<header>Java SE ou JDK ?</header>
+					<p>Il existe deux distribution de Java par Oracle : Java SE (Standard Edition) et le JDK (Java development kit).
+					Java SE permet uniquement l'exécution des programmes Java. Le JDK fournit en plus un compilateur et des outils utiles
+					aux développeurs. Il est donc nécessaire d'installer le JDK pour développer des applications
+					en Java mais également pour exécuter le serveur TomEE.</p>
+				</aside>
+			</dd>
+
+				<dt>Eclipse IDE for Java EE Web Developpers</dt>
+				<dd>L'environnement de développement<br/>
+				<em><a class="explicit" target="download" href="https://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/keplersr1">
+				https://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/keplersr1
+				</a></em>
+				<aside class="warn">
+					<p>Il existe plusieurs distributions d'Eclipse. Il est impératif d'installer <strong>la version pour le développement Java EE</strong>.
+					Si vous avez déjà installé Eclipse, vérifiez dans le menu "Help &gt; About Eclipse" que votre version est bien "Eclipse Java EE IDE for Web Developers".
+					</p>
+				</aside>
+				</dd>
+				<dt>Apache TomEE Plus</dt>
+				<dd>Le serveur d'application Java EE<br/>
+				Windows : <em><a class="explicit" target="download" href="http://archive.apache.org/dist/tomee/tomee-1.6.0/apache-tomee-1.6.0-plus.zip">
+				http://archive.apache.org/dist/tomee/tomee-1.6.0/apache-tomee-1.6.0-plus.zip</a></em><br>
+				MacOS et Linux : <em><a class="explicit" target="download" href="http://archive.apache.org/dist/tomee/tomee-1.6.0/apache-tomee-1.6.0-plus.tar.gz">
+				http://archive.apache.org/dist/tomee/tomee-1.6.0/apache-tomee-1.6.0-plus.tar.gz
+				</a></em>
+				<aside>
+					<p>Nous verrons bientôt que les applications Java EE ne sont pas des programmes indépendants (standalone). Les applications Java EE sont déployées et exécutées dans ce que l'on appelle un serveur d'application qui fournit l'environnement d'exécution nécessaire.</p>
+				</aside>
+				</dd>
+			</dl>
+		</section>
+
+		<section>
+			<h2>Installation des outils</h2>
+			<p>L'installation du JDK 7 dépend de votre plate-forme : il est distribué sous la forme d'un installeur pour Windows et MacOS, et sous la forme d'un package ou d'une archive sous Linux.</p>
+			<p>Eclipse et TomEE sont distribués sous la forme d'une archive (tar.gz pour Linux et MacOS et zip pour Windows) que vous pouvez décompresser où vous le souhaitez.</p>
+		</section>
+		
+		<section>
+			<h2>Configuration de Java dans Eclipse</h2>
+			<p>Après avoir lancé Eclipse, il va falloir vérifier la version de Java utilisée par l'IDE et la modifier si nécessaire.</p>
+			<p>Pour vérifier les versions de Java disponibles dans Eclipse, ouvrez les préférences utilisateur : menu "Window &gt; Preferences".
+			Dans la zone de filtre en haut à gauche, saisissez "jre" (pour Java Runtime Environment) et sélectionnez dans l'arbre "Installed JREs" comme ci-dessous&nbsp;:</p>
+			<img width="60%" alt="JRE installés dans Eclipse" src="assets/eclipse_installed_jre.png">
+			<p>Vérifiez que le JDK que vous avez installé se trouve bien dans la liste des JRE détectés par Eclipse. De plus le JDK doit être coché pour indiquer à Eclipse qu'il s'agit de l'environnement d'exécution à utiliser par défaut pour tous les projets.</p>
+			<p><strong>Si vous ne trouvez pas le JDK installé dans la liste</strong>, utilisez le bouton "Add..." pour l'ajouter manuellement&nbsp;:</p>
+			<ol>
+				<li>Pour le choix du type de JRE, choisissez "Standard VM" et cliquez sur "Next"</li>
+				<li>Dans la boîte de dialogue "Edit JRE", cliquez sur le bouton "Directory..." pour sélectionner le répertoire d'installation du JDK</li>
+				<li>Eclipse s'occupe ensuite de remplir les champs nécessaires et vous n'avez plus qu'à cliquer sur "Finish"</li>
+			</ol>
+			<img width="60%" alt="Définition d'une JRE dans Eclipse" src="assets/eclipse_jre_definition.png">
+			<aside class="warn">
+				<p>N'oubliez pas de cocher la ligne de votre JDK dans l'écran "Installed JREs" pour qu'il devienne l'environnement d'exécution par défaut.</p>
+			</aside>
+		</section>
+		<section>
+			<h2>Intégration de TomEE dans Eclipse</h2>
+			<p>TomEE est un serveur complet qui peut être exécuté de manière autonome (comme un serveur de production par exemple). Cependant, pour simplifier les tâches de développement, 
+			nous allons l'intégrer dans Eclipse afin de pouvoir le démarrer et l'arrêter directement depuis l'IDE.</p>
+			<p>Dans Eclipse Java EE, il existe une vue pour créer et gérer les serveurs. Pour ajouter cette vue, il faut passer par
+			le menu "Window &gt; Show View &gt; Servers".</p>
+			<p>Vous avez maintenant la vue "Servers" ajoutée à votre perspective de développement. Faites un click droit dans cette vue pour sélectionner "New &gt; Server".</p>
+			<p>Dans la boîte de dialogue "Define a New Server", sélectionnez "Apache &gt; Tomcat v7.0 Server" comme type de serveur. Vous pouvez également changer le nom
+			du nouveau serveur par quelque chose de plus exact comme "TomEE 1.6.0 Server at localhost".</p>
+			<img width="60%" alt="Ajout d'un serveur dans Eclipse" src="assets/eclipse_new_server.png">
+			<p>Cliquez ensuite sur "Next". Dans la boîte de dialoge "Tomcat Server", cliquez sur "Browse..." pour sélectionner le répertoire d'installation de TomEE sur votre disque.</p>
+			<img width="60%" alt="Ajout d'un serveur dans Eclipse" src="assets/eclipse_new_server2.png">
+			<p>Cliquez ensuite sur "Finish".</p>
+			<p>Vous disposez maintenant d'un serveur dans votre vue "Servers". Il ne vous reste plus qu'à le démarrer en faisant un click droit sur son nom et en sélectionnant "Start".</p>
+			<p>Si tout se passe bien, à la fin du lancement, vous pourrez accéder à votre serveur à l'adresse <a class="explicit" target="localhost" href="http://localhost:8080">http://localhost:8080</a>.
+			Vous devez voir s'afficher une page d'erreur 404. Votre serveur fonctionne correctement mais aucune application Java EE n'est encore déployée pour répondre à cette adresse.</p>
+
+			<aside>
+				<header>Tomcat ou TomEE ?</header>
+				<p>Pour l'intégration dans Eclipse, il vous est demandé de choisir Tomcat 7 comme type de serveur et TomEE n'est pas présent dans la liste proposée par Eclipse.
+				Nous reviendrons plus tard sur la différence entre Tomcat et TomEE. Pour l'instant, il suffit de savoir que TomEE 1.6.0 est un packaging de Tomcat 7 auquel on a ajouté
+				tout ce qui est nécessaire pour exécuter des applications Java EE.
+				</p>
+			</aside>
+		</section>
+	</article>
+
+</body>
+</html>

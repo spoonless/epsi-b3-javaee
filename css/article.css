@@ -1,0 +1,122 @@
+@charset "UTF-8";
+@import url(normalize.css)
+@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700,400italic,700italic);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+
+a, a:link, a:visited {
+	color: inherit;
+}
+body {
+	font-family: "Open Sans", sans-serif;
+	margin-top: 6em;
+	background: rgb(233, 233, 233);
+}
+
+nav {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	background-color: rgb(63, 63, 63);
+	padding: 0.6em;
+	color: white;
+	opacity:0.9
+}
+
+article {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 60em;
+	text-align: justify;
+	font-size: 11pt;
+	background: white;
+	padding: 2em;
+	box-shadow: -1px 2px 5px 1px rgba(100, 100, 100, 0.7);
+	margin-bottom: 6em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: rgb(71,71,71);
+	font-family: "Quicksand", sans-serif;
+	text-transform: uppercase;
+	letter-spacing: -0.05em;
+	text-align: right;
+	margin-bottom: 1em;
+	border-bottom: thin solid rgb(71,71,71);
+}
+
+h1 {
+	font-size: 350%;
+}
+
+h2 {
+	font-size: 250%;
+}
+
+h3 {
+	font-size: 200%;
+}
+
+h4 {
+	font-size: 150%;
+}
+
+h5 {
+	font-size: 100%;
+}
+
+aside {
+    background: rgb(243, 243, 243);
+    border: 1em solid #6699CC;
+    border-width: 0.1em 0.1em 0.1em 0.8em; 
+    margin-top: 1em;
+    clear: both;
+    overflow: hidden;
+    border-radius: 10px;
+    padding: 1em 1em 1em 1em;
+    font-size: 90%;
+    margin-left:1em;
+	box-shadow: -1px 2px 5px 1px rgba(100, 100, 100, 0.7);
+}
+
+aside>header {
+	font-style: italic;
+	font-weight: bold;
+	margin-bottom: 0.5em;
+}
+
+dl {
+	margin-left: 1em;
+	padding-left: 0;
+}
+
+dd {
+	margin-left: 1.5em;
+	padding-left: 0;
+}
+
+dt {
+	margin-top: 1em;
+	font-weight: bold;
+}
+
+ul>li {
+	list-style: url("bullet_blue.png");
+}
+
+
+aside.warn {
+    border-color: #990033;
+}
+
+aside.tip {
+    border-color: #339900;
+}
+
+code.hljs {
+    font-size: 90%;
+	border-radius: 10px;
+    border-left: 1em solid #A8A8A8;
+    border-width: 0.1em 0.1em 0.1em 0.8em; 
+    margin-left:1em;
+}

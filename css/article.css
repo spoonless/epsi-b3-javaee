@@ -10,17 +10,25 @@ body {
 	font-family: "Open Sans", sans-serif;
 	margin-top: 6em;
 	background: rgb(233, 233, 233);
+	font-size: 11pt;
 }
 
-nav {
+#titleBar {
 	position: fixed;
 	bottom: 0px;
 	left: 0px;
 	width: 100%;
 	background-color: rgb(63, 63, 63);
-	padding: 0.6em;
 	color: white;
-	opacity:0.9
+	opacity:0.9;
+	padding:0.2em;
+}
+
+#titleBar img {
+	vertical-align: middle;
+	padding-right:0.3em;
+	margin-right:0.3em;
+	border-right: solid thin rgb(100,100,100);
 }
 
 article {
@@ -28,7 +36,6 @@ article {
 	margin-right: auto;
 	max-width: 60em;
 	text-align: justify;
-	font-size: 11pt;
 	background: white;
 	padding: 2em;
 	box-shadow: -1px 2px 5px 1px rgba(100, 100, 100, 0.7);

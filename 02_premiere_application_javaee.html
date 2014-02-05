@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Première application Java EE</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+	<div id="titleBar">
+		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
+ 		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>
+		<script>document.write(document.title)</script> - EPSI B3 2013/2014 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a>
+	</div>
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		<section>
+			<p>L'objectif de cette section est de développer une première application Web Java EE sous la forme d'un site avec une page HTML.</p>
+		</section>
+		<section>
+			<h2>Qu'est-ce qu'une application Web Java EE ?</h2>
+			<p>Une application Web Java contient trois types de contenu :</p>
+			<ul>
+				<li><strong>Les fichiers publics</strong> : images, pages HTML, fichiers JavaScript. Il s'agit des fichiers qui sont téléchargés tel quel sur le navigateur client.</li>
+				<li><strong>Les ressources dynamiques</strong> : il s'agit du code Java (mais pas uniquement) qui est exécuté par le serveur en vue de produire un contenu à renvoyer au client.</li>
+				<li><strong>Les fichiers privés</strong> : il s'agit la plupart du temps de fichiers de configuration qui sont exploités par le serveur ou les ressources dynamiques et que l'on ne souhaite pas rendre directement accessibles sur le Web</li>
+			</ul>
+			<p>Une application Web Java n'est pas directement exécutable, elle doit être <strong>déployée</strong> dans un serveur d'application.
+			Le serveur va prendre en charge la réception des requêtes clientes et exécuter le code de l'application en conséquence.</p>
+		</section>
+		<section>
+			<h2>Création d'un projet dans Eclipse</h2>
+			<p>Dans Eclipse, sélectionnez "File &gt; New &gt; Dynamic Web Project".</p>
+			<img width="60%" src="assets/eclipse_new_dynamic_web_project.png" alt="Création d'une application Web dynamique dans Eclipse">
+			<p>Saisissez le nom du projet et <strong>vérifiez que le champ "Target Runtime" est bien positionné sur le serveur que vous avez
+			créé</strong>. Cela indique à Eclipse que votre application Web dépend des bibliothèques Java fournies par TomEE.</p>
+			<p>Cliquez sur "Next". Eclipse vous propose les répertoires de votre projet qui contiendront les sources Java. Nous n'en aurons pas
+			besoin pour l'instant. Laissez les valeurs par défaut et cliquez sur "Next".</p>
+			<p>Pour la dernière étape, <strong>cliquez sur la case "Generate web.xml deployment descriptor"</strong> puis cliquez sur "Finish".</p>
+			<img width="60%" src="assets/eclipse_new_dynamic_web_project1.png" alt="Création d'une application Web dynamique dans Eclipse">
+		</section>
+		<section>
+			<h2>Déploiement depuis Eclipse et test de l'application</h2>
+			<p>Vous disposez maintenant d'un projet dans Eclipse. Ce projet contient un répertoire <strong>WebContent</strong> : il s'agit
+			du repertoire racine pour le contenu des fichiers statiques de l'application.</p>
+			<p>Ajoutez un fichier HTML dans le répertoire <strong>WebContent</strong> (click droit sur le répertoire puis "New &gt; HTML file").</p>
+			<p>Vous pouvez par exemple créer le fichier <strong>hello.html</strong> avec le contenu suivant :</p>
+			<pre><code class="html">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Hello Java EE&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p&gt;Hello Java EE&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre>
+			<p>Il ne vous reste plus qu'à déployer votre application dans TomEE. Pour cela, faites un click droit sur le nom
+			de votre serveur dans la vue "Servers" et choisissez le menu <strong>"Add and Remove..."</strong>. Vous allez pouvoir
+			choisir les applications que vous souhaitez ajouter ou supprimer de votre serveur.</p>
+			<img width="60%" src="assets/eclipse_add_into_server.png" alt="Ajout d'une application Web dans TomEE">
+			<p>Si cela, n'est pas déjà fait, il vous reste encore à démarrer votre serveur.</p>
+			<p>Votre application est maintenant déployée et vous pouvez accéder au fichier depuis votre navigateur Web
+			à l'adresse : <a class="explicit" href="http://localhost:8080/monappli/hello.html">http://localhost:8080/monappli/hello.html</a></p>
+			
+			<aside>
+				<header>Le contexte racine de déploiement (root context)</header>
+				<p>Un serveur d'application peut abriter plusieurs applications. Au moment du déploiement, on indique
+				au serveur le <strong>contexte racine de déploiement</strong> de l'application. Il s'agit du chemin dans l'URL
+				à partir duquel le serveur identifie l'application à laquelle un client souhaite accéder.</p>
+				<p>Lorsque vous développez sous Eclipse, le contexte racine par défaut est tout simplement le nom du projet.
+				Ainsi dans votre serveur de test, l'URL de base à partir de laquelle vous accédez à votre application est :
+				<strong>http://localhost:8080/[nom du projet]</strong></p>
+			</aside>
+		</section>
+		<section>
+			<h2>Packaging de l'application</h2>
+			<p>Imaginons que votre application est maintenant terminée et que vous souhaitez la distribuer ou la livrer
+			pour une mise en production.</p>
+			<p>Une application Web Java EE possède un format de distribution particulier : le format <strong>WAR</strong> (pour Web ARchive).</p>
+			<p>Vous allez maintenant générer un fichier WAR à partir d'Eclipse. Pour cela, faites un click droit sur votre projet puis "Export &gt; WAR file".
+			Sélectionnez une destination pour la sauvegarde du fichier et cliquez sur "Finish".</p>
+			<p><strong>Félicitation, vous venez de développer et de créer un format livrable pour votre première application Java EE !</strong></p>
+			<p>Regardons maintenant plus en détail ce que contient ce fichier WAR. Un fichier WAR est en fait une archive ZIP. Il est donc très facile
+			de regarder son contenu :</p>
+			<img src="assets/war_content.png" alt="Contenu du fichier WAR de l'application Web">
+			<p>Nous retrouvons le fichier hello.html qui a été ajouté à l'application. Mais nous découvrons surtout l'arborescence standardisée d'un fichier WAR :</p>
+			<dl>
+				<dt>META-INF</dt>
+				<dd>Ce répertoire contient les meta-informations décrivrant le livrable. Il contient en général au moins le fichier
+				MANIFEST.MF qui donne des informations générales : nom du package, auteur, date de création, ... Ce répertoire est optionnel.</dd>
+				
+				<dt>WEB-INF</dt>
+				<dd>Ce répertoire correspond à la section privée de l'application. Il contient le code de l'application ainsi
+				que les fichiers de configuration. <strong>Le contenu de ce répertoire n'est pas accéssible depuis l'extérieur</strong>. Faites le test
+				en tentant d'accéder au fichier web.xml à l'adresse
+				<a href="http://localhost:8080/monappli/WEB-INF/web.xml" class="explicit">http://localhost:8080/monappli/WEB-INF/web.xml</a>.
+				Vous obtenez un code erreur 404 (NOT FOUND). Le fichier est bien présent mais le serveur refuse de répondre à cette adresse !</dd>
+
+				<dt>WEB-INF/web.xml</dt>
+				<dd><b>LE fichier de déploiement</b> de l'application Web ! Il fournit des informations au serveur d'application au moment
+				du démarrage de l'application. L'application que nous avons développé était tellement simple que nous n'avons pas eu à nous
+				en préoccuper pour l'instant.</dd>
+				
+				<dt>WEB-INF/classes</dt>
+				<dd>Ce répertoire accueille les fichiers Java compilés (les fichiers .class). Comme nous n'avons pas écrit de code
+				pour notre application, ce répertoire est vide.</dd>
+				
+				<dt>WEB-INF/lib</dt>
+				<dd>Ce répertoire accueille les bibliothèques Java (les fichiers .jar) externes qui sont nécessaires à l'application.
+				Nous verrons que le serveur d'application fournit déjà de nombreuses bibliothèques qu'il ne faut <strong>SURTOUT</strong>
+				pas incoporer au livrable. Pour toutes les autres, c'est dans ce répertoire qu'elles doivent être placées.</dd>
+			</dl>
+			
+			<aside>
+				<header>web.xml obligatoire ou pas ?</header>
+				<p>Depuis Java EE 6, le fichier de déploiement web.xml n'est plus obligatoire. Cependant, certains outils 
+				de développement considèrent encore l'absence de ce fichier comme une erreur. Il est donc préférable
+				de toujours l'ajouter. Voilà pourquoi, il vous a été demandé de cocher la case "Generate web.xml deployment descriptor"
+				au moment de la création du projet. 
+				</p>
+			</aside>
+		</section>
+	</article>
+
+</body>
+</html>

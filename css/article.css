@@ -31,6 +31,12 @@ body {
 	border-right: solid thin rgb(100,100,100);
 }
 
+figcaption {
+	font-style: italic;
+	font-weight: bold;
+	margin-bottom: 0.5em;
+}
+
 article {
 	margin-left: auto;
 	margin-right: auto;

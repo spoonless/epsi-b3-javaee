@@ -21,15 +21,198 @@
 		<p>Une servlet est un <strong>composant Web</strong> de Java EE. Elle permet de traiter une requête entrante sur un
 		serveur et de générer une réponse dynamique.</p>
 		<p>L'API <strong>servlet</strong> est définie par la spécification <a href="http://jcp.org/aboutJava/communityprocess/final/jsr315/index.html">JSR 315</a> et la version actuelle est la 3.0.</p>
-		<p>Une servlet est fournie par le développeur de l'application. Elle est géree par un <strong>conteneur Web</strong>.
-		Ce dernier a la reponsabilité de :</p>
-		<ul>
-			<li>gérer le cycle de vie des servlets (c'est-à-dire leur création et leur destruction)</li>
-			<li>transmettre les requêtes entrantes à une servlet</li>
-			<li>renvoyer au client la réponse produite par la servlet</li>
-		</ul>
-		<p>Le <strong>conteneur Web</strong> est inclus dans le serveur d'application Java EE.</p>
+
+		<section>
+			<h2>Structure d'une servlet HTTP</h2>
+			<p>Une servlet HTTP est une classe Java qui hérite de la classe <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServlet.html">javax.servlet.http.HttpServlet</a>&nbsp;:</p>
+			<pre><code class="java">
+package fr.epsi;
+
+import javax.servlet.http.HttpServlet;
+
+public class MyServlet extends HttpServlet {
+
+}
+
+</code></pre>
+			
+			<p>Par défaut, la classe <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServlet.html">javax.servlet.http.HttpServlet</a> fournit des méthodes
+			doXXX (XXX représentant une méthode HTTP) qui seront appelées lorsque la servlet devra traiter une requête HTTP de la méthode correspondante.</p>
+			
+			<aside>
+				<header>les méthodes HTTP</header>
+				Une requête HTTP est identifiée par une méthode. Les méthodes HTTP standards sont : HEAD, OPTIONS, GET, POST, PUT, DELETE, PATCH.
+				La méthode PATCH a été ajoutée tardivement et n'apparaît pas encore dans l'API servlet.
+				Vous pouvez vous reporter à <a href="http://fr.wikipedia.org/wiki/Hypertext_Transfer_Protocol">l'article wikipedia sur HTTP</a> pour une explication succinte des différentes méthodes.
+			</aside>
+			
+			<p>HttpServlet dispose donc des méthodes doGet, doPost, doPut... L'implémentation par défaut de ces méthodes
+			consiste à retourner un message d'erreur HTTP. Chaque servlet doit donc redéfinir les méthodes qui la concerne.</p>
+			
+			<pre><code class="java">
+package fr.epsi;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/*
+ * Exemple d'une servlet acceptant les requêtes HTTP GET 
+ */
+public class MyServlet extends HttpServlet {
+	
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+                 throws ServletException, IOException {
+    // traitement de la requête et génération du résultat à retourner au client
+  }
+
+}
+
+</code></pre>
+	
+			<p>Les méthodes doXXX ont toutes deux paramètres : <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html">javax.servlet.http.HttpServletRequest</a> et <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletResponse.html">javax.servlet.http.HttpServletResponse</a>
+			qui représentent respectivement la requête HTTP entrante et la réponse renvoyée par le serveur.</p>
+			<p>Pour l'instant, les méthodes qui vont nous intéresser sur ces classes sont :</p>
+			<dl>
+				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getParameter%28java.lang.String%29">String HttpServletRequest.getParameter(String)</a></dt>
+				<dd>Retourne la valeur d'un paramètre d'une requête GET ou POST. La méthode attend le nom du paramètre et retourne sa valeur
+				ou null si le paramètre n'existe pas.</dd>
+	
+				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getParameter%28java.lang.String%29">java.util.Map&lt;java.lang.String,java.lang.String[]&gt; HttpServletRequest.getParameterMap()</a></dt>
+				<dd>Retourne une Map des paramètres d'une requête GET ou POST. La clé dans la Map correspond au nom du paramètre.
+				La valeur est un tableau de chaînes de caractères. En effet, un paramètre peut être présent plusieurs fois dans une requête.</dd>
+	
+				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletResponse.html#setContentType%28java.lang.String%29">void HttpServletResponse.setContentType(String)</a></dt>
+				<dd>Positionne le type de contenu MIME de la réponse HTTP pour informer le client du format
+				de la réponse. Par exemple : "text/html" pour une page HTML.</dd>
+				
+				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletResponse.html#setCharacterEncoding%28java.lang.String%29">void HttpServletResponse.setCharacterEncoding(String)</a></dt>
+				<dd>Indique l'encodage caractère du flux de réponse. L'appel à HttpServletResponse.getWriter() tient compte de l'encodage positionné. Il faut donc appeler cette méthode avant HttpServletResponse.getWriter()</dd>
+	
+				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletResponse.html#getWriter%28%29">java.io.PrintWriter HttpServletResponse.getWriter()</a></dt>
+				<dd>Retourne un objet de type PrintWriter qui permet d'écrire la réponse dans le flux
+				de sortie. L'objet PrintWriter offre des méthodes write pour générer une réponse au format texte (comme une page HTML).</dd>
+	
+				<dt><a href="">javax.servlet.ServletOutputStream HttpServletResponse.getOutputStream()</a></dt>
+				<dd>Retourne un objet représentant le flux de sortie en mode binaire. Cette méthode est utile lorsque la réponse
+				générée est au format binaire (comme une image par exemple).</dd>
+			</dl>
+	
+			<pre><code class="java">
+package fr.epsi;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/*
+ * Une servlet qui salue la personne qui envoie
+ * son nom dans le paramètre name.
+ */
+public class HelloServlet extends HttpServlet {
+	
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+                 throws ServletException, IOException {
+    String name = req.getParameter("name");
+
+    resp.setContentType("text/plain");
+    resp.setCharacterEncoding("utf-8");
+    resp.getWriter().write("Hello " + name + "!");
+  }
+
+}
+
+</code></pre>
+		</section>
+		
+		<section>
+			<h2>Configuration du déploiement d'une servlet</h2>
+			<p>Une servlet n'est pas une classe Java comme les autres, il s'agit d'un composant
+			Java EE qui va être pris en charge par le serveur d'application. Le serveur d'application
+			a besoin de savoir pour quelle(s) URL cette servlet sera responsable de traiter les
+			requêtes et de fournir la réponse.</p>
+			<p>La méthode la plus simple pour configurer le déploiement d'une servlet consiste à utiliser
+			l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/annotation/WebServlet.html">@WebServlet</a>
+			sur la classe.</p>
+	
+			<pre><code class="java">
+package fr.epsi;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/hello")
+public class HelloServlet extends HttpServlet {
+
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+                 throws ServletException, IOException {
+    String name = req.getParameter("name");
+
+    resp.setContentType("text/plain");
+    resp.setCharacterEncoding("utf-8");
+    resp.getWriter().write("Hello " + name + "!");
+  }
+
+}
+
+</code></pre>
+			<p>Pour la servlet ci-dessus, l'annotation @WebServlet précise le motif de l'URL (URL pattern)
+			pour lequel la servlet devra être sollicitée (dans cet exemple "/hello"). 
+			Une fois l'application déployée dans un serveur de test en local, une requête de la forme</p>
+			<pre><code>http://localhost:8080/[nom de l'application]/hello?name=EPSI</code></pre>
+			<p>devrait répondre</p>
+			<pre><code>Hello EPSI!</code></pre>
+			
+			<aside>
+				<header>Chemin absolu d'URL dans une application Web</header>
+				<p>Le motif d'URL dans l'exemple précédent est "/hello". Le / est obligatoire
+				est dénote donc un chemin absolu. Néanmoins dans une servlet, un chemin absolu
+				commence non pas à la racine du serveur mais à la racine de l'application.</p>
+				<p>Ainsi pour une application déployée dans le contexte racine <strong>"/monappli"</strong>, une servlet
+				dont le motif d'URL est <strong>"/hello"</strong> sera accessible par le chemin <strong>"/monappli/hello"</strong> et non pas "/hello".
+				</p>
+				<p>Cette astuce est très pratique car elle dispense les servlets de connaître le contexte racine
+				d'une application. Cela peut néanmoins entraîner une certaine confusion chez les développeurs
+				entre les URL qui seront effectivement retournées au client (comme les liens dans une page Web par exemple)
+				et les URL manipulées côté serveur.</p>
+			</aside>
+		</section>
+		
+		<section>
+			<h2>Motif d'URL d'une Servlet</h2>
+			<p>Comme nous l'avons vu dans la section précédente, une servlet pour être déployée a besoin d'un ou plusieurs
+			motifs d'URL indiquant le chemin des requêtes qu'elle prend en charge. Il existe plusieurs syntaxes
+			qui sont toutes équivalentes :</p>
+			<pre><code class="java">@WebServlet("/hello")</code></pre>
+			<pre><code class="java">@WebServlet({"/hello"})</code></pre>
+			<pre><code class="java">@WebServlet(urlPatterns={"/hello"})</code></pre>
+			<p>Il est possible de donner plusieurs motifs d'URL indiquant que la même servlet peut être sollicitée à
+			partir de chemins différents.</p>
+			<pre><code class="java">@WebServlet({"/hello", "/bonjour"})</code></pre>
+			<pre><code class="java">@WebServlet(urlPatterns={"/hello", "/bonjour"})</code></pre>
+			<p>Enfin, il est possible d'utiliser le caractère générique *. Par contre son utilisation
+			est limitée car il ne peut apparaître que <strong>comme premier ou dernier</strong> élément d'un motif :</p>
+			<pre><code class="java">// Toutes les URL se terminant par .html
+@WebServlet("*.html")</code></pre>
+			<pre><code class="java">// Toutes les URL commençant par /hello/
+@WebServlet("/hello/*")</code></pre>
+		</section>
 	</article>
+	
 	<article class="exercice">
 		<h1>Exercice : Servlet de temps</h1>
 		<dl>
@@ -60,8 +243,8 @@
 		<dl>
 			<dt>Objectif</dt>
 			<dd>Réaliser une application qui fournit une page d'accueil présentant un formulaire Web.
-			Le formulaire permet de saisir son nom et son age et de soumettre les données au serveur avec un HTTP POST.
-			Le serveur doit répondre une page Web affichant les données envoyées.</dd>
+			Le formulaire permet de saisir son nom et son age et de soumettre les données au serveur par une méthode HTTP POST.
+			Le serveur doit répondre une page Web générée par une servlet et affichant les données envoyées.</dd>
 
 			<dt>Modèle Maven du projet à télécharger</dt>
 			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a></dd>
@@ -81,7 +264,7 @@
 			<dt>Objectif</dt>
 			<dd>Améliorer l'application Web de l'exercice précédent. Maintenant le serveur doit valider que le client
 			a bien envoyé son nom et que l'age est bien un nombre strictement positif. Si les données sont fausses,
-			le serveur doit retourner une erreur HTTP 400 avec un message explicatif.</dd>
+			le serveur doit retourner une erreur HTTP 400.</dd>
 
 			<dt>Modèle du projet</dt>
 			<dd>Pour cet exercice, vous reprendrez le projet de l'exercice précédent pour l'améliorer.</dd>
@@ -90,6 +273,11 @@
 		<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html#valueOf%28java.lang.String%29">Integer.valueOf(String)</a>.
 		Cette méthode jette une exception <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/NumberFormatException.html">java.lang.NumberFormatException</a>
 		si la chaîne de caractères ne peut pas être convertie en entier.</aside>
+		
+		<aside class="tip">
+			Pour retourner une erreur HTTP, on utilisera <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletResponse.html#sendError%28int%29">HttpServletResponse.sendError(int)</a>
+			qui génère automatiquement une page d'erreur HTML.
+		</aside>
 	</article>
 </body>
 </html>

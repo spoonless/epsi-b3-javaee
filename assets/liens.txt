@@ -1,0 +1,4 @@
+http://fr.openclassrooms.com/informatique/cours/creez-votre-application-web-avec-java-ee
+http://blog.paumard.org/cours/servlet/
+http://blog.paumard.org/cours/jpa/
+

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Les servlets</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+	<div id="titleBar">
+		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
+ 		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>
+		<script>document.write(document.title)</script> - EPSI B3 2013/2014 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a>
+	</div>
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		<p>Une servlet est un <strong>composant Web</strong> de Java EE. Elle permet de traiter une requête entrante sur un
+		serveur et de générer une réponse dynamique.</p>
+		<p>L'API <strong>servlet</strong> est définie par la spécification <a href="http://jcp.org/aboutJava/communityprocess/final/jsr315/index.html">JSR 315</a> et la version actuelle est la 3.0.</p>
+		<p>Une servlet est fournie par le développeur de l'application. Elle est géree par un <strong>conteneur Web</strong>.
+		Ce dernier a la reponsabilité de :</p>
+		<ul>
+			<li>gérer le cycle de vie des servlets (c'est-à-dire leur création et leur destruction)</li>
+			<li>transmettre les requêtes entrantes à une servlet</li>
+			<li>renvoyer au client la réponse produite par la servlet</li>
+		</ul>
+		<p>Le <strong>conteneur Web</strong> est inclus dans le serveur d'application Java EE.</p>
+	</article>
+	<article class="exercice">
+		<h1>Exercice : Servlet de temps</h1>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Réaliser une application qui retourne une page web affichant la date et l'heure du serveur.
+			La page Web de résultat sera générée par une servlet.</dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a></dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>&Eacute;diter le fichier pom.xml du template et modifier la balise artifactId pour spécifier le nom de votre projet.
+			Modifier ensuite la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+		<aside>
+			Pour afficher la date et l'heure du serveur, vous aurez besoin de représenter une
+			date sous la forme d'une chaîne de caractères. 
+			Pour cela, la classe <a href="http://docs.oracle.com/javase/7/docs/api/java/text/DateFormat.html">java.text.DateFormat</a>
+			fournie par l'API Java vous sera très utile.
+		</aside>
+	</article>
+
+	<article class="exercice">
+		<h1>Exercice : traitement d'un formulaire</h1>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Réaliser une application qui fournit une page d'accueil présentant un formulaire Web.
+			Le formulaire permet de saisir son nom et son age et de soumettre les données au serveur avec un HTTP POST.
+			Le serveur doit répondre une page Web affichant les données envoyées.</dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a></dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>&Eacute;diter le fichier pom.xml du template et modifier la balise artifactId pour spécifier le nom de votre projet.
+			Modifier ensuite la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
+
+	<article class="exercice">
+		<h1>Exercice : traitement d'un formulaire (suite)</h1>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Améliorer l'application Web de l'exercice précédent. Maintenant le serveur doit valider que le client
+			a bien envoyé son nom et que l'age est bien un nombre strictement positif. Si les données sont fausses,
+			le serveur doit retourner une erreur HTTP 400 avec un message explicatif.</dd>
+
+			<dt>Modèle du projet</dt>
+			<dd>Pour cet exercice, vous reprendrez le projet de l'exercice précédent pour l'améliorer.</dd>
+		</dl>
+		<aside>Afin de valider l'age envoyé au serveur, vous pouvez utiliser la méthode 
+		<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html#valueOf%28java.lang.String%29">Integer.valueOf(String)</a>.
+		Cette méthode jette une exception <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/NumberFormatException.html">java.lang.NumberFormatException</a>
+		si la chaîne de caractères ne peut pas être convertie en entier.</aside>
+	</article>
+</body>
+</html>

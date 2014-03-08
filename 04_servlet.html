@@ -43,11 +43,11 @@ public class MyServlet extends HttpServlet {
 				<header>les méthodes HTTP</header>
 				Une requête HTTP est identifiée par une méthode. Les méthodes HTTP standards sont : HEAD, OPTIONS, GET, POST, PUT, DELETE, PATCH.
 				La méthode PATCH a été ajoutée tardivement et n'apparaît pas encore dans l'API servlet.
-				Vous pouvez vous reporter à <a href="http://fr.wikipedia.org/wiki/Hypertext_Transfer_Protocol">l'article wikipedia sur HTTP</a> pour une explication succinte des différentes méthodes.
+				Vous pouvez vous reporter à <a href="http://fr.wikipedia.org/wiki/Hypertext_Transfer_Protocol">l'article wikipedia sur HTTP</a> pour une explication succincte des différentes méthodes.
 			</aside>
 			
 			<p>HttpServlet dispose donc des méthodes doGet, doPost, doPut... L'implémentation par défaut de ces méthodes
-			consiste à retourner un message d'erreur HTTP. Chaque servlet doit donc redéfinir les méthodes qui la concerne.</p>
+			consiste à retourner un message d'erreur HTTP. Chaque servlet doit donc redéfinir les méthodes qui la concernent.</p>
 			
 			<pre><code class="java">
 package fr.epsi;
@@ -78,6 +78,9 @@ public class MyServlet extends HttpServlet {
 			qui représentent respectivement la requête HTTP entrante et la réponse renvoyée par le serveur.</p>
 			<p>Pour l'instant, les méthodes qui vont nous intéresser sur ces classes sont :</p>
 			<dl>
+				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#setCharacterEncoding%28java.lang.String%29">String HttpServletRequest.setCharacterEncoding(String)</a></dt>
+				<dd>Spécifie le format d'encodage des paramètres de la requête. Par défaut, l'encodage utilisé est <a href="http://fr.wikipedia.org/wiki/ISO_8859-1">ISO 8859-1</a> (Latin-1).</dd>
+
 				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getParameter%28java.lang.String%29">String HttpServletRequest.getParameter(String)</a></dt>
 				<dd>Retourne la valeur d'un paramètre d'une requête GET ou POST. La méthode attend le nom du paramètre et retourne sa valeur
 				ou null si le paramètre n'existe pas.</dd>
@@ -121,6 +124,7 @@ public class HelloServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
                  throws ServletException, IOException {
+    req.setCharacterEncoding("utf-8");
     String name = req.getParameter("name");
 
     resp.setContentType("text/plain");
@@ -160,6 +164,7 @@ public class HelloServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
                  throws ServletException, IOException {
+    req.setCharacterEncoding("utf-8");
     String name = req.getParameter("name");
 
     resp.setContentType("text/plain");
@@ -278,6 +283,89 @@ public class HelloServlet extends HttpServlet {
 			Pour retourner une erreur HTTP, on utilisera <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletResponse.html#sendError%28int%29">HttpServletResponse.sendError(int)</a>
 			qui génère automatiquement une page d'erreur HTML.
 		</aside>
+	</article>
+	
+	<article>
+		<h1>Utilisation du fichier de déploiement web.xml</h1>
+		<section>
+			<p>Nous avons vu que l'annotation <code>@WebServlet</code> permet d'indiquer comment une servlet doit être déployée dans le serveur. S'il préfère, 
+			le développeur a la possibilité	de spécifier ces informations dans le fichier de déploiement <strong>web.xml</strong> plutôt que d'utiliser une annotation.</p>
+		</section>
+		<aside>Les annotations n'ont été introduites dans le langage Java que depuis la version 5. Pour J2EE, le recours au fichier de déploiement web.xml
+		était la seule façon de déclarer les servlets. Ce fichier reste donc encore aujourd'hui très utilisé par les développeurs, particulièrement
+		pour déclarer des servlets provenant de frameworks et de bibliothèques tiers.</aside>
+		<section>
+			<p>Pour déclarer une servlet dans une fichier web.xml, il suffit d'associer un identifiant avec le nom de la classe de la servlet. Ensuite, on précise
+			un ou des motifs d'URL pour cette servlet de la façon suivante&nbsp;:</p>
+<pre><code class="xml">&lt;web-app 
+  xmlns="http://java.sun.com/xml/ns/javaee" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  version="3.0"&gt;
+  
+  &lt;!-- la déclaration de la servlet --&gt;
+  &lt;servlet&gt;
+    &lt;servlet-name&gt;nomLogiqueDeLaServlet&lt;/servlet-name&gt;
+    &lt;!-- le nom de la classe implémentant la servlet (précédé du nom du package) --&gt;
+    &lt;servlet-class&gt;le.nom.complet.de.la.classe.de.la.Servlet&lt;/servlet-class&gt;
+  &lt;/servlet&gt;
+  
+  &lt;!-- l'association de la servlet avec un motif d'URL --&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;nomLogiqueDeLaServlet&lt;/servlet-name&gt;
+    &lt;!-- le motif d'url (par exemple *.html ou /servlet) --&gt;
+    &lt;url-pattern&gt;*&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+
+&lt;/web-app&gt;
+</code></pre>
+			<p>Pour rappel, le fichier web.xml doit <strong>obligatoirement</strong> se trouver dans le répertoire WEB-INF
+			de l'application Web finale. Dans un projet Maven, on placera donc ce fichier dans le répertoire 
+			<strong>src/main/webapp/WEB-INF</strong>.</p>
+		</section>
+		<aside>
+			<header>Java EE : annotation ou descripteur de déploiement ?</header>
+			<p>Java EE est une plate-forme pour laquelle les développeurs des applications en fournissant des <strong>composants</strong> (Web, métier, ...).
+			Pour fournir les informations de deploiement de ces composants, nous verrons qu'il est toujours possible d'utiliser des annotations ou des
+			descripteurs de déploiement (des fichiers XML). L'utilisation d'annotation offre l'avantage de déclarer les informations au plus près du code.
+			Au contraire, le descripteur de déploiement centralise l'ensemble des informations pour une application. Il permet une plus grande souplesse
+			au détriment de la verbosité et de la nécessité de maintenir un fichier XML.</p>
+		</aside>
+	</article>
+	<article class="exercice">
+		<h1>Exercice&nbsp;: déploiement à partir du web.xml</h1>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Déployer une servlet en utilisant le fichier de déploiement web.xml. Pour cela, vous allez déployer une servlet fournie
+			par une bibliothèque tierce : <b>barcode4j</b>. Cette servlet génère des codes barres à la volée.</dd>
+
+			<dt>Modèle de projet</dt>
+			<dd>Utilisez le même projet que pour l'exercice précédent. Vous verrez ainsi que l'on peut mélanger dans une même application
+			des servlets déclarées par annotations avec des servlets déclarées dans le fichier de déploiement. Le fichier web.xml
+			doit déjà être présent et ne contenir que la balise racine <code>&lt;web-app&gt;</code>.</dd>
+			
+			<dt>Ajout de barcode4j dans le projet</dt>
+			<dd>
+			Maven va vous permettre de récupérer automatiquement les bibliothèques qui vont vous être utiles pour cette exercice.
+			Ouvrez le fichier pom.xml du projet et dans la balise <code>&lt;dependencies&gt;</code>, ajoutez les deux dépendences suivantes :
+<pre><code class="xml">&lt;dependency&gt;
+  &lt;groupId&gt;net.sf.barcode4j&lt;/groupId&gt;
+  &lt;artifactId&gt;barcode4j&lt;/artifactId&gt;
+  &lt;version&gt;2.1&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+  &lt;groupId&gt;avalon-framework&lt;/groupId&gt;
+  &lt;artifactId&gt;avalon-framework-api&lt;/artifactId&gt;
+  &lt;version&gt;4.2.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+			<p>La sauvegarde du fichier pom.xml dans votre IDE doit entraîner un téléchargement par Maven de ces dépendances et leur ajout
+			dans la configuration du projet.</p>
+			<p>La servlet fournie par barcode4j s'appelle&nbsp;: <code><strong>org.krysalis.barcode4j.servlet.BarcodeServlet</strong></code></p>
+			</dd>
+		</dl>
+		<p>Une fois la servlet déclarée, vous pouvez y accéder en passant des paramètres HTTP détaillés dans la <a href="http://barcode4j.sourceforge.net/2.1/servlet.html">documentation</a>.</p>
 	</article>
 </body>
 </html>

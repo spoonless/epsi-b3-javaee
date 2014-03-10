@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Conteneur Web, listeners et filtres</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+	<div id="titleBar">
+		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
+ 		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>
+		<script>document.write(document.title)</script> - EPSI B3 2013/2014 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a>
+	</div>
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		<section>
+			<p>Nous avons vu au chapitre précédent que les servlets sont des composants Web qui permettent
+			de répondre à des requêtes utilisateurs. Ces servlets sont packagées dans une application Web
+			qui est elle-même déployée dans une serveur d'application Java EE. Cependant, nous n'avons
+			pas eu à écrire de lignes de code telles que :</p>
+			<pre><code class="java">MaServlet servlet = new MaServlet();</code></pre>
+			<p>C'est-à-dire que nous n'avons pas eu à instancier nos servlets et pourtant, elles ont bien été
+			créées et utilisées pour générer les réponses dynamiques.</p>
+			<p>Un serveur Java EE fournit un <strong>conteneur Web</strong> (parfois appelé conteneur de servlets). Un conteneur
+			a la charge d'instancier, d'initialiser et de détruire les servlets d'une application. C'est également
+			le conteneur qui fournit une instance de HttpServletRequest et de HttpServletResponse pour chaque requête.</p>
+			<p>Nous allons voir en détail la gestion du cycle de vie des servlets par le conteneur Web et les conséquences
+			que cela a sur la façon de développer des servlets.</p>
+		</section>
+		<section>
+			<h2>Cycle de vie des servlets</h2>
+			<p>Le conteneur Web gère le cycle de vie des servlets : la création, l'initialisation et la destruction.
+			&Aacute; chacune de ces étapes une instance de servlet est informée par un appel à une méthode déclarée
+			dans l'interface <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/Servlet.html">Servlet</a>
+			et qui peut être redéfinie pour chaque servlet.</p>
+			
+			<pre><code class="java">
+public void init(ServletConfig config) throws ServletException {
+  // appelée au moment de l'initialisation de la servlet
+}
+
+public void destroy() {
+  // appelée avant la suppression de la servlet du conteneur
+}
+
+</code></pre>
+
+			<p>De plus la servlet sera prévenue de son instanciation par un appel à son constructeur. Cela
+			a une conséquence importante pour l'implémentation d'une servlet : <strong>une servlet doit
+			obligatoirement avoir une constructeur sans paramètre</strong>.</p>
+		</section>
+	</article>
+
+</body>
+</html>

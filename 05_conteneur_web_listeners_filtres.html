@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Conteneur Web, listeners et filtres</title>
+	<title>Le conteneur Web</title>
 	<meta name="author" content="David Gayerie">
 	<link href="css/article.css" rel="stylesheet">
 	<link href="highlight/styles/zenburn.css" rel="stylesheet">
@@ -53,8 +53,240 @@ public void destroy() {
 			<p>De plus la servlet sera prévenue de son instanciation par un appel à son constructeur. Cela
 			a une conséquence importante pour l'implémentation d'une servlet : <strong>une servlet doit
 			obligatoirement avoir une constructeur sans paramètre</strong>.</p>
+			<p>Lors de l'appel à la méthode <code>init(ServletConfig)</code>, le conteneur passe en paramètre
+			une instance de <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletConfig.html">ServletConfig</a>
+			qui permet, entre-autres, à la servlet de récupérer des paramètres d'initialisation. Notez que la méthode <code>init(ServletConfig)</code>
+			autorise l'implémentation à jeter une <code><strong>ServletException</strong></code>. Si cela se produit, le conteneur considère que la servlet n'a
+			pas pu s'initialiser correctement et elle ne sera pas déployée dans le conteneur : elle ne sera donc pas accessible !</p>
+			
+			<aside class="tip">
+				Dans une servlet, il est préférable de surcharger la méthode : 
+				<pre><code class="java">
+public void init() throws ServletException {
+}
+
+</code></pre>
+				<p>Cette méthode est définie dans la classe parente de <code>HttpServlet</code> et si on désire accéder
+				à l'objet <code>ServletConfig</code>, il est possible de le faire avec la méthode <code>getServletConfig()</code>.</p>
+			</aside>
 		</section>
 	</article>
+	
+	<article class="exercice">
+		<h2>Exercice&nbsp;: comprendre le cycle de vie d'une servlet</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Déployer une servlet qui trace les différentes étapes de son cycle de vie.</dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a></dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>&Eacute;diter le fichier pom.xml du template et modifier la balise artifactId pour spécifier le nom de votre projet.
+			Modifier ensuite la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+		<p>Pour cet exercice vous allez déployer une servlet de log dont voici le code source&nbsp;:</p>
+		<pre><code class="java">
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/log")
+public class LogServlet extends HttpServlet {
+
+  private static final long serialVersionUID = 7446985734933559486L;
+
+  @Override
+  public void init() throws ServletException {
+    this.log("################################# init " + getServletName());
+  }
+
+  @Override
+  public void destroy() {
+    this.log("################################# destroy " + getServletName());
+  }
+
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+                      throws ServletException, IOException {
+    resp.setCharacterEncoding("utf-8");
+    resp.setContentType("text/plain");
+    resp.getWriter().write(getServletName() + " called successfully");
+  }
+
+}
+
+</code></pre>
+		<p>Vérifier dans les logs du serveur (onglet Console sous Eclipse) l'apparition des messages de log produits par la servlet lorsque vous faites les opérations suivantes&nbsp;:</p>
+		<ul>
+			<li>Lancement du serveur d'application</li>
+			<li>Sollicitation de la servlet avec une requête HTTP depuis un navigateur Web (une ou plusieurs fois)</li>
+			<li>Arrêt du serveur d'application (ou suppression de l'application du serveur en cours d'exécution)</li>
+		</ul>
+		<p>N'hésitez pas à tester plusieurs combinaisons possibles de ces actions.</p>
+		<p>Que pouvez-vous en déduire concernant la façon dont un conteneur Web gère la création, l'initialisation et la suppression d'une servlet&nbsp;?</p>
+		
+		<dl>
+			<dt>Variation</dt>
+			<dd>Si maintenant vous modifiez l'annotation <code>@WebServlet</code> de la façon suivante&nbsp;:
+				<pre><code class="java">@WebServlet(urlPatterns = "/log", loadOnStartup = 0)</code></pre>
+				<p>Refaites l'exercice en essayant de constater si cela produit un changement dans le cycle de vie de la servlet.</p>
+			</dd>
+			
+		</dl>
+	</article>
+	
+	<article>
+		<h2>Servlet et programmation concurrente</h2>
+		<section>
+			<p>Avec l'exercice précédent, nous avons mis en lumière le fait que le conteneur Web ne crée qu'une seule instance de chaque servlet.
+			En fait, le conteneur est libre d'adopter la stratégie qui lui paraît la meilleure. Nous avons également constater que nous pouvons 
+			changer le moment où le conteneur instanciera une servlet grâce à l'attribut <code>loadOnStartup</code> 
+			(cette option est disponible également dans le fichier de déploiement web.xml avec la balise <code>&lt;load-on-startup&gt;</code>).</p>
+			<p>En tant que développeur de servlet, il faut donc <strong>toujours</strong> garder à l'esprit qu'une même instance de servlet
+			sera utilisée pour servir plusieurs requête HTTP, y compris des requêtes simultanées. Cela introduit dans le développement de servlet, le problème
+			de la programmation concurrente. Tout changement de l'état interne d'une servlet peut entraîner un bug potentiel pour des requêtes
+			qui sont traitées en parallèle.</p>
+			
+			<aside class="tip">
+				Pour éviter tout problème, il faut s'assurer que les modifications des attributs d'une servlet sont sûres dans un contexte d'exécution
+				concurrent. Il faut également s'assurer que les objets manipulés par la servlet et qui ne sont pas explicitement créés pour une requête, peuvent
+				être utilisés dans un environnement concurrent (<strong>thread-safe</strong>).
+			</aside>
+			
+			<p>Nous verrons que la problèmatique de programmation concurrente est récurrente dans le développement d'application Java EE.</p>
+		</section>
+	</article>
+	
+	<article class="exercice">
+		<h2>Exercice : servlet et programmation concurrente</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Comprendre les risques de la programmation concurrente.</dd>
+		</dl>
+		<p>Plusieurs implémentations de servlet sont proposées ci-dessous. Toutes posent un problème d'exécution dans un environnement
+		concurrent (elles ne sont thread-safe). Cherchez d'où provient le problème et quelles solutions proposeriez vous pour le corriger.</p>
+		
+		<figure>
+			<figcaption>Cas 1 : la servlet de calcul</figcaption>
+			<pre><code class="java">
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class SumServlet extends HttpServlet {
+
+  private static final long serialVersionUID = -7059227478134291799L;
+
+  private int total;
+
+  @Override
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
+                      throws ServletException, IOException {
+    total = 0;
+    for (String value : req.getParameterValues("value")) {
+      total += Integer.parseInt(value);
+    }
+    resp.setCharacterEncoding("UTF-8");
+    resp.setContentType("text/plain");
+    resp.getWriter().write("The total is " + total);
+  }
+
+}
+
+</code></pre>
+		</figure>
+
+		<figure>
+			<figcaption>Cas 2 : la servlet de temps</figcaption>
+			<pre><code class="java">
+import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Date;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class TimeServlet extends HttpServlet {
+
+  private static final long serialVersionUID = 7446985734933559486L;
+  private final DateFormat dateInstance = DateFormat.getDateInstance(DateFormat.LONG);
+
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+                      throws ServletException, IOException {
+    resp.setCharacterEncoding("UTF-8");
+    resp.setContentType("text/plain");
+    resp.getWriter().write(dateInstance.format(new Date()));
+  }
+
+}
+
+</code></pre>
+		</figure>
+
+		<figure>
+			<figcaption>Cas 3 : la servlet d'inscription d'un utilisateur</figcaption>
+			<pre><code class="java">
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class SubscriptionServlet extends HttpServlet {
+
+  private static final long serialVersionUID = 7446985734933559486L;
+
+  private HttpServletRequest firstStepRequest;
+
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+                      throws ServletException, IOException {
+    if ("first".equals(req.getParameter("step"))) {
+      this.firstStepRequest = req;
+      generateSecondStepPage(resp);
+    }
+    else {
+      String name = firstStepRequest.getParameter("name");
+      String age = firstStepRequest.getParameter("age");
+      String address = req.getParameter("address");
+      String city = req.getParameter("city");
+      createSubscription(name, age, address, city);
+      generateSubscriptionSuccessPage(resp);
+    }
+  }
+
+  private void generateSecondStepPage(HttpServletResponse resp) throws IOException {
+    // ...
+  }
+
+  private void generateSubscriptionSuccessPage(HttpServletResponse resp) 
+                                              throws IOException {
+    // ...
+  }
+
+  private void createSubscription(String name, String age, String address, String city) {
+    // ...
+  }
+}
+</code></pre>
+		</figure>
+	</article>
+	
 
 </body>
 </html>

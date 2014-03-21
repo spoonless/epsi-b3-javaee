@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Les attributs dans le conteneur Web</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+	<div id="titleBar">
+		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
+ 		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>
+		<script>document.write(document.title)</script> - EPSI B3 2013/2014 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a>
+	</div>
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		<section>
+			<p>Il est souvent utile de partager de l'information dans un container Web.
+			L'information partagée est appelée <strong>un attribut</strong>. Il est défini par
+			sa portée&nbsp;:</p>
+			<dl>
+				<dt>Portée de requête (<strong>request scope</strong>)</dt>
+				<dd>
+				L'attribut est disponible pour les servlets qui participent au traitement de la requête cliente.
+				Nous verrons bientôt qu'une même requête peut être prise en charge par une chaîne de plusieurs servlets.
+				</dd>
+				
+				<dt>Portée de session (<strong>session scope</strong>)</dt>
+				<dd>L'attribut est disponible entre plusieurs requêtes du client. L'ensemble de ces attributs
+				est appelé une session utilisateur.
+				</dd>
+				
+				<dt>Portée de l'application (<strong>application scope</strong>)</dt>
+				<dd>L'attribut est disponible à tout moment à l'ensemble des servlets de l'application Web.</dd>
+			</dl>
+			<p>Un attribut est une notion très vague&nbsp;: il s'agit simplement d'une instance
+			d'une classe Java (implémentant si possible l'interface <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html">java.io.Serializable</a>).</p>
+			<p>Le développeur d'application va pouvoir stocker les attributs dont il a besoin dans différents objets fournis
+			par le conteneur (suivant le cas d'usage qui l'intéresse). La gestion des attributs se fait toujours avec
+			des méthodes aux signatures similaires&nbsp;:</p>
+			<dl>
+				<dt>void XXXX.setAttribute(String nom, Object valeur)</dt>
+				<dd>Pour positionner un attribut</dd>
+
+				<dt>Object XXXX.getAttribute(String nom)</dt>
+				<dd>Pour récupérer un attribut que l'on a préalablement positionné</dd>
+
+				<dt>java.util.Enumeration&lt;String&gt; XXXX.getAttributeNames()</dt>
+				<dd>Pour connaître la liste des noms des attributs disponibles</dd>
+
+				<dt>void XXXX.removeAttribut()</dt>
+				<dd>Pour supprimer l'attibut</dd>
+			</dl>
+			<p>Remarque&nbsp;: Dans la liste ci-dessus XXXX représente l'objet du conteneur stockant les attributs et qui
+			dépend du cas d'usage.</p>
+
+			<aside class="warn">
+				<header>Attributs et concurrence</header>
+				<p>Nous avons vu au chapitre précédent que la programmation de servlets implique de prendre en
+				considération les problèmes de programmation concurrente (une servlet peut traiter N requêtes
+				simultanément). Ainsi les attributs de portée session et application sont aussi potentiellement
+				accessibles par du code traitant des requêtes simultanées. Il faut donc protéger les modifications
+				concurrentes sur ces attributs.</p>
+			</aside>
+		</section>
+		
+		<section>
+			<h2>Attribut de portée requête</h2>
+			<p>Les attributs de portée requête sont directement accessibles depuis une instance de <code>HttpServletRequest</code>.
+			</p>
+			<pre><code class="java">
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+                      throws ServletException, IOException {
+    User user = new User();
+    user.setName(req.getParameter("name"));
+    user.setAddress(req.getParameter("address"));
+    // on stocke l'utilisateur comme attribut de requête
+    req.setAttribute("user", user);
+    
+    // ...
+  }
+
+</code></pre>
+			<p>On peut ensuite récupérer l'attribut à n'importe quel moment lors traitement de la requête</p>
+			
+			<pre><code class="java">
+    User user = User.class.cast(req.getAttribute("user"));
+
+</code></pre>
+			<p>Les cas d'usage d'un attribut de portée requête sont limités pour traiter une requête avec une servlet.
+			Ce type d'attribut devient beaucoup plus utile dès que plusieurs composants Web sont utilisés pour
+			traiter une requête. Nous y reviendrons à plusieurs reprises lorsque nous parlerons des JSP, du modèle
+			MVC et de JSF.</p>
+		</section>
+
+
+		<section>
+			<h2>Attribut de portée session</h2>
+			<p>Les attributs de portée session sont disponibles entre plusieurs requêtes du client. Cela
+			signifie que l'application Web mémorise des données relatives au client constituant ainsi une
+			session utilisateur. Le conteneur représente cette session grâce à une instance de la classe
+			<a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSession.html">HttpSession</a>
+			disponible depuis une instance de HttpServletRequest.
+			</p>
+			<pre><code class="java">
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+                      throws ServletException, IOException {
+    User user = new User();
+    user.setName(req.getParameter("name"));
+    user.setAddress(req.getParameter("address"));
+    // on stocke l'utilisateur comme attribut de session
+    req.getSession().setAttribute("user", user);
+    
+    // ...
+  }
+
+</code></pre>
+			<p>On peut ensuite récupérer l'attribut lors du traitement de n'importe quelle requête
+			reçue de ce client.</p>
+			
+			<pre><code class="java">
+    User user = User.class.cast(req.getSession().getAttribute("user"));
+
+</code></pre>
+			<aside>
+				<header>Session HTTP : comment cela marche-t-il ?</header>
+				<p>HTTP est un protocole non connecté et sans état (stateless). Cela signifie que la notion 
+				de session n'est tout simplement pas possible avec HTTP seul&nbsp;!</p
+				<p>Pour parvenir à créer une notion de session, le conteneur Web associe à une instance
+				de HttpSession un identifiant (le sessionId). Ce sessionId est envoyé au client sous
+				la forme d'un cookie nommé JSESSIONID. Le client renvoie ensuite ce cookie dans l'en-tête
+				de chaque requête ultérieure au serveur. Ce dernier retrouve la bonne instance de
+				HttpSession à partir du sessionId et peut l'associer à la requête entrante.</p>
+			</aside>
+			
+			<aside class="warn">
+				<header>Les limites de la session HTTP</header>
+				<p>La relative simplicité d'une session HTTP a conduit beaucoup de développeurs
+				à en user (et en abuser). Cependant, son apport peut très vitre être contre-balancé par ses inconvénients.</p>
+				<p>Il est très difficile pour le conteneur Web de déterminer quand une session doit
+				être supprimée du serveur. En effet, un utilisateur d'un site Web peut très facilement
+				se comporter de façon inattendue. Il peut, par exemple, fermer son navigateur Web ou
+				quitter une page comme bon lui semble sans que le serveur n'en soit informé. 
+				Le conteneur considère donc qu'une session est
+				invalidée et peut être détruite s'il ne reçoit plus de requête avec le sessionId
+				pendant un certain laps de temps (généralement configuré à 30 minutes par défaut dans les serveurs d'application).
+				Cela signifie qu'un développeur ne peut jamais être sûr à 100% qu'une session est disponible
+				avec les attributs qu'il espère y trouver. L'utilisation de session peut donc très
+				rapidement favoriser l'apparition de bugs.</p>
+				<p>Le rattachement d'un client à une session n'est finalement basé que sur l'échange
+				d'un cookie entre un client et un serveur. Un utilisateur mal intentioné peut intercepter
+				une requête HTTP d'un client, extraire le cookie et émettre au serveur sa propre requête
+				avec le cookie volé. C'est ce qu'on appelle un vol de session. L'utilisation de
+				session peut donc très rapidement entraîner des brèches de sécurité.</p>
+				<p>Pour ces raisons (et d'autres encore) beaucoup de développeurs Web tendent à penser
+				que l'utilisation de session doit être proscrite, ou du moins limitée à des cas très
+				particuliers.</p>
+			</aside>
+		</section>
+	</article>
+	
+	<article class="exercice">
+		<h2>Exercice&nbsp;: Implémenter un formulaire en plusieurs étapes</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Réaliser une application qui permet à un utilisateur de s'incrire en donnant des informations personnelles.</dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a></dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>&Eacute;diter le fichier pom.xml du template et modifier la balise artifactId pour spécifier le nom de votre projet.
+			Modifier ensuite la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
+
+</body>
+</html>

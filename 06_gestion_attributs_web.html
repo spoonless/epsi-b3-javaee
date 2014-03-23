@@ -52,7 +52,7 @@
 				<dt>java.util.Enumeration&lt;String&gt; XXXX.getAttributeNames()</dt>
 				<dd>Pour connaître la liste des noms des attributs disponibles</dd>
 
-				<dt>void XXXX.removeAttribut(String nom)</dt>
+				<dt>void XXXX.removeAttribute(String nom)</dt>
 				<dd>Pour supprimer un attribut</dd>
 			</dl>
 			<p>Remarque&nbsp;: Dans la liste ci-dessus XXXX représente l'objet du conteneur stockant les attributs.</p>
@@ -168,10 +168,21 @@
 	</article>
 	
 	<article class="exercice">
-		<h2>Exercice&nbsp;: Implémenter un formulaire en plusieurs étapes</h2>
+		<h2>Exercice&nbsp;: Implémenter un formulaire en plusieurs étapes avec session</h2>
 		<dl>
 			<dt>Objectif</dt>
-			<dd>Réaliser une application qui permet à un utilisateur de s'incrire en donnant des informations personnelles.</dd>
+			<dd>Réaliser une application qui permet à un utilisateur de s'incrire en donnant des informations personnelles.
+			<p>La saisie d'information doit se faire en plusieurs étapes&nbsp;:</p>
+			<ol>
+				<li>Une première page Web demande à l'utilisateur de saisir sont nom et son âge. Puis l'utilisateur 
+				clique sur le bouton "suivant".</li>
+				<li>Une nouvelle page demande à l'utilisateur de saisir son adresse (rue, code postal et ville). Puis
+				l'utilisateur clique sur le bouton "valider".</li>
+				<li>Finalement une page récapitulative s'affiche avec toutes les informations de l'utilisateur.</li>
+			</ol>
+			<p>Pour réaliser cette inscription en plusieurs étapes, vous utiliserez le mécanisme de session Web
+			pour conserver les données saisies par l'utilisateur.</p>
+			<dd>
 
 			<dt>Modèle Maven du projet à télécharger</dt>
 			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a></dd>
@@ -185,5 +196,52 @@
 		</dl>
 	</article>
 
+	<article class="exercice">
+		<h2>Exercice&nbsp;: Implémenter un formulaire en plusieurs étapes sans session</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Reprenez l'exercice précédent mais cette fois-ci, implémentez le même formulaire
+			de saisie en plusieurs étapes <strong>sans</strong> utiliser la session Web. L'objectif
+			est donc d'implémenter une application sans état.<dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a></dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>&Eacute;diter le fichier pom.xml du template et modifier la balise artifactId pour spécifier le nom de votre projet.
+			Modifier ensuite la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
+	
+	<article>
+		<h2>Les attributs de portée application</h2>
+		<section>
+			<p>Les attributs de portée application sont stockés dans une instance d'un objet
+			<a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContext.html">ServletContext</a>.
+			Le <code>ServletContext</code> représente le contexte d'exécution de l'ensemble des servlets,
+			c'est-à-dire le contexte d'exécution de l'application Web. L'instance de <code>ServletContext</code>
+			est accessible depuis n'importe quelle servlet de l'application grâce à la méthode <code>getServletContext()</code>.</p>
+			<pre><code class="java">
+  public void init() throws ServletException {
+	// on stocke la date de création de la servlet
+	this.getServletContext().setAttribute("creationDate", new java.util.Date());
+  }
+
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+                      throws ServletException, IOException {
+    // on récupère la date de création de la servlet
+    java.util.Date creation = java.util.Date.class.cast(this.getServletContext()
+                                                           .getAttribute("creationDate"));
+    // ...
+  }
+</code></pre>
+			<p>Les attributs de portée application sont généralement des données de configuration
+			de l'application créées au lancement ou bien des données mises en cache pour améliorer les performances.</p>
+		</section>
+	</article>
 </body>
 </html>

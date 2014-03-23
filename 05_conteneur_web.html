@@ -30,14 +30,14 @@
 			a la charge d'instancier, d'initialiser et de détruire les servlets d'une application. C'est également
 			le conteneur qui fournit une instance de HttpServletRequest et de HttpServletResponse pour chaque requête.</p>
 			<p>Nous allons voir en détail la gestion du cycle de vie des servlets par le conteneur Web et les conséquences
-			que cela a sur la façon de développer des servlets.</p>
+			que cela a sur la façon de développer des application Web.</p>
 		</section>
 		<section>
 			<h2>Cycle de vie des servlets</h2>
 			<p>Le conteneur Web gère le cycle de vie des servlets : la création, l'initialisation et la destruction.
-			&Aacute; chacune de ces étapes une instance de servlet est informée par un appel à une méthode déclarée
+			&Aacute; chacune de ces étapes, une instance de servlet est informée par un appel à une méthode déclarée
 			dans l'interface <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/Servlet.html">Servlet</a>
-			et qui peut être redéfinie pour chaque servlet.</p>
+			et qui peut être surchargée pour chaque servlet.</p>
 			
 			<pre><code class="java">
 public void init(ServletConfig config) throws ServletException {
@@ -52,7 +52,26 @@ public void destroy() {
 
 			<p>De plus la servlet sera prévenue de son instanciation par un appel à son constructeur. Cela
 			a une conséquence importante pour l'implémentation d'une servlet : <strong>une servlet doit
-			obligatoirement avoir une constructeur sans paramètre</strong>.</p>
+			obligatoirement avoir un constructeur sans paramètre</strong>.</p>
+			<aside class="tip">
+				En Java, une classe qui ne déclare pas de constructeur dispose néanmoins d'un constructeur
+				par défaut. Il s'agit d'un constructeur sans paramètre. Ainsi&nbsp;:
+				<pre><code class="java">
+public class MaClasse {
+
+}
+
+</code></pre>
+			<div>est équivalent à&nbsp;:</div>
+				<pre><code class="java">
+public class MaClasse {
+  public MaClasse() {
+    super();
+  }
+}
+
+</code></pre>
+			</aside>
 			<p>Lors de l'appel à la méthode <code>init(ServletConfig)</code>, le conteneur passe en paramètre
 			une instance de <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletConfig.html">ServletConfig</a>
 			qui permet, entre-autres, à la servlet de récupérer des paramètres d'initialisation. Notez que la méthode <code>init(ServletConfig)</code>
@@ -88,7 +107,7 @@ public void init() throws ServletException {
 			<dt>Intégration du projet dans Eclipse</dt>
 			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
 		</dl>
-		<p>Pour cet exercice vous allez déployer une servlet de log dont voici le code source&nbsp;:</p>
+		<p>Pour cet exercice, vous allez déployer une servlet de log dont voici le code source&nbsp;:</p>
 		<pre><code class="java">
 import java.io.IOException;
 
@@ -151,7 +170,7 @@ public class LogServlet extends HttpServlet {
 			changer le moment où le conteneur instanciera une servlet grâce à l'attribut <code>loadOnStartup</code> 
 			(cette option est disponible également dans le fichier de déploiement web.xml avec la balise <code>&lt;load-on-startup&gt;</code>).</p>
 			<p>En tant que développeur de servlet, il faut donc <strong>toujours</strong> garder à l'esprit qu'une même instance de servlet
-			sera utilisée pour servir plusieurs requête HTTP, y compris des requêtes simultanées. Cela introduit dans le développement de servlet, le problème
+			sera utilisée pour servir plusieurs requêtes HTTP, y compris des requêtes simultanées. Cela introduit dans le développement de servlet, le problème
 			de la programmation concurrente. Tout changement de l'état interne d'une servlet peut entraîner un bug potentiel pour des requêtes
 			qui sont traitées en parallèle.</p>
 			
@@ -169,10 +188,10 @@ public class LogServlet extends HttpServlet {
 		<h2>Exercice : servlet et programmation concurrente</h2>
 		<dl>
 			<dt>Objectif</dt>
-			<dd>Comprendre les risques de la programmation concurrente.</dd>
+			<dd>Comprendre les risques de bug dans un contexte d'exécution concurrent.</dd>
 		</dl>
 		<p>Plusieurs implémentations de servlet sont proposées ci-dessous. Toutes posent un problème d'exécution dans un environnement
-		concurrent (elles ne sont thread-safe). Cherchez d'où provient le problème et quelles solutions proposeriez vous pour le corriger.</p>
+		concurrent (elles ne sont pas thread-safe). Cherchez d'où provient le problème et quelles solutions proposeriez-vous pour le corriger.</p>
 		
 		<figure>
 			<figcaption>Cas 1 : la servlet de calcul</figcaption>
@@ -286,7 +305,5 @@ public class SubscriptionServlet extends HttpServlet {
 </code></pre>
 		</figure>
 	</article>
-	
-
 </body>
 </html>

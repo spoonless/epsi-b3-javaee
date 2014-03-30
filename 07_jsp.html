@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Java Server Pages</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+	<div id="titleBar">
+		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
+ 		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>
+		<script>document.write(document.title)</script> - EPSI B3 2013/2014 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a>
+	</div>
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		<section>
+			<p>Nous avons vu que les servlets permettent facilement d'exécuter du code Java pour traiter une requête HTTP.
+			Cependant, l'API servlet n'est pas très pratique pour générer une réponse orientée texte (telle qu'une page HTML).
+			Les Java Server Pages (JSP) ont été la première solution introduite pour offrir une alternative plus simple pour l'ecriture
+			de patron (template) de réponse.</p>
+			
+			<aside class="tip">
+				<header>Développer des JSP avec TomEE</header>
+				<p>TomEE est un serveur livrée avec une configuration par défaut conçue pour un environnement de production.</p>
+				<p>Pour le développement de JSP, nous allons voir qu'il est plus efficace de pouvoir modifier les JSP de l'application
+				et que le serveur de test prenne en compte nos modifications à la volée sans qu'il soit nécessaire de redéployer l'application.
+				Pour des raisons de performances, la prise en compte à chaud des modifications n'est pas le comportement par défaut de TomEE.</p>
+				<p>Pour activer ce comportement, il va falloir modifier la configuration du serveur. Pour cela allez dans le répertoire
+				d'installation de TomEE et ouvez le fichier <strong>conf/web.xml</strong>. Aux alentours de la ligne 225, vous allez trouver la
+				déclaration suivante&nbsp;:</p>
+				<pre><code class="xml">
+&lt;servlet&gt;
+  &lt;servlet-name&gt;jsp&lt;/servlet-name&gt;
+  &lt;servlet-class&gt;org.apache.jasper.servlet.JspServlet&lt;/servlet-class&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;fork&lt;/param-name&gt;
+    &lt;param-value&gt;false&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;xpoweredBy&lt;/param-name&gt;
+    &lt;param-value&gt;false&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;development&lt;/param-name&gt;
+    &lt;param-value&gt;false&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;load-on-startup&gt;3&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+
+</code></pre>
+				<p>Faites un backup de ce fichier et remplacez cette configuration par celle-ci&nbsp;:</p>
+				<pre><code class="xml">
+&lt;servlet&gt;
+  &lt;servlet-name&gt;jsp&lt;/servlet-name&gt;
+  &lt;servlet-class&gt;org.apache.jasper.servlet.JspServlet&lt;/servlet-class&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;fork&lt;/param-name&gt;
+    &lt;param-value&gt;false&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;xpoweredBy&lt;/param-name&gt;
+    &lt;param-value&gt;false&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;development&lt;/param-name&gt;
+    &lt;param-value&gt;true&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;modificationTestInterval&lt;/param-name&gt;
+    &lt;param-value&gt;0&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;load-on-startup&gt;3&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+
+</code></pre>
+
+				<p><strong>Détruisez maintenant votre instance de serveur dans votre IDE (dans Eclipse supprimez le serveur dans votre vue "Servers") et créez une nouvelle
+				instance d'un serveur TomEE afin de prendre en compte ces modifications.</strong></p>
+				<p>Attention, si vous faites une mauvaise manipulation, votre serveur peut ne plus démarrer correctement.</p>
+			</aside>
+		</section>
+	</article>
+
+	<article class="exercice">
+		<h2>Exercice&nbsp;: première JSP</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Créer et affichez dans un navigateur une simple JSP. &Agrave; la racine de l'application Web, créez un fichier <strong>index.jsp</strong> avec le contenu suivant&nbsp;:
+			<pre><code class="html">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Java EE&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p&gt;Notre première JSP.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre>
+			<dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a></dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>&Eacute;diter le fichier pom.xml du template et modifier la balise artifactId pour spécifier le nom de votre projet.
+			Modifier ensuite la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+		
+	</article>
+
+	<article>
+		<h2></h2>
+		<section>
+			<p>Si on s'en tient à l'exercice précédent, une page JSP ressemble exactement à une page statique (comme une page HTML)&nbsp;: il n'en est rien&nbsp;!
+			En fait le serveur transforme automatique une page JSP en une servlet de la forme&nbsp;:</p>
+				<pre><code class="java">
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class index extends HttpServlet {
+	
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+                 throws ServletException, IOException {
+    resp.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+    out.write("&lt;!DOCTYPE html&gt;\n");
+    out.write("&lt;html&gt;\n");
+    out.write("  &lt;head&gt;\n");
+    out.write("    &lt;title&gt;Java EE&lt;/title&gt;\n");
+    out.write("  &lt;/head&gt;\n");
+    out.write("  &lt;body&gt;\n");
+    out.write("    &lt;p&gt;Notre première JSP.&lt;/p&gt;\n");
+    out.write("  &lt;/body&gt;\n");
+    out.write("&lt;/html&gt;\n");
+  }
+}
+
+</code></pre>
+			<p>Tous les accès HTTP à la JSP ne retournent pas directement la page que nous avons écrite mais exécutent la servlet qui a été générée par le serveur.</p>
+			
+			<aside class="tip">
+				L'extension <strong>.jsp</strong> d'un fichier suffit au serveur pour identifier une JSP.
+			</aside>
+			<p>Nous allons voir maintenant comment nous pouvons ajouter du contenu dynamique dans une JSP.</p>
+		</section>
+	</article>
+</body>
+</html>

@@ -130,6 +130,24 @@ aside.tip {
     border-color: #339900;
 }
 
+table {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 90%;
+}
+
+tbody td {
+	padding-top: 0.1em;
+	padding-bottom: 0.1em;
+	padding-right: 0.3em;
+	padding-left: 0.3em;
+	border: thin solid rgb(200, 200, 200);
+}
+
+tbody tr:nth-child(even) {
+	background: rgb(233, 233, 233);
+}
+
 code.hljs {
     font-size: 90%;
 	border-radius: 10px;

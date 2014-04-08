@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Request Dispatcher et MVC</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+	<div id="titleBar">
+		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
+ 		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>
+		<script>document.write(document.title)</script> - EPSI B3 2013/2014 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a>
+	</div>
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		<section>
+			<p>Le <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/RequestDispatcher.html">request dispatcher</a> 
+			est un objet fourni par le conteneur Web. Il permet d'inclure ou de déléguer des traitements
+			lors de la prise en charge d'une requête HTTP. Nous allons voir dans un premier temps comment 
+			cet objet peut être utilisé. Dans un second temps, nous verrons ce que l'utilisation d'un request dispatcher
+			apporte dans la conception d'achitecture Web en prenant comme exemple le modèle MVC.</p>
+			
+			<h2>Le request dispatcher</h2>
+			<p>Nous avons vu précédemment qu'il existe une classe <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContext.html">ServletContext</a>
+			permettant notamment de stocker les attributs de portée application. Le ServletContext représente le contexte
+			d'une application Web et est accessible depuis une servlet grâce à la méthode 
+			<a href="http://docs.oracle.com/javaee/6/api/javax/servlet/GenericServlet.html#getServletContext%28%29">getServletContext()</a>.</p>
+			<p>Une instance de ServletContext permet également de récupérer une instance de RequestDispatcher grâce
+			aux méthodes&nbsp;: </p>
+			<dl>
+				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContext.html#getRequestDispatcher%28java.lang.String%29">getResquestDispatcher(String path)</a></dt>
+				<dd>Permet de récupérer une instance de RequestDispatcher pour transferer le traitement à la ressource dont le chemin d'URL est passé en paramètre
+					<pre><code class="java">
+  RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/un/chemin");
+
+</code></pre>
+					<p>Selon la documentation, le chemin passé en paramètre <strong>DOIT</strong> commencer par /.
+					Cependant, le chemin est interprété relativement au contexte racine de l'application.</p>
+				</dd>
+
+				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContext.html#getNamedDispatcher%28java.lang.String%29">getNamedDispatcher(String name)</a></dt>
+				<dd>Permet de récupérer une instance de RequestDispatcher pour transferer le traitement à la servlet dont le nom est passé en paramètre
+					<pre><code class="java">
+  RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("maServlet");
+
+</code></pre>
+					<p>Une servlet peut être nommée dans le fichier web.xml grâce à la balise &lt;servlet-name&gt; ou avec
+					l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/annotation/WebServlet.html">@WebServlet</a> 
+					grâce à l'attribut name de l'annotation.</p>
+				</dd>
+			</dl>
+			
+			<p>Une fois que nous disposons d'une instance d'un RequestDispatcher nous pouvons appeler une de ses deux
+			méthodes disponibles&nbsp;:</p>
+			
+			<dl>
+				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/RequestDispatcher.html#include%28javax.servlet.ServletRequest,%20javax.servlet.ServletResponse%29">void RequestDispatcher.include(ServletRequest request, ServletResponse response)</a></dt>
+				<dd>Inclut le contenu de la ressource dans le résultat final renvoyé au client. Si le request dispatcher pointe sur 
+				un fichier HTML, l'ensemble	du fichier sera inséré dans la réponse. Si le request dispatcher pointe sur une servlet,
+				cette dernière est exécutée et sa sortie est insérée dans la réponse.
+				</dd>
+
+				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/RequestDispatcher.html#forward%28javax.servlet.ServletRequest,%20javax.servlet.ServletResponse%29">void RequestDispatcher.forward(ServletRequest request, ServletResponse response)</a></dt>
+				<dd>Délègue le traitement de la requête à une nouvelle ressource. La différence avec la méthode <code>include</code> est que
+				la servlet qui appelle <code>forward</code> ne doit pas avoir produite de contenu dans la réponse.</dd>
+			</dl>
+			<p>Avec le request dispatcher, on voit apparaître la possibilité de créer une chaîne de traitement pour
+			une requête. Par exemple, une servlet peut être utilisée pour valider les paramètres transmis par la requête
+			et effectuer un traitement propre à l'application. Puis, <i>via</i> un RequestDispatcher, elle peut déléguer
+			à une autre servlet le soin de générer la réponse en utilisant la méthode <code>forward</code>. C'est dans
+			ce modèle de traitement que les attributs de requête vus dans le chapitre précédent vont être utiles.
+			Chaque servlet impliquée dans le traitement de la requête exploite et produit des données qu'elle peut
+			récupérer ou stocker comme attribut dans la requête.</p>
+		</section>
+	</article>
+	<article class="exercice">
+		<h2>Exercice : utilisation du RequestDispatcher</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Reprendre l'exercice du formulaire en deux étapes qui stocke
+			les informations du client en session. Après la mise en session du nom et de l'âge, 
+			modifier l'application pour utiliser un RequestDispatcher afin de déléguer la création du 
+			formulaire de saisie de l'adresse à une page HTML.<dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a></dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>&Eacute;diter le fichier pom.xml du template et modifier la balise artifactId pour spécifier le nom de votre projet.
+			Modifier ensuite la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
+	<article>
+		<section>
+			<h2>Le modèle MVC</h2>
+			<p>L'utilisation d'un RequestDispatcher pour segmenter le traitement d'une requête HTTP a permis
+			très tôt aux développeurs d'application Web en Java d'imaginer un modèle d'architecture.
+			Ce modèle est basé sur un modèle de conception déjà utilisé pour le développement
+			d'application graphique : <a href="http://fr.wikipedia.org/wiki/Mod%C3%A8le-vue-contr%C3%B4leur">le MVC (modèle-vue-contrôleur)</a>.</p>
+			<p>Le MVC découpe le traitement applicatif selon trois catégories&nbsp;:</p>
+			<dl>
+				<dt>Le modèle</dt>
+				<dd>Il contient les données applicatives ainsi que les logiques de traitement propres à l'application.</dd>
+
+				<dt>La vue</dt>
+				<dd>Elle gère la représentation graphique des données et l'interface utilisateur</dd>
+				
+				<dt>Le contrôleur</dt>
+				<dd>Il est sollicité par les intéractions de l'utilisateur ou les modifications
+				des données. Il assure la cohérence entre le modèle et la vue.</dd>
+			</dl>
+			<p>Pour une application Web Java&nbsp;</p>
+			<ul>
+				<li>le modèle peut être un simple objet Java qui encapsule la logique de l'application</li>
+				<li>la vue peut être une page HTML ou une Java Server Pages (JSP)</li>
+				<li>le contrôleur est une servlet chargée de valider les paramètres de la requête
+				avant de les transmettre au modèle pour le traitement. Une fois ce traitement terminé, la servlet 
+				transmet le résultat à la vue grâce au RequestDispatcher.</li>
+			</ul>
+		</section>
+	</article>
+
+</body>
+</html>

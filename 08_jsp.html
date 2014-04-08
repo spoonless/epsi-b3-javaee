@@ -26,11 +26,11 @@
 			
 			<aside class="tip">
 				<header>Développer des JSP avec TomEE</header>
-				<p>TomEE est un serveur livrée avec une configuration par défaut conçue pour un environnement de production.</p>
-				<p>Pour le développement de JSP, nous allons voir qu'il est plus efficace de pouvoir modifier les JSP de l'application
-				et que le serveur de test prenne en compte nos modifications à la volée sans qu'il soit nécessaire de redéployer l'application.
-				Pour des raisons de performances, la prise en compte à chaud des modifications n'est pas le comportement par défaut de TomEE.</p>
-				<p>Pour activer ce comportement, il va falloir modifier la configuration du serveur. Pour cela allez dans le répertoire
+				<p>TomEE est un serveur livré avec une configuration par défaut conçue pour un environnement de production.</p>
+				<p>Pour le développement de JSP, nous allons voir qu'il est plus intéressant de configurer le serveur de test afin qu'il 
+				prenne en compte nos modifications dans les JSP à la volée sans qu'il soit nécessaire de redéployer l'application.
+				Pour des raisons de performance, la prise en compte à chaud des modifications n'est pas le comportement par défaut de TomEE.</p>
+				<p>Pour activer ce comportement, il va falloir modifier la configuration du serveur. Pour cela, allez dans le répertoire
 				d'installation de TomEE et ouvez le fichier <strong>conf/web.xml</strong>. Aux alentours de la ligne 225, vous allez trouver la
 				déclaration suivante&nbsp;:</p>
 				<pre><code class="xml">
@@ -79,7 +79,7 @@
 
 </code></pre>
 
-				<p><strong>Détruisez maintenant votre instance de serveur dans votre IDE (dans Eclipse supprimez le serveur dans votre vue "Servers") et créez une nouvelle
+				<p><strong>Détruisez maintenant votre instance de serveur dans votre IDE (dans Eclipse, supprimez le serveur dans votre vue "Servers") et créez une nouvelle
 				instance d'un serveur TomEE afin de prendre en compte ces modifications.</strong></p>
 				<p>Attention, si vous faites une mauvaise manipulation, votre serveur peut ne plus démarrer correctement.</p>
 			</aside>
@@ -90,7 +90,8 @@
 		<h2>Exercice&nbsp;: première JSP</h2>
 		<dl>
 			<dt>Objectif</dt>
-			<dd>Créer et affichez dans un navigateur une simple JSP. &Agrave; la racine de l'application Web (répertoire src/main/webapp dans le projet Maven), créez un fichier <strong>index.jsp</strong> avec le contenu suivant&nbsp;:
+			<dd>Créer et afficher dans un navigateur une JSP. &Agrave; la racine de l'application Web (répertoire src/main/webapp dans le projet Maven), 
+			créer un fichier <strong>index.jsp</strong> avec le contenu suivant&nbsp;:
 			<pre><code class="html">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -133,7 +134,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /*
 * En réalité la servlet créée à partir d'une page JSP
-* est plus complexe que l'exemple ci-dessous.
+* est plus complexe que le code ci-dessous.
 */
 public class index extends HttpServlet {
 	
@@ -170,7 +171,7 @@ public class index extends HttpServlet {
 		<h2>EL : Expression Language</h2>
 		<section>
 			<p>Java EE intègre l'expression language (EL). L'EL est directement utilisable dans une JSP.
-			Il s'agit d'un langage permettant de manipuler des instances d'objet avec
+			Il s'agit d'un langage permettant de manipuler des expressions avec
 			une syntaxe simplifiée. L'EL <strong>n'est pas</strong> un langage de programmation. Il se limite à l'évaluation d'expression
 			qui retourne une valeur (boléenne, numérique, chaîne de caractères, objet,...).</p>
 			<p>Une expression en EL est facilement reconnaissable car elle est délimitée par <code><strong>${ }</strong></code>.</p>
@@ -179,7 +180,7 @@ public class index extends HttpServlet {
   ${myObject}               : l'attribut portant le nom "myObject"
   ${myObject.myProperty}    : équivalent à myObject.getMyProperty()
   ${myObject["myProperty"]} : équivalent à myObject.getMyProperty()
-  ${myList[0]}              : pour accéder à au premier élément d'une liste
+  ${myList[0]}              : pour accéder au premier élément d'une liste
   ${myMap["key"]}           : pour accéder à la valeur associée à la clé "key" d'une map
 
 </code></pre>
@@ -191,7 +192,7 @@ public class index extends HttpServlet {
 			</aside>
 			<h3>Les opérateurs dans l'expression language</h3>
 
-			<p>L'EL dispose également de différents opérateurs. Certains opérateurs peuvent s'écrire avec un symbole ou une abbréviation&nbsp;:</p>
+			<p>L'EL dispose également de différents opérateurs. Certains opérateurs peuvent s'écrire indifféremment avec un symbole ou une abbréviation&nbsp;:</p>
 			<table>
 				<col width="10%">
 				<col width="10%">
@@ -258,12 +259,12 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 
 			<h3>Les objets implicites dans une JSP</h3>
 			<p>Dans une JSP, il existe une liste pré-définie d'objets qui sont directement
-			accessibles dans une expression&nbsp;:</p>
+			accessibles dans en EL&nbsp;:</p>
 			
 			<dl>
 				<dt>pageScope</dt>
 				<dd>Map permettant d'accéder aux différents attributs de portée (scope) <strong>page</strong>. Les attributs de portée page
-				correspondent aux attributs déclarée dans la page.</dd>
+				correspondent aux attributs déclarés dans la page.</dd>
 
 				<dt>requestScope</dt>
 				<dd>Map permettant d'accéder aux différents attributs de portée (scope) <strong>request</strong>.</dd>
@@ -278,13 +279,15 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 				<dd>Map permettant d'accéder aux paramètres de la requête HTTP.</dd>
 
 				<dt>paramValues</dt>
-				<dd>Map permettant d'accéder aux paramètres de la requête HTTP sous forme de tableau.</dd>
+				<dd>Map permettant d'accéder aux paramètres de la requête HTTP sous forme de tableau. Pratique si un paramètre est transmis
+				plusieurs fois dans une requête.</dd>
 
 				<dt>header</dt>
-				<dd>Map permettant d'accéder aux valeurs du Header HTTP de la requête.</dd>
+				<dd>Map permettant d'accéder aux valeurs des en-têtes HTTP de la requête.</dd>
 
 				<dt>headerValues</dt>
-				<dd>Map permettant d'accéder aux valeurs du Header HTTP de la requête sous forme de tableau.</dd>
+				<dd>Map permettant d'accéder aux valeurs du Header HTTP de la requête sous forme de tableau. Pratique si un en-tête est transmis
+				plusieurs fois dans une requête.</dd>
 
 				<dt>cookie</dt>
 				<dd>Map permettant d'accéder aux Cookies transmis dans la requête HTTP.</dd>
@@ -294,7 +297,7 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 
 				<dt>pageContext</dt>
 				<dd>L'objet <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/jsp/PageContext.html">PageContext</a> de la page JSP.
-				On trouve notamment dans cet objet les attibuts request et response.</dd>
+				On trouve notamment dans cet objet les attributs request et response (respectivement de type HttpServletRequest et HttpServletResponse).</dd>
 			</dl>
 			
 			<p>On peut, par exemple, afficher dynamiquement des informations liées à la 
@@ -326,8 +329,8 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 			<pre><code>${sessionScope["utilisateur"].nom}</code></pre>
 			<p>Il est également possible de référencer directement l'attribut utilisateur dans une page JSP&nbsp;:</p>
 			<pre><code>${utilisateur.nom}</code></pre>
-			<p>Dans ce cas, l'attribut utilisateur est recherché successivement dans les portées <strong>page, requête, session (si elle existe), application</strong>.
-			Le premier attribut portant ce nom identifié dans une portée est utilisé.</p>
+			<p>Dans ce cas, l'attribut utilisateur est recherché successivement dans les portées <strong>page, requête, session (si elle existe) et enfin application</strong>.
+			Le premier attribut trouvé portant ce nom est utilisé.</p>
 			
 			<aside class="tip">
 				La recherche d'un attribut dans les différentes portées est réalisée par la méthode
@@ -351,9 +354,9 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 			
 			
 			<h3>La directive page</h3>
-			<p>La directive <code>page</code> permet de donner des informations sur le context d'exécution de la JSP. Il est recommandé de placer
+			<p>La directive <code>page</code> permet de donner des informations sur le contexte d'exécution de la JSP. Il est recommandé de placer
 			cette directive sur la première ligne de la JSP.</p>
-			<pre><code>&lt;%@page pageEncoding="UTF-8" contentType="text/plain" %&gt;</code></pre>
+			<pre><code>&lt;%@page pageEncoding="UTF-8" contentType="text/html" %&gt;</code></pre>
 			<p>Cette directive accepte entre autres les attributs&nbsp;:</p>
 			<dl>
 				<dt>contentType</dt>
@@ -361,8 +364,9 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 
 				<dt>pageEncoding</dt>
 				<dd>L'encodage de la page, la valeur par défaut est "ISO-8859-1". <b>Attention</b>, le fait de préciser l'encodage
-				dans le header HTML n'est pas suffisant pour une JSP. En effet le header HTML n'est pas interprété par la JSP (le contenu
-				de la page est vu comme du texte brut).</dd>
+				dans le header HTML n'est pas suffisant pour une JSP. En effet, le header HTML est interprété par la client
+				mais pas par la JSP. L'attribut <code>pageEncoding</code> de la directive page est donc là pour
+				informer le conteneur Web de l'encodage à utiliser réellement pour envoyer la réponse au client.</dd>
 
 				<dt>errorPage</dt>
 				<dd>Contient un lien vers une page JSP à utiliser si une exception se produit lors du traitement de cette JSP.
@@ -409,7 +413,7 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 				<dd>Permet de référencer ou de créer un objet Java.
 					<p>Pour référencer un objet (un java bean), on utilise les attributs suivants&nbsp;</p>
 					<ul>
-						<li>id : donne le nom de la variable qui référence l'objet</li>
+						<li>id : donne le nom de l'attribut dans la page qui référencera l'objet</li>
 						<li>beanName : donne le nom de l'attribut qui contient l'objet</li>
 						<li>scope : donne la portée dans laquelle se situe l'attribut (page, request, session, application)</li>
 						<li>type : le type Java complet (avec le nom de package) de l'objet</li>
@@ -436,12 +440,12 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 						<b>Attention</b>, l'attribut DOIT exister pour pouvoir être récupéré avec <code>&lt;jsp:useBean&gt;</code>.
 						Sinon l'exécution de la JSP provoque une exception.
 					</aside>
-					<p>L'utilisation de <code>&lt;jsp:useBean&gt;</code> pour référencer un attribut est limité. 
-					Depuis l'introduction de l'expression language, il est possible d'accéder simplement aux attributs.</p>
+					<p>L'utilité de <code>&lt;jsp:useBean&gt;</code> pour référencer un attribut est limité. 
+					Depuis l'introduction de l'EL, il est possible d'accéder facilement aux attributs avec des expressions de la forme <code>${nomAttribut}</code>.</p>
 					<p>Pour créer un objet, on utilise les attributs suivants&nbsp;</p>
 					<ul>
-						<li>id : donne le nom de la variable qui référence l'objet</li>
-						<li>scope : donne la portée dans laquelle l'objet sera stocké comme attribut (page, request, session, application)</li>
+						<li>id : donne le nom de l'attribut qui référencera l'objet</li>
+						<li>scope : donne la portée dans laquelle l'attribut sera stocké (page, request, session, application)</li>
 						<li>class : le type Java complet (avec le nom de package) de l'objet</li>
 					</ul>
 					<figure>
@@ -530,7 +534,7 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 				<dt>&lt;jsp:include/&gt;</dt>
 				<dd>Permet d'inclure dynamiquement une page (statique ou une autre JSP). &Agrave; la différence de la directive,
 				la balise action <code>&lt;jsp:include&gt;</code> est interprétée à chaque exécution de la JSP. Cela signifie
-				que la page à inclure peut être calculée dynamiquement grâce à une EL.
+				que l'adresse de la page à inclure peut être calculée dynamiquement grâce à une EL.
 				Cette balise est similaire à un appel à <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/RequestDispatcher.html#include%28javax.servlet.ServletRequest,%20javax.servlet.ServletResponse%29">RequestDispatcher.include</a>
 					<figure>
 						<figcaption>Inclusion d'une page en fonction d'un paramètre</figcaption>
@@ -565,7 +569,7 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 				</dd>
 				
 				<dt>&lt;jsp:forward/&gt;</dt>
-				<dd>Permet de continuer le traitement de la requête dans une autre ressource de l'application.
+				<dd>Permet de déléguer le traitement de la requête à une autre ressource de l'application.
 				Cette balise est similaire à un appel à <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/RequestDispatcher.html#forward%28javax.servlet.ServletRequest,%20javax.servlet.ServletResponse%29">RequestDispatcher.forward</a>.
 					<figure>
 						<figcaption>Un simple forward vers une autre page en fonction d'un paramètre</figcaption>
@@ -596,14 +600,14 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 			<p>En plus des balises d'action, l'utilisation des JSP peut être enrichie grâce à l'inclusion de bibliothèques
 			de balises : les Tag Libraries (taglib en abbrégé).</p>
 			<p>Le développement de telles bibliothèques dépasse le cadre de ce cours. Par contre nous allons voir comment
-			utiliser la bibliothèque standart fournie par le conteneur Web : Java Standard Tag Library (JSTL).</p>
+			utiliser la bibliothèque standart fournie par le conteneur Web : <strong>Java Standard Tag Library (JSTL)</strong>.</p>
 			<p>Pour inclure une bibliothèque de balises dans une JSP, on utilise la directive <code>taglib</code>&nbsp;:</p>
 			<pre><code>&lt;%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %&gt;</code></pre>
-			<p>L'attribut uri désigne le nom de la bibliothèque. Cette URI ne pointe pas nécessairement sur une
+			<p>L'attribut <code>uri</code> désigne le nom de la bibliothèque. Cette URI ne pointe pas nécessairement sur une
 			adresse Internet. Il s'agit simplement d'un nom unique permettant au conteneur Web d'identifier
-			l'implémentation de la bibliothèque. L'attribut prefix désigne le prefixe de la balise identifiant
-			dans la JSP les balises de la bibliothèque. Ce mécanisme suit le même principe que les espaces de nom
-			XML.</p>
+			l'implémentation de la bibliothèque. L'attribut <code>prefix</code> désigne un identifiant quelconque qui devra être placé 
+			devant chaque balise de la bibliothèque afin de l'identifier sans ambiguïté. 
+			Ce mécanisme suit le même principe que les espaces de nom XML.</p>
 			
 			<p>La JSTL est découpée en cinq bibliothèques, chacune devant être incluse par 
 			une directive <code>taglib</code>.</p>
@@ -613,7 +617,7 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 			</aside>
 			
 			<dl>
-				<dt>JSTL core</dt>
+				<dt><a href="http://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/c/tld-summary.html">JSTL core</a></dt>
 				<dd>
 					<pre><code>&lt;%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %&gt;</code></pre>
 					<p>Cette bibliothèque contient des balises pour la gestion des conditions et des boucles (c:if, c:forEach)
@@ -660,11 +664,11 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 					</figure>
 				</dd>
 
-				<dt>JSTL formater</dt>
+				<dt><a href="http://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/fmt/tld-summary.html">JSTL formater</a></dt>
 				<dd>
 					<pre><code>&lt;%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %&gt;</code></pre>
-					<p>Cette bibliothèques fournit des balises pour formater les données (date, nombre) mais
-					également pour assurer une internationalisation de l'application.</p>
+					<p>Cette bibliothèque fournit des balises pour formater les données (date, nombre, ...) mais
+					également pour assurer une internationalisation de l'application (gestion de la langue en fonction des préférences du client).</p>
 					<figure>
 						<figcaption>Mise en forme d'un nombre</figcaption>
 						<pre><code class="html">
@@ -684,7 +688,7 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 					</figure>
 				</dd>
 
-				<dt>JSTL SQL</dt>
+				<dt><a href="http://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/sql/tld-summary.html">JSTL SQL</a></dt>
 				<dd>
 					<pre><code>&lt;%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %&gt;</code></pre>
 					<p>Comme son nom l'indique, cette bibliothèque permet d'exécuter des requêtes SQL dans les JSP.
@@ -692,7 +696,7 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 					les accès aux bases de données sont généralement gérés par des composants dédiés.</p>
 				</dd>
 
-				<dt>JSTL XML</dt>
+				<dt><a href="http://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/x/tld-summary.html">JSTL XML</a></dt>
 				<dd>
 					<pre><code>&lt;%@taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %&gt;</code></pre>
 					<p>Cette bibliothèque permet de lire et de manipuler des documents XML directement dans les JSP.</p>
@@ -725,7 +729,7 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 					</figure>
 				</dd>
 
-				<dt>JSTL functions</dt>
+				<dt><a href="http://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/fn/tld-summary.html">JSTL functions</a></dt>
 				<dd>
 					<pre><code>&lt;%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %&gt;</code></pre>
 					<p>Cette bibliothèque n'introduit pas de nouvelle balise mais des fonctions utilisables avec
@@ -815,7 +819,7 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 					</tr>
 				</tbody>
 			</table>
-			<p>L'ordre des lignes est indifférent, cela n'a pas d'importance pour l'exercice.</p>
+			<p>L'ordre des lignes dans le tableau HTML est indifférent, cela n'a pas d'importance pour l'exercice.</p>
 			<dd>
 
 			<dt>Modèle Maven du projet à télécharger</dt>
@@ -838,7 +842,8 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 			Le formulaire doit permettre de saisir les informations suivantes : login et email. De plus, l'utilisateur
 			doit pouvoir cocher la case "J'ai lu et approuvé les conditions générales de ce site". 
 			<p>Au moment de la soumission du formulaire, le serveur doit vérifier que tous les champs ont été
-			correctement renseignés. Si des champs n'ont pas été saisis correctement,
+			correctement renseignés&nbsp;: le login et l'email doivent être renseignés et la case doit être cochée.
+			Si des champs n'ont pas été saisis correctement,
 			le formulaire doit être réaffiché avec un message d'erreur indiquant clairement ce qui n'est pas correct.
 			De plus, les champs doivent être remplis avec
 			les valeurs saisies précédemment pour faciliter la correction.</p>

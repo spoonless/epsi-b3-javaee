@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Tests automatisés</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+	<div id="titleBar">
+		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
+ 		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>
+		<script>document.write(document.title)</script> - EPSI B3 2013/2014 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a>
+	</div>
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		<p>Un test automatisé est un programme (le plus souvent une méthode) qui se découpe en trois étapes dites AAA pour <em>Arrange</em>, <em>Act</em>, <em>Assert</em>.</p>
+		<dl>
+			<dt>Arrange</dt>
+			<dd>La mise en place de l'environnement&nbsp;: création et initialisation des objets
+			nécessaires à l'exécution du test.</dd>
+
+			<dt>Act</dt>
+			<dd>Le test proprement dit.</dd>
+
+			<dt>Assert</dt>
+			<dd>La vérification des résultats obtenus par le test.</dd>
+		</dl>
+		<!--
+Les différents types de tests
+* tests unitaires
+* tests d'acceptation
+* tests d'intégration
+* et les autres
+
+Les tests unitaires 
+Qu'est-ce que l'unité ?
+
+		 -->
+		<h2>JUnit</h2>
+		<p><a href="http://www.junit.org">Junit</a> est le framework de tests unitaires le plus utilisé en Java.</p>
+		<section>
+			<h3>Intégration de JUnit dans un projet Maven</h3>
+			<p>Pour intégrer JUnit dans un projet Maven, il faut d'abord ajouter le jar de JUnit dans le projet.
+			Pour cela, il suffit d'ajouter la déclaration suivante dans le fichier pom.xml du projet dans la section <code>&lt;dependencies&gt;</code>&nbsp;:</p>
+			<pre><code class="xml">
+&lt;dependency&gt;
+  &lt;groupId&gt;junit&lt;/groupId&gt;
+  &lt;artifactId&gt;junit&lt;/artifactId&gt;
+  &lt;version&gt;4.11&lt;/version&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+
+</code></pre>
+			<aside>
+				<p>L'attribut scope est positionné à <code>test</code> dans la déclaration de dépendance ci-dessus. Cela indique à Maven
+				que la bibliothèque JUnit ne doit être prise en compte que pour la compilation et l'exécution des classes de test.
+				Ainsi la bibliothèque JUnit ne sera pas incluse dans le packaging de l'application finale. Par exemple, elle ne sera
+				pas ajoutée dans le fichier war si le projet est une application Web.</p>
+			</aside>
+			<p>Les classes de test peuvent maintenant être implémentées en les plaçant dans le répertoire de source <code>src/test/java</code>
+			du projet.</p>
+		</section>
+		<section>
+			<h3>Structure d'une classe de test JUnit</h3>
+			<p>Comme Java est un langage orienté Objet, les tests JUnit sont regroupés dans des classes de test.
+			Généralement on groupe les tests ayant la même classe comme point d'entrée et on nomme la classe de test à partir
+			du nom de la classe testée préfixé ou suffixé par <code>Test</code> en la plaçant dans le même package. 
+			Par exemple, pour tester la classe DateFormatter,
+			on créera une classe TestDateFormatter ou DateFormatterTest.</p>
+			<aside>
+				<p>Suffixé ou postfixé par Test le nom de la classe de test est juste une convention. 
+				Néanmoins il est très fortement conseillé de la respecter
+				car les IDE et Maven utilisent également cette convention pour découvrir les classes de test à exécuter.</p>
+			</aside>
+			
+			<figure>
+				<figcaption>Exemple d'une classe de test</figcaption>
+				<pre><code class="java">
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class UneClasseTest {
+	
+  @Test
+  public void methodeDeTest() throws Exception {
+    assertTrue("Une assertion", true);
+  }
+
+}
+				
+</code></pre>
+			</figure>
+			<p>Une classe de test est simplement une classe déclarant des méthodes publiques sans paramètre
+			annotées par <code>@Test</code>.</p>
+			
+			<p>Il est possible d'exécuter des méthodes avant et après chaque test pour allouer et désallouer
+			des ressources nécessaires à l'exécution des tests. On utilise pour cela des méthodes publiques
+			sans paramètre annotées avec <code>@Before</code> et <code>@After</code>.</p>
+
+			<figure>
+				<figcaption>Exemple d'une classe de test avec <code>@Before</code> et <code>@After</code></figcaption>
+				<pre><code class="java">
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class UneClasseTest {
+	
+  @Before
+  public void initTestEnvironment() {
+    // cette méthode est exécutée avant chaque test
+  }
+
+  @After
+  public void destroyTestEnvironment() {
+    // cette méthode est exécutée après chaque test
+  }
+
+  @Test
+  public void methodeDeTest() throws Exception {
+    assertTrue("Une assertion", true);
+  }
+
+}
+				
+</code></pre>
+			</figure>
+			<p>La classe <a href="http://junit.org/javadoc/4.11/org/junit/Assert.html">Assert</a> est une classe outil contenant des méthodes statiques
+			permettant de déclarer les assertions des tests. Les assertions sont des méthodes suivants
+			les mêmes patrons de signature&nbsp;</p>
+			<pre><code class="java">
+  // les assertions impliquant uniquement la valeur récupérée par le test
+  Assert.assertXXX(message, valeurActuelle);
+  Assert.assertXXX(valeurActuelle);
+  
+  // les assertions impliquant une comparaison entre une valeur attendue 
+  // et la valeur récupérée par le test
+  Assert.assertXXX(message, valeurAttendue, valeurActuelle);
+  Assert.assertXXX(valeurAttendue, valeurActuelle);
+
+</code></pre>
+			<aside class="tip">
+				<p>Il existe également la méthode <a href="http://junit.org/javadoc/4.11/org/junit/Assert.html#assertThat%28T,%20org.hamcrest.Matcher%29">Assert.assertThat</a> qui permet
+				une écriture plus riche des assertions&nbsp;:</p>
+				<pre><code class="java">
+import org.junit.Test;
+
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+
+public class UneClasseTest {
+
+  @Test
+  public void methodeDeTest() throws Exception {
+    assertThat(2, is(2));
+    assertThat(2, not(is(3)));
+  }
+
+}
+
+</code></pre>
+			</aside>
+		</section>
+		<section>
+			<h3>Exécution des tests JUnit</h3>
+			<p>JUnit est pris en charge par les IDE Java et par les outils de build comme Maven.</p>
+			<p>Dans Eclipse, il suffit de faire un clique droit dans l'explorateur de projet sur un fichier
+			source, une classe de Test ou un package et de choisir <strong>"Run as... &gt; JUnit Test"</strong>. On peut également
+			presser la touche <kbd>F11</kbd> dans l'éditeur de code source de la classe de test.</p>
+			<p>Avec Maven, il suffit de lancer le goal <strong>test</strong>&nbsp;:</p>
+			<pre><code class="bash">mvn test</code></pre>
+		</section>
+	</article>
+
+	<article class="exercice">
+		<h2>Exercice&nbsp;: Tests unitaires de java.util.Math#abs(int)</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>&Eacute;crire les tests unitaires pour la méthode <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Math.html#abs%28int%29">java.util.Math#abs(int)</a>.<dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd><a href="assets/templates/tests_unitaires.zip">tests_unitaires.zip</a></dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>&Eacute;diter le fichier pom.xml et modifier la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
+	
+	<article>
+		<section>
+			<p>L'exercice précédent proposait de tester une méthode sans effet de bord (ce que l'on appelle également 
+			une <a href="http://fr.wikipedia.org/wiki/Fonction_pure">fonction pure</a>).
+			Les tests sur ce type de méthodes sont faciles à écrire. Ce type de méthode reste cependant l'exception lorsque l'on utilise
+			la programmation orientée objet. En effet, l'appel d'une méthode sur un objet modifie parfois son état et provoque généralement
+			des effets de bord en sollicitant d'autres objets avec lesquels l'objet entretient des dépendances.</p>
+		</section>
+	</article>
+
+	<article class="exercice">
+		<h2>Exercice&nbsp;: Tests unitaires pour l'application d'inscription en ligne</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>&Eacute;crire les tests unitaires pour la classe fr.epsi.mvc.Inscription.<dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd><a href="assets/templates/inscription-webapp.zip">inscription-webapp.zip</a></dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>&Eacute;diter le fichier pom.xml et modifier la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
+	
+	<article>
+		<section>
+			<h2>Utilisation de doublure</h2>
+			<p>Parfois, il est utile de contrôler l'environnement de test d'un objet ou d'une collaboration d'objets.
+			Pour cela, on peut faire appel à des doublures qui vont se substituer lors des tests aux objets réellement utilisés lors
+			de l'exécution de l'application dans un environnement de production.</p>
+			
+			<dl>
+				<dt>Simulateur</dt>
+				<dd>Un simulateur fournit une implémentation alternative d'un sous-sytème. Un simulateur remplace
+				un sous-sytème qui n'est pas disponible pour l'environnement de test. Par exemple, on peut remplacer
+				un système de base de données par une implémentation simplifiée en mémoire.</dd>
+
+				<dt>Fake object</dt>
+				<dd>Un fake object permet de remplacer un sous-sytème dont il est difficile de garantir le comportement.
+				Le comportement du fake object est défini par le test et est donc déterministe. Par exemple, si un objet dépend des
+				informations retournées par un service Web, il est souhaitable de remplacer pour les tests l'implémentation du client
+				par une implémentation qui retournera une réponse déterminée par le test lui-même.</dd>
+
+				<dt>Mock object</dt>
+				<dd>Un objet mock est proche d'un fake object sauf qu'un objet mock est également capable de faire
+				des assertions sur les méthodes qui sont appelées et les paramètres qui sont transmis à ces méthodes.</dd>
+
+			</dl>
+		</section>
+		<section>
+			<h2>Implémentation d'objet mock avec Mockito</h2>
+			<p><a href="https://github.com/mockito/mockito">Mockito</a> est un framework Java pour faciliter la création d'objets mocks à partir d'une classe
+			ou d'une interface.</p>
+			<p>Pour ajouter Mockito à un projet Maven, il suffit d'ajouter dans la section <code>&lt;dependencies&gt;</code>
+			du fichier pom.xml&nbsp;:</p>
+			<pre><code class="xml">
+&lt;dependency&gt;
+  &lt;groupId&gt;org.mockito&lt;/groupId&gt;
+  &lt;artifactId&gt;mockito-all&lt;/artifactId&gt;
+  &lt;version&gt;1.9.5&lt;/version&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+
+</code></pre>
+		
+			<p>La méthode statique <code>Mockito.mock(Class&lt;?&gt;)</code> permet de créer une instance d'un mock à partir
+			d'une classe ou d'une interface. L'instance d'objet retournée par cette méthode est instrumentalisée par Mockito.
+			Il est possible d'enregistrer sur ce mock des comportements lors de la phase <em>arrange</em> grâce, notamment, à la méthode
+			<code>Mockito.when(Object)</code>. Lors de la phase <em>assert</em>, il est possible de vérifier que les appels
+			de méthodes programmés sur le mock ont bien été réalisés grâce à la méthode <code>Mockito.verify(Object)</code>.</p>
+			
+			<figure>
+				<figcaption>Exemple d'une classe de test utilisant Mockito</figcaption>
+				<pre><code class="java">
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.junit.Test;
+import org.mockito.Mockito;
+
+public class TestWithMockito {
+
+  @Test
+  public void testDemoMockito() throws Exception {
+    HttpServletRequest mockedRequest = Mockito.mock(HttpServletRequest.class);
+    Mockito.when(mockedRequest.getParameter("login")).thenReturn("monlogin");
+
+    String parameterValue = mockedRequest.getParameter("login");
+
+    assertThat(parameterValue, is("monlogin"));
+    Mockito.verify(mockedRequest).getParameter("login");
+  }
+
+}
+
+</code></pre>
+			</figure>
+
+			<figure>
+				<figcaption>Utilisation de Mockito avec import static</figcaption>
+				<pre><code class="java">
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.junit.Test;
+
+public class TestWithMockito {
+
+  @Test
+  public void testDemoMockito() throws Exception {
+    HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
+    when(mockedRequest.getParameter("login")).thenReturn("monlogin");
+
+    String parameterValue = mockedRequest.getParameter("login");
+
+    assertThat(parameterValue, is("monlogin"));
+    verify(mockedRequest).getParameter("login");
+  }
+
+}
+
+</code></pre>
+			</figure>
+			<p>La documentation de Mockito est accessible <a href="http://docs.mockito.googlecode.com/hg/latest/org/mockito/Mockito.html">ici</a>.</p>
+		</section>
+	</article>
+	
+	<article class="exercice">
+		<h2>Exercice&nbsp;: Tests unitaires pour l'application d'inscription en ligne (suite)</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>&Eacute;crire les tests unitaires pour la classe fr.epsi.mvc.InscriptionServlet.
+			<p><strong>Attention</strong>, la méthode publique
+			d'invocation d'une servlet est <code>Servlet#service(ServletRequest, ServletResponse)</code>. Les méthodes doXXX (doGet, doPost, ...)
+			sont des méthodes <code>protected</code> qui sont appelées par la méthode <code>Servlet#service(ServletRequest, ServletResponse)</code>
+			selon la valeur de retour de la méthode <code>HttpServletRequest#getMethod()</code>.</p><dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd><a href="assets/templates/inscription-webapp.zip">inscription-webapp.zip</a></dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>&Eacute;diter le fichier pom.xml et modifier la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
+	</body>
+</html>

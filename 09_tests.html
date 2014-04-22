@@ -18,7 +18,7 @@
 	</div>
 	<article>
 		<h1><script>document.write(document.title)</script></h1>
-		<p>Un test automatisé est un programme (le plus souvent une méthode) qui se découpe en trois étapes dites AAA pour <em>Arrange</em>, <em>Act</em>, <em>Assert</em>.</p>
+		<p>Un test automatisé est un programme qui se découpe en trois étapes dites AAA pour <em>Arrange</em>, <em>Act</em>, <em>Assert</em>.</p>
 		<dl>
 			<dt>Arrange</dt>
 			<dd>La mise en place de l'environnement&nbsp;: création et initialisation des objets
@@ -30,6 +30,16 @@
 			<dt>Assert</dt>
 			<dd>La vérification des résultats obtenus par le test.</dd>
 		</dl>
+		<p>Le sous-système (l'ensemble des objets) éprouvé par le test est parfois appelé <strong>SUT</strong> (System Under Test).</p>
+		
+		<p>On distingue différentes catégories de tests&nbsp;:</p>
+		<ul>
+			<li>Tests unitaires&nbsp;: testent une partie (une unité) d'un système afin de s'assurer qu'il fonctionne correctement (<em>build the system right</em>)</li>
+			<li>Tests d'acceptation&nbsp;: testent le système afin de s'assurer qu'il est conforme aux besoins (<em>build the right system</em>)</li>
+			<li>Tests d'intégration&nbsp;: testent le système sur une plate-forme proche de la plate-forme cible</li>
+			<li>Tests de securité&nbsp;: testent que l'application ne contient pas de failles de sécurité connues (injection de code, attaque XSS, ...)</li>
+			<li>Tests de robustesse&nbsp;: testent le comportement de l'application au limite des ressources disponibles (mémoire, CPU, ...) sur la plate-forme</li>
+		</ul>
 		<!--
 Les différents types de tests
 * tests unitaires
@@ -68,12 +78,12 @@ Qu'est-ce que l'unité ?
 		<section>
 			<h3>Structure d'une classe de test JUnit</h3>
 			<p>Comme Java est un langage orienté Objet, les tests JUnit sont regroupés dans des classes de test.
-			Généralement on groupe les tests ayant la même classe comme point d'entrée et on nomme la classe de test à partir
+			Généralement, on groupe dans une classe les tests ayant la même classe comme point d'entrée et on nomme la classe de test à partir
 			du nom de la classe testée préfixé ou suffixé par <code>Test</code> en la plaçant dans le même package. 
 			Par exemple, pour tester la classe DateFormatter,
 			on créera une classe TestDateFormatter ou DateFormatterTest.</p>
 			<aside>
-				<p>Suffixé ou postfixé par Test le nom de la classe de test est juste une convention. 
+				<p>Suffixer ou postfixer par Test le nom de la classe de test est juste une convention. 
 				Néanmoins il est très fortement conseillé de la respecter
 				car les IDE et Maven utilisent également cette convention pour découvrir les classes de test à exécuter.</p>
 			</aside>
@@ -96,11 +106,12 @@ public class UneClasseTest {
 </code></pre>
 			</figure>
 			<p>Une classe de test est simplement une classe déclarant des méthodes publiques sans paramètre
-			annotées par <code>@Test</code>.</p>
+			annotées par <a href="http://junit.org/javadoc/4.11/org/junit/Test.html"><code>@Test</code></a>.</p>
 			
 			<p>Il est possible d'exécuter des méthodes avant et après chaque test pour allouer et désallouer
 			des ressources nécessaires à l'exécution des tests. On utilise pour cela des méthodes publiques
-			sans paramètre annotées avec <code>@Before</code> et <code>@After</code>.</p>
+			sans paramètre annotées avec <a href="http://junit.org/javadoc/4.11/org/junit/Before.html"><code>@Before</code></a>
+			et <a href="http://junit.org/javadoc/4.11/org/junit/After.html"><code>@After</code></a>.</p>
 
 			<figure>
 				<figcaption>Exemple d'une classe de test avec <code>@Before</code> et <code>@After</code></figcaption>
@@ -134,14 +145,15 @@ public class UneClasseTest {
 			</figure>
 			<p>La classe <a href="http://junit.org/javadoc/4.11/org/junit/Assert.html">Assert</a> est une classe outil contenant des méthodes statiques
 			permettant de déclarer les assertions des tests. Les assertions sont des méthodes suivants
-			les mêmes patrons de signature&nbsp;</p>
+			les mêmes patrons de signature&nbsp;:</p>
 			<pre><code class="java">
   // les assertions impliquant uniquement la valeur récupérée par le test
+  // comme (Assert.assertTrue)
   Assert.assertXXX(message, valeurActuelle);
   Assert.assertXXX(valeurActuelle);
   
   // les assertions impliquant une comparaison entre une valeur attendue 
-  // et la valeur récupérée par le test
+  // et la valeur récupérée par le test (comme Assert.assertEquals)
   Assert.assertXXX(message, valeurAttendue, valeurActuelle);
   Assert.assertXXX(valeurAttendue, valeurActuelle);
 
@@ -200,8 +212,8 @@ public class UneClasseTest {
 		<section>
 			<p>L'exercice précédent proposait de tester une méthode sans effet de bord (ce que l'on appelle également 
 			une <a href="http://fr.wikipedia.org/wiki/Fonction_pure">fonction pure</a>).
-			Les tests sur ce type de méthodes sont faciles à écrire. Ce type de méthode reste cependant l'exception lorsque l'on utilise
-			la programmation orientée objet. En effet, l'appel d'une méthode sur un objet modifie parfois son état et provoque généralement
+			Les tests sur ce type de méthodes sont faciles à écrire. Ils restent cependant l'exception lorsqu'on utilise
+			la programmation orientée objet. En effet, l'appel d'une méthode sur un objet modifie le plus souvent son état et provoque généralement
 			des effets de bord en sollicitant d'autres objets avec lesquels l'objet entretient des dépendances.</p>
 		</section>
 	</article>
@@ -327,6 +339,9 @@ public class TestWithMockito {
 
 </code></pre>
 			</figure>
+			<aside>
+				<p>Les exemples de code ci-dessus ne sont bien évidemment pas de vrais tests JUnit puisqu'ils se contentent de tester le bon fonctionnement de Mockito.</p>
+			</aside>
 			<p>La documentation de Mockito est accessible <a href="http://docs.mockito.googlecode.com/hg/latest/org/mockito/Mockito.html">ici</a>.</p>
 		</section>
 	</article>
@@ -336,10 +351,14 @@ public class TestWithMockito {
 		<dl>
 			<dt>Objectif</dt>
 			<dd>&Eacute;crire les tests unitaires pour la classe fr.epsi.mvc.InscriptionServlet.
-			<p><strong>Attention</strong>, la méthode publique
-			d'invocation d'une servlet est <code>Servlet#service(ServletRequest, ServletResponse)</code>. Les méthodes doXXX (doGet, doPost, ...)
-			sont des méthodes <code>protected</code> qui sont appelées par la méthode <code>Servlet#service(ServletRequest, ServletResponse)</code>
-			selon la valeur de retour de la méthode <code>HttpServletRequest#getMethod()</code>.</p><dd>
+			<aside class="warn">
+				<p><strong>Attention</strong>, la méthode publique
+				d'invocation d'une servlet est <code>Servlet#service(ServletRequest, ServletResponse)</code>. Les méthodes doXXX (doGet, doPost, ...)
+				sont des méthodes <code>protected</code> qui sont appelées par la méthode <code>Servlet#service(ServletRequest, ServletResponse)</code>
+				selon la valeur de retour de la méthode <code>HttpServletRequest#getMethod()</code>.</p>
+			</aside>
+			<p>Pour cet exercice, à vous de choisir la stratégie que vous utiliserez pour fournir les doublures nécessaires au SUT.</p>
+			<dd>
 
 			<dt>Modèle Maven du projet à télécharger</dt>
 			<dd><a href="assets/templates/inscription-webapp.zip">inscription-webapp.zip</a></dd>

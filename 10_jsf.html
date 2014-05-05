@@ -32,16 +32,10 @@
 		<section>
 			<p>Java Server Faces (JSF) est défini par la JSR 314. Il s'agit d'un framework permettant de créer des applications
 			Web complètes.</p>
-			<p>JSF offre les avantages suivants&nbsp;:</p>
-			<ul>
-				<li>Création d'une application en suivant le modèle MVC</li>
-				<li>TODO</li>
-				
-			</ul>
 			
 			<aside>
 				<p>Il existe de nombreux frameworks permettant de développer des applications Web en Java&nbsp;: JSF, Struts2, Spring MVC, Wicket, GWT, Play, Tapestry...
-				Lorsqu'on développe une application Web Java EE, il peut être difficile de savoir lequel choisir. Pour ce cours, nous nous contenterons
+				Lorsqu'on développe une application Web en Java, il peut être difficile de savoir lequel choisir. Pour ce cours, nous nous contenterons
 				d'une introduction à JSF qui a la particularité d'être le framework "officiellement" supporté pour Java EE et donc 
 				d'être intégré dans le serveur d'application TomEE.</p>
 			</aside>
@@ -84,9 +78,9 @@
 				uniquement les annotations Java. Il est tout de même recommandé d'ajouter ce fichier dans
 				l'application même si son contenu doit rester minimal.</p>
 			</aside>
-			<p>Pour utiliser JSF dans TomEE nous allons également avoir besoin d'un service Java EE : <strong>CDI</strong>
+			<p>Pour l'utilisation de JSF en vue d'un déploiement dans TomEE, nous allons également avoir besoin d'un service Java EE : <strong>CDI</strong>
 			(Contexts and Dependency Injection). Nous reviendrons plus tard sur l'utilité de ce service. CDI n'est pas
-			activer par défaut pour une application Web. Pour l'activer, il suffit d'ajouter le fichier de déploiement 
+			activé par défaut pour une application Web. Pour l'activer, il suffit d'ajouter le fichier de déploiement 
 			de CDI pour l'application. Ce fichier doit s'appeler <strong>beans.xml</strong> est être situé dans le 
 			répertoire WEB-INF. Le contenu minimal de ce fichier est&nbsp;:</p>
 			<pre><code class="xml">
@@ -103,12 +97,14 @@
 		
 		<section>
 			<h2 id="facelets">La vue : facelets</h2>
-			<p>JSF n'utilise pas les JSP, JSF dispose de son propre langage de déclaration de vue appelé <strong>facelets</strong>.
-			Du point de vue du développeur, nous allons voir qu'il n'y a pas un très grande différence entre une JSP et une
+			<p>JSF n'utilise pas les JSP, JSF dispose de son propre langage de déclaration de vue appelé <strong>facelet</strong>.
+			Du point de vue du développeur, nous allons voir qu'il n'y a pas une très grande différence entre une JSP et une
 			facelet. Par contre, il s'agit de deux technologies différentes&nbsp;: les balises supportées ne sont pas les
 			mêmes et une facelet n'est pas transformée en Servlet. 
 			</p>
-			<p>Une facelets est un document XHTML 1.0. Une facelets <strong>doit</strong> se conformer à la DTD XHTML-1.0-Transitional.</p>
+			<p>Une facelet est un document XHTML 1.0. Une facelets <strong>doit</strong> se conformer à la DTD XHTML-1.0-Transitional.
+			Avec le succés de HTML5, des adaptations ont été faites dans JSF (Java EE 7) pour permettre de développer des facelets HTML5. Néanmoins,
+			une facelet doit être un document XML bien formé.</p>
 			
 			<figure>
 				<figcaption>Un exemple de fichier XHTML</figcaption>
@@ -130,7 +126,7 @@
 			</figure>
 			
 			<p>Une facelet est un document XML que le moteur JSF va analyser pour rechercher des balises spécifiques JSF.
-			L'utilisation des balises de facelets se fait grâce aux espaces de noms XML (XML namespaces).
+			L'utilisation des balises de facelets se fait grâce aux espaces de nom XML (XML namespaces).
 			Il existe six bibliothèques standards de balises JSF. Chacune dispose de son propre espace de nom XML.
 			</p>
 			
@@ -157,7 +153,7 @@
 					<tr>
 						<td>f</td>
 						<td>http://java.sun.com/jsf/core</td>
-						<td>Contient les balises qui ne génèrent pas de rendu HTML mais assurent l'intéraction avec le serveur</td>
+						<td>Contient les balises qui ne génèrent pas de rendu HTML mais assurent l'intéraction avec le serveur et le formattage de données</td>
 						<td>f:actionListener f:ajax</td>
 					</tr>
 					<tr>
@@ -178,14 +174,14 @@
 					<tr>
 						<td>ui</td>
 						<td>http://java.sun.com/jsf/facelets</td>
-						<td>Contient les balises permettant des composition de vues. Il est possible de définir un layout
+						<td>Contient les balises permettant des compositions de vues. Il est possible de définir un layout
 						pour l'ensemble de l'application et d'appliquer automatiquement ce layout à chaque facelet.</td>
 						<td>ui:component ui:composition</td>
 					</tr>
 					<tr>
 						<td>cc</td>
 						<td>http://java.sun.com/jsf/composite</td>
-						<td>Permet de définir de créer de nouveaux composants graphiques.</td>
+						<td>Permet de définir de nouveaux composants graphiques.</td>
 						<td>cc:interface cc:implementation</td>
 					</tr>
 				</tbody>
@@ -225,12 +221,12 @@
 			<aside class="warn">
 				<p><strong>Une facelet est un fichier qui doit porter l'extension .xhtml</strong>. En effet, la servlet
 				JSF est configurée pour traiter les requêtes de type *.xhtml. Ainsi, le serveur ne 
-				revoit jamais les fichiers XHTML bruts. Il délègue le traitement à la servlet JSF
+				renvoit jamais les fichiers XHTML bruts. Il délègue le traitement à la servlet JSF
 				qui interprète la facelet.</p>
 			</aside>
 			
-			<p>On retrouve beaucoup de similitude entre facelets et JSP. Par exemple, voici l'équivalent d'une
-			page JSP affichant les paramètres en entrée avec la technogie facelets&nbsp;:</p>
+			<p>On retrouve beaucoup de similitudes entre facelets et JSP. Par exemple, voici l'équivalent d'une
+			page JSP affichant les paramètres en entrée avec la technologie facelets&nbsp;:</p>
 			
 			<figure>
 				<figcaption>Exemple&nbsp;: Une facelet affichant les paramètres</figcaption>
@@ -263,8 +259,8 @@
 </code></pre>
 			</figure>
 			
-			<p>Il existe quasimement les mêmes <a href="08_jsp.html#objets_implicites">objets implicites</a>
-			accéssibles avec les expression language (EL) que pour les JSP. Comme une JSP, une facelet peut accéder
+			<p>Il existe quasiment les mêmes <a href="08_jsp.html#objets_implicites">objets implicites</a>
+			accéssibles avec l'expression language (EL) que pour les JSP. Comme une JSP, une facelet peut accéder
 			aux attributs des différentes portées (page, request, session, application). Cependant pour créer ces
 			attributs, nous n'allons plus utiliser l'API servlet comme vu précédemment, nous allons utiliser
 			le service <strong>CDI</strong>.</p>
@@ -275,7 +271,7 @@
 				créé avec Maven, Eclipse ne détecte pas automatiquement qu'il s'agit d'un projet intégrant
 				JSF. Il est néanmoins possible d'activer manuellement le support de JSF pour le projet.
 				Dans l'explorateur de projet, faites un clique droit sur le nom du projet et sélectionnez "Properties" (ou <kbd>ALT+Entrée</kbd>).
-				Dans l'arborescence des propriétés, sélectionnez "Project Facets" et dans la liste des Facets, cochez "Java Server Faces" puis
+				Dans l'arborescence des propriétés, sélectionnez "Project Facets" et, dans la liste des Facets, cochez "Java Server Faces" puis
 				cliquez sur "Ok".</p>
 				<img width="90%" src="assets/eclipse_configure_jsf.png" alt="Configuration de JSF dans Eclipse" />
 			</aside>
@@ -285,7 +281,7 @@
 			<h2 id="introduction_cdi">Une introduction à CDI</h2>
 			<p>Contexts and Dependency Injection ou <strong>CDI</strong> est un service Java EE permettant
 			de déclarer des objets Java qui seront automatiquement créés par le serveur et positionnés comme
-			attributs dans la portée désirées. Ensuite ces objets sont accessibles depuis une JSP ou une facelets
+			attributs dans la portée désirée. Ensuite ces objets sont accessibles depuis une JSP ou une facelets
 			ou encore peuvent être injectés dans un composant Java EE ou un autre objet géré par CDI.</p>
 		</section>
 		<section>
@@ -325,9 +321,13 @@ public class Personne {
 
 </code></pre>
 			</figure>
-			<p>L'annotation <code>@Named</code> suffit à indiquer que cette classe peut être gérée par CDI.
-			L'annotation <code>RequestScoped</code> indique que l'instance de l'objet sera un attribut de portée requête.
-			Sur le même principe, il existe les annotations <code>@SessionScoped</code> et <code>@ApplicationScoped</code>.</p>
+			<p>L'annotation <code><a href="http://docs.oracle.com/javaee/6/api/javax/inject/Named.html">@Named</a></code> 
+			suffit à indiquer que cette classe peut être gérée par CDI.
+			L'annotation <code><a href="http://docs.oracle.com/javaee/6/api/javax/enterprise/context/RequestScoped.html">@RequestScoped</a></code> 
+			indique que l'instance de l'objet sera un attribut de portée requête.
+			Sur le même principe, il existe les annotations 
+			<code><a href="http://docs.oracle.com/javaee/6/api/javax/enterprise/context/SessionScoped.html">@SessionScoped</a></code> 
+			et <code><a href="http://docs.oracle.com/javaee/6/api/javax/enterprise/context/ApplicationScoped.html">@ApplicationScoped</a></code>.</p>
 			<p>Par défaut, le nom de l'instance sera le même que le nom de la classe commençant par une minuscule.
 			Ainsi, une fois cette classe ajoutée dans le projet, il est possible de l'utiliser dans une facelet&nbsp;:
 			</p>
@@ -350,14 +350,14 @@ public class Personne {
 
 </code></pre>
 			</figure>
-			<p>S'il n'existe pas d'attribut personne, celui-ci sera automatiquement créé avec une portée requête.</p>
-			<p>Il est également possible de spécifier le nom de l'instance dans l'annotation <code>@Named</code>&nbsp;:</p>
+			<p>S'il n'existe pas d'attribut <code>personne</code>, celui-ci sera automatiquement créé avec une portée requête.</p>
+			<p>Il est également possible de spécifier soi-même le nom du bean dans l'annotation <code>@Named</code>&nbsp;:</p>
 			<pre><code class="java">@Named("unePersonne")</code></pre>
 
 			<h3>Le fichier de déploiement beans.xml</h3>
 			<p>Comme la plupart des services Java EE, CDI dispose d'un fichier de déploiement appelé <strong>beans.xml</strong>.
 			Ce fichier sert à déclarer des fonctionnalités avancées pour CDI mais il doit également être présent dans
-			l'arborescence de l'application pour permettre au conteneur d'activer le service CDI pour cette application.
+			l'arborescence de l'application pour indiquer à TomEE d'activer le service CDI pour cette application.
 			Pour une application Web, le fichier beans.xml doit se trouver dans le répertoire WEB-INF. Sa structure minimale
 			est&nbsp;:
 			</p>
@@ -379,7 +379,7 @@ public class Personne {
 			<h2 id="modele">Le modèle</h2>
 			<p>Dans une application JSF, n'importe quelle instance d'objet Java gérée par CDI peut jouer le rôle du modèle.
 			Dans la terminologie JSF, on parle de <em>backing beans</em> pour désigner les objets Java avec lesquels
-			la facelet iteragie.
+			la facelet iteragit.
 			Par exemple, une instance de la classe <code>Personne</code> vue précédemment peut être utilisée comme modèle
 			dans un formulaire d'une facelet&nbsp;:
 			</p>
@@ -411,7 +411,7 @@ public class Personne {
 </code></pre>
 			</figure>
 			
-			<p>Notez que depuis le début de ce chapitre, les EL (expression language) utilisées dans les facelets
+			<p>Notez que depuis le début de ce chapitre, les expressions en EL (expression language) utilisées dans les facelets
 			sont délimitées par <strong>#{ }</strong>. Comme pour les JSP, JSF supporte l'écriture d'une EL
 			sous la forme <strong>${ }</strong>. Cependant, l'utilisation du caractère <strong>#</strong>
 			indique que l'on souhaite activer le <em>value binding</em>. Cette fonctionnalité
@@ -426,7 +426,7 @@ public class Personne {
 			Ainsi, avec JSF, un contrôleur est simplement une classe Java gérée par CDI qui expose des méthodes
 			qui seront appelées par JSF lors de la réception des requêtes du client.</p>
 			<p>La génération d'action vers le contrôleur se fait lorsque le client envoie des données vers le serveur. 
-			En HTML, cela se fait par la une soumission de formulaire. Avec JSF, la soumission de formulaire peut se faire avec la balise <code>h:commandLink</code> ou
+			En HTML, cela se fait par la soumission de formulaire. Avec JSF, la soumission de formulaire peut se faire avec la balise <code>h:commandLink</code> ou
 			la balise <code>h:commandButton</code>. Ces deux balise JSF disposent de l'attribut <code>action</code>
 			qui permet d'écrire une EL définissant l'appel à une fonction d'un backing bean (une instance gérée par CDI).
 			Il est possible de préciser dans l'EL les paramètres qui seront passés à la méthode côté serveur.</p>
@@ -525,7 +525,7 @@ public class ReferentielPersonne {
 
 </code></pre>
 			</figure>
-			<p>Pour les logiques de navigation simples, il est possible d'utiliser les balises <code>h:link</code> et <code>h:button</code>
+			<p>Pour la navigation par liens, il est possible d'utiliser les balises <code>h:link</code> et <code>h:button</code>
 			dans les facelets. Ces balises disposent de l'attribut <code>outcome</code>. Cet attribut donne l'identifiant
 			de la facelet cible. Bien sûr, la valeur de l'attribut <code>outcome</code> peut être le résultat d'une EL.</p>
 			<figure>
@@ -562,7 +562,7 @@ public class ReferentielPersonne {
 			<p>La validation des données de formulaire est une autre fonctionnalité importante des frameworks Web.
 			La biblothèque de balises <a href="https://javaserverfaces.java.net/nonav/docs/2.1/vdldocs/facelets/f/tld-summary.html">core</a>
 			de JSF fournit, entre autres, les balises <code>f:validateDoubleRange</code>, <code>f:validateLength</code>, <code>f:validateLongRange</code>,
-			<code>f:validateBean</code>, <code>f:validateRegex</code> et <code>f:validateRequired</code>.
+			<code>f:validateRegex</code> et <code>f:validateRequired</code>.
 			Utilisées comme balises filles des entrées de formulaire, elles permettent d'ajouter des règles de validité
 			pour les données de formulaire. JSF validera automatiquement les données soumises par l'utilisateur avant
 			de transférer le traitement au contrôleur.</p>
@@ -618,6 +618,58 @@ public class ReferentielPersonne {
 		</section>
 		<section>
 			<h2 id="bean_validation">La validation avec <em>Bean Validation</em></h2>
+			<p>Le serveur d'application fournit un autre service nommée <a href="http://beanvalidation.org/">Bean Validation</a> (JSR303). 
+			Bean Validation permet d'exprimer les contraintes de validité d'un objet avec des annotations. JSF est capable d'interagir
+			avec Bean Validation pour la validation de formulaire. Ainsi, plutôt que de déclarer la validation dans une facelet comme
+			dans la section précédente, il est possible d'ajouter des annotations directement sur le bean <code>Personne</code>&nbsp;</p>
+			<figure>
+				<figcaption>Utilisation de Bean Validation</figcaption>
+				<pre><code class="java">
+package fr.epsi;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
+@Named
+@RequestScoped
+public class Personne {
+
+  @Size(min = 1, message = "Le nom est obligatoire !")
+  private String nom;
+
+  @Min(value=1, message = "L'âge doit être un nombre positif !")
+  @Max(value=99, message = "L'âge ne peut pas dépasser 99 ans !")
+  private int age;
+
+  public String getNom() {
+    return nom;
+  }
+
+  public void setNom(String nom) {
+    this.nom = nom;
+  }
+
+  public int getAge() {
+    return age;
+  }
+
+  public void setAge(int age) {
+    this.age = age;
+  }
+}
+
+</code></pre>
+			</figure>
+			
+			<p>La documentation des annotations de Bean Validation est disponible dans la
+			documentation de l'API Java EE&nbsp;: 
+			<a class="explicit" href="http://docs.oracle.com/javaee/6/api/javax/validation/constraints/package-summary.html">http://docs.oracle.com/javaee/6/api/javax/validation/constraints/package-summary.html</a></p>
+			
+			<p>Bean Validation est une bonne alternative aux balises JSF de validation si une bean doit être
+			réutilisé comme modèle dans des facelets différentes.</p>
 		</section>
 
 		<section>

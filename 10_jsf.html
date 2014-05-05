@@ -40,28 +40,107 @@
 				d'être intégré dans le serveur d'application TomEE.</p>
 			</aside>
 		</section>
-		
+	</article>
+	
+	<article class="exercice">
+		<h2>Exercice&nbsp;: Formulaire MVC avec JSF</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Développer une application MVC pour la saisie d'un formulaire d'adhésion en ligne.
+			Le formulaire doit permettre de saisir les informations suivantes : login et email. De plus, l'utilisateur
+			doit pouvoir cocher la case "J'ai lu et approuvé les conditions générales de ce site". 
+			<p>Au moment de la soumission du formulaire, le serveur doit vérifier que tous les champs ont été
+			correctement renseignés&nbsp;: le login et l'email doivent être renseignés et la case doit être cochée.
+			Si des champs n'ont pas été saisis correctement,
+			le formulaire doit être réaffiché avec un message d'erreur indiquant clairement ce qui n'est pas correct.</p>
+			<p>Lorsque tous les champs sont saisis correctement, une page de confirmation d'adhésion doit être affichée avec la mention&nbsp;:
+			<pre><code>Bienvenue &lt;login&gt;, votre inscription a bien été prise en compte le &lt;date&gt; à &lt;heure&gt;.</code></pre>
+			<p>Pour réaliser cette application, vous utiliserez le framework JSF.</p>
+			<dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a>
+				<aside class="warn">
+					<p><strong>Attention ce modèle ne permet pas de faire fonctionner une application JSF !</strong>
+					Vous devez suivre les indications de la section <em><a href="#creer_projet">Créer un projet avec JSF</a></em>
+					pour compléter la configuration de votre projet.
+					</p>
+				</aside>
+			</dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>&Eacute;diter le fichier pom.xml du template et modifier la balise artifactId pour spécifier le nom de votre projet.
+			Modifier ensuite la section &lt;developers&gt; pour indiquer vos nom et email.
+			</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
+
+	<article>
 		<section>
 			<h2 id="creer_projet">Créer un projet avec JSF</h2>
+			<aside class="warn">
+				<p><strong>Important !</strong> Pour ce chapitre, nous allons voir l'utilisation de JSF 2.2
+				dans un serveur d'application. La plupart des articles sur JSF disponibles sur le Web
+				traitent soit de JSF 1.X soit de l'utilisation de JSF dans un conteneur de
+				servlets (le plus souvent Tomcat). Même si les notions restent les mêmes, la
+				plupart des codes d'exemple que vous pourrez trouver <strong>ne fonctionneront pas</strong> sans adaptation.</p>
+			</aside>
+
 			<p>L'implémentation de JSF intégrée dans TomEE est celle de la communauté Apache : MyFaces.
 			MyFaces est une Servlet qu'il faut déclarer dans le fichier web.xml de son application&nbsp;:</p>
-			<pre><code class="xml">
+			<figure>
+				<figcaption>Déclaration de la servlet JSF dans le web.xml</figcaption>
+				<pre><code class="xml">
   &lt;servlet&gt;
     &lt;servlet-name&gt;Faces Servlet&lt;/servlet-name&gt;
     &lt;servlet-class&gt;javax.faces.webapp.FacesServlet&lt;/servlet-class&gt;
     &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
   &lt;/servlet&gt;
-  &lt;!-- La servlet de JSF est configurée pour répondre à toutes les requêtes de fichiers XHTML --&gt;
+  &lt;!--La servlet de JSF est configurée pour répondre à toutes les requêtes de fichiers XHTML--&gt;
   &lt;servlet-mapping&gt;
     &lt;servlet-name&gt;Faces Servlet&lt;/servlet-name&gt;
     &lt;url-pattern&gt;*.xhtml&lt;/url-pattern&gt;
   &lt;/servlet-mapping&gt;
 
 </code></pre>
+			</figure>
+			<p>JSF supporte une configuration de développement pour permettre un rechargement presque à chaud
+			lorsque des modifications sont apportées à l'application. Pour l'activer, il faut rajouter 
+			<strong>au début du fichier web.xml</strong> un paramètre d'application&nbsp;:</p>
+			<figure>
+				<figcaption>Activation du mode développement dans le web.xml</figcaption>
+				<pre><code class="xml">
+  &lt;context-param&gt;
+    &lt;param-name&gt;javax.faces.PROJECT_STAGE&lt;/param-name&gt;
+    &lt;param-value&gt;Development&lt;/param-value&gt;
+  &lt;/context-param&gt;
+
+</code></pre>
+			</figure>
+			<p>Lorsque vous déploierez votre application dans TomEE, vous verrez dans la log
+			de démarrage un message d'avertissement confirmant l'activation du mode développement&nbsp;:</p>
+			<figure>
+				<figcaption>Confirmation au démarrage de l'activation du mode développement</figcaption>
+				<pre><code>
+*******************************************************************
+*** WARNING: Apache MyFaces-2 is running in DEVELOPMENT mode.   ***
+***                                         ^^^^^^^^^^^         ***
+*** Do NOT deploy to your live server(s) without changing this. ***
+*** See Application#getProjectStage() for more information.     ***
+*******************************************************************
+
+</code></pre>
+			</figure>
+
 			<p>Comme tous les services Java EE, JSF dispose d'un fichier de déploiement au format XML.
 			Ce fichier de déploiement s'appelle <strong>faces-config.xml</strong> et doit être situé dans
 			le répertoire WEB-INF. Le contenu minimal de ce fichier est&nbsp;:</p>
-			<pre><code class="xml">
+			<figure>
+				<figcaption>Le fichier de déploiement faces-config.xml</figcaption>
+				<pre><code class="xml">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;faces-config
   xmlns="http://xmlns.jcp.org/xml/ns/javaee"
@@ -73,6 +152,7 @@
 &lt;/faces-config&gt;
 
 </code></pre>
+			</figure>
 			<aside>
 				<p>Le fichier faces-config.xml est optionnel car il est possible d'intégrer JSF en utilisant
 				uniquement les annotations Java. Il est tout de même recommandé d'ajouter ce fichier dans
@@ -83,7 +163,9 @@
 			activé par défaut pour une application Web. Pour l'activer, il suffit d'ajouter le fichier de déploiement 
 			de CDI pour l'application. Ce fichier doit s'appeler <strong>beans.xml</strong> est être situé dans le 
 			répertoire WEB-INF. Le contenu minimal de ce fichier est&nbsp;:</p>
-			<pre><code class="xml">
+			<figure>
+				<figcaption>Le fichier de déploiement beans.xml</figcaption>
+				<pre><code class="xml">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans 
   xmlns="http://java.sun.com/xml/ns/javaee"
@@ -93,6 +175,7 @@
 &lt;/beans&gt;
 
 </code></pre>
+			</figure>
 		</section>
 		
 		<section>
@@ -189,7 +272,7 @@
 			
 			<aside>
 				<p>La documentation des bibliothèques de balises est disponible sur
-				<a href="https://javaserverfaces.java.net/nonav/docs/2.1/vdldocs/facelets/index.html" class="explicit">https://javaserverfaces.java.net/nonav/docs/2.1/vdldocs/facelets/index.html</a></p>
+				<strong><a href="https://javaserverfaces.java.net/nonav/docs/2.1/vdldocs/facelets/index.html" class="explicit">https://javaserverfaces.java.net/nonav/docs/2.1/vdldocs/facelets/index.html</a></strong></p>
 			</aside>
 			
 			<p>La bibliothèque JSF HTML (http://java.sun.com/jsf/html) contient notamment les balises 
@@ -328,9 +411,41 @@ public class Personne {
 			Sur le même principe, il existe les annotations 
 			<code><a href="http://docs.oracle.com/javaee/6/api/javax/enterprise/context/SessionScoped.html">@SessionScoped</a></code> 
 			et <code><a href="http://docs.oracle.com/javaee/6/api/javax/enterprise/context/ApplicationScoped.html">@ApplicationScoped</a></code>.</p>
+			
+			<aside class="warn">
+				<header><code>@SessionScoped</code> et la passivation</header>
+				<p>Les classes Java portant l'annotation <code>@SessionScoped</code> doivent supporter la passivation sinon vous obtiendrez
+				une erreur à l'exécution. La passivation signifie simplement que le contenu d'un objet doit pouvoir être sauvé sur disque.
+				Comme un objet de portée session a une durée de vie qui dépasse le temps de traitement d'une requête HTTP, on considère qu'il
+				doit pouvoir être sauvé (passivation) lors de l'arrêt d'un serveur et rechargé (activation) au démarrage afin de garantir 
+				la continuité de service du point de vue du client. Sans aller trop loin dans les implications de la passivation/activation,
+				il suffit de savoir que les classes annotées avec <code>@SessionScoped</code> doivent implémenter l'interface marqueur
+				<a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html">java.io.Serializable</a>.
+				</p>
+				<figure>
+					<figcaption>Une déclaration de portée session</figcaption>
+						<pre><code class="java">
+package fr.epsi;
+
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+
+@Named
+@SessionScoped
+public class Personne implements java.io.Serializable {
+
+  // ...
+
+}
+
+</code></pre>
+				</figure>
+			</aside>
+			
 			<p>Par défaut, le nom de l'instance sera le même que le nom de la classe commençant par une minuscule.
 			Ainsi, une fois cette classe ajoutée dans le projet, il est possible de l'utiliser dans une facelet&nbsp;:
 			</p>
+			
 			<figure>
 				<figcaption>Utilisation dans une facelet d'un bean géré par CDI</figcaption>
 				<pre><code class="xml">
@@ -674,10 +789,140 @@ public class Personne {
 
 		<section>
 			<h2 id="ajax">Les requêtes Ajax</h2>
-		</section>
 
+			<aside class="tip">
+				<p>Vous pouvez télécharger un projet Maven de démonstration d'utilisation d'Ajax dans JSF&nbsp;: <a href="assets/corrections/demoajax.zip">demoajax.zip</a></p>
+			</aside>
+			
+			<p>Une requête Ajax est une requête asynchrone qui est exécutée par le navigateur. Lorsque le serveur renvoie
+			la réponse au navigateur, ce dernier ne modifie pas la page affichée mais rend accessible la réponse en JavaScript.</p>
+			<p>JSF supporte Ajax sans que le développeur Web n'ait à implémenter du code JavaScript.
+			JSF injecte lui-même le code JavaScript nécessaire au moment du rendu de la facelet.</p>
+			<p>Pour activer Ajax, il suffit, par exemple, de spécifier la balise <code><a href="https://javaserverfaces.java.net/nonav/docs/2.1/vdldocs/facelets/f/ajax.html">f:ajax</a></code>
+			 comme balise fille d'un
+			<code>h:commandButton</code>&nbsp;:</p>
+			
+			<figure>
+				<figcaption>Un exemple d'ajout du support Ajax</figcaption>
+				<pre><code class="html">
+  &lt;h:commandButton value="un bouton" action="#{monControleur.traiter()}"&gt;
+    &lt;f:ajax execute="@form" render="resultat" /&gt;
+  &lt;/h:commandButton&gt;
+
+</code></pre>
+			</figure>
+			
+			<p>La déclaration ci-dessus suffit à générer automatiquement le code javascript dans la page XHTML pour que,
+			lorsque l'utilisateur clique sur le bouton, une requête Ajax soit soumise au serveur. La balise <code>f:ajax</code>
+			a deux attributs importants&nbsp;:</p>
+			<ul>
+				<li><code>execute</code> : liste les composants qui sont pris en compte par la requête Ajax. Il est possible
+				de lister les id des élements d'un formulaire séparés par un espace. On peut aussi utiliser un des mots-clés 
+				suivants&nbsp;: @form (tous les éléments du formulaire courant), @this (uniquement le composant
+				qui contient la balise <code>f:ajax</code>), @all (tous les composants graphiques JSF de la page), @none (aucune composant
+				n'est associé à la requête Ajax).</li>
+				<li><code>render</code> : spécifie l'ID ou la liste des ID  des composants graphiques JSF dans la facelet qui doivent être mis à jour lors de la réception
+				de la réponse Ajax. Comme pour l'attribut précédent, il est possible d'utiliser les mots-clés @this, @form, @all et @none</li>
+			</ul>
+			
+			<p>Pour le support d'Ajax, l'implémentation du contrôleur se fait souvent en implémentant deux méthodes&nbsp;:
+			une méthode d'appel qui traitera les données et une méthode d'obtention du résultat qui permettra de mettre à jour
+			une partie de la page.</p>
+			
+			<aside class="warn">
+				<p>La méthode du contrôleur spécifiée dans la balise <code>action</code> d'un <code>h:commandButton</code>
+				ne doit rien retourner (<code>void</code>) sinon JSF interprètera le résultat comme un ID de facelet
+				et redirigera le navigateur vers une nouvelle page.  
+				</p>
+			</aside>
+			
+			<p>Un exemple simple mais complet serait&nbsp;:</p>
+			
+			<figure>
+				<figcaption>Une facelet utilisant Ajax</figcaption>
+				<pre><code class="html">
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!DOCTYPE html PUBLIC 
+          "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html 
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:h="http://java.sun.com/jsf/html"&gt;
+&lt;h:head&gt;
+  &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;/h:head&gt;
+&lt;h:body&gt;
+  &lt;h:form&gt;
+    &lt;h:commandButton value="un bouton" action="#{monControleur.traiter()}"&gt;
+      &lt;f:ajax execute="@form" render="resultat" /&gt;
+    &lt;/h:commandButton&gt;
+  &lt;/h:form&gt;
+  &lt;h:outputText id="resultat" value="#{monControleur.resultat}"/&gt;
+&lt;/h:body&gt;
+&lt;/html&gt;
+
+</code></pre>
+			</figure>
+			
+			<figure>
+				<figcaption>Le contrôleur associé</figcaption>
+				<pre><code class="java">
+package fr.epsi;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+
+@Named
+@RequestScoped
+public class MonControleur {
+
+  private String resultat;
+
+  public String getResultat() {
+    return resultat;
+  }
+
+  public void traiter() {
+    resultat = "Bravo, vous avez fait une requête Ajax !";
+  }
+
+}
+
+</code></pre>
+			</figure>
+		</section>
+	</article>
+
+	<article class="exercice">
+		<h2>Exercice&nbsp;: Formulaire MVC avec JSF en Ajax</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Faites évoluer l'application réalisée lors de l'exercice proposé au début de ce chapitre.
+			Maintenant l'application va utiliser une requête Ajax pour l'adhésion de l'utilisateur.
+			Lorsque l'utilisateur adhère en ligne, il n'est plus redirigé vers une nouvelle page
+			mais on lui confirme sur la même page que son inscription a été prise en compte.
+			Bien sûr, la validation des données de formulaire doit continuer à fonctionner.
+			<dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>Utiliser une copie de votre projet précédent ou ajouter une nouvelle facelet dans le projet.
+			</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
+
+	<article>
 		<section>
 			<h2 id="conclusion">... et bien plus</h2>
+			<p>Ce chapitre n'avait pour ambition que de présenter les fonctionnalités les plus essentielles de JSF.
+			Avec JSF, vous avez aussi la possibilité de créer un layout pour l'ensemble de l'application ou de créer
+			en facelet vos propres composants graphiques réutilisables.</p>
+			<p>Vous pouvez également enrichir votre application avec des composants graphiques plus complexes.
+			On pourra par exemple incorporer des bibliothèques tierces comme la très impressionante 
+			<a href="http://primefaces.org/">PrimeFaces</a>.
+			</p>
 		</section>
 	</article>
 

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Java Server Faces</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<script>
+		function createToc() {
+			var titles = document.getElementsByTagName("h2");
+			var toc = ""
+			for (var i = 0; i < titles.length; ++i) {
+				toc += "<li><a href='#" + titles[i].id + "'>" + titles[i].innerHTML + "</a></li>"
+			}
+			document.getElementById("toc").innerHTML = "<ol>" + toc  + "</ol>"
+		}
+	</script>
+</head>
+<body onload="createToc()">
+	<div id="titleBar">
+		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
+ 		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>
+		<script>document.write(document.title)</script> - EPSI B3 2013/2014 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a>
+	</div>
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		<section id="toc"></section>
+		<section>
+			<p>Java Server Faces (JSF) est défini par la JSR 314. Il s'agit d'un framework permettant de créer des applications
+			Web complètes.</p>
+			<p>JSF offre les avantages suivants&nbsp;:</p>
+			<ul>
+				<li>Création d'une application en suivant le modèle MVC</li>
+				<li>TODO</li>
+				
+			</ul>
+			
+			<aside>
+				<p>Il existe de nombreux frameworks permettant de développer des applications Web en Java&nbsp;: JSF, Struts2, Spring MVC, Wicket, GWT, Play, Tapestry...
+				Lorsqu'on développe une application Web Java EE, il peut être difficile de savoir lequel choisir. Pour ce cours, nous nous contenterons
+				d'une introduction à JSF qui a la particularité d'être le framework "officiellement" supporté pour Java EE et donc 
+				d'être intégré dans le serveur d'application TomEE.</p>
+			</aside>
+		</section>
+		
+		<section>
+			<h2 id="creer_projet">Créer un projet avec JSF</h2>
+			<p>L'implémentation de JSF intégrée dans TomEE est celle de la communauté Apache : MyFaces.
+			MyFaces est une Servlet qu'il faut déclarer dans le fichier web.xml de son application&nbsp;:</p>
+			<pre><code class="xml">
+  &lt;servlet&gt;
+    &lt;servlet-name&gt;Faces Servlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;javax.faces.webapp.FacesServlet&lt;/servlet-class&gt;
+    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+  &lt;/servlet&gt;
+  &lt;!-- La servlet de JSF est configurée pour répondre à toutes les requêtes de fichiers XHTML --&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;Faces Servlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;*.xhtml&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+
+</code></pre>
+			<p>Comme tous les services Java EE, JSF dispose d'un fichier de déploiement au format XML.
+			Ce fichier de déploiement s'appelle <strong>faces-config.xml</strong> et doit être situé dans
+			le répertoire WEB-INF. Le contenu minimal de ce fichier est&nbsp;:</p>
+			<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;faces-config
+  xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+                      http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+  version="2.2"&gt;
+
+&lt;/faces-config&gt;
+
+</code></pre>
+			<aside>
+				<p>Le fichier faces-config.xml est optionnel car il est possible d'intégrer JSF en utilisant
+				uniquement les annotations Java. Il est tout de même recommandé d'ajouter ce fichier dans
+				l'application même si son contenu doit rester minimal.</p>
+			</aside>
+			<p>Pour utiliser JSF dans TomEE nous allons également avoir besoin d'un service Java EE : <strong>CDI</strong>
+			(Contexts and Dependency Injection). Nous reviendrons plus tard sur l'utilité de ce service. CDI n'est pas
+			activer par défaut pour une application Web. Pour l'activer, il suffit d'ajouter le fichier de déploiement 
+			de CDI pour l'application. Ce fichier doit s'appeler <strong>beans.xml</strong> est être situé dans le 
+			répertoire WEB-INF. Le contenu minimal de ce fichier est&nbsp;:</p>
+			<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans 
+  xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                      http://java.sun.com/xml/ns/javaee/beans_1_0.xsd"&gt;
+&lt;/beans&gt;
+
+</code></pre>
+		</section>
+		
+		<section>
+			<h2 id="facelets">La vue : facelets</h2>
+			<p>JSF n'utilise pas les JSP, JSF dispose de son propre langage de déclaration de vue appelé <strong>facelets</strong>.
+			Du point de vue du développeur, nous allons voir qu'il n'y a pas un très grande différence entre une JSP et une
+			facelet. Par contre, il s'agit de deux technologies différentes&nbsp;: les balises supportées ne sont pas les
+			mêmes et une facelet n'est pas transformée en Servlet. 
+			</p>
+			<p>Une facelets est un document XHTML 1.0. Une facelets <strong>doit</strong> se conformer à la DTD XHTML-1.0-Transitional.</p>
+			
+			<figure>
+				<figcaption>Un exemple de fichier XHTML</figcaption>
+<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!DOCTYPE html PUBLIC 
+          "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+  &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;p&gt;Hello XHTML 1.0&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre>
+			</figure>
+			
+			<p>Une facelet est un document XML que le moteur JSF va analyser pour rechercher des balises spécifiques JSF.
+			L'utilisation des balises de facelets se fait grâce aux espaces de noms XML (XML namespaces).
+			Il existe six bibliothèques standards de balises JSF. Chacune dispose de son propre espace de nom XML.
+			</p>
+			
+			<table style="font-size: 80%;">
+				<col width="10%">
+				<col width="30%">
+				<col width="35%">
+				<col width="25%">
+				<thead>
+					<tr>
+						<th>Préfixe</th>
+						<th>XML namespace</th>
+						<th>Description</th>
+						<th>Exemples de balise</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>h</td>
+						<td>http://java.sun.com/jsf/html</td>
+						<td>Contient les balises pour le rendu HTML des éléments pris en charge par JSF</td>
+						<td>h:head h:body h:form h:inputText</td>
+					</tr>
+					<tr>
+						<td>f</td>
+						<td>http://java.sun.com/jsf/core</td>
+						<td>Contient les balises qui ne génèrent pas de rendu HTML mais assurent l'intéraction avec le serveur</td>
+						<td>f:actionListener f:ajax</td>
+					</tr>
+					<tr>
+						<td>c</td>
+						<td>http://java.sun.com/jsp/jstl/core</td>
+						<td>Contient les balises de la bibliothèque JSTL core (Cf <a href="08_jsp.html#jstl">cours sur les JSP</a>).
+						<b>Attention</b> cette bibliothèque a été amputée notamment de la balise c:out par rapport à la version JSP.
+						En JSF, on utilise <code>h:outputText</code> à la place.</td>
+						<td>c:if c:forEach</td>
+					</tr>
+					<tr>
+						<td>fn</td>
+						<td>http://java.sun.com/jsp/jstl/functions</td>
+						<td>Contient les fonctions de la bibliothèque JSTL functions (Cf <a href="08_jsp.html#jstl">cours sur les JSP</a>).
+						Cette bibliothèque ne contient pas de balise.</td>
+						<td>fn:contains fn:join</td>
+					</tr>
+					<tr>
+						<td>ui</td>
+						<td>http://java.sun.com/jsf/facelets</td>
+						<td>Contient les balises permettant des composition de vues. Il est possible de définir un layout
+						pour l'ensemble de l'application et d'appliquer automatiquement ce layout à chaque facelet.</td>
+						<td>ui:component ui:composition</td>
+					</tr>
+					<tr>
+						<td>cc</td>
+						<td>http://java.sun.com/jsf/composite</td>
+						<td>Permet de définir de créer de nouveaux composants graphiques.</td>
+						<td>cc:interface cc:implementation</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<aside>
+				<p>La documentation des bibliothèques de balises est disponible sur
+				<a href="https://javaserverfaces.java.net/nonav/docs/2.1/vdldocs/facelets/index.html" class="explicit">https://javaserverfaces.java.net/nonav/docs/2.1/vdldocs/facelets/index.html</a></p>
+			</aside>
+			
+			<p>La bibliothèque JSF HTML (http://java.sun.com/jsf/html) contient notamment les balises 
+			<a href="https://javaserverfaces.java.net/nonav/docs/2.1/vdldocs/facelets/h/head.html">h:head</a>, 
+			<a href="https://javaserverfaces.java.net/nonav/docs/2.1/vdldocs/facelets/h/body.html">h:body</a>.
+			Ces balises permettent d'indiquer au moteur JSF les parties du document HTML qui correspondent aux en-entêtes et au corps.
+			JSF utilise ces informations pour éventuellement enrichir la page XHTML finale avec des balises supplémentaires.</p>
+			
+			<figure>
+				<figcaption>Un exemple de facelet hello.xhtml</figcaption>
+<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!DOCTYPE html PUBLIC 
+          "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" &gt;
+&lt;h:head&gt;
+  &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;/h:head&gt;
+&lt;h:body&gt;
+  &lt;p&gt;Hello Facelet&lt;/p&gt;
+&lt;/h:body&gt;
+&lt;/html&gt;
+
+</code></pre>
+			</figure>
+			
+			<aside class="warn">
+				<p><strong>Une facelet est un fichier qui doit porter l'extension .xhtml</strong>. En effet, la servlet
+				JSF est configurée pour traiter les requêtes de type *.xhtml. Ainsi, le serveur ne 
+				revoit jamais les fichiers XHTML bruts. Il délègue le traitement à la servlet JSF
+				qui interprète la facelet.</p>
+			</aside>
+			
+			<p>On retrouve beaucoup de similitude entre facelets et JSP. Par exemple, voici l'équivalent d'une
+			page JSP affichant les paramètres en entrée avec la technogie facelets&nbsp;:</p>
+			
+			<figure>
+				<figcaption>Exemple&nbsp;: Une facelet affichant les paramètres</figcaption>
+				<pre><code class="html">
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!DOCTYPE html PUBLIC 
+          "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"&gt;
+&lt;h:head&gt;
+  &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;/h:head&gt;
+&lt;h:body&gt;
+  &lt;table&gt;
+    &lt;tbody&gt;
+      &lt;c:forEach var="entry" items="#{paramValues}"&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;h:outputText value="#{entry.key}"/&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;h:outputText value="#{fn:join(entry.value, ', ')}" /&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/c:forEach&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/h:body&gt;
+&lt;/html&gt;
+
+</code></pre>
+			</figure>
+			
+			<p>Il existe quasimement les mêmes <a href="08_jsp.html#objets_implicites">objets implicites</a>
+			accéssibles avec les expression language (EL) que pour les JSP. Comme une JSP, une facelet peut accéder
+			aux attributs des différentes portées (page, request, session, application). Cependant pour créer ces
+			attributs, nous n'allons plus utiliser l'API servlet comme vu précédemment, nous allons utiliser
+			le service <strong>CDI</strong>.</p>
+
+			<aside class="tip">
+				<header>Activer le support de JSF dans Eclipse</header>
+				<p>Eclipse supporte la complétion des balises JSF dans les facelets. Pour un projet
+				créé avec Maven, Eclipse ne détecte pas automatiquement qu'il s'agit d'un projet intégrant
+				JSF. Il est néanmoins possible d'activer manuellement le support de JSF pour le projet.
+				Dans l'explorateur de projet, faites un clique droit sur le nom du projet et sélectionnez "Properties" (ou <kbd>ALT+Entrée</kbd>).
+				Dans l'arborescence des propriétés, sélectionnez "Project Facets" et dans la liste des Facets, cochez "Java Server Faces" puis
+				cliquez sur "Ok".</p>
+				<img width="90%" src="assets/eclipse_configure_jsf.png" alt="Configuration de JSF dans Eclipse" />
+			</aside>
+		</section>
+		
+		<section>
+			<h2 id="introduction_cdi">Une introduction à CDI</h2>
+			<p>Contexts and Dependency Injection ou <strong>CDI</strong> est un service Java EE permettant
+			de déclarer des objets Java qui seront automatiquement créés par le serveur et positionnés comme
+			attributs dans la portée désirées. Ensuite ces objets sont accessibles depuis une JSP ou une facelets
+			ou encore peuvent être injectés dans un composant Java EE ou un autre objet géré par CDI.</p>
+		</section>
+		<section>
+			<h3>Déclarer un objet avec CDI</h3>
+			<p>Nous verrons dans l'exemple ci-dessous une déclaration par annotations&nbsp;:</p>
+			
+			<figure>
+				<figcaption>Une déclaration de portée requête</figcaption>
+					<pre><code class="java">
+package fr.epsi;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+
+@Named
+@RequestScoped
+public class Personne {
+  private String nom;
+  private int age;
+
+  public String getNom() {
+    return nom;
+  }
+
+  public void setNom(String nom) {
+    this.nom = nom;
+  }
+
+  public int getAge() {
+    return age;
+  }
+
+  public void setAge(int age) {
+    this.age = age;
+  }
+}
+
+</code></pre>
+			</figure>
+			<p>L'annotation <code>@Named</code> suffit à indiquer que cette classe peut être gérée par CDI.
+			L'annotation <code>RequestScoped</code> indique que l'instance de l'objet sera un attribut de portée requête.
+			Sur le même principe, il existe les annotations <code>@SessionScoped</code> et <code>@ApplicationScoped</code>.</p>
+			<p>Par défaut, le nom de l'instance sera le même que le nom de la classe commençant par une minuscule.
+			Ainsi, une fois cette classe ajoutée dans le projet, il est possible de l'utiliser dans une facelet&nbsp;:
+			</p>
+			<figure>
+				<figcaption>Utilisation dans une facelet d'un bean géré par CDI</figcaption>
+				<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!DOCTYPE html PUBLIC 
+          "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" &gt;
+&lt;h:head&gt;
+  &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;/h:head&gt;
+&lt;h:body&gt;
+  &lt;p&gt;Bonjour #{personne.nom}&lt;/p&gt;
+&lt;/h:body&gt;
+&lt;/html&gt;
+
+</code></pre>
+			</figure>
+			<p>S'il n'existe pas d'attribut personne, celui-ci sera automatiquement créé avec une portée requête.</p>
+			<p>Il est également possible de spécifier le nom de l'instance dans l'annotation <code>@Named</code>&nbsp;:</p>
+			<pre><code class="java">@Named("unePersonne")</code></pre>
+
+			<h3>Le fichier de déploiement beans.xml</h3>
+			<p>Comme la plupart des services Java EE, CDI dispose d'un fichier de déploiement appelé <strong>beans.xml</strong>.
+			Ce fichier sert à déclarer des fonctionnalités avancées pour CDI mais il doit également être présent dans
+			l'arborescence de l'application pour permettre au conteneur d'activer le service CDI pour cette application.
+			Pour une application Web, le fichier beans.xml doit se trouver dans le répertoire WEB-INF. Sa structure minimale
+			est&nbsp;:
+			</p>
+			<figure>
+				<figcaption>Contenu minimal du fichier de déploiement beans.xml</figcaption>
+				<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans 
+  xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                      http://java.sun.com/xml/ns/javaee/beans_1_0.xsd"&gt;
+&lt;/beans&gt;
+
+</code></pre>
+			</figure>
+		</section>
+		<section>
+			<h2 id="modele">Le modèle</h2>
+			<p>Dans une application JSF, n'importe quelle instance d'objet Java gérée par CDI peut jouer le rôle du modèle.
+			Dans la terminologie JSF, on parle de <em>backing beans</em> pour désigner les objets Java avec lesquels
+			la facelet iteragie.
+			Par exemple, une instance de la classe <code>Personne</code> vue précédemment peut être utilisée comme modèle
+			dans un formulaire d'une facelet&nbsp;:
+			</p>
+			<figure>
+				<figcaption>Utilisation d'un bean CDI dans un formulaire</figcaption>
+				<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!DOCTYPE html PUBLIC 
+          "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" &gt;
+&lt;h:head&gt;
+  &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;/h:head&gt;
+&lt;h:body&gt;
+  &lt;h:form acceptcharset="UTF-8" &gt;
+    &lt;h:outputLabel for="nom" value="nom" /&gt;
+    &lt;h:inputText id="nom" value="#{personne.nom}"/&gt;
+
+    &lt;h:outputLabel for="age" value="âge" /&gt;
+    &lt;h:inputText id="age" value="#{personne.age}" /&gt;
+
+    &lt;h:commandButton /&gt;
+  &lt;/h:form&gt;
+&lt;/h:body&gt;
+&lt;/html&gt;
+
+</code></pre>
+			</figure>
+			
+			<p>Notez que depuis le début de ce chapitre, les EL (expression language) utilisées dans les facelets
+			sont délimitées par <strong>#{ }</strong>. Comme pour les JSP, JSF supporte l'écriture d'une EL
+			sous la forme <strong>${ }</strong>. Cependant, l'utilisation du caractère <strong>#</strong>
+			indique que l'on souhaite activer le <em>value binding</em>. Cette fonctionnalité
+			indique au moteur JSF, que le contenu du bean <code>personne</code> devra également être mis à jour
+			avec les données envoyées par le client. Concrètement, il est plus simple d'utiliser
+			systématiquement avec JSF la notation <strong>#{ }</strong>.</p>
+		</section>
+		
+		<section>
+			<h2 id="controleur">Le contrôleur</h2>
+			<p>JSF est basé sur l'API servlet mais il permet aux développeurs d'application Web de s'en affranchir.
+			Ainsi, avec JSF, un contrôleur est simplement une classe Java gérée par CDI qui expose des méthodes
+			qui seront appelées par JSF lors de la réception des requêtes du client.</p>
+			<p>La génération d'action vers le contrôleur se fait lorsque le client envoie des données vers le serveur. 
+			En HTML, cela se fait par la une soumission de formulaire. Avec JSF, la soumission de formulaire peut se faire avec la balise <code>h:commandLink</code> ou
+			la balise <code>h:commandButton</code>. Ces deux balise JSF disposent de l'attribut <code>action</code>
+			qui permet d'écrire une EL définissant l'appel à une fonction d'un backing bean (une instance gérée par CDI).
+			Il est possible de préciser dans l'EL les paramètres qui seront passés à la méthode côté serveur.</p>
+			<figure>
+				<figcaption>Définition d'une action sur un h:commandButton</figcaption>
+				<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!DOCTYPE html PUBLIC 
+          "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" &gt;
+&lt;h:head&gt;
+  &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;/h:head&gt;
+&lt;h:body&gt;
+  &lt;h:form acceptcharset="UTF-8" &gt;
+    &lt;h:outputLabel for="nom" value="nom" /&gt;
+    &lt;h:inputText id="nom" value="#{personne.nom}"/&gt;
+
+    &lt;h:outputLabel for="age" value="âge" /&gt;
+    &lt;h:inputText id="age" value="#{personne.age}" /&gt;
+
+    &lt;h:commandButton action="#{referentielPersonne.chercher(personne)}" 
+                     value="chercher" /&gt;
+  &lt;/h:form&gt;
+&lt;/h:body&gt;
+&lt;/html&gt;
+
+</code></pre>
+			</figure>
+			
+			<p>Dans la facelet ci-dessus, l'action déclenchée par le bouton "chercher" est&nbsp;:</p>
+			<pre><code class="el">#{referentielPersonne.chercher(personne)}</code></pre>
+			<p>Cela signifie que JSF va chercher un bean CDI portant le nom "referentielPersonne"
+			et il va invoquer la méthode <code>chercher</code> en passant en paramètre une instance
+			de la classe Personne dont les attributs <code>nom</code> et <code>age</code> auront
+			été au préalable renseignés avec les valeurs envoyées dans la requête.</p>
+			
+			<p>Ainsi un contrôleur valide pourrait être&nbsp;:</p>
+			
+			<figure>
+				<figcaption>Un exemple de contrôleur</figcaption>
+				<pre><code class="java">
+package fr.epsi;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
+
+@Named
+@ApplicationScoped
+public class ReferentielPersonne {
+
+  public void chercher(Personne personne) {
+    // ...
+  }
+
+}
+
+</code></pre>
+			</figure>
+		</section>
+		<section>
+			<h2 id="navigation">La navigation</h2>
+			<p>Une fonctionnalité importante des frameworks Web est la gestion de la navigation.
+			Après avoir traité une requête, vers quelle vue, un contrôleur doit-il déléguer le traitement
+			pour construire la représentation finale&nbsp;?
+			</p>
+			<p>Dans JSF, les vues sont les fichiers XHTML (les facelets). Les identifiants des facelets correspondent
+			simplement au nom du fichier sans l'extension .xhtml. Une méthode de contrôleur indique la vue résultat
+			en retournant son identifiant. Si la méthode de contrôleur ne retourne aucune valeur (void) ou retourne
+			null, la vue résultat est la vue courante.</p>
+			<p>Si nous reprenons notre exemple de contrôleur, nous pouvons indiquer la vue résultat en modifiant
+			la méthode <code>chercher</code> pour qu'elle retourne une chaîne de caractères.</p>
+			<figure>
+				<figcaption>Spécification de la vue par un contrôleur</figcaption>
+				<pre><code class="java">
+package fr.epsi;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
+
+@Named
+@ApplicationScoped
+public class ReferentielPersonne {
+
+  public String chercher(Personne personne) {
+    // ...
+    
+    // il doit exister une fichier resultat.xhtml qui correspond
+    // à la facelet qui génèrera la vue.
+    return "resultat";
+  }
+
+}
+
+</code></pre>
+			</figure>
+			<p>Pour les logiques de navigation simples, il est possible d'utiliser les balises <code>h:link</code> et <code>h:button</code>
+			dans les facelets. Ces balises disposent de l'attribut <code>outcome</code>. Cet attribut donne l'identifiant
+			de la facelet cible. Bien sûr, la valeur de l'attribut <code>outcome</code> peut être le résultat d'une EL.</p>
+			<figure>
+				<figcaption>Exemple de navigation simple avec h:link</figcaption>
+				<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!DOCTYPE html PUBLIC 
+          "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" &gt;
+&lt;h:head&gt;
+  &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;/h:head&gt;
+&lt;h:body&gt;
+  &lt;ul&gt;
+    &lt;!-- un lien vers la facelet entree.xhtml --&gt;
+    &lt;li&gt;&lt;h:link outcome="entree" value="Entrée"/&gt;&lt;/li&gt;
+    &lt;!-- un lien vers la facelet plat.xhtml --&gt;
+    &lt;li&gt;&lt;h:link outcome="plat" value="Plat"/&gt;&lt;/li&gt;
+    &lt;!-- un lien vers la facelet fromage.xhtml ou vers la facelet dessert.xhtml --&gt;
+    &lt;li&gt;&lt;h:link outcome="#{param['fromage'] ? 'fromage' : 'dessert'}" 
+                value="Fromage ou Dessert"/&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/h:body&gt;
+&lt;/html&gt;
+
+</code></pre>
+			</figure>
+		</section>
+		
+		<section>
+			<h2 id="validation">La validation de formulaire</h2>
+			<p>La validation des données de formulaire est une autre fonctionnalité importante des frameworks Web.
+			La biblothèque de balises <a href="https://javaserverfaces.java.net/nonav/docs/2.1/vdldocs/facelets/f/tld-summary.html">core</a>
+			de JSF fournit, entre autres, les balises <code>f:validateDoubleRange</code>, <code>f:validateLength</code>, <code>f:validateLongRange</code>,
+			<code>f:validateBean</code>, <code>f:validateRegex</code> et <code>f:validateRequired</code>.
+			Utilisées comme balises filles des entrées de formulaire, elles permettent d'ajouter des règles de validité
+			pour les données de formulaire. JSF validera automatiquement les données soumises par l'utilisateur avant
+			de transférer le traitement au contrôleur.</p>
+			
+			<figure>
+				<figcaption>Ajout des balises de validation</figcaption>
+				<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!DOCTYPE html PUBLIC 
+          "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" &gt;
+&lt;h:head&gt;
+  &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;/h:head&gt;
+&lt;h:body&gt;
+  &lt;h:form acceptcharset="UTF-8" &gt;
+    &lt;h:outputLabel for="nom" value="nom" /&gt;
+    &lt;h:inputText id="nom" value="#{personne.nom}"&gt;
+      &lt;f:validateLength minimum="1"/&gt;
+    &lt;/h:inputText&gt;
+    &lt;h:message for="nom"/&gt;
+
+    &lt;h:outputLabel for="age" value="âge" /&gt;
+    &lt;h:inputText id="age" value="#{personne.age}"&gt;
+      &lt;f:validateLongRange minimum="1" maximum="99"/&gt;
+    &lt;/h:inputText&gt;
+    &lt;h:message for="age"/&gt;
+
+    &lt;h:commandButton action="#{referentielPersonne.chercher(personne)}" 
+                     value="chercher" /&gt;
+  &lt;/h:form&gt;
+&lt;/h:body&gt;
+&lt;/html&gt;
+
+</code></pre>
+			</figure>
+			
+			<p>Si la validation échoue, JSF retourne la même vue au client sans solliciter le contrôleur.
+			La vue dispose dans son contexte des messages d'erreur de validation. La balise <code>h:message</code>
+			permet d'indiquer où les erreurs d'une entrée de formulaire seront affichées dans la réponse. 
+			</p>
+			
+			<aside class="tip">
+				<p>Les messages d'erreur de validation générés par JSF ne sont pas toujours très adaptés.
+				Pour surcharger les messages des validateurs, on peut utiliser l'attribut <code>validatorMessage</code>
+				sur les balises telles que h:inputText, h:inputTextArea et h:inputSecret.</p>
+				<p>Il est également possible de redéfinir les messages par défaut de JSF pour les adapter
+				à son application. Pour plus d'information, vous pouvez vous reporter à ce <a href="http://www.mkyong.com/jsf2/customize-validation-error-message-in-jsf-2-0/">post</a>.</p>
+			</aside>
+		</section>
+		<section>
+			<h2 id="bean_validation">La validation avec <em>Bean Validation</em></h2>
+		</section>
+
+		<section>
+			<h2 id="ajax">Les requêtes Ajax</h2>
+		</section>
+
+		<section>
+			<h2 id="conclusion">... et bien plus</h2>
+		</section>
+	</article>
+
+</body>
+</html>

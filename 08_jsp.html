@@ -9,6 +9,7 @@
 	
 	<script src="highlight/highlight.pack.js"></script>
 	<script>hljs.initHighlightingOnLoad();</script>
+	<script src="js/toc.js"></script>
 </head>
 <body>
 	<div id="titleBar">
@@ -18,22 +19,24 @@
 	</div>
 	<article>
 		<h1><script>document.write(document.title)</script></h1>
+		<section id="toc"></section>
 		<section>
 			<p>Nous avons vu que les servlets permettent facilement d'exécuter du code Java pour traiter une requête HTTP.
 			Cependant, l'API servlet n'est pas très pratique pour générer une réponse orientée texte (telle qu'une page HTML).
 			Les Java Server Pages (JSP) ont été la première solution introduite pour offrir une alternative plus simple pour l'ecriture
 			de patron (template) de réponse.</p>
+		</section>
 			
-			<aside class="tip">
-				<header>Développer des JSP avec TomEE</header>
-				<p>TomEE est un serveur livré avec une configuration par défaut conçue pour un environnement de production.</p>
-				<p>Pour le développement de JSP, nous allons voir qu'il est plus intéressant de configurer le serveur de test afin qu'il 
-				prenne en compte nos modifications dans les JSP à la volée sans qu'il soit nécessaire de redéployer l'application.
-				Pour des raisons de performance, la prise en compte à chaud des modifications n'est pas le comportement par défaut de TomEE.</p>
-				<p>Pour activer ce comportement, il va falloir modifier la configuration du serveur. Pour cela, allez dans le répertoire
-				d'installation de TomEE et ouvez le fichier <strong>conf/web.xml</strong>. Aux alentours de la ligne 225, vous allez trouver la
-				déclaration suivante&nbsp;:</p>
-				<pre><code class="xml">
+		<section>
+			<h2>Développer des JSP avec TomEE</h2>
+			<p>TomEE est un serveur livré avec une configuration par défaut conçue pour un environnement de production.</p>
+			<p>Pour le développement de JSP, nous allons voir qu'il est plus intéressant de configurer le serveur de test afin qu'il 
+			prenne en compte nos modifications dans les JSP à la volée sans qu'il soit nécessaire de redéployer l'application.
+			Pour des raisons de performance, la prise en compte à chaud des modifications n'est pas le comportement par défaut de TomEE.</p>
+			<p>Pour activer ce comportement, il va falloir modifier la configuration du serveur. Pour cela, allez dans le répertoire
+			d'installation de TomEE et ouvez le fichier <strong>conf/web.xml</strong>. Aux alentours de la ligne 225, vous allez trouver la
+			déclaration suivante&nbsp;:</p>
+			<pre><code class="xml">
 &lt;servlet&gt;
   &lt;servlet-name&gt;jsp&lt;/servlet-name&gt;
   &lt;servlet-class&gt;org.apache.jasper.servlet.JspServlet&lt;/servlet-class&gt;
@@ -53,8 +56,8 @@
 &lt;/servlet&gt;
 
 </code></pre>
-				<p>Faites un backup de ce fichier et remplacez cette configuration par celle-ci&nbsp;:</p>
-				<pre><code class="xml">
+			<p>Faites un backup de ce fichier et remplacez cette configuration par celle-ci&nbsp;:</p>
+			<pre><code class="xml">
 &lt;servlet&gt;
   &lt;servlet-name&gt;jsp&lt;/servlet-name&gt;
   &lt;servlet-class&gt;org.apache.jasper.servlet.JspServlet&lt;/servlet-class&gt;
@@ -79,10 +82,9 @@
 
 </code></pre>
 
-				<p><strong>Détruisez maintenant votre instance de serveur dans votre IDE (dans Eclipse, supprimez le serveur dans votre vue "Servers") et créez une nouvelle
-				instance d'un serveur TomEE afin de prendre en compte ces modifications.</strong></p>
-				<p>Attention, si vous faites une mauvaise manipulation, votre serveur peut ne plus démarrer correctement.</p>
-			</aside>
+			<p><strong>Détruisez maintenant votre instance de serveur dans votre IDE (dans Eclipse, supprimez le serveur dans votre vue "Servers") et créez une nouvelle
+			instance d'un serveur TomEE afin de prendre en compte ces modifications.</strong></p>
+			<p>Attention, si vous faites une mauvaise manipulation, votre serveur peut ne plus démarrer correctement.</p>
 		</section>
 	</article>
 

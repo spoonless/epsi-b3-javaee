@@ -9,6 +9,7 @@
 	
 	<script src="highlight/highlight.pack.js"></script>
 	<script>hljs.initHighlightingOnLoad();</script>
+	<script src="js/toc.js"></script>
 </head>
 <body>
 	<div id="titleBar">
@@ -18,6 +19,7 @@
 	</div>
 	<article>
 		<h1><script>document.write(document.title)</script></h1>
+		<section id="toc"></section>
 		<p>Une servlet est un <strong>composant Web</strong> de Java EE. Elle permet de traiter une requête entrante sur un
 		serveur et de générer une réponse dynamique.</p>
 		<p>L'API <strong>servlet</strong> est définie par la spécification <a href="http://jcp.org/aboutJava/communityprocess/final/jsr315/index.html">JSR 315</a> et la version actuelle est la 3.0.</p>
@@ -219,7 +221,7 @@ public class HelloServlet extends HttpServlet {
 	</article>
 	
 	<article class="exercice">
-		<h1>Exercice : Servlet de temps</h1>
+		<h2>Exercice : Servlet de temps</h2>
 		<dl>
 			<dt>Objectif</dt>
 			<dd>Réaliser une application qui retourne une page web affichant la date et l'heure du serveur.
@@ -244,7 +246,7 @@ public class HelloServlet extends HttpServlet {
 	</article>
 
 	<article class="exercice">
-		<h1>Exercice : traitement d'un formulaire</h1>
+		<h2>Exercice : traitement d'un formulaire</h2>
 		<dl>
 			<dt>Objectif</dt>
 			<dd>Réaliser une application qui fournit une page d'accueil présentant un formulaire Web.
@@ -264,7 +266,7 @@ public class HelloServlet extends HttpServlet {
 	</article>
 
 	<article class="exercice">
-		<h1>Exercice : traitement d'un formulaire (suite)</h1>
+		<h2>Exercice : traitement d'un formulaire (suite)</h2>
 		<dl>
 			<dt>Objectif</dt>
 			<dd>Améliorer l'application Web de l'exercice précédent. Maintenant le serveur doit valider que le client
@@ -286,7 +288,7 @@ public class HelloServlet extends HttpServlet {
 	</article>
 	
 	<article>
-		<h1>Utilisation du fichier de déploiement web.xml</h1>
+		<h2>Utilisation du fichier de déploiement web.xml</h2>
 		<section>
 			<p>Nous avons vu que l'annotation <code>@WebServlet</code> permet d'indiquer comment une servlet doit être déployée dans le serveur. S'il préfère, 
 			le développeur a la possibilité	de spécifier ces informations dans le fichier de déploiement <strong>web.xml</strong> plutôt que d'utiliser une annotation.</p>
@@ -334,7 +336,7 @@ public class HelloServlet extends HttpServlet {
 		</aside>
 	</article>
 	<article class="exercice">
-		<h1>Exercice&nbsp;: déploiement à partir du web.xml</h1>
+		<h2>Exercice&nbsp;: déploiement à partir du web.xml</h2>
 		<dl>
 			<dt>Objectif</dt>
 			<dd>Déployer une servlet en utilisant le fichier de déploiement web.xml. Pour cela, vous allez déployer une servlet fournie

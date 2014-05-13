@@ -9,18 +9,9 @@
 	
 	<script src="highlight/highlight.pack.js"></script>
 	<script>hljs.initHighlightingOnLoad();</script>
-	<script>
-		function createToc() {
-			var titles = document.getElementsByTagName("h2");
-			var toc = ""
-			for (var i = 0; i < titles.length; ++i) {
-				toc += "<li><a href='#" + titles[i].id + "'>" + titles[i].innerHTML + "</a></li>"
-			}
-			document.getElementById("toc").innerHTML = "<ol>" + toc  + "</ol>"
-		}
-	</script>
+	<script src="js/toc.js"></script>
 </head>
-<body onload="createToc()">
+<body>
 	<div id="titleBar">
 		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
  		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>

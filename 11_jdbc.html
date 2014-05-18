@@ -521,11 +521,11 @@ public class MyServlet extends HttpServlet {
 				</figure>
 				<p>Le code précédent contruit la requête SQL en concaténant des chaînes de caractères à partir
 				des paramètres reçus. Il exécute la requête et s'assure qu'elle retourne au moins un résultat.</p>
-				<p>Un utilisateur mal intentionné peut alors saisir comme login et mot de passe&nbsp;: <strong><kbd>' or 1 = 1</kbd></strong>.
+				<p>Un utilisateur mal intentionné peut alors saisir comme login et mot de passe&nbsp;: <strong><kbd>' or '' = '</kbd></strong>.
 				Ainsi la requête SQL sera&nbsp;:</p>
 				<figure>
 					<pre><code class="sql">
-  select * from users where login = '' or 1 = 1 and password = '' or 1 = 1
+  select * from users where login = '' or '' = '' and password = '' or '' = ''
 
 </code></pre>
 				</figure>
@@ -554,7 +554,7 @@ public class MyServlet extends HttpServlet {
 				ne peuvent pas en modifier sa structure. La requête exécutée sera équivalente à&nbsp;:</p>
 				<figure>
 					<pre><code class="sql">
-  select * from users where login = ''' or 1 = 1' and password = ''' or 1 = 1'
+  select * from users where login = ''' or '''' = ''' and password = ''' or '''' = '''
 
 </code></pre>
 				</figure>

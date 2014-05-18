@@ -24,6 +24,47 @@
 		JDBC fait partie de l'édition standard et est donc disponible directement dans le JDK.
 		</section>
 		<section>
+			<h2>Préambule : try-with-resources</h2>
+			<p>L'API JDBC utilise beaucoup d'objets qui sont des ressources de base de données que
+			le développeur doit <strong>impérativement</strong> fermer par l'appel à des méthodes <code>close()</code>.
+			<strong>Ne pas fermer correctement les objets alloués par JDBC est un bug</strong> qui conduit habituellement
+			 à un épuisement des ressources système, empêchant l'application de fonctionner correctement.</p>
+			 
+			<p>Java 7 a introduit l'interface <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/AutoCloseable.html">AutoCloseable</a>
+			ainsi qu'une nouvelle syntaxe dénommée <a href="http://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html"><strong>try-with-resources</strong></a>. 
+			L'API JDBC utilise massivement l'interface <code>AutoCloseable</code> et autorise donc le try-with-resources.
+			Ainsi, les deux codes ci dessous sont équivalents puisque la classe 
+			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">java.sql.Connection</a>
+			implémente <code>AutoCloseable</code>&nbsp;:</p>
+			
+			<figure>
+				<figcaption>Avec try-with-resources</figcaption>
+				<pre><code class="java">
+  try (java.sql.Connection connection = dataSource.getConnection()) {
+    // ...
+  }
+
+</code></pre>
+			</figure>
+
+			<figure>
+				<figcaption>Sans try-with-resources</figcaption>
+				<pre><code class="java">
+  java.sql.Connection connection = dataSource.getConnection();
+  try {
+    // ...
+  }
+  finally {
+    if (connection != null) {
+      connection.close();
+    }
+  }
+
+</code></pre>
+			</figure>
+			<p>Tout au long de ce chapitre sur JDBC, nous utiliserons alternativement l'une ou l'autre des syntaxes.</p>
+		</section>
+		<section>
 			<h2>Le pilote de base de données</h2>
 			<p>JDBC est une API indépendante de la base de données sous-jacente. D'un côté, les développeurs implémentent
 			les interactions avec une base de données à partir de cette API. D'un autre côté, chaque fournisseur de SGBDR fournit sa propre
@@ -91,7 +132,8 @@
 </code></pre>
 			</figure>
 			
-			<p>Lorsque la connexion n'est plus nécessaire, <strong>il faut libérer les ressources allouées</strong> en la fermant avec la méthode <code>close()</code>.</p>
+			<p>Lorsque la connexion n'est plus nécessaire, <strong>il faut libérer les ressources allouées</strong> en la fermant avec la méthode <code>close()</code>.
+			La classe <code>Connection</code> implémente <code>AutoCloseable</code>, ce qui l'autorise a être utilisée dans un try-with-resources.</p>
 			<figure>
 				<pre><code class="java">
   connection.close();
@@ -141,13 +183,11 @@ public class MyServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
                           throws ServletException, IOException {
-    Connection connection = dataSource.getConnection();
-    try {
+
+    try (Connection connection = dataSource.getConnection()) {
       // ...
     }
-    finally {
-      connection.close();
-    }
+
   }
 
 }
@@ -194,7 +234,7 @@ public class MyServlet extends HttpServlet {
 			
 			<aside class="info">
 				<header>DataSource et JNDI</header>
-				<p>L'annotation <code>@Resource</code> se base sur JNDI (Java Naming and Directory Interface) pour rechercher
+				<p>L'annotation <code>@Resource</code> se base sur <strong>JNDI</strong> (Java Naming and Directory Interface) pour rechercher
 				la <code>DataSource</code> demandée. JNDI est une API
 				standard de Java permettant de se connecter à des annuaires (notamment les annuaires LDAP). Les serveurs d'application
 				Java EE disposent de leur propre implémentation interne d'annuaire permettant de stocker des instances d'objet.</p>
@@ -267,18 +307,261 @@ public class MyServlet extends HttpServlet {
 		</section>
 		<section>
 			<h2>Les requêtes SQL (Statement)</h2>
-			<p></p>
+			<p>L'interface <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">Connection</a> permet,
+			entre autres, de créer des <code>Statements</code>. Un <code>Statement</code> est une interface qui permet
+			d'effectuer des requêtes SQL. On distingue 3 types de <code>Statement</code>&nbsp;:</p>
+			<ul>
+				<li><a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html"><code>Statement</code></a>&nbsp;:
+				Permet d'exécuter une requête SQL et d'en connaître le résultat.
+				</li>
+				<li><a href="http://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html"><code>PreparedStatement</code></a>&nbsp;:
+				Comme le <code>Statement</code>, le <code>PreparedStatement</code> permet d'exécuter une requête SQL et d'en connaître le résultat.
+				Le <code>PreparedStatement</code> est une requête paramétrable. Pour des raisons de performance, on peut préparer une requête
+				et ensuite l'exécuter autant de fois que nécessaire en passant des paramètres différents. Le <code>PreparedStatement</code>
+				est également pratique pour se prémunir efficacement des failles de sécurité par injection SQL.
+				</li>
+				<li><a href="http://docs.oracle.com/javase/7/docs/api/java/sql/CallableStatement.html"><code>CallableStatement</code></a>&nbsp;:
+				permet d'exécuter des procédures stockées sur le SGBDR. On peut ainsi passer des paramètres en entrée du <code>CallableStatement</code>
+				et récupérer les paramètres de sortie après exécution.
+			</ul> 
+		</section>
+		<section>
+			<h2>Le Statement</h2>
+			<p>Un <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html"><code>Statement</code></a>
+			 est créé à partir d'une des méthodes <code>createStatement</code> de l'interface
+			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">Connection</a>. &Agrave; partir
+			d'un <code>Statement</code>, il est possible d'exécuter des requêtes SQL&nbsp;:</p>
+			<figure>
+				<figcaption>Utilisation d'un Statement</figcaption>
+				<pre><code class="java">
+  java.sql.Statement stmt = connection.createStatement();
+
+  // méthode la plus générique d'un statement. Retourne true si la requête SQL 
+  // exécutée est un select (c'est-à-dire si la requête produit un résultat) 
+  stmt.execute("insert into myTable (col1, col2) values ('value1', 'value1')");
+
+  // méthode spécialisée pour l'exécution d'un select. Cette méthode retourne
+  // un ResultSet (voir plus loin)
+  stmt.executeQuery("select col1, col2 from myTable");
+
+  // méthode spécialisée pour toutes les requêtes qui ne sont pas des select.
+  // Contrairement à ce que son nom indique, on peut l'utiliser pour des requêtes
+  // DDL (create table, drop table, ...) et pour toutes requêtes DML (insert, update, delete).
+  stmt.executeUpdate("insert into myTable (col1, col2) values ('value1', 'value1')");
+
+</code></pre>
+			</figure>
+			<p><strong>Attention</strong>, un <code>Statement</code> est une ressource JDBC et il doit être
+			fermé dès qu'il n'est plus nécessaire&nbsp;:</p>
+			<figure>
+				<pre><code class="java">
+  stmt.close();
+
+</code></pre>
+			</figure>
+			
+			<p>La classe <code>Statement</code> implémente <code>AutoCloseable</code>, ce qui l'autorise a être utilisée dans un try-with-resources</p>
+			
+			<p>Pour des raisons de performance, il est également possible d'utiliser un <code>Statement</code>
+			en mode batch. Cela signifie, que l'on accumule l'ensemble des requêtes SQL côté client, puis
+			on les envoie en bloc au serveur plutôt que de les exécuter séquentiellement.</p>
+
+			<figure>
+				<figcaption>Utilisation d'un Statement en mode batch</figcaption>
+				<pre><code class="java">
+  java.sql.Statement stmt = connection.createStatement();
+  try {
+    stmt.addBatch("update myTable set col3 = 'sameValue' where col1 = col2");
+    stmt.addBatch("update myTable set col3 = 'anotherValue' where col1 &lt;&gt; col2");
+    stmt.addBatch("update myTable set col3 = 'nullValue' where col1 = null and col2 = null");
+    // les requêtes SQL sont soumises au serveur au moment de l'appel à executeBatch
+    stmt.executeBatch();
+  }
+  finally {
+    stmt.close();
+  }
+
+</code></pre>
+			</figure>
 		</section>
 		<section>
 			<h2>Le ResultSet</h2>
-			<p></p>
+			<p>Lorsqu'on exécute une requête SQL de type <code>select</code>, JDBC nous donne accès à
+			une instance de <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/ResultSet.html"><code>ResultSet</code></a>.
+			Avec un <code>ResultSet</code>, il est possible de parcourir ligne à ligne les résultats de la requête 
+			(comme pour un itérateur) grâce à la méthode
+			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/ResultSet.html#next%28%29">ResultSet.next()</a>.
+			Pour chaque résultat, il est possible d'extraire les données dans un type supporté par Java.</p>
+			<p>Le <code>ResultSet</code> offre une liste de méthodes de la forme&nbsp;:</p>
+			<figure>
+				<pre><code class="java">
+  ResultSet.getXXX(String columnName)
+  ResultSet.getXXX(int columnIndex)
+
+</code></pre>
+			</figure>
+			<p>XXX représent le type Java que la méthode retourne. Si on passe un numéro en paramètre, il s'agit
+			du numéro de la colonne dans l'ordre du select. <strong>Attention</strong>, le numéro de la première colonne est <strong>1</strong>.</p>
+
+			<figure>
+				<figcaption>Exemple d'utilisation d'un ResultSet</figcaption>
+				<pre><code class="java">
+  String request = "select titre, date_sortie, duree from films";
+
+  try (java.sql.Statement stmt = connection.createStatement();
+       java.sql.ResultSet resultSet = stmt.executeQuery(request);) {
+    
+    // on parcourt l'ensemble des résultats retourné par la requête
+    while (resultSet.next()) {
+      String titre = resultSet.getString("titre");
+      java.sql.Date dateSortie = resultSet.getDate("date_sortie");
+      long duree = resultSet.getLong("duree");
+      
+      // ...
+    }
+  }
+
+</code></pre>
+			</figure>
+			<p><strong>Attention</strong>, un <code>ResultSet</code> est une ressource JDBC et il doit être
+			fermé dès qu'il n'est plus nécessaire&nbsp;:</p>
+			<figure>
+				<pre><code class="java">
+  resultSet.close();
+
+</code></pre>
+			</figure>
+			<p>La classe <code>ResultSet</code> implémente <code>AutoCloseable</code>, ce qui l'autorise a être utilisée dans un try-with-resources.</p>
 		</section>
 		<section>
 			<h2>Le PreparedStatement</h2>
-			<p></p>
+			<p>Un <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html"><code>PreparedStatement</code></a>
+			 est créé à partir d'une des méthodes <code>prepareStatement</code> de l'interface
+			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">Connection</a>.
+			Lors de l'appel à <code>prepareStatement</code>, il faut passer la requête SQL a exécuter. Par contre cette requête
+			peut contenir des <strong>?</strong> indiquant l'emplacement des paramètres.</p>
+			<p>L'interface <code>PreparedStatement</code> fournit des méthodes de la forme&nbsp;:</p>
+			<figure>
+				<pre><code class="java">
+  PreparedStatement.setXXX(int parameterIndex, XXX x)
+
+</code></pre>
+			</figure>
+			<p>XXX représente le type, parameterIndex la position du paramètre dans la requête SQL (<strong>attention</strong>, le premier paramètre a l'indice <strong>1</strong>) et
+			x la valeur du paramètre.</p>
+			
+			<aside class="tip">
+				&Agrave; noter que pour positionner un paramètre SQL à NULL, il faut utiliser la méthode
+				<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html#setNull%28int,%20int%29">setNull(int parameterIndex, int sqlType)</a>.
+			</aside>
+
+			<figure>
+				<figcaption>Exemple d'utilisation d'un PreparedStatement</figcaption>
+				<pre><code class="java">
+  String request = "insert into films (titre, date_sortie, duree) values (?, ?, ?)";
+
+  try (java.sql.PreparedStatement pstmt = connection.prepareStatement(request)) {
+    
+    pstmt.setString(1, "live JDBC");
+    pstmt.setDate(2, new java.sql.Date(System.currentTimeMillis()));
+    pstmt.setInt(3, 120);
+    
+    pstmt.executeUpdate();
+  }
+
+</code></pre>
+			</figure>
+
+			<p><strong>Attention</strong>, un <code>PreparedStatement</code> est une ressource JDBC et il doit être
+			fermé dès qu'il n'est plus nécessaire&nbsp;:</p>
+			<figure>
+				<pre><code class="java">
+  pstmt.close();
+
+</code></pre>
+			</figure>
+			<p>La classe <code>PreparedStatement</code> implémente <code>AutoCloseable</code>, ce qui l'autorise a être utilisée dans un try-with-resources</p>
+			
+			<p>Le <code>PreparedStatement</code> reprend une API similaire à celle du <code>Statement</code>&nbsp;:</p>
+			<ul>
+				<li>une méthode <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html#execute%28%29"><code>execute</code></a> pour tous les types de requête SQL</li>
+				<li>une méthode <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html#executeQuery%28%29"><code>executeQuery</code></a> (qui retourne un <code>ResultSet</code>) pour les requêtes SQL de type select</li>
+				<li>une méthode <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html#executeUpdate%28%29"><code>executeUpdate</code></a> pour toutes les requêtes SQL qui ne sont pas des select</li>
+			</ul>
+			
+			<p>Le <code>PreparedStatement</code> offre trois avantages&nbsp;:</p>
+			<ul>
+				<li>il permet de convertir efficacement les types Java en types SQL pour les données en entrée</li>
+				<li>il permet d'améliorer les performances si on désire exécuter plusieurs fois la même requête avec des paramètres différents. &Agrave;
+				noter que le <code>PreparedStatement</code> supporte lui aussi le mode batch</li>
+				<li>il permet de se prémunir de failles de sécurité telles que l'injection SQL</li>
+			</ul>
+			
+			<aside class="info">
+				<header>L'injection SQL</header>
+				<p>L'injection SQL est une faille de sécurité qui permet à un utilisateur malveillant de modifier une requête SQL
+				pour obtenir un comportement non souhaité par les développeurs.
+				Imaginons que le code suivant est exécuté après la saisie par l'utilisateur de son login et de son mot de passe&nbsp;:
+				</p>
+				<figure>
+					<pre><code class="java">
+  public boolean isUserAuthorized(String login, String password) {
+    try (java.sql.Statement stmt = connection.createStatement()) {
+
+      String request = "select * from users where login = '" + login 
+                       + "' and password = '" + password + "'";
+    
+      try (java.sql.ResultSet resultSet = stmt.executeQuery(request)) {
+        return resultSet.next();
+      }
+    }
+  }
+
+</code></pre>
+				</figure>
+				<p>Le code précédent contruit la requête SQL en concaténant des chaînes de caractères à partir
+				des paramètres reçus. Il exécute la requête et s'assure qu'elle retourne au moins un résultat.</p>
+				<p>Un utilisateur mal intentionné peut alors saisir comme login et mot de passe&nbsp;: <strong><kbd>' or 1 = 1</kbd></strong>.
+				Ainsi la requête SQL sera&nbsp;:</p>
+				<figure>
+					<pre><code class="sql">
+  select * from users where login = '' or 1 = 1 and password = '' or 1 = 1
+
+</code></pre>
+				</figure>
+				<p>Cette requête SQL retourne toutes les lignes de la table <code>users</code> et l'utilisateur sera
+				donc considéré comme autorisé par l'application.</p>
+				
+				<p>Si on modifie le code précédent pour utiliser un <code>PreparedStatement</code>, ce comportement non souhaité disparaît&nbsp;:</p>
+				<figure>
+					<pre><code class="java">
+  public boolean isUserAuthorized(String login, String password) {
+    String request = "select * from users where login = ? and password = ?";
+    try (java.sql.PreparedStatement stmt = connection.prepareStatement(request)) {
+      
+      stmt.setString(1, login);
+      stmt.setString(2, password);
+    
+      try (java.sql.ResultSet resultSet = stmt.executeQuery()) {
+        return resultSet.next();
+      }
+    }
+  }
+
+</code></pre>
+				</figure>
+				<p>Avec un <code>PreparedStatement</code>, login et password sont maintenant des paramètres de la requête SQL et ils
+				ne peuvent pas en modifier sa structure. La requête exécutée sera équivalente à&nbsp;:</p>
+				<figure>
+					<pre><code class="sql">
+  select * from users where login = ''' or 1 = 1' and password = ''' or 1 = 1'
+
+</code></pre>
+				</figure>
+			</aside>
 		</section>
 		<section>
-			<h2>Faille de sécurité : injection SQL</h2>
+			<h2>Le CallableStatement</h2>
 			<p></p>
 		</section>
 		<section>

@@ -20,22 +20,250 @@
 	<article>
 		<h1><script>document.write(document.title)</script></h1>
 		<section id="toc"></section>
-		<section>JDBC (Java DataBase Connectivity) est l'API standard pour interagir avec les bases données en Java.
-		JDBC fait partie de l'édition standard et est donc disponible dans le JDK.
+		<section>JDBC (Java DataBase Connectivity) est l'API standard pour interagir avec les bases données relationnelles en Java.
+		JDBC fait partie de l'édition standard et est donc disponible directement dans le JDK.
 		</section>
 		<section>
 			<h2>Le pilote de base de données</h2>
-			<p>JDBC est une API indépendante de la base de données. Chaque fournisseur de SGBDR fournit sa propre
-			implémentation du <em>driver JDBC</em>. Pour pouvoir se connecter à une base de données, il faut donc
-			ajouter le driver (qui se présente sous la forme d'un fichier jar) dans le classpath à l'exécution du programme.</p>
+			<p>JDBC est une API indépendante de la base de données sous-jacente. D'un côté, les développeurs implémentent
+			les interactions avec une base de données à partir de cette API. D'un autre côté, chaque fournisseur de SGBDR fournit sa propre
+			implémentation d'un <em>pilote JDBC</em> (JDBC driver). Pour pouvoir se connecter à une base de données, il faut
+			simplement ajouter le driver (qui se présente sous la forme d'un fichier jar) dans le classpath lors de l'exécution du programme.</p>
+			<p>Des pilotes JDBC sont disponibles pour les SGBDR les plus utilisés&nbsp;:
+			<a href="http://www.oracle.com/">Oracle DB</a>,
+			<a href="http://www.mysql.com/ ">MySQL</a>,
+			<a href="http://www.postgresql.org/">PostgreSQL</a>,
+			<a href="http://db.apache.org/derby/">Apache Derby</a>,
+			<a href="http://msdn.microsoft.com/en-us/sqlserver/aa937724.aspx">SQLServer</a>,
+			<a href="http://www.sqlite.org/">SQLite</a>,
+			<a href="http://hsqldb.org/">HSQLDB (HyperSQL DataBase)</a>, ...</p>
+			
+			<p>Dans un projet géré par Maven, le pilote JDBC est une dépendance logiciel comme une autre. Pour l'intégrer
+			dans le livrable, il suffit de le déclarer dans le fichier pom.xml dans la section <code>dependencies</code>&nbsp;:</p>
+			<figure>
+				<figcaption>Ajout du driver MySQL dans le fichier pom.xml</figcaption>
+				<pre><code class="xml">
+&lt;dependency&gt;
+  &lt;groupId&gt;mysql&lt;/groupId&gt;
+  &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+  &lt;version&gt;5.1.30&lt;/version&gt;
+&lt;/dependency&gt;
+
+</code></pre>
+			</figure>
+			
+			<p>On peut rechercher le pilote souhaité sur le site du <a href="http://mvnrepository.com">Maven Repository</a>.</p>
+			
+			<aside class="warn">
+				<p><strong>Attention</strong>, pour des raisons de licence, certains pilotes JDBC ne sont pas disponibles
+				dans les référentiels Maven. C'est le cas notamment du pilote JDBC pour <b>Oracle</b>.</p>
+				<p>Vous devez télécharger le pilote vous-même sur <a href="http://www.oracle.com/technetwork/database/features/jdbc/index-091264.html">le site d'Oracle</a>.
+				Si vous souhaitez ajouter le pilote Oracle dans votre référentiel Maven en local, consultez <a href="http://www.mkyong.com/maven/how-to-add-oracle-jdbc-driver-in-your-maven-local-repository/">cet article</a>.</p>
+			</aside>
+			
+			<p>Pour l'utilisation de JDBC dans un serveur d'application Java EE, il est aussi possible d'<strong>installer le
+			pilote JDBC directement dans le serveur</strong> plutôt que de l'ajouter comme dépendance de l'application. Pour <strong>TomEE</strong>, 
+			il suffit de télécharger le fichier jar du pilote JDBC et de le copier dans le répertoire <code>lib</code> du répertoire
+			d'installation du serveur.</p>
+			
 		</section>
 		<section>
-			<h2>Exemples de pilotes</h2>
-			<p></p>
+			<h2>Création d'une connexion</h2>
+			<p>Une connexion à une base de données est représentée par une instance de la classe <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">Connection</a>.
+			Il existe plusieurs façons d'obtenir une instance de cet objet. Nous simplifierons légèrement le propos en considérant deux cas d'utilisation : 
+			la création d'une connexion sans Java EE et la création d'un connexion avec Java EE.</p>
+
+			<h3>Création d'une connexion sans Java EE</h3>
+			<p>Comme nous l'avons précisé au début de ce chapitre, JDBC fait partie de l'API standard du JDK. Il n'est donc pas
+			nécessaire de disposer d'un conteneur Java EE ou d'un serveur d'application pour l'utiliser. Pour une utilisation
+			hors de Java EE, la classe <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/DriverManager.html">DriverManager</a> permet
+			d'enregister un pilote JDBC et de créer une connexion&nbsp;:</p>
+			<figure>
+				<figcaption>Création d'une connexion MySQL avec le DriverManager</figcaption>
+				<pre><code class="java">
+  DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+
+  // Connexion à la base myschema sur la machine localhost 
+  // en utilisant le login "username" et le password "password"
+  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/myschema", 
+                                                      "username", "password");
+
+</code></pre>
+			</figure>
+			
+			<p>Lorsque la connexion n'est plus nécessaire, <strong>il faut libérer les ressources allouées</strong> en la fermant avec la méthode <code>close()</code>.</p>
+			<figure>
+				<pre><code class="java">
+  connection.close();
+
+</code></pre>
+			</figure>
+			
+			<h3>Création d'une connexion avec Java EE</h3>
+			<p>Dans un serveur d'application, l'utilisation du <code>DriverManager</code> est remplacée par celle
+			de la <a href="http://docs.oracle.com/javase/7/docs/api/javax/sql/DataSource.html"><code>DataSource</code></a>.
+			L'interface <code>DataSource</code> n'offre que deux méthodes&nbsp;:</p>
+			<figure>
+				<pre><code class="java">
+// Attempts to establish a connection with the data source
+Connection getConnection()
+
+// Attempts to establish a connection with the data source
+Connection getConnection(String username, String password)
+
+</code></pre>
+			</figure>
+			
+			<p>Il n'est pas possible de spécifier l'URL de connection à la base de données avec une <code>DataSource</code>.
+			Par contre une <code>DataSource</code> peut être injectée dans n'importe quel composant Java EE (Servlet, Bean CDI, EJB)
+			grâce à l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/annotation/Resource.html"><code>@Resource</code></a>&nbsp;:</p>
+			<figure>
+				<figcaption>Injection d'une DataSource dans une Servlet</figcaption>
+				<pre><code class="java">
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+
+@WebServlet("/MyServlet")
+public class MyServlet extends HttpServlet {
+
+  @Resource(name = "nomDeLaDataSource")
+  private DataSource dataSource;
+
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+                          throws ServletException, IOException {
+    Connection connection = dataSource.getConnection();
+    try {
+      // ...
+    }
+    finally {
+      connection.close();
+    }
+  }
+
+}
+
+</code></pre>
+			</figure>
+
+			<p>L'annotation <code>@Resource</code> permet de spécifier le nom de la DataSource grâce à l'attribut name.
+			Mais comment le serveur d'application fait-il pour lier une DataSource avec une connexion vers une base de données&nbsp;?
+			Malheureusement, il n'existe pas de standard et chaque serveur d'application dispose de sa procédure. Pour <strong>TomEE</strong>,
+			une DataSource se configure dans le fichier <strong>tomee.xml</strong>. Ce fichier se trouve dans le répertoire <code>conf</code>
+			du répertoire d'installation du serveur. On peut ainsi déclarer une source de données directement dans le serveur. 
+			Il est également possible d'ajouter un fichier <strong>resources.xml</strong> dans le répertoire <code>WEB-INF</code> de son application.
+			Ce fichier a le même format que le fichier tomee.xml mais il fournit une définition des sources de données uniquement pour cette application.
+			</p>
+			
+			<figure>
+				<figcaption>Exemple de déclaration d'une DataSource MySQL dans le fichier resources.xml (ou tomee.xml)</figcaption>
+				<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;tomee&gt;
+&lt;Resource id="nomDeLaDataSource" type="javax.sql.DataSource"&gt;
+  JdbcDriver com.mysql.jdbc.Driver
+  JdbcUrl jdbc:mysql://localhost:3306/myDataBase
+  UserName root
+  Password root
+  JtaManaged false
+&lt;/Resource&gt;
+&lt;/tomee&gt;
+
+</code></pre>
+			</figure>
+			<p>Le nom de la source de données est indiqué par l'attribut <code>id</code> de la balise <code>Resource</code>. 
+			La documentation officielle de TomEE contient des informations intéressantes à consulter&nbsp;:</p>
+			<ul>
+				<li><a href="http://tomee.apache.org/datasource-config.html">DataSource Configuration</a> (documentation des paramètres de la balise <code>Resource</code>)</li>
+				<li><a href="http://tomee.apache.org/common-datasource-configurations.html">Common DataSource Configurations</a> (exemples de configuration de <code>DataSources</code> pour divers SGBDR)</li>
+			</ul>
+			<p>Ce système de configuration est certes plus compliqué que l'utilisation du <code>DriverManager</code> mais il permet
+			à l'application d'ignorer les détails de configuration. L'utilisation des <code>DataSources</code> dans un serveur
+			d'application apporte généralement des fonctionnalités supplémentaires telles que la mise en cache et la réutilisation
+			de connexions (pour améliorer les performances), les tests permettant de vérifier que les connexions sont correctements
+			établies, la supervision des connexions, ...</p>
+			
+			<aside class="info">
+				<header>DataSource et JNDI</header>
+				<p>L'annotation <code>@Resource</code> se base sur JNDI (Java Naming and Directory Interface) pour rechercher
+				la <code>DataSource</code> demandée. JNDI est une API
+				standard de Java permettant de se connecter à des annuaires (notamment les annuaires LDAP). Les serveurs d'application
+				Java EE disposent de leur propre implémentation interne d'annuaire permettant de stocker des instances d'objet.</p>
+				<p>Les resources telles que les <code>DataSources</code> sont donc stockées dans un annuaire interne et
+				il est possible d'y accéder avec l'API JNDI. Les ressources sont classées dans une arborescence (comme le sont
+				les fichiers dans un système de fichiers). Une ressource est stockée dans l'arborescence <code>java:/comp/env</code>.</p>
+				
+				<figure>
+					<figcaption>Exemple de récupération d'une DataSource en utilisant l'API JNDI</figcaption>
+					<pre><code class="java">
+  // javax.naming.InitialContext désigne le contexte racine de l'annuaire.
+  // Un annuaire JDNI est constitué d'instances de javax.naming.Context 
+  // (qui sont l'équivalent des répertoires dans un système de fichiers).
+  Context envContext = InitialContext.doLookup("java:/comp/env");
+  
+  // On récupère la source de données dans le contexte java:/comp/env
+  DataSource dataSource = DataSource.class.cast(envContext.lookup("nomDeLaDataSource"));
+
+</code></pre>
+				</figure>
+				<p>Le contexte JNDI <code>java:/comp/env</code> est un contexte particulier. Il désigne l'ensemble des composants
+				Java EE disponibles dans l'environnement (<code>env</code>) du composant Java EE (<code>comp</code>) courant.</p>
+			</aside>
+
 		</section>
 		<section>
-			<h2>La connection à la base de données</h2>
-			<p></p>
+			<h2>L'URL de connexion et les classes de pilotes</h2>
+			<p>Comme nous l'avons vu à la section précédente, pour établir une connexion, nous avons besoin de connaître la classe du pilote
+			et l'URL de connexion à la base de données. Il n'existe pas vraiment de règle en la matière puisque chaque fournisseur de pilote
+			décide du nom de la classe et du format de l'URL. Le tableau suivant donne les informations nécessaires suivant le SGBDR&nbsp;:</p>
+			<table class="table">
+				<col width="20%">
+				<col width="35%">
+				<col width="45%">
+				<thead>
+					<tr>
+						<th>SGBDR</th>
+						<th>Nom de classe du pilote</th>
+						<th>Format de l'URL de connexion</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Oracle DB</td>
+						<td>oracle.jdbc.OracleDriver</td>
+						<td>jdbc:oracle:thin:@[host]:[port]:[schema]<br/><i>Ex&nbsp;: jdbc:oracle:thin:@localhost:1521:maBase</i></td>
+					</tr>
+					<tr>
+						<td>MySQL</td>
+						<td>com.mysql.jdbc.Driver</td>
+						<td>jdbc:mysql://[host]:[port]/[schema]<br/><i>Ex&nbsp;: jdbc:mysql://localhost:3306/maBase</i></td>
+					</tr>
+					<tr>
+						<td>PosgreSQL</td>
+						<td>org.postgresql.Driver</td>
+						<td>jdbc:postgresql://[host]:[port]/[schema]<br/><i>Ex&nbsp;: jdbc:postgresql://localhost:5432/maBase</i></td>
+					</tr>
+					<tr>
+						<td>HSQLDB (mode fichier)</td>
+						<td>org.hsqldb.jdbcDriver</td>
+						<td>jdbc:hsqldb:file:[chemin du fichier]<br/><i>Ex&nbsp;: jdbc:hsqldb:file:maBase</i></td>
+					</tr>
+					<tr>
+						<td>HSQLDB (mode mémoire)</td>
+						<td>org.hsqldb.jdbcDriver</td>
+						<td>jdbc:hsqldb:mem:[schema]<br/><i>Ex&nbsp;: jdbc:hsqldb:mem:maBase</i></td>
+					</tr>
+				</tbody>
+			</table>
 		</section>
 		<section>
 			<h2>Les requêtes SQL (Statement)</h2>
@@ -50,15 +278,11 @@
 			<p></p>
 		</section>
 		<section>
+			<h2>Faille de sécurité : injection SQL</h2>
+			<p></p>
+		</section>
+		<section>
 			<h2>La transaction</h2>
-			<p></p>
-		</section>
-		<section>
-			<h2>La source de données en Java EE</h2>
-			<p></p>
-		</section>
-		<section>
-			<h2>Déclaration dans TomEE</h2>
 			<p></p>
 		</section>
 	</article>

@@ -774,7 +774,7 @@ public class Personne {
 			documentation de l'API Java EE&nbsp;: 
 			<a class="explicit" href="http://docs.oracle.com/javaee/6/api/javax/validation/constraints/package-summary.html">http://docs.oracle.com/javaee/6/api/javax/validation/constraints/package-summary.html</a></p>
 			
-			<p>Bean Validation est une bonne alternative aux balises JSF de validation si une bean doit être
+			<p>Bean Validation est une bonne alternative aux balises JSF de validation si un bean doit être
 			réutilisé comme modèle dans des facelets différentes.</p>
 		</section>
 
@@ -816,9 +816,9 @@ public class Personne {
 				de la réponse Ajax. Comme pour l'attribut précédent, il est possible d'utiliser les mots-clés @this, @form, @all et @none</li>
 			</ul>
 			
-			<p>Pour le support d'Ajax, l'implémentation du contrôleur se fait souvent en implémentant deux méthodes&nbsp;:
-			une méthode d'appel qui traitera les données et une méthode d'obtention du résultat qui permettra de mettre à jour
-			une partie de la page.</p>
+			<p>Pour le support d'Ajax, l'implémentation du contrôleur se fait souvent avec deux méthodes&nbsp;:
+			une méthode pour permettre au contrôleur de recevoir les données de la facelet et une méthode pour permettre à la facelet d'obtenir, en retour, les résultats
+			qui permettront de mettre à jour une partie de la page.</p>
 			
 			<aside class="warn">
 				<p>La méthode du contrôleur spécifiée dans la balise <code>action</code> d'un <code>h:commandButton</code>

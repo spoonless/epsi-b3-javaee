@@ -25,9 +25,9 @@
 		</section>
 		<section>
 			<h2>Préambule : try-with-resources</h2>
-			<p>L'API JDBC utilise beaucoup d'objets qui sont des ressources de base de données que
+			<p>L'API JDBC donne accès à des objets qui correspondent à des ressources de base de données que
 			le développeur doit <strong>impérativement</strong> fermer par l'appel à des méthodes <code>close()</code>.
-			<strong>Ne pas fermer correctement les objets alloués par JDBC est un bug</strong> qui conduit habituellement
+			<strong>Ne pas fermer correctement les objets fournis par JDBC est un bug</strong> qui conduit habituellement
 			 à un épuisement des ressources système, empêchant l'application de fonctionner correctement.</p>
 			 
 			<p>Java 7 a introduit l'interface <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/AutoCloseable.html">AutoCloseable</a>
@@ -62,7 +62,8 @@
 
 </code></pre>
 			</figure>
-			<p>Tout au long de ce chapitre sur JDBC, nous utiliserons alternativement l'une ou l'autre des syntaxes.</p>
+			<p>La version utilisant la syntaxe du try-with-resources est plus compacte et prend en charge automatiquement l'appel à la méthode <code>close()</code>. 
+			Tout au long de ce chapitre sur JDBC, nous utiliserons alternativement l'une ou l'autre des syntaxes.</p>
 		</section>
 		<section>
 			<h2>Le pilote de base de données</h2>
@@ -133,7 +134,7 @@
 			</figure>
 			
 			<p>Lorsque la connexion n'est plus nécessaire, <strong>il faut libérer les ressources allouées</strong> en la fermant avec la méthode <code>close()</code>.
-			La classe <code>Connection</code> implémente <code>AutoCloseable</code>, ce qui l'autorise a être utilisée dans un try-with-resources.</p>
+			La classe <code>Connection</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un try-with-resources.</p>
 			<figure>
 				<pre><code class="java">
   connection.close();
@@ -360,7 +361,7 @@ public class MyServlet extends HttpServlet {
 </code></pre>
 			</figure>
 			
-			<p>La classe <code>Statement</code> implémente <code>AutoCloseable</code>, ce qui l'autorise a être utilisée dans un try-with-resources</p>
+			<p>La classe <code>Statement</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un try-with-resources</p>
 			
 			<p>Pour des raisons de performance, il est également possible d'utiliser un <code>Statement</code>
 			en mode batch. Cela signifie, que l'on accumule l'ensemble des requêtes SQL côté client, puis
@@ -431,14 +432,14 @@ public class MyServlet extends HttpServlet {
 
 </code></pre>
 			</figure>
-			<p>La classe <code>ResultSet</code> implémente <code>AutoCloseable</code>, ce qui l'autorise a être utilisée dans un try-with-resources.</p>
+			<p>La classe <code>ResultSet</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un try-with-resources.</p>
 		</section>
 		<section>
 			<h2>Le PreparedStatement</h2>
 			<p>Un <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html"><code>PreparedStatement</code></a>
 			 est créé à partir d'une des méthodes <code>prepareStatement</code> de l'interface
 			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">Connection</a>.
-			Lors de l'appel à <code>prepareStatement</code>, il faut passer la requête SQL a exécuter. Par contre cette requête
+			Lors de l'appel à <code>prepareStatement</code>, il faut passer la requête SQL à exécuter. Par contre cette requête
 			peut contenir des <strong>?</strong> indiquant l'emplacement des paramètres.</p>
 			<p>L'interface <code>PreparedStatement</code> fournit des méthodes de la forme&nbsp;:</p>
 			<figure>
@@ -480,7 +481,7 @@ public class MyServlet extends HttpServlet {
 
 </code></pre>
 			</figure>
-			<p>La classe <code>PreparedStatement</code> implémente <code>AutoCloseable</code>, ce qui l'autorise a être utilisée dans un try-with-resources</p>
+			<p>La classe <code>PreparedStatement</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un try-with-resources</p>
 			
 			<p>Le <code>PreparedStatement</code> reprend une API similaire à celle du <code>Statement</code>&nbsp;:</p>
 			<ul>
@@ -500,7 +501,7 @@ public class MyServlet extends HttpServlet {
 			<aside class="info">
 				<header>L'injection SQL</header>
 				<p>L'injection SQL est une faille de sécurité qui permet à un utilisateur malveillant de modifier une requête SQL
-				pour obtenir un comportement non souhaité par les développeurs.
+				pour obtenir un comportement non souhaité par le développeur.
 				Imaginons que le code suivant est exécuté après la saisie par l'utilisateur de son login et de son mot de passe&nbsp;:
 				</p>
 				<figure>
@@ -519,7 +520,7 @@ public class MyServlet extends HttpServlet {
 
 </code></pre>
 				</figure>
-				<p>Le code précédent contruit la requête SQL en concaténant des chaînes de caractères à partir
+				<p>Le code précédent construit la requête SQL en concaténant des chaînes de caractères à partir
 				des paramètres reçus. Il exécute la requête et s'assure qu'elle retourne au moins un résultat.</p>
 				<p>Un utilisateur mal intentionné peut alors saisir comme login et mot de passe&nbsp;: <strong><kbd>' or '' = '</kbd></strong>.
 				Ainsi la requête SQL sera&nbsp;:</p>
@@ -562,11 +563,143 @@ public class MyServlet extends HttpServlet {
 		</section>
 		<section>
 			<h2>Le CallableStatement</h2>
-			<p></p>
+			<p>Un <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/CallableStatement.html"><code>CallableStatement</code></a>
+			permet d'appeler des procédures ou des fonctions stockées.
+			Il est créé à partir d'une des méthodes <code>prepareCall</code> de l'interface
+			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">Connection</a>.
+			Comme pour le <code>PreparedStatement</code>, il est nécessaire de passer la requête lors de l'appel à <code>prepareCall</code>
+			et l'utilisation de <strong>?</strong> permet de spécifier les paramètres.</p>
+			<p>Cependant, il n'existe pas de syntaxe standard en SQL pour appeler des procédures ou des fonctions stockées.
+			JDBC définit tout de même une syntaxe compatible avec tous les pilotes JDBC&nbsp;:</p>
+			<figure>
+				<figcaption>Requête JDBC pour l'appel d'une procédure stockée</figcaption>
+				<pre><code>
+  {call nom_de_la_procedure(?, ?, ?, ...)}
+
+</code></pre>
+			</figure>
+			<figure>
+				<figcaption>Requête JDBC pour l'appel d'une fonction stockée</figcaption>
+				<pre><code>
+  {? = call nom_de_la_fonction(?, ?, ?, ...)}
+
+</code></pre>
+			</figure>
+			<p>Un <code>CallableStatement</code> permet de passer des paramètres en entrée avec des méthodes de type <code>setXXX</code>
+			comme pour le <code>PreparedStatement</code>. Il permet également de récupérer les paramètres en sortie avec des méthodes
+			de type <code>getXXX</code> comme on peut trouver dans l'interface <code>ResultSet</code>. Comme pour le <code>PreparedStatement</code>,
+			on retrouve les méthodes <code>execute</code>, <code>executeUpdate</code> et <code>executeQuery</code> pour réaliser l'appel
+			à la base de données.</p>
+			
+			<figure>
+				<figcaption>Exemple de procédure stockée MySQL</figcaption>
+				<pre><code class="sql">
+  create procedure sayHello (in nom varchar(50), out message varchar(60))
+  begin
+    select concat('hello ', nom, ' !') into message;
+  end
+
+</code></pre>
+			</figure>
+			
+			<figure>
+				<figcaption>Exemple d'appel de la procédure stockée avec JDBC</figcaption>
+				<pre><code class="java">
+  String request = "{call sayHello(?, ?)}";
+
+  try (java.sql.CallableStatement stmt = connection.prepareCall(request)) {
+    // on positionne le paramètre d'entrée
+    stmt.setString(1, "EPSI");
+    // on appelle la procédure
+    stmt.executeUpdate();
+    // on récupère le paramètre de sortie
+    String message = stmt.getString(2);
+
+    // ...
+  }
+
+</code></pre>
+			</figure>
+
+			<p><strong>Attention</strong>, un <code>CallableStatement</code> est une ressource JDBC et il doit être
+			fermé dès qu'il n'est plus nécessaire&nbsp;:</p>
+			<figure>
+				<pre><code class="java">
+  stmt.close();
+
+</code></pre>
+			</figure>
+			<p>La classe <code>CallableStatement</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un try-with-resources</p>
 		</section>
 		<section>
 			<h2>La transaction</h2>
-			<p></p>
+			<p>La plupart des SGBDR intègrent un moteur de transaction. Une transaction est définie par le respect de quatre propriétés
+			désignées par l'acronyme <a href="http://fr.wikipedia.org/wiki/Propri%C3%A9t%C3%A9s_ACID">ACID</a>&nbsp;:</p>
+			<ul>
+				<li><strong>Atomicité</strong>&nbsp;: la transaction garantit que l'ensemble des opérations qui la composent sont soit toutes réalisées avec succès soit aucune n'est conservée.</li>
+				<li><strong>Cohérence</strong>&nbsp;: la transaction garantit qu'elle fait passer le système d'un état valide vers un autre état valide.</li>
+				<li><strong>Isolation</strong>&nbsp;: deux transactions sont isolées l'une de l'autre. C'est-à-dire que leur exécution simultanée produit le même résultat que si elles avaient été exécutées successivement.</li>
+				<li><strong>Durabilité</strong>&nbsp;: la transaction garantit qu'après son exécution, les modifications qu'elle a apportées au système sont conservées durablement.</li>
+			</ul>
+			<p>Une transaction est définie par un début et une fin qui peut être soit une validation des modifications (commit), soit une annulation des modifications effectuées (rollback).
+			On parle de <em>démarcation transactionnelle</em> pour désigner la portion de code qui doit s'exécuter dans le cadre d'une transaction.</p>
+			
+			<p>Avec JDBC, il faut d'abord s'assurer que le pilote ne commite pas sytématiquement à chaque requête SQL (l'auto commit). Une opération de commit à chaque requête SQL
+			équivaut en fait à ne pas avoir de démarcation transactionnelle. Sur l'interface 
+			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html"><code>Connection</code></a>, il existe les méthodes
+			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html#setAutoCommit%28boolean%29"><code>setAutoCommit(boolean)</code></a> et
+			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html#getAutoCommit%28%29"><code>getAutoCommit()</code></a> pour nous aider à gérer
+			ce comportement. <strong>Attention</strong>, dans la plupart des implémentations des pilotes JDBC, l'auto commit est activé par défaut (mais ce n'est pas une règle).</p>
+			<p>Dans les serveurs d'application Java EE, l'activation ou non de l'auto commit par défaut et souvent configurable au niveau de la <code>DataSource</code>.
+			C'est le cas pour TomEE, puisque l'attribut <code>defaultAutoCommit</code> peut être positionné sur une balise <code>Resource</code>. Cet attribut vaut
+			<code>true</code> par défaut.</p>
+
+			<figure>
+				<figcaption>Configuration de l'auto commit dans le fichier resources.xml (ou tomee.xml)</figcaption>
+				<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;tomee&gt;
+&lt;Resource id="nomDeLaDataSource" type="javax.sql.DataSource"&gt;
+  JdbcDriver com.mysql.jdbc.Driver
+  JdbcUrl jdbc:mysql://localhost:3306/myDataBase
+  defaultAutoCommit false
+  UserName root
+  Password root
+  JtaManaged false
+&lt;/Resource&gt;
+&lt;/tomee&gt;
+
+</code></pre>
+			</figure>
+			
+			<p>&Agrave; partir du moment au l'auto commit n'est plus actif sur une connexion, il est de la responsabilité du développeur
+			d'appeler sur l'instance de <code>Connection</code> 
+			la méthode <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html#commit%28%29"><code>commit()</code></a>
+			(ou <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html#rollback%28%29"><code>rollback()</code></a>).</p>
+			
+			<p>Le contrôle de la démarcation transactionnelle par programmation est surtout utile lorsque l'on souhaite garantir
+			l'atomicité d'un ensemble de requêtes SQL.</p>
+			
+			<figure>
+				<figcaption>Exemple de démarcation transactionnelle avec JDBC</figcaption>
+				<pre><code class="java">
+  TODO
+
+</code></pre>
+			</figure>
+			
+			<aside class="info">
+				<header>JTA (Java Transaction API)</header>
+				<p>Le recours aux transactions ne se limite pas aux systèmes de base de données. N'importe quel service logiciel
+				peut fournir un support à la transaction. Quand plusieurs systèmes transactionnels sont inclus au sein d'une même transaction,
+				il peut être nécessaire d'avoir recours à une transaction distribuée pour les synchroniser.</p>
+				<p>Pour ces raisons, Java EE fournit une API dédiée uniquement à la gestion des transactions&nbsp;: <strong>JTA</strong>. 
+				Cette API est indépendante de JDBC et elle est aussi plus complète (et donc plus compliquée).
+				TomEE nous laisse le choix de gérer les transactions avec JTA ou avec JDBC pour les <code>DataSources</code>. Le paramètre 
+				<code>JtaManaged</code> disponible dans la balise <code>Resource</code> permet d'indiquer si l'on souhaite ou non qu'une
+				<code>DataSource</code> soit gérable avec JTA. Nous reviendrons sur JTA lorsque nous
+				parlerons de JPA et des EJB.
+			</aside>
 		</section>
 	</article>
 

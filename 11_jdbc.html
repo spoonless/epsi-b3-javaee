@@ -684,7 +684,53 @@ public class MyServlet extends HttpServlet {
 			<figure>
 				<figcaption>Exemple de démarcation transactionnelle avec JDBC</figcaption>
 				<pre><code class="java">
-  TODO
+  // si nécessaire on force la désactivation de l'auto commit
+  connection.setAutoCommit(false);
+  boolean transactionOk = false;
+  
+  try {
+  
+    // on ajoute un produit avec une quantité donnée dans la facture
+    String requeteAjoutProduit = 
+              "insert into ligne_facture (facture_id, produit_id, quantite) values (?, ?, ?)";
+
+    try (PreparedStatement pstmt = connection.prepareStatement(requeteAjoutProduit)) {
+      pstmt.setString(1, factureId);
+      pstmt.setString(2, produitId);
+      pstmt.setLong(3, quantite);
+    
+      pstmt.executeUpdate();
+    }
+  
+    // on déstocke la quantité de produit qui a été ajoutée dans la facture
+    String requeteDestockeProduit = 
+              "update stock_produit set quantite = (quantite - ?) where produit_id = ?";
+
+    try (PreparedStatement pstmt = connection.prepareStatement(requeteDestockeProduit)) {
+      pstmt.setLong(1, quantite);
+      pstmt.setString(2, produitId);
+    
+      pstmt.executeUpdate();
+    }
+  
+    transactionOk = true;
+  }
+  finally {
+    // L'utilisation d'une transaction dans cet exemple permet d'éviter d'aboutir à
+    // des états incohérents si un problème survient pendant l'exécution du code.
+    // Par exemple, si le code ne parvient pas à exécuter la seconde requête SQL
+    // (bug logiciel, perte de la connexion avec la base de données, ...) alors
+    // une quantité d'un produit aura été ajoutée dans une facture sans avoir été
+    // déstockée. Ceci est clairement un état incohérent du système. Dans ce cas,
+    // on effectue un rollback de la transaction pour annuler l'insertion dans
+    // la table ligne_facture.
+    if (transactionOk) {
+      connection.commit();
+    }
+    else {
+      connection.rollback();
+    }
+  }
 
 </code></pre>
 			</figure>

@@ -20,10 +20,11 @@
 	<article>
 		<h1><script>document.write(document.title)</script></h1>
 		<section id="toc"></section>
-		<section>JDBC (Java DataBase Connectivity) est l'API standard pour interagir avec les bases données relationnelles en Java.
-		JDBC fait partie de l'édition standard et est donc disponible directement dans le JDK.
-		</section>
 		<section>
+			<p>JDBC (Java DataBase Connectivity) est l'API standard pour interagir avec les bases données relationnelles en Java.
+			JDBC fait partie de l'édition standard et est donc disponible directement dans le JDK.</p>
+		</section>
+		<section id="tryWithResources">
 			<h2>Préambule : try-with-resources</h2>
 			<p>L'API JDBC donne accès à des objets qui correspondent à des ressources de base de données que
 			le développeur doit <strong>impérativement</strong> fermer par l'appel à des méthodes <code>close()</code>.
@@ -33,7 +34,7 @@
 			<p>Java 7 a introduit l'interface <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/AutoCloseable.html">AutoCloseable</a>
 			ainsi qu'une nouvelle syntaxe dénommée <a href="http://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html"><strong>try-with-resources</strong></a>. 
 			L'API JDBC utilise massivement l'interface <code>AutoCloseable</code> et autorise donc le try-with-resources.
-			Ainsi, les deux codes ci dessous sont équivalents puisque la classe 
+			Ainsi, les deux codes ci-dessous sont équivalents puisque la classe 
 			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">java.sql.Connection</a>
 			implémente <code>AutoCloseable</code>&nbsp;:</p>
 			
@@ -68,7 +69,7 @@
 		<section>
 			<h2>Le pilote de base de données</h2>
 			<p>JDBC est une API indépendante de la base de données sous-jacente. D'un côté, les développeurs implémentent
-			les interactions avec une base de données à partir de cette API. D'un autre côté, chaque fournisseur de SGBDR fournit sa propre
+			les interactions avec une base de données à partir de cette API. D'un autre côté, chaque fournisseur de SGBDR livre sa propre
 			implémentation d'un <em>pilote JDBC</em> (JDBC driver). Pour pouvoir se connecter à une base de données, il faut
 			simplement ajouter le driver (qui se présente sous la forme d'un fichier jar) dans le classpath lors de l'exécution du programme.</p>
 			<p>Des pilotes JDBC sont disponibles pour les SGBDR les plus utilisés&nbsp;:
@@ -80,7 +81,7 @@
 			<a href="http://www.sqlite.org/">SQLite</a>,
 			<a href="http://hsqldb.org/">HSQLDB (HyperSQL DataBase)</a>, ...</p>
 			
-			<p>Dans un projet géré par Maven, le pilote JDBC est une dépendance logiciel comme une autre. Pour l'intégrer
+			<p>Pour un projet géré par Maven, le pilote JDBC est une dépendance logicielle comme une autre. Pour l'intégrer
 			dans le livrable, il suffit de le déclarer dans le fichier pom.xml dans la section <code>dependencies</code>&nbsp;:</p>
 			<figure>
 				<figcaption>Ajout du driver MySQL dans le fichier pom.xml</figcaption>
@@ -134,7 +135,7 @@
 			</figure>
 			
 			<p>Lorsque la connexion n'est plus nécessaire, <strong>il faut libérer les ressources allouées</strong> en la fermant avec la méthode <code>close()</code>.
-			La classe <code>Connection</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un try-with-resources.</p>
+			La classe <code>Connection</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un <a href="#tryWithResources">try-with-resources</a>.</p>
 			<figure>
 				<pre><code class="java">
   connection.close();
@@ -239,7 +240,7 @@ public class MyServlet extends HttpServlet {
 				la <code>DataSource</code> demandée. JNDI est une API
 				standard de Java permettant de se connecter à des annuaires (notamment les annuaires LDAP). Les serveurs d'application
 				Java EE disposent de leur propre implémentation interne d'annuaire permettant de stocker des instances d'objet.</p>
-				<p>Les resources telles que les <code>DataSources</code> sont donc stockées dans un annuaire interne et
+				<p>Les ressources telles que les <code>DataSources</code> sont donc stockées dans un annuaire interne et
 				il est possible d'y accéder avec l'API JNDI. Les ressources sont classées dans une arborescence (comme le sont
 				les fichiers dans un système de fichiers). Une ressource est stockée dans l'arborescence <code>java:/comp/env</code>.</p>
 				
@@ -262,7 +263,7 @@ public class MyServlet extends HttpServlet {
 
 		</section>
 		<section>
-			<h2>L'URL de connexion et les classes de pilotes</h2>
+			<h2>L'URL de connexion et la classe des pilotes</h2>
 			<p>Comme nous l'avons vu à la section précédente, pour établir une connexion, nous avons besoin de connaître la classe du pilote
 			et l'URL de connexion à la base de données. Il n'existe pas vraiment de règle en la matière puisque chaque fournisseur de pilote
 			décide du nom de la classe et du format de l'URL. Le tableau suivant donne les informations nécessaires suivant le SGBDR&nbsp;:</p>
@@ -345,7 +346,7 @@ public class MyServlet extends HttpServlet {
   // un ResultSet (voir plus loin)
   stmt.executeQuery("select col1, col2 from myTable");
 
-  // méthode spécialisée pour toutes les requêtes qui ne sont pas des select.
+  // méthode spécialisée pour toutes les requêtes qui ne sont pas de type select.
   // Contrairement à ce que son nom indique, on peut l'utiliser pour des requêtes
   // DDL (create table, drop table, ...) et pour toutes requêtes DML (insert, update, delete).
   stmt.executeUpdate("insert into myTable (col1, col2) values ('value1', 'value1')");
@@ -361,7 +362,7 @@ public class MyServlet extends HttpServlet {
 </code></pre>
 			</figure>
 			
-			<p>La classe <code>Statement</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un try-with-resources</p>
+			<p>La classe <code>Statement</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un <a href="#tryWithResources">try-with-resources</a>.</p>
 			
 			<p>Pour des raisons de performance, il est également possible d'utiliser un <code>Statement</code>
 			en mode batch. Cela signifie, que l'on accumule l'ensemble des requêtes SQL côté client, puis
@@ -390,7 +391,7 @@ public class MyServlet extends HttpServlet {
 			<p>Lorsqu'on exécute une requête SQL de type <code>select</code>, JDBC nous donne accès à
 			une instance de <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/ResultSet.html"><code>ResultSet</code></a>.
 			Avec un <code>ResultSet</code>, il est possible de parcourir ligne à ligne les résultats de la requête 
-			(comme pour un itérateur) grâce à la méthode
+			(comme avec un itérateur) grâce à la méthode
 			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/ResultSet.html#next%28%29">ResultSet.next()</a>.
 			Pour chaque résultat, il est possible d'extraire les données dans un type supporté par Java.</p>
 			<p>Le <code>ResultSet</code> offre une liste de méthodes de la forme&nbsp;:</p>
@@ -432,14 +433,14 @@ public class MyServlet extends HttpServlet {
 
 </code></pre>
 			</figure>
-			<p>La classe <code>ResultSet</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un try-with-resources.</p>
+			<p>La classe <code>ResultSet</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un <a href="#tryWithResources">try-with-resources</a>.</p>
 		</section>
 		<section>
 			<h2>Le PreparedStatement</h2>
 			<p>Un <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html"><code>PreparedStatement</code></a>
 			 est créé à partir d'une des méthodes <code>prepareStatement</code> de l'interface
 			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">Connection</a>.
-			Lors de l'appel à <code>prepareStatement</code>, il faut passer la requête SQL à exécuter. Par contre cette requête
+			Lors de l'appel à <code>prepareStatement</code>, il faut passer la requête SQL à exécuter. Cependant, cette requête
 			peut contenir des <strong>?</strong> indiquant l'emplacement des paramètres.</p>
 			<p>L'interface <code>PreparedStatement</code> fournit des méthodes de la forme&nbsp;:</p>
 			<figure>
@@ -448,8 +449,8 @@ public class MyServlet extends HttpServlet {
 
 </code></pre>
 			</figure>
-			<p>XXX représente le type, parameterIndex la position du paramètre dans la requête SQL (<strong>attention</strong>, le premier paramètre a l'indice <strong>1</strong>) et
-			x la valeur du paramètre.</p>
+			<p>XXX représente le type du paramètre, parameterIndex sa position dans la requête SQL (<strong>attention</strong>, le premier paramètre a l'indice <strong>1</strong>) et
+			x sa valeur.</p>
 			
 			<aside class="tip">
 				&Agrave; noter que pour positionner un paramètre SQL à NULL, il faut utiliser la méthode
@@ -481,7 +482,7 @@ public class MyServlet extends HttpServlet {
 
 </code></pre>
 			</figure>
-			<p>La classe <code>PreparedStatement</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un try-with-resources</p>
+			<p>La classe <code>PreparedStatement</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un <a href="#tryWithResources">try-with-resources</a></p>
 			
 			<p>Le <code>PreparedStatement</code> reprend une API similaire à celle du <code>Statement</code>&nbsp;:</p>
 			<ul>
@@ -629,7 +630,7 @@ public class MyServlet extends HttpServlet {
 
 </code></pre>
 			</figure>
-			<p>La classe <code>CallableStatement</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un try-with-resources</p>
+			<p>La classe <code>CallableStatement</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un <a href="#tryWithResources">try-with-resources</a></p>
 		</section>
 		<section>
 			<h2>La transaction</h2>
@@ -672,7 +673,7 @@ public class MyServlet extends HttpServlet {
 </code></pre>
 			</figure>
 			
-			<p>&Agrave; partir du moment au l'auto commit n'est plus actif sur une connexion, il est de la responsabilité du développeur
+			<p>&Agrave; partir du moment où l'auto commit n'est plus actif sur une connexion, il est de la responsabilité du développeur
 			d'appeler sur l'instance de <code>Connection</code> 
 			la méthode <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html#commit%28%29"><code>commit()</code></a>
 			(ou <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html#rollback%28%29"><code>rollback()</code></a>).</p>
@@ -701,6 +702,38 @@ public class MyServlet extends HttpServlet {
 				parlerons de JPA et des EJB.
 			</aside>
 		</section>
+	</article>
+	
+	<article class="exercice">
+		<h2>Exercice&nbsp;: Ajout de l'accès à une base de données pour une application Web</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Faites évoluer l'application fournie comme modèle de cet exercice afin d'ajouter l'interaction avec
+			la base de données en utilisant JDBC. 
+			<p>La classe <code>fr.epsi.individu.IndividuRepository</code> doit être modifiée (ainsi que tout 
+			ce qui vous jugerez nécessaire dans le projet) afin d'ajouter le code manquant.</p>
+			<p>Une fois terminée, l'application doit permettre&nbsp;:</p>
+			<ul>
+				<li>d'enregistrer un nouvel individu dans le système (en spécifiant son	nom, son prénom et son âge)</li>
+				<li>de récupérer la liste de tous les individus enregistrés dans le système</li>
+				<li>de supprimer les informations d'un individu</li>
+			</ul>
+			<dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>Vous avez le choix entre deux modèles de projet&nbsp;:
+				<ul>
+					<li><a href="assets/templates/mvc-with-jdbc.zip">modèle basé sur servlet/JSP</a></li>
+					<li><a href="assets/templates/jsfmvc-with-jdbc.zip">modèle basé sur JSF</a></li>
+				</ul>
+				<p><strong>Choisissez et téléchargez UN modèle</strong> et réalisez ensuite les évolutions.</p>
+				<p><strong>Important&nbsp;:</strong> ajoutez dans votre projet le fichier SQL permettant
+				de créer le schéma de base de données.</p>
+			</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
 	</article>
 
 </body>

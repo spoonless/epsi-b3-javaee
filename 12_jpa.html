@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Java Persistence API (JPA)</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<script src="js/toc.js"></script>
+</head>
+<body onload="createToc()">
+	<div id="titleBar">
+		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
+ 		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>
+		<script>document.write(document.title)</script> - EPSI B3 2013/2014 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a>
+	</div>
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		<section id="toc"></section>
+		<section>
+			<p>Nous avons vu que l'API JDBC nous permet d'écrire des programmes Java qui interagissent avec des bases de données.
+			JDBC nous assure que le code Java sera semblable quelque soit le SGBDR utilisé (mais le code SQL pourra bien sûr être
+			différent en exploitant telle ou telle fonctionnalité non standard fournie par le SGBDR).</p>
+			<p>Néanmoins, JDBC a quelques inconvénients&nbsp;:</p>
+			<ul>
+				<li>l'API est verbeuse et répétitive. Pour un programme de quelques centaines de lignes de code, elle se révèle
+				très efficace. Mais pour des applications plus volumineuses, la quantité de code nécessaire (notamment SQL) peut devenir une source
+				de ralentissement du développement.</li>
+				<li>la gestion des ressources est une source d'erreur permanente pour les développeurs. Il est donc très facile d'écrire
+				des applications qui perdent des ressources.</li>
+				<li>JDBC n'offre qu'un service limité&nbsp;: un système d'échange avec une base de données (même s'il le fait très bien).</li>
+			</ul>
+		</section>
+		<section>
+			<h2>Les ORM (Object-Relational Mapping)</h2>
+			<p>Les ORM sont des frameworks qui, comme l'indique leur nom, permettent de créer une correspondance entre un modèle objet et
+			un modèle relationnel de base de données. Un ORM fournit généralement les fonctionnalités suivantes&nbsp;:</p>
+			<ul>
+				<li>génération à la volée des requêtes SQL les plus simples (CRUD)</li>
+				<li>prise en charge des dépendances entre objets pour la mise en jour en cascade de la base de données</li>
+				<li>support pour la construction de requêtes complexes par programmation.</li>
+			</ul>
+			<p>Java EE fournit une API standard pour l'utilisation d'un ORM&nbsp;: <strong>JPA (Java Persistence API)</strong> (JSR-317).
+			Il existe plusieurs implémentations open source qui respectent l'API JPA&nbsp;: <a href="https://www.eclipse.org/eclipselink/">EclipseLink</a> (qui est aussi l'implémentation de référence),
+			<a href="http://hibernate.org/">Hibernate</a> (JBoss - Red Hat), <a href="http://openjpa.apache.org/">OpenJPA</a> (Apache)</p>
+			<p>Toutes ces implémentations sont bâties sur JDBC. Nous retrouverons donc les notions de pilote, de data source et d'URL de connexion 
+			lorsqu'il s'agira de configurer l'accès à la base de données.</p>
+		</section>
+		<section>
+			<h2>Les entités JPA</h2>
+			<p>JPA permet de définir des entités (<em>entities</em>). Une entité est simplement une instance d'une classe qui sera <em>persistante</em> (que
+			l'on pourra sauvegarder dans / charger depuis une base de données relationnelle). Une entité signalée par l'annotation 
+			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Entity.html"><code>@Entity</code></a>. De plus, une entité JPA <strong>doit disposer d'un
+			ou plusieurs attributs définissant un identifiant</strong> grâce à l'annotation
+			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Id.html"><code>@Id</code></a>
+			. Cet identifiant correspondra à la clé primaire dans la table associée.</p>
+			<figure>
+				<figcaption>Un exemple de classe entité avec la déclaration de son identifiant</figcaption>
+				<pre><code class="java">
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Individu {
+
+  @Id
+  // Permet de définir la statégie de génération
+  // de la clé lors d'une insertion en base de données.
+  @GeneratedValue(strategy=GenerationType.AUTO)
+  private Long id;
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+}
+
+</code></pre>
+			</figure>
+			
+			<p>Il existe un grand nombre d'annotations JPA servant à préciser comment la correspondance doit être
+			faite entre le modèle objet et le modèle relationnel de base de données. Bien qu'il existe une possibilité
+			de déclarer cette correpondance dans le fichier XML <code>orm.xml</code>, la plupart de développeurs préfèrent
+			utiliser le modèle des annotations. Les tableaux ci-dessous résument les annotations les plus simples et les plus
+			utiles pour commencer à utiliser JPA&nbsp;:</p>
+			
+			<table>
+				<caption>Les annotations orientées entité</caption>
+				<col width="25%"/>
+				<col width="75%"/>
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Entity.html"><code>@Entity</code></a></td>
+						<td>Définit qu'une classe est une entité. Il possible de nommer l'entité grâce à l'attribut <code>name</code> (sinon le nom de l'entité correspond au nom de la classe).</td>
+					</tr>
+					<tr>
+						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Id.html"><code>@Id</code></a></td>
+						<td>Définit l'attribut qui sert de clé primaire dans la table. Il est recommander au départ d'utiliser
+						un type primitif, un wrapper de type primitif ou une <code>String</code> pour représenter un id.
+						Pour les clés composites, la mise en &oelig;uvre est plus compliquée. Afin de ne pas se compliquer inutilement
+						la tâche, il vaut mieux prévoir une simple clé technique pour chaque entité.</td>
+					</tr>
+					<tr>
+						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Basic.html"><code>@Basic</code></a></td>
+						<td>Définit une mapping simple pour un attribut (String vers VARCHAR ...). Si on ne souhaite pas changer
+						la valeur des attributs par défaut de cette annotation, alors il est possible de ne pas la spécifier
+						puisqu'elle représente le mapping par défaut.</td>
+					</tr>
+					<tr>
+						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Temporal.html"><code>@Temporal</code></a></td>
+						<td>Pour les attributs de type <code>java.util.Date</code> et <code>java.util.Calendar</code>, cette annotation
+						permet de préciser le type de mapping vers le type SQL (DATE, TIME ou TIMESTAMP).</td>
+					</tr>
+					<tr>
+						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Transient.html"><code>@Transient</code></a></td>
+						<td>Indique qu'un attribut <strong>ne doit pas</strong> être persisté. Cet attribut ne sera donc jamais pris
+						en compte lors de l'exécution des requêtes vers la base de données.</td>
+					</tr>
+					<tr>
+						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Lob.html"><code>@Lob</code></a></td>
+						<td>Indique que la colonne correspondante en base de données est un LOB (large object).</td>
+					</tr>
+				</tbody>
+			</table>
+			<table>
+				<caption>Les annotations orientées base de données</caption>
+				<col width="25%"/>
+				<col width="75%"/>
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Table.html"><code>@Table</code></a></td>
+						<td>Permet de définir les informations sur la table représentant cette entité en base de données. Il
+						est possible de définir le nom de la table grâce à l'attribut <code>name</code>. Par défaut le nom de la table
+						correspond au nom de l'entité (qui par défaut correspond au nom de la classe).</td>
+					</tr>
+					<tr>
+						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/GeneratedValue.html"><code>@GeneratedValue</code></a></td>
+						<td>Indique la stratégie à appliquer pour la génération de la clé lors de l'insertion d'une entité en base.
+						En pratique, on pourra utiliser la stratégie par défaut qui consiste au moteur ORM à décider selon le SGBDR.</td>
+					</tr>
+					<tr>
+						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Column.html"><code>@Column</code></a></td>
+						<td>Permet de déclarer des informations relatives à la colonne sur laquelle un attribut doit être mappé.
+						Avec cette annotation, il est possible de donner le nom de la colonne (attribut <code>name</code>) mais également
+						si l'attribut doit être pris en compte pour des requêtes d'insertion (attribut <code>insertable</code>) ou
+						de mise à jour (attribut <code>updatable</code>). Certains outils sont capables d'exploiter les annotations pour créer
+						les bases de données. Dans ce cas, d'autres attributs sont disponibles pour ajouter toutes les contraintes nécessaires
+						(telles que <code>length</code> ou <code>nullable</code>).</td>
+					</tr>
+				</tbody>
+			</table>
+			<figure>
+				<figcaption>Un exemple plus complet de classe entité</figcaption>
+				<pre><code class="java">
+import java.util.Calendar;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name="Individu")
+public class Individu {
+
+  @Id
+  @Column(name="individu_id")
+  @GeneratedValue(strategy=GenerationType.AUTO)
+  private Long id;
+
+  @Basic
+  @Column(length = 30, nullable=false)
+  private String nom;
+
+  @Basic
+  @Column(length = 30, nullable=false)
+  private String prenom;
+
+  @Column(length = 3, nullable=false)
+  private Integer age;
+
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(updatable = false)
+  private Calendar dateAdhesion;
+
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(insertable = false)
+  private Calendar dateModification;
+
+  @Lob
+  @Basic(fetch=FetchType.LAZY)
+  private byte[] image;
+
+  @Transient
+  private Abonnement abonnement;
+
+  // les getter/setter ont été omis pour faciliter la lecture
+}
+
+</code></pre>
+			</figure>
+			<p>&Agrave; l'entité JPA ci-dessus, on pourra faire correspondre la table MySQL&nbsp;:</p>
+			<figure>
+				<pre><code class="sql">
+CREATE TABLE `Individu` (
+  `individu_id` int NOT NULL AUTO_INCREMENT,
+  `nom` varchar(30) NOT NULL,
+  `prenom` varchar(30) NOT NULL,
+  `age` int(3) NOT NULL,
+  `dateAdhesion` TIMESTAMP,
+  `dateModification` TIMESTAMP,
+  `image` BLOB,
+  PRIMARY KEY (`individu_id`)
+);
+
+</code></pre>
+			</figure>
+		</section>
+		<section>
+			<h2>L'EntityManager</h2>
+			<p>Les annotations JPA que nous avons vues dans la sections précédente, ne servent à rien si elle ne sont pas
+			exploitées programmatiquement. Dans JPA, l'interface centrale qui va exploiter ces annotations est 
+			l'<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/EntityManager.html"><strong><code>EntityManager</code></strong></a>.
+			&Agrave; partir d'une instance d'<code>EntityManager</code>, nous allons pouvoir appliquer les 4 opérations fondamentales&nbsp;:</p>
+			<figure>
+				<pre><code class="java">
+  EntityManager em = ... // nous verrons plus loin comment obtenir une instance
+  Individu individu = new Individu();
+  
+  //...
+  
+  // requête d'insertion dans la base de données
+  em.persist(individu);
+  
+  // requête de recherche (select) d'un élément. 
+  // Le second paramètre correspond à la valeur de la clé recherchée.
+  individu = em.find(Individu.class, 2);
+  
+  individu.setPrenom("nouveau prénom");
+
+  individu = em.merge(individu);
+  
+  // requête de suppression (delete)
+  em.remove(individu);
+</code></pre>
+			</figure>
+			<p>JPA est capable de faire la correspondance entre les appels aux méthodes <code>persist</code>, <code>find</code>, <code>merge</code>,
+			<code>remove</code> et les requêtes SQL correspondantes.
+			De plus, l'implémentation JPA se charge d'extraire ou au contraire de positionner les attributs dans l'instance de l'entité. Par exemple,
+			un appel à <code>find</code> retourne bien une instance de la classe spécifiée par premier paramètre. Cette instance aura ses attributs
+			renseignés à partir des colonnes sur lesquelles ils ont été mappés avec les annotations.</p>
+			<p>Attention cependant à ne pas croire que JPA est simplement un framework pour générer du SQL. Une des difficultés dans la maîtrise de JPA
+			consiste justement à comprendre comment il gère le cycle de vie des entités indépendamment de la base de données. Ainsi, on constate
+			que le nom des méthodes <code>persist</code>, <code>find</code>, <code>merge</code> et <code>remove</code> ne correspond pas au nom
+			des instructions SQL <code>INSERT</code>, <code>SELECT</code>, <code>UPDATE</code> et <code>DELETE</code>. Il ne s'agit pas
+			d'un effet de style, ces méthodes ont un nom différent parce qu'elles ne se correspondent pas exactement aux opérations SQL sous-jacentes.</p>
+		</section>
+	</article>
+	
+	<article class="exercice">
+		<h3>Test&nbsp;: &Agrave; votre avis</h3>
+		<section>
+			<p>Quelles sont les requêtes SQL exécutées par le code ci-dessous&nbsp;?</p>
+			<figure>
+				<pre><code class="java">
+  EntityManager em = ... // nous verrons plus loin comment obtenir une instance
+  
+  em.getTransaction().begin();
+
+  Individu individu = new Individu();
+  individu.setNom("David");
+  individu.setPrenom("Gayerie");
+  individu.setAge(39);
+  
+  em.persist(individu);
+  
+  individu.setAge(40);
+
+  em.merge(individu);
+  
+  em.remove(individu);
+
+  em.getTransaction().commit();
+
+</code></pre>
+			</figure>
+			
+		</section>
+	</article>
+	
+	<article>
+		<section>
+			<p>Un <code>EntityManager</code> cherche à limiter les interactions inutiles avec la base de données. Ainsi, tant qu'une transaction
+			est en cours, le moteur JPA n'effectuera aucune requête SQL, à moins d'y être obligé pour garantir l'intégrité des données.
+			Il attendra si possible le commit de la transaction. Ainsi si une entité est créée puis modifiée au cours de la même transaction,
+			plutôt que d'exécuter deux requêtes SQL (INSERT puis UPDATE), l'<code>EntityManager</code> attendra la fin de la transaction pour
+			réaliser une seul requête SQL (INSERT) avec les données définitives.</p>
+			
+			<h3>La méthode <code>find</code></h3>
+			<p>La méthode <code>EntityManager.find</code> permet de rechercher une entité en donnant sa clé. Un appel à cette méthode
+			ne déclenche pas forcément une requête <code>SELECT</code> vers la base de données.</p>
+
+			<p>En effet, un <code>EntityManager</code> agit également comme un cache au dessus de la base de données. Ainsi, il garantit l'unicité
+			des instances des objets. Si la méthode <code>find</code> est appelée plusieurs fois sur la même instance d'un <code>EntityManager</code>
+			avec une clé identique, alors l'instance retournée est toujours <strong>la même</strong>.</p>
+			<figure>
+				<pre><code class="java">
+  EntityManager em = ... // nous verrons plus loin comment obtenir une instance
+
+  Individu individu  = em.find(Individu.class, 1);
+  Individu individu2 = em.find(Individu.class, 1);
+  
+  // individu == individu2
+				</code></pre>
+			</figure>
+
+			<h3>La méthode <code>persist</code></h3>
+			<p>La méthode persiste ne se contente pas d'enregistrer une entité en base. Elle positionne également la valeur de l'attribut
+			représentant la clé de l'entité. La détermination de la valeur de la clé dépend de la stratégie spécifiée par 
+			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/GeneratedValue.html"><code>@GeneratedValue</code></a>.
+			L'insertion en base ne se fait pas nécessairement au moment de l'appel à la méthode <code>persist</code> (on peut toutefois
+			forcer l'insertion avec la méthode <code>EntityManager.flush()</code>). Cependant, l'<code>EntityManager</code> garantit que des appels
+			successifs à sa méthode find permettront de récupérer l'instance de l'entité.</p>
+			<p>C'est une erreur d'appeler la méthode <code>EntityManager.persist</code> en passant une entité dans l'attribut représentant
+			la clé est non null. La méthode jette l'exception <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/EntityExistsException.html"><code>EntityExistsException</code></a>.</p>
+
+
+			<h3>La méthode <code>merge</code></h3>
+			<p>La méthode <code>EntityManager.merge(T)</code> est parfois considérée comme la méthode permettant de réaliser les <code>UPDATE</code>
+			des entités en base de données.
+			Il n'en est rien et la sémantique de la méthode <code>merge</code> et très différente. En fait, il <code>n'existe pas</code>
+			à proprement parlé de méthode pour réaliser la mise à jour d'une entité. Un <code>EntityManager</code> surveille les entités
+			dont il a la charge et réalise les mises à jour si nécessaire au commit de la transaction. Par exemple le code ci-dessous
+			suffit à déclencher une requête SQL UPDATE&nbsp;:</p>
+
+			<figure>
+				<figcaption>Mise à jour implicite d'une entité</figcaption>
+				<pre><code class="java">
+  EntityManager em = ... // nous verrons plus loin comment obtenir une instance
+  
+  em.getTransaction().begin();
+  try {
+    Individu individu = em.find(Individu.class, 1);
+    if (individu != null) {
+      individu.setAge(individu.getAge() + 1);
+    }
+    // Si l'age de l'individu a été incrémenté, JPA est
+    // capable de le détecter et de déclencher un UPDATE 
+    // au moment du commit.
+    em.getTransaction().commit();
+  }
+  catch (RuntimeException e) {
+    em.getTransaction().rollback();
+    throw e;
+  }
+
+</code></pre>
+			</figure>
+			<p>Si un <code>EntityManager</code> détecte automatiquement les modifications des entités dont il a la charge, à quoi peut donc servir la méthode <code>EntityManager.merge(T)</code>&nbsp;?
+			En fait si vous créez vous même une instance d'une entité et que vous positionnez la clé, cette entité n'est pas géré par un <code>EntityManager</code>.
+			Pour que l'<code>EntityManager</code> prenne en compte votre entité, il faut appeler la méthode <code>merge</code>&nbsp;:</p>
+			<figure>
+				<figcaption>Utilisation de la méthode merge</figcaption>
+				<pre><code class="java">
+  EntityManager em = ... // nous verrons plus loin comment obtenir une instance
+  
+  em.getTransaction().begin();
+  
+  Individu individu = new Individu();
+  // on positionne explicitement l'id de l'entité
+  individu.setId(1);
+  
+  try {
+    // il est très important de remplacer notre instance
+    // par celle retournée par l'EntityManager après un merge.
+    individu = em.merge(individu);
+    // l'instance de individu contient bien l'âge stocké en base
+    // de données (l'appel à merge à récupérer l'information)
+    individu.setAge(individu.getAge() + 1);
+
+    // JPA est capable de détecter que l'age de l'individu a été modifié
+    // et qu'il faut réaliser un UPDATE SQL au moment du commit.
+    em.getTransaction().commit();
+  }
+  catch (RuntimeException e) {
+    em.getTransaction().rollback();
+    throw e;
+  }
+
+</code></pre>
+			</figure>
+			
+			<p>L'inverse la méthode <code>EntityManager.merge(T)</code> est <code>EntityManager.detach(Object)</code> qui annule la gestion
+			d'une entité par l'<code>EntityManager</code>. Lors du commit de la transaction, les modifications faites sur l'entité détachée
+			ne seront pas prises en compte.</p>
+
+			<h3>La méthode <code>detach</code></h3>
+
+			<h3>La méthode <code>remove</code></h3>
+
+			<h3>La méthode <code>refresh</code></h3>
+		</section>
+		
+		<section>
+			<h2>Obtenir un EntityManager</h2>
+			
+			<h3>Dans une application Java</h3>
+
+			<h3>Dans un serveur Java EE</h3>
+
+			<h2>JPA et JTA</h2>
+		</section>
+
+	</article>
+
+</body>
+</html>

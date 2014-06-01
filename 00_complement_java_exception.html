@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Les exceptions</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<script src="js/toc.js"></script>
+</head>
+<body>
+	<div id="titleBar">
+		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
+ 		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>
+		<script>document.write(document.title)</script> - EPSI B3 2013/2014 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a>
+	</div>
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		<section id="toc"></section>
+		<section>
+			<h2>Principe général</h2>
+			<p>Une exception permet d'interrompre un traitement lorsqu'une situation exceptionnelle se produit.</p> 
+			<p>Une exception est propagée dans la pile des appels de méthodes. Elle peut être interceptée progammatiquement.
+			Si elle n'est interceptée par aucune méthode, elle remonte la pile d'appel et interrompt le thread d'exécution.
+			S'il s'agit du thread principal, le programme s'interrompt en erreur.</p>
+		</section>
+		<section>
+			<h2>Déclaration et héritage</h2>
+
+			<p>Les exceptions sont représentées par des classes qui ont comme ancêtre <strong>java.lang.Throwable</strong></p>
+			<figure>
+				<figcaption>La hiérarchie de base des exceptions</figcaption>
+				<img src="assets/exception_inheritance.png"/>
+			</figure>
+			<p>Les classes héritant de <strong>java.lang.Error</strong> sont réservées pour la JVM afin de signaler des erreurs systèmes :</p>
+			<ul>
+				<li>NoClassDefFoundError</li>
+				<li>OutOfMemoryError</li>
+				<li>StackOverflowError</li>
+				<li>...</li>
+			</ul>
+
+			<p>Pour créer une exception, il suffit de créer sa propre classe en la faisant hériter de <code>java.lang.Exception</code>.</p>
+			<figure>
+				<pre><code class="java">
+// La classe hérite de Exception qui hérite elle-même de throwable.
+// Par convention le nom de la classe se termine par Exception.
+public class EndOfTheWorldException extends Exception {
+}
+
+</code></pre>
+			</figure>
+			<p>Pour lancer une exception on utilise le mot-clé <strong>throw</strong>. 
+			On peut maintenant signaler l'événement exceptionnel de la fin du monde en lançant l'exception&nbsp;:</p>
+			<figure>
+				<pre><code class="java">
+  throw new EndOfTheWorldException();
+
+</code></pre>
+			</figure>
+			
+			<p>On distingue deux catégories d'exception&nbsp;: les <strong>checked exceptions</strong> et les <strong>unchecked exceptions</strong></p>
+			
+		</section>
+		<section>
+			<h2>Les checked exceptions</h2>
+			<p>Les <em>checked exceptions</em> <strong>doivent</strong> apparaître dans la signature des méthodes qui peuvent
+			les lancer ou les propager lors d'un appel grâce au mot-clé <strong>throws</strong>.</p>
+			<figure>
+				<pre><code class="java">
+public void pressTheRedButton() throws EndOfTheWorldException {
+  if(this.isTheEndOfTheWorld()) {
+    throw new EndOfTheWorldException();
+  }
+  // ...
+}
+
+public void doSomethingSilly() throws EndOfTheWorldException {
+  pressTheRedButton();
+}
+
+</code></pre>
+			</figure>
+
+			<p>Plusieurs <em>checked exceptions</em> peuvent être spécifiées en les séparant par une virgule :</p>
+			<figure>
+				<pre><code class="java">
+  public Stuff buy(long amount, Currency currency) 
+    throws NotEnoughMoneyException, NotAcceptedCurrencyException, 
+           StuffUnavailableException {
+    // ...
+  }
+
+</code></pre>
+			</figure>
+		</section>
+		<section>
+			<h2>Les unchecked exceptions</h2>
+
+			<p>Les <em>unchecked exceptions</em> héritent directement ou indirectement 
+			de <strong>RuntimeException</strong> ou de <strong>Error</strong>.</p>
+			<p>La déclaration de ces exceptions est <strong>optionnelle</strong> dans la signature des méthodes pouvant les lancer ou les propager.
+			D'où leur nom de <em>unchecked</em> qui signifie que leur propagation n'est pas vérifiée par le compilateur.</p>
+			<figure>
+				<pre><code class="java">
+  public class EntityNotFoundException extends RuntimeException {
+    public EntityNotFoundException(String message) {
+      super(message);
+    } 
+  }
+
+</code></pre>
+			</figure>
+
+			<figure>
+				<pre><code class="java">
+  // Il n'est pas nécessaire d'ajouter :
+  //       throws EntityNotFoundException
+  // car EntityNotFoundException hérite de RuntimeException.
+  public Entity get(String id) {
+    Entity entity = database.load(id);
+    if (entity == null) {
+      throw new EntityNotFoundException("Cannot find entity " + id);
+    }
+    return entity;
+  }
+
+</code></pre>
+			</figure>
+			
+		</section>
+		
+		<section>
+			<h2>La syntaxe try-catch</h2>
+
+			<p>Une exception peut être interceptée par une méthode dans la pile d'appel grâce à la syntaxe <code>try-catch</code>&nbsp;:</p>
+			<figure>
+				<pre><code class="java">
+  try {
+    evilMind.pressTheRedButton();
+  }
+  catch (EndOfTheWorldException ex) {
+    hero.saveTheWorld();
+  }
+
+</code></pre>
+			</figure>
+
+			<p>Le block défini par le mot-clé <strong>catch</strong> est exécuté <strong>uniquement</strong>
+			si une exception de type <strong>EndOfTheWorldException</strong> est lancée lors de l'exécution
+			du block défini par le mot-clé <strong>try</strong>.
+			</p>
+
+			<p>Un block défini par le mot-clé <strong>finally</strong> est exécuté systématiquement après un block
+	        <strong>try</strong> et un block <strong>catch</strong> (si une exception a été attrapée).</p>
+			<figure>
+				<pre><code class="java">
+  try {
+    evilMind.pressTheRedButton();
+  }
+  catch (EndOfTheWorldException ex) {
+    hero.saveTheWorld();
+  }
+  finally {
+    // Finalement, le héros arrête l'esprit du mal qu'il ait eu
+    // ou non à sauver le monde.
+    hero.arrest(evilMind);
+  }
+
+</code></pre>
+			</figure>
+
+			<p>Un block <strong>finally</strong> est souvent utilisé en Java pour libérer 
+			des ressources système à la fin d'un traitement.</p>
+			<figure>
+				<pre><code class="java">
+public String getFileContent(String filename) throws java.io.IOException {
+  java.io.FileReader reader = new java.io.FileReader(filename);
+  try {
+    int nbCharRead = 0;
+    char[] buffer = new char[1024];
+    StringBuilder builder = new StringBuilder();
+    // L'appel à reader.read peut lancer une java.io.IOException
+    while ((nbCharRead = reader.read(buffer)) &gt;= 0) {
+      builder.append(buffer, 0, nbCharRead);
+    }
+    // le retour explicite n'empêche pas l'exécution du block finally.
+    return builder.toString();
+  }
+  // Ce block est obligatoirement exécuté après le block try.
+  // Ainsi le flux de lecture sur le fichier est fermé 
+  // avant le retour de la méthode. 
+  finally {
+    reader.close();
+  }
+}
+
+</code></pre>
+			</figure>
+
+			<p>Depuis Java 7, on peut utiliser une expression 
+			<em><a href="http://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html" target="javadoc">try-with-resources</a></em>. 
+			Pour gérer le cas particulier des resources que l'on souhaite fermer automatiquement.</p>
+			<figure>
+				<pre><code class="java">
+  public String getFileContent(String filename) throws java.io.IOException {
+  // La resource que l'on souhaite fermer automatiquement et
+  // déclarer après le mot-clé try entre parenthèses.  
+  try (java.io.FileReader reader = new java.io.FileReader(filename)) {
+    int nbCharRead = 0;
+    char[] buffer = new char[1024];
+    StringBuilder builder = new StringBuilder();
+    while ((nbCharRead = reader.read(buffer)) &gt;= 0) {
+      builder.append(buffer, 0, nbCharRead);
+    }
+    return builder.toString();
+  }
+  // On évite l'utilisation du bloc finally de l'exemple
+  // précédent. Le try-with-resource garantit que reader.close()
+  // est appelé.
+}
+
+</code></pre>
+			</figure>
+
+			<p>Seules les classes implémentant l'interface 
+			<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/AutoCloseable.html" target="javadoc">java.lang.AutoCloseable</a> 
+			ou <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Closeable.html" target="javadoc">java.io.Closeable</a> 
+			peuvent être utilisées dans une expression <em>try-with-resources</em>.</p>
+		</section>
+	</article>
+</body>
+</html>

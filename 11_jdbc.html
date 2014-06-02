@@ -143,7 +143,7 @@
 </code></pre>
 			</figure>
 			
-			<h3>Création d'une connexion avec Java EE</h3>
+			<h3 id="creation_connexion_avec_javaee">Création d'une connexion avec Java EE</h3>
 			<p>Dans un serveur d'application, l'utilisation du <code>DriverManager</code> est remplacée par celle
 			de la <a href="http://docs.oracle.com/javase/7/docs/api/javax/sql/DataSource.html"><code>DataSource</code></a>.
 			L'interface <code>DataSource</code> n'offre que deux méthodes&nbsp;:</p>
@@ -166,7 +166,6 @@ Connection getConnection(String username, String password)
 				<pre><code class="java">
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;

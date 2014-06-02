@@ -206,7 +206,7 @@ public String getFileContent(String filename) throws java.io.IOException {
 			Pour gérer le cas particulier des resources que l'on souhaite fermer automatiquement.</p>
 			<figure>
 				<pre><code class="java">
-  public String getFileContent(String filename) throws java.io.IOException {
+public String getFileContent(String filename) throws java.io.IOException {
   // La resource que l'on souhaite fermer automatiquement et
   // déclarer après le mot-clé try entre parenthèses.  
   try (java.io.FileReader reader = new java.io.FileReader(filename)) {

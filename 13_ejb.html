@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Enterprise Java Beans (EJB)</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<script src="js/toc.js"></script>
+</head>
+<body>
+	<div id="titleBar">
+		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
+ 		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>
+		<script>document.write(document.title)</script> - EPSI B3 2013/2014 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a>
+	</div>
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		<section id="toc"></section>
+
+		<section>
+			<p>Les EJB sont des composants Java EE fournis par les développeurs d'application.
+			Ils encapsulent la logique de traitement de l'application (logique métier).</p>
+			<p>Les EJB donnent accès à des services et des fonctionnalités permettant 
+			le développement d'application scalable, sécurisée et transactionnelle.</p>
+		</section>
+
+		<section>
+			<h2>Les types d'EJB</h2>
+			<p>Il existe plusieurs types d'EJB :</p>
+			<ul>
+				<li>Les EJB de session : Stateful EJB, Stateless EJB et Singleton EJB</li>
+				<li>Les EJB orientés message : Message Driven Bean</li>
+				<li>Les entity bean pour la persistance : Cf. JPA</li>
+			</ul>
+
+			<p>Les EJB offrent les services suivants :</p>
+			<ul>
+				<li>modèle d'exécution thread-safe</li>
+				<li>gestion du cycle de vie des instances pour une meilleure scalabilité</li>
+				<li>accés aux services Java EE par injection</li>
+				<li>gestion des transactions</li>
+				<li>contrôle des droits d'accès pour l'invocation des méthodes</li>
+				<li>gestion des traitements asynchrones</li>
+				<li>accès distant pour un client à travers une interface remote</li>
+			</ul>
+
+		</section>
+		
+		<section>
+			<h2>Les EJB session</h2>
+			<p>Il existe trois types d'EJB session :</p>
+			<ul>
+				<li>les EJB avec état conversationnel (stateful)</li>
+				<li>les EJB sans état conversationnel (stateless)</li>
+				<li>les EJB singleton (singleton)</li>
+			</ul>
+	
+		</section>
+
+		<figure>
+			<figcaption>EJB stateful : le panier utilisateur</figcaption>
+			<pre><code class="java">import javax.ejb.Stateful;
+
+@Stateful
+public class UserBasket {
+  private List&lt;Item&gt; items = new ArrayList&lt;&gt;();
+
+  public void addItem(Item i) {
+    items.add(i);
+  }
+  
+  // ...
+}</code></pre>
+		</figure>
+		<p>L'EJB stateful maintient l'état conversationnel : cela signifie qu'une instance particulière de cet EJB est créée par le conteneur pour chaque client.
+		L'état de l'instance est donc conservé entre deux appels de méthodes.
+		</p>
+
+		<figure>
+			<figcaption>EJB stateless : la gestion d'une ressource</figcaption>
+			<pre><code class="java">import javax.ejb.Stateless;
+
+@Stateless
+public class ArticleRepository {
+
+  public void addArticle(Article a) {
+    // ...
+  }
+  
+  // ...
+}</code></pre>
+		</figure>
+		<p>L'EJB stateless ne maintient pas d'état conversationnel. Le conteneur crée un pool d'instances et en attribut une à chaque demande du client.</p>
+		<p>Le conteneur garantit cependant qu'une même instance de cet EJB n'est utilisé que par un client à la fois.</p>
+
+		<figure>
+			<figcaption>EJB singleton : la gestion d'une ressource unique</figcaption>
+			<pre><code class="java">import javax.ejb.*;
+
+@Singleton
+@Lock(LockType.WRITE)
+public class SharedResource {
+
+  @Lock(LockType.READ)
+  public SharedResource getSharedResource() {
+    // ...
+  }
+}</code></pre>
+		</figure>
+		<p>Le conteneur veille à ce qu'il n'existe qu'<strong>UNE</strong> instance d'un EJB singleton pour une application.</p>
+		<p>L'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/ejb/Lock.html">@Lock</a> permet de contrôler si l'instance ou une méthode
+		autorise des accès concurrents (lock de type READ) ou des accès avec acquisition d'un verrou (lock de type WRITE).</p>
+		<p>Par défaut, un EJB singleton dispose d'un verrou en écriture pour toutes ses méthodes (lock de type write).</p>
+
+		<p>Pour avoir accès à une instance d'un EJB, une application <strong>ne la crée pas</strong>, elle demande au conteneur EJB de la lui fournir.</p>
+		<p>La méthode la plus simple, consiste à utiliser l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/ejb/EJB.html">@EJB</a> sur un attribut d'un composant Java EE.</p>
+		<figure>
+			<figcaption>Un client EJB</figcaption>
+			<pre><code class="java">import javax.ejb.EJB;
+import javax.ws.rs.Path;
+
+// Une classe avec l'annotation @Path désigne une ressource racine JAX-RS.
+// Cette classe est bien un composant Java EE géré par le conteneur Web.
+@Path("article")
+public class ArticleResource {
+
+  @EJB
+  private ArticleRepository;
+  
+  // ...
+}</code></pre>
+		</figure>
+
+		<header>La gestion des transactions</header>
+		<p>Les EJB permettent d'ajouter le support transactionnel sur chacune de leur méthode.</p>
+		<p>L'utilisation la plus courante consiste à gérer les transactions vers les bases de données.</p>
+		<p>Lors de l'appel d'une méthode d'un EJB, le conteneur démarre une transaction de base de données et à la fin de la méthode, le conteneur effectue un commit ou un rollback.</p>
+
+		<p>Une transaction a les propriétés <a href="http://fr.wikipedia.org/wiki/Propri%C3%A9t%C3%A9s_ACID">ACID</a> pour garantir sa fiabilité :</p>
+		<ul>
+			<li><b>A</b>tomicité</li>
+			<li><b>C</b>ohérence</li>
+			<li><b>I</b>solation</li>
+			<li><b>D</b>urabilité</li>
+		</ul>
+
+		<p>Deux annotations permettent de déclarer le support transactionnel pour les EJB : </p>
+		<dl>
+			<dt><a href="http://docs.oracle.com/javaee/6/api/javax/ejb/TransactionManagement.html">@TransactionManagement</a></dt>
+			<dd>Définit si la transaction est gérée par le conteneur (valeur CONTAINER par défaut) ou si la transaction est gérée par le bean lui-même (valeur BEAN).
+			Une transaction gérée par le bean signifie que le développeur souhaite gérer la transaction par programmation.</dd>
+			<dt><a href="http://docs.oracle.com/javaee/6/api/javax/ejb/TransactionAttribute.html">@TransactionAttribute</a></dt>
+			<dd>Permet de gérer sous quelle condition une transaction gérée par le conteneur peut être démarrée lors de l'appel à la méthode de l'EJB.</dd>
+		</dl>
+
+		<figure>
+			<figcaption>Transaction gérée par le conteneur</figcaption>
+			<pre><code class="java">import javax.ejb.*;
+
+@Stateless
+// Il s'agit de la valeur par défaut
+@TransactionManagement(TransactionManagementType.CONTAINER)
+// Il s'agit de la valeur par défaut
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
+public class ArticleRepository {
+
+  public void addArticle(Article a) {
+    // ...
+  }
+  
+  // ...
+}</code></pre>
+		</figure>
+
+		<figure>
+			<figcaption>Transaction gérée par le bean</figcaption>
+			<pre><code class="java">import javax.ejb.*;
+import javax.annotation.Resource;
+import javax.transaction.UserTransaction;
+
+@Stateless
+// signale que la transaction est gérée dans le code de l'EJB
+@TransactionManagement(TransactionManagementType.BEAN)
+public class ArticleRepository {
+  @Resource
+  private UserTransaction tx;
+
+  public void addArticle(Article a) {
+    // démarrer la transaction
+    tx.begin();
+    // ...
+    // commiter la transaction
+    tx.commit();
+  }
+  
+  // ...
+}</code></pre>
+
+		</figure>
+		<p>Le bean peut gérer la transaction grâce à l'objet <a href="http://docs.oracle.com/javaee/6/api/javax/transaction/UserTransaction.html">UserTransaction</a>
+		injecté par le conteneur grâce à l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/annotation/Resource.html">@Resource</a>.</p>
+
+		<p>Dans le cas d'une gestion des transactions par le conteneur, une transaction sera rollbackée si :</p>
+		<ul>
+			<li>la méthode de l'EJB se termine par une exception runtime</li>
+			<li>la méthode de l'EJB se termine par une exception portant l'annotation 
+			<a href="http://docs.oracle.com/javaee/6/api/javax/ejb/ApplicationException.html">@ApplicationException</a>
+			avec l'attribut <strong>rollback</strong> avec la valeur true</li>
+		</ul>
+		<p>Dans tous les autres cas, la transaction est <strong>commitée</strong>.</p>
+
+		<p>L'exception ci-dessous provoque un rollback de la transaction gérée par le conteneur lorsqu'elle est jetée lors de l'exécution d'une méthode d'EJB.</p>
+		<figure>
+			<figcaption>Une exception applicative</figcaption>
+			<pre><code class="java">import javax.ejb.ApplicationException;
+
+@ApplicationException(rollback = true)
+public class ArticleNotAvailableException extends Exception {
+  
+  // ...
+
+}</code></pre>
+		</figure>
+	</article>
+
+</body>
+</html>

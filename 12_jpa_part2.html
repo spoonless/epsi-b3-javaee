@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Java Persistence API (JPA) 2/2</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<script src="js/toc.js"></script>
+</head>
+<body>
+	<div id="titleBar">
+		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
+ 		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>
+		<script>document.write(document.title)</script> - EPSI B3 2013/2014 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a>
+	</div>
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		<section id="toc"></section>
+		
+		<section>
+			<h2>Exécuter des requêtes avec JPA</h2>
+
+			<p>Les méthodes <code>find</code>, <code>persist</code>, <code>merge</code>, <code>detach</code>, <code>refresh</code> et <code>remove</code>
+			disponibles avec une instance d'<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/EntityManager.html"><code>EntityManager</code></a> 
+			permettent de gérer simplement une entité mais deviennent très vite limitées pour réaliser des requêtes courantes en SQL.</p>
+
+			<p>Un <code>EntityManager</code> fournit également différentes API pour exécuter des requêtes. Le principe est toujours le même&nbsp;:</p>
+			<ol>
+				<li>On crée un objet de type <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Query.html"><code>Query</code></a>
+				ou <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/TypedQuery.html"><code>TypedQuery</code></a> grâce à l'API</li>
+				<li>Pour les requêtes paramétrées, on positionne la valeur des paramètres grâce aux méthode <code>setParameter(String name, XXX xxx)</code>
+				ou <code>setParameter(int position, XXX xxx)</code></li>
+				<li>On peut optionnellement positionner plusieurs autres informations pour la requête (par exemple, le nombre maximum de résultats pour une consultation
+				grâce à la méthode <code>setMaxResults(int)</code>)</li>
+				
+				<li>On exécute la requête grâce aux méthodes <code>executeUpdate()</code> (pour un update ou un delete), <code>getSingleResult()</code>
+				pour une requête SELECT ne retournant qu'un seul résultat ou <code>getResultList()</code></li>
+			</ol>
+			
+			<p>Pour les différents exemples de requêtes qui suivent, nous nous baserons sur l'entité JPA suivante&nbsp;:</p>
+			<figure>
+				<pre><code class="java">
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "individu")
+public class Individu {
+  @Id
+  @Column(name = "individuId")
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  @Basic
+  @Column(length = 30, nullable = false)
+  private String nom;
+
+  @Basic
+  @Column(length = 30, nullable = false)
+  private String prenom;
+
+  @Column(length = 3, nullable = false)
+  private Integer age;
+  
+  // les getters et setters sont omis ... 
+}
+</code></pre>
+			</figure>
+			
+			<p>Cette entité JPA correspond à la table MySQL&nbsp;:</p>
+			<figure>
+				<pre><code class="java">
+CREATE TABLE `individu` (
+  `individuId` int NOT NULL AUTO_INCREMENT,
+  `nom` varchar(30) NOT NULL,
+  `prenom` varchar(30) NOT NULL,
+  `age` int(3) NOT NULL,
+  PRIMARY KEY (`individu_id`)
+);
+</code></pre>
+			</figure>
+			
+		</section>
+
+		<section>
+			<h2>Les requêtes Natives</h2>
+			<p>Les requêtes natives en JPA désignent les requêtes SQL. On crée une requête native à partir des méthodes <code>EntityManager.createNativeQuery(...)</code>.</p>
+			
+			<figure>
+				<figcaption>Exemple&nbsp;: récupérer tous les individus</figcaption>
+				<pre><code class="java">
+  List&lt;Individu&gt; individus = null;
+  individus = entityManager.createNativeQuery("select * from individu", Individu.class)
+                           .getResultList();
+
+</code></pre>
+			</figure>
+			<figure>
+				<figcaption>Exemple&nbsp;: récupérer tous les individus âgés au plus de ageMax</figcaption>
+				<pre><code class="java">
+  int ageMax = 25;
+  List&lt;Individu&gt; individus = null;
+  individus = entityManager
+                  .createNativeQuery("select * from individu where age &lt;= ?", Individu.class)
+                  .setParameter(1, ageMax)
+                  .getResultList();
+
+</code></pre>
+			</figure>
+			<figure>
+				<figcaption>Exemple&nbsp;: connaître le nombre d'individus enregistrés</figcaption>
+				<pre><code class="java">
+  long result = (long) entityManager
+                           .createNativeQuery("select count(1) from individu", long.class)
+                           .getSingleResult();
+
+</code></pre>
+			</figure>
+			<figure>
+				<figcaption>Exemple&nbsp;: Suppression d'un individu dont l'id est individuId</figcaption>
+				<pre><code class="java">
+  long individuId = 1;
+  // Cette requête nécessite une transaction active
+  entityManager.createNativeQuery("delete from individu where individuId = ?")
+               .setParameter(1, individuId)
+               .executeUpdate();
+
+</code></pre>
+			</figure>
+
+		</section>
+			
+		<section>
+			<h2>Les requêtes JPQL</h2>
+
+			<p>Avec JPA, il est possible d'utiliser une autre langage pour l'écriture des requêtes, il s'agit du <strong>JPA Query Language</strong> (JPQL).
+			Ce langage est un langage de requête objet. L'objectif n'est plus d'écrire des requêtes basées sur le modèle relationnel des tables
+			mais sur le modèle objet des classes Java.</p>
+			
+			<aside class="tip">
+				<p>Pour une <strong>introduction à la syntaxe du JPQL</strong>, reportez-vous au <a href="http://en.wikibooks.org/wiki/Java_Persistence/JPQL">Wikibook</a>.</p>
+			</aside>
+			
+			<p>On crée une requête native à partir des méthodes <code>EntityManager.createQuery(...)</code>.</p>
+
+			<figure>
+				<figcaption>Exemple&nbsp;: récupérer tous les individus</figcaption>
+				<pre><code class="java">
+  List&lt;Individu&gt; individus = null;
+  individus = entityManager.createQuery("select i from Individu i", Individu.class)
+                           .getResultList();
+
+</code></pre>
+			</figure>
+			<figure>
+				<figcaption>Exemple&nbsp;: récupérer tous les individus âgés au plus de ageMax</figcaption>
+				<pre><code class="java">
+  int ageMax = 25;
+  List&lt;Individu&gt; individus = null;
+  individus = entityManager
+                .createQuery("select i from Individu i where i.age &lt;= :ageMax", Individu.class)
+                .setParameter("ageMax", ageMax)
+                .getResultList();
+
+</code></pre>
+			</figure>
+			<figure>
+				<figcaption>Exemple&nbsp;: connaître le nombre d'individus enregistrés</figcaption>
+				<pre><code class="java">
+  long result = entityManager.createQuery("select count(i) from Individu i", long.class)
+                             .getSingleResult();
+
+</code></pre>
+			</figure>
+			<figure>
+				<figcaption>Exemple&nbsp;: Suppression d'un individu dont l'id est individuId</figcaption>
+				<pre><code class="java">
+  long individuId = 1;
+  // Cette requête nécessite une transaction active
+  entityManager.createQuery("delete from Individu i where i.id = :id")
+               .setParameter("id", individuId)
+               .executeUpdate();
+</code></pre>
+			</figure>
+			
+			<p>Sur des exemples aussi simples que les exemples précédents, le JPQL semble très proche du SQL. Cependant,
+			avec le JPQL, on ne fait référence qu'au classe des objets et à leurs attributs, <strong>jamais</strong> au nom des tables
+			et des colonnes.</p> 
+
+			<p>Ensuite dans la requête JPQL suivante&nbsp;:</p>
+			<figure>
+				<pre><code class="sql">select individu from Individu individu</code></pre>
+			</figure>
+			<p><strong>individu</strong> désigne la variable contenant l'instance courante de la classe Individu. Il ne s'agit
+			absolument pas d'un alias de table comme en SQL. La déclaration d'une variable en JPQL est obligatoire&nbsp;!</p>
+			
+			<p>Enfin, le JPQL introduit une nouvelle façon de déclarer des parmètres dans une requête sous forme <strong><code>:nom</code></strong>.
+			Il ainsi possible de nommer des paramètres, rendant ainsi le code plus facile à lire et à maintenir.</p>
+			
+		</section>
+
+		<section>
+			<h2>Les requêtes par programmation</h2>
+			<p>Lorsque l'on souhaite construire une requête JPQL dynamiquement, il n'est pas toujours très facile de construire la requête
+			par simple concaténation de chaînes de caractères. Pour cela, JPA fournit une API permettant de définir entièrement une
+			requête JPQL par programmation. On crée cette requête à travers un <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/criteria/CriteriaBuilder.html"><code>CriteriaBuilder</code></a>
+			que l'on peut récupérer grâce à la méthode <code>EntityManager.getCriteriaBuilder()</code>.</p>
+
+			<figure>
+				<figcaption>Exemple&nbsp;: récupérer tous les individus</figcaption>
+				<pre><code class="java">
+  CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+  CriteriaQuery&lt;Individu&gt; query = builder.createQuery(Individu.class);
+  Root&lt;Individu&gt; i = query.from(Individu.class);
+  query.select(i);
+
+  List&lt;Individu&gt; individus = entityManager.createQuery(query).getResultList();
+
+</code></pre>
+			</figure>
+			<figure>
+				<figcaption>Exemple&nbsp;: récupérer tous les individus âgés au plus de ageMax</figcaption>
+				<pre><code class="java">
+  int ageMax = 25;
+
+  CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+  CriteriaQuery&lt;Individu&gt; query = builder.createQuery(Individu.class);
+  Root&lt;Individu&gt; i = query.from(Individu.class);
+  query.select(i);
+  query.where(builder.lessThanOrEqualTo(i.get("age").as(int.class), ageMax));
+
+  List&lt;Individu&gt; individus = entityManager.createQuery(query).getResultList();
+
+</code></pre>
+			</figure>
+
+			<figure>
+				<figcaption>Exemple&nbsp;: connaître le nombre d'individus enregistrés</figcaption>
+				<pre><code class="java">
+  CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+  CriteriaQuery&lt;Long&gt; query = builder.createQuery(Long.class);
+  Root&lt;Individu&gt; i = query.from(Individu.class);
+  query.select(builder.count(i));
+
+  long result = entityManager.createQuery(query).getSingleResult();
+
+</code></pre>
+			</figure>
+
+			<aside class="tip">
+				<p>Pour des exemples supplémentaires d'utilisation du <code>CriteriaBuilder</code>, reportez-vous au <a href="http://en.wikibooks.org/wiki/Java_Persistence/Criteria">Wikibook</a>.</p>
+			</aside>
+
+		</section>
+		
+		<section>
+			<h2>Gestion des relations</h2>
+			<p>Un des intérêts des ORM est de gérer de transformer les relations entre objets en relations entre tables
+			dans un modèle de base de données relationnels. JPA définit des modèles de relation qui peuvent être 
+			adaptés par annotation.</p>
+			<p>Les relations sont spécifiées par les annotations&nbsp;:
+			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/OneToOne.html"><code>@OneToOne</code></a>,
+			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/ManyToOne.html"><code>@ManyToOne</code></a>,
+			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/OneToMany.html"><code>@OneToMany</code></a>,
+			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/ManyToMany.html"><code>@ManyToMany</code></a>.
+			</p>
+
+			<aside class="tip">
+				<p>Pour une présentation approfondie des relations dans JPA, reportez-vous au <a href="http://en.wikibooks.org/wiki/Java_Persistence/Relationships">Wikibook</a>.</p>
+			</aside>
+
+		</section>
+
+		<section>
+			<h2>La relation 1:1 (one to one)</h2>
+			<p>L'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/OneToOne.html"><code>@OneToOne</code></a>
+			définit une relation 1:1 entre deux entités. Si cette relation n'est pas forcément très courante dans un modèle
+			relationnel de base de données, elle se rencontre très souvent dans une modèle objet.</p>
+
+			<figure>
+				<figcaption>Exemple de relation OneToOne</figcaption>
+				<pre><code class="java">
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
+public class Individu {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  @OneToOne
+  private Abonnement abonnement;
+
+  // getters et setters omis ...
+}
+
+</code></pre>
+				<pre><code class="java">
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Abonnement {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  // getters et setters omis ...
+}
+
+</code></pre>
+			</figure>
+			
+			<p>L'annotation <code>@OneToOne</code> implique que la table <code>Individu</code> contient une colonne qui est une
+			clé étrangère contenant la clé d'un abonnement. Par défaut, JPA s'attend à ce que cette colonne se nomme
+			ABONNEMENT_ID, mais il est possible de changer ce nom grâce à l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/JoinColumn.html"><code>@JoinColumn</code></a>&nbsp;:</p>
+
+			<figure>
+				<figcaption>Déclaration de la clé étrangère</figcaption>
+				<pre><code class="java">
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+@Entity
+public class Individu {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  @OneToOne
+  @JoinColumn(name = "abonnement_fk")
+  private Abonnement abonnement;
+
+  // getters et setters omis ...
+}
+
+</code></pre>
+			</figure>
+		</section>
+
+		<section>
+			<h2>La relation n:1 (many to one)</h2>
+			<p>L'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/ManyToOne.html"><code>@ManyToOne</code></a>
+			définit une relation n:1 entre deux entités.</p>
+
+			<figure>
+				<figcaption>Exemple de relation ManyToOne</figcaption>
+				<pre><code class="java">
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
+public class Individu {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  @ManyToOne
+  private Societe societe;
+
+  // getters et setters omis ...
+}
+
+</code></pre>
+				<pre><code class="java">
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Societe {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  // getters et setters omis ...
+}
+
+</code></pre>
+			</figure>
+			
+			<p>L'annotation <code>@ManyToOne</code> implique que la table <code>Individu</code> contient une colonne qui est une
+			clé étrangère contenant la clé d'une société. Par défaut, JPA s'attend à ce que cette colonne se nomme
+			SOCIETE_ID, mais il est possible de changer ce nom grâce à l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/JoinColumn.html"><code>@JoinColumn</code></a>.
+			Il est également possible d'indiquer à JPA qu'il doit passer par une table d'association pour établir la relation
+			entre les deux entités avec l'annotation
+			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/JoinTable.html"><code>@JoinTable</code></a>&nbsp;:
+			</p>
+
+			<figure>
+				<figcaption>Déclaration d'une table d'association</figcaption>
+				<pre><code class="java">
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+
+@Entity
+public class Individu {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  @ManyToOne
+  // déclaration d'une table d'association
+  @JoinTable(name = "societe_individu", 
+             joinColumns = @JoinColumn(name = "individu_id"), 
+             inverseJoinColumns = @JoinColumn(name = "societe_id"))
+  private Societe societe;
+
+  // getters et setters omis ...
+}
+
+</code></pre>
+			</figure>
+		</section>
+
+		<section>
+			<h2>La relation 1:n (one to many)</h2>
+			<p>L'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/OneToMany.html"><code>@OneToMany</code></a>
+			définit une relation 1:n entre deux entités. Cette annotation ne peut être utilisée qu'avec une collection d'éléments
+			puisqu'elle implique qu'il peut y avoir plusieurs entités associées.</p>
+
+			<figure>
+				<figcaption>Exemple de relation OneToMany</figcaption>
+				<pre><code class="java">
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@Entity
+public class Societe {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  @OneToMany
+  private List&lt;Individu&gt; employes = new ArrayList&lt;&gt;();
+
+  // getters et setters omis ...
+}
+
+</code></pre>
+				<pre><code class="java">
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Individu {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  // getters et setters omis ...
+}
+
+</code></pre>
+			</figure>
+			
+			<p>L'annotation <code>@OneToMany</code> implique que la table <code>Individu</code> contient une colonne qui est une
+			clé étrangère contenant la clé d'une société. Par défaut, JPA s'attend à ce que cette colonne se nomme
+			SOCIETE_ID, mais il est possible de changer ce nom grâce à l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/JoinColumn.html"><code>@JoinColumn</code></a>.
+			Il est également possible d'indiquer à JPA qu'il doit passer par une table d'association pour établir la relation
+			entre les deux entités avec l'annotation
+			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/JoinTable.html"><code>@JoinTable</code></a>.
+			Ainsi, <code>@ManyToOne</code> fonctionne exactement comme <code>@OneToMany</code> sauf que cette annotation
+			porte sur l'autre côté de la relation.
+			</p>
+		</section>
+
+		<section>
+			<h2>La relation n:n (many to many)</h2>
+			<p>L'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/ManyToMany.html"><code>@ManyToMany</code></a>
+			définit une relation n:n entre deux entités. Cette annotation ne peut être utilisée qu'avec une collection d'éléments
+			puisqu'elle implique qu'il peut y avoir plusieurs entités associées.</p>
+
+			<figure>
+				<figcaption>Exemple de relation ManyToMany</figcaption>
+				<pre><code class="java">
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+@Entity
+public class Individu {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  @ManyToMany
+  private List&lt;Individu&gt; enfants = new ArrayList&lt;&gt;();
+
+  // getters et setters omis ...
+}
+
+</code></pre>
+			</figure>
+			
+			<p>L'annotation <code>@ManyToMany</code> implique qu'il existe une table d'association
+			<code>Individu_Individu</code> qui contient les clés étrangères <code>INDIVIDU_ID</code> et <code>ENFANTS_ID</code>
+			permettant de modéliser la relation. 
+			Il est possible de décrire explicitement la relation grâce à l'annotation
+			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/JoinTable.html"><code>@JoinTable</code></a>&nbsp;:
+			</p>
+			
+			<figure>
+				<figcaption>Déclaration de la table d'association</figcaption>
+				<pre><code class="java">
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
+@Entity
+public class Individu {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  @ManyToMany
+  @JoinTable(name = "ParentEnfant", 
+             joinColumns = @JoinColumn(name = "parent_id"), 
+             inverseJoinColumns = @JoinColumn(name = "enfant_id"))
+  private List&lt;Individu&gt; enfants = new ArrayList&lt;&gt;();
+
+  // getters et setters omis ...
+}
+
+</code></pre>
+			</figure>
+		</section>
+	</article>
+</body>
+</html>

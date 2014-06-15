@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Java Persistence API (JPA)</title>
+	<title>Java Persistence API (JPA) 1/2</title>
 	<meta name="author" content="David Gayerie">
 	<link href="css/article.css" rel="stylesheet">
 	<link href="highlight/styles/zenburn.css" rel="stylesheet">
@@ -189,7 +189,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="Individu")
+@Table(name="individu")
 public class Individu {
 
   @Id
@@ -231,7 +231,7 @@ public class Individu {
 			<p>&Agrave; l'entité JPA ci-dessus, on pourra faire correspondre la table MySQL&nbsp;:</p>
 			<figure>
 				<pre><code class="sql">
-CREATE TABLE `Individu` (
+CREATE TABLE `individu` (
   `individuId` int NOT NULL AUTO_INCREMENT,
   `nom` varchar(30) NOT NULL,
   `prenom` varchar(30) NOT NULL,

@@ -1,0 +1,140 @@
+@charset "UTF-8";
+@import url(normalize.css);
+@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700,400italic,700italic);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+
+a, a:link, a:visited {
+	color: inherit;
+	text-decoration: none;
+}
+
+body {
+	font-family: serif;
+	margin: 0cm;
+	font-size: 10pt;
+}
+
+#titleBar {
+	display:none;
+}
+
+figcaption, table>caption {
+	font-style: italic;
+	font-weight: bold;
+	margin-bottom: 0.5em;
+	text-align: left;
+}
+
+article {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 100%;
+	text-align: justify;
+	margin-bottom: 1em;
+}
+
+article.exercice {
+	padding-left: 1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Quicksand", sans-serif;
+	text-transform: uppercase;
+	letter-spacing: -0.05em;
+	text-align: right;
+	margin-bottom: 1em;
+	border-bottom: thin solid rgb(71,71,71);
+}
+
+h1 {
+	font-size: 220%;
+}
+
+h2 {
+	margin-top: 2em;
+	font-size: 175%;
+}
+
+h3 {
+	font-size: 150%;
+}
+
+h4 {
+	font-size: 125%;
+}
+
+h5 {
+	font-size: 100%;
+}
+
+aside {
+    border: 1em solid #6699CC;
+    border-width: 0.1em 0.1em 0.1em 0.8em; 
+    margin-top: 1em;
+    clear: both;
+    overflow: hidden;
+    border-radius: 10px;
+    padding: 1em 1em 1em 1em;
+    font-size: 90%;
+}
+
+aside>header {
+	font-style: italic;
+	font-weight: bold;
+	margin-bottom: 0.5em;
+}
+
+dl {
+	margin-left: 1em;
+	padding-left: 0;
+}
+
+dd {
+	margin-left: 1.5em;
+	padding-left: 0;
+}
+
+dt {
+	margin-top: 1em;
+	font-weight: bold;
+}
+
+aside.warn {
+    border-color: #990033;
+}
+
+aside.tip {
+    border-color: #339900;
+}
+
+table {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	margin-bottom: 1em;
+}
+
+tbody td {
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;
+	padding-right: 0.3em;
+	padding-left: 0.3em;
+	border: thin solid rgb(200, 200, 200);
+}
+
+code.hljs {
+    font-size: 70%;
+    font-family: monospace;
+	border-radius: 10px;
+    border-left: 1em solid #A8A8A8;
+    border-width: 0.1em 0.1em 0.1em 0.8em; 
+}
+
+section#toc {
+	margin-left:40%;
+	padding: 0.5em;
+}
+
+section#toc ol {
+	list-style: lower-roman;
+}

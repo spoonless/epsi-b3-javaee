@@ -26,19 +26,19 @@
 
 			<p>Les méthodes <code>find</code>, <code>persist</code>, <code>merge</code>, <code>detach</code>, <code>refresh</code> et <code>remove</code>
 			disponibles avec une instance d'<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/EntityManager.html"><code>EntityManager</code></a> 
-			permettent de gérer simplement une entité mais deviennent très vite limitées pour réaliser des requêtes courantes en SQL.</p>
+			permettent de gérer simplement une entité mais ne permettent pas de réaliser des requêtes très élaborées.</p>
 
-			<p>Un <code>EntityManager</code> fournit également différentes API pour exécuter des requêtes. Le principe est toujours le même&nbsp;:</p>
+			<p>Heureusement, un <code>EntityManager</code> fournit également différentes API pour exécuter des requêtes. Le principe est toujours le même&nbsp;:</p>
 			<ol>
 				<li>On crée un objet de type <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Query.html"><code>Query</code></a>
 				ou <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/TypedQuery.html"><code>TypedQuery</code></a> grâce à l'API</li>
-				<li>Pour les requêtes paramétrées, on positionne la valeur des paramètres grâce aux méthode <code>setParameter(String name, XXX xxx)</code>
+				<li>Pour les requêtes paramétrées, on positionne la valeur des paramètres grâce aux méthodes <code>setParameter(String name, XXX xxx)</code>
 				ou <code>setParameter(int position, XXX xxx)</code></li>
 				<li>On peut optionnellement positionner plusieurs autres informations pour la requête (par exemple, le nombre maximum de résultats pour une consultation
 				grâce à la méthode <code>setMaxResults(int)</code>)</li>
 				
 				<li>On exécute la requête grâce aux méthodes <code>executeUpdate()</code> (pour un update ou un delete), <code>getSingleResult()</code>
-				pour une requête SELECT ne retournant qu'un seul résultat ou <code>getResultList()</code></li>
+				(pour une requête SELECT ne retournant qu'un seul résultat) ou <code>getResultList()</code> (pour une requête SELECT ne retournant une liste de résultats).</li>
 			</ol>
 			
 			<p>Pour les différents exemples de requêtes qui suivent, nous nous baserons sur l'entité JPA suivante&nbsp;:</p>
@@ -150,7 +150,7 @@ CREATE TABLE `individu` (
 				<p>Pour une <strong>introduction à la syntaxe du JPQL</strong>, reportez-vous au <a href="http://en.wikibooks.org/wiki/Java_Persistence/JPQL">Wikibook</a>.</p>
 			</aside>
 			
-			<p>On crée une requête native à partir des méthodes <code>EntityManager.createQuery(...)</code>.</p>
+			<p>On crée une requête JPQL à partir des méthodes <code>EntityManager.createQuery(...)</code>.</p>
 
 			<figure>
 				<figcaption>Exemple&nbsp;: récupérer tous les individus</figcaption>
@@ -193,7 +193,7 @@ CREATE TABLE `individu` (
 			</figure>
 			
 			<p>Sur des exemples aussi simples que les exemples précédents, le JPQL semble très proche du SQL. Cependant,
-			avec le JPQL, on ne fait référence qu'au classe des objets et à leurs attributs, <strong>jamais</strong> au nom des tables
+			avec le JPQL, on ne fait référence qu'aux objets et à leurs attributs, <strong>jamais</strong> au nom des tables
 			et des colonnes.</p> 
 
 			<p>Ensuite dans la requête JPQL suivante&nbsp;:</p>
@@ -201,10 +201,10 @@ CREATE TABLE `individu` (
 				<pre><code class="sql">select individu from Individu individu</code></pre>
 			</figure>
 			<p><strong>individu</strong> désigne la variable contenant l'instance courante de la classe Individu. Il ne s'agit
-			absolument pas d'un alias de table comme en SQL. La déclaration d'une variable en JPQL est obligatoire&nbsp;!</p>
+			absolument pas d'un alias de table comme en SQL. La déclaration d'une variable en JPQL est obligatoire&nbsp;! Alors qu'un alias de table SQL est optionnel.</p>
 			
-			<p>Enfin, le JPQL introduit une nouvelle façon de déclarer des parmètres dans une requête sous forme <strong><code>:nom</code></strong>.
-			Il ainsi possible de nommer des paramètres, rendant ainsi le code plus facile à lire et à maintenir.</p>
+			<p>Enfin, le JPQL introduit une nouvelle façon de déclarer un paramètre dans une requête sous la forme <strong><code>:nom</code></strong>.
+			Les paramètres disposent ainsi d'un nom explicite, rendant ainsi le code plus facile à lire et à maintenir.</p>
 			
 		</section>
 
@@ -267,9 +267,9 @@ CREATE TABLE `individu` (
 		
 		<section>
 			<h2>Gestion des relations</h2>
-			<p>Un des intérêts des ORM est de gérer de transformer les relations entre objets en relations entre tables
-			dans un modèle de base de données relationnels. JPA définit des modèles de relation qui peuvent être 
-			adaptés par annotation.</p>
+			<p>Une des fonctionnalités majeures des ORM est de gérer les relations entre objets comme des relations entre tables
+			dans un modèle de base de données relationnelle. JPA définit des modèles de relation qui peuvent être 
+			déclarés par annotation.</p>
 			<p>Les relations sont spécifiées par les annotations&nbsp;:
 			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/OneToOne.html"><code>@OneToOne</code></a>,
 			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/ManyToOne.html"><code>@ManyToOne</code></a>,
@@ -413,7 +413,7 @@ public class Societe {
 			<p>L'annotation <code>@ManyToOne</code> implique que la table <code>Individu</code> contient une colonne qui est une
 			clé étrangère contenant la clé d'une société. Par défaut, JPA s'attend à ce que cette colonne se nomme
 			SOCIETE_ID, mais il est possible de changer ce nom grâce à l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/JoinColumn.html"><code>@JoinColumn</code></a>.
-			Il est également possible d'indiquer à JPA qu'il doit passer par une table d'association pour établir la relation
+			Plutôt que par une colonne, il est également possible d'indiquer à JPA qu'il doit passer par une table d'association pour établir la relation
 			entre les deux entités avec l'annotation
 			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/JoinTable.html"><code>@JoinTable</code></a>&nbsp;:
 			</p>
@@ -582,6 +582,164 @@ public class Individu {
 
 </code></pre>
 			</figure>
+		</section>
+		<section>
+			<h2>Les relations bi-directionnelles</h2>
+			<p>Parfois, il est nécessaire de construire un lien entre deux objets qui soit navigables dans les deux sens.
+			D'un point de vue objet, cela signifie que chaque objet dispose d'un attribut pointant sur l'autre instance. Mais
+			d'un point de vue du schéma de base de données relationnelle, il s'agit du même lien. Avec JPA, il est possible
+			de qualifier une relation entre deux objets comme étant une relation inverse grâce à l'attribut <code>mappedBy</code>
+			de l'annotation indiquant le type de relation. 
+			</p>
+
+			<figure>
+				<figcaption>Exemple d'une relation bi-directionnelle avec <code>mappedBy</code></figcaption>
+				<pre><code class="java">
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+@Entity
+public class Individu {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  @ManyToMany
+  private List&lt;Individu&gt; enfants = new ArrayList&lt;&gt;();
+
+  @ManyToMany(mappedBy = "enfants")
+  private List&lt;Individu&gt; parents = new ArrayList&lt;&gt;();
+
+  // getters et setters omis ...
+}
+
+</code></pre>
+			</figure>
+			<p>Dans l'exemple précédent, la liste des <code>enfants</code> représente bien une relation entre plusieurs instances de la classe Individu et
+			la liste <code>parents</code> représente la relation inverse. Pour le spécifier à JPA, on utilise l'attribut <code>mappedBy</code>
+			de l'annotation <code>@ManyToMany</code> pour indiquer sur l'attribut représentant la relation inverse, le nom de l'attribut modélisant la relation principale.</p>
+		</section>
+		<section>
+			<h2>La propagation en cascade</h2>
+			<p>Avec JPA, il est possible de propager des modifications à tout ou partie des entités liées. Les annotations permettant de spécifier
+			une relation possèdent un attribut <code>cascade</code> permettant de spécifier les opérations concernées&nbsp;: 
+			<code>ALL</code>, <code>DETACH</code>, <code>MERGE</code>, <code>PERSIST</code>, <code>REFRESH</code> ou <code>REMOVE</code>.</p>
+
+			<figure>
+				<figcaption>Exemple d'opération en cascade</figcaption>
+				<pre><code class="java">
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
+public class Individu {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+  private Societe societe;
+
+  // getters et setters omis ...
+}
+
+</code></pre>
+			</figure>
+			<p>Dans l'exemple précédent, on précise que l'instance de société doit être enregistrée en base si nécessaire
+			au moment où l'instance d'Individu sera elle-même enregistrée. De plus, lors d'un appel à merge pour une instance d'Individu, un merge
+			sera automatiquement realisé sur l'instance de l'attribut société.</p>
+		</section>
+		
+		<section>
+			<h2>Fetch lazy ou fetch eager</h2>
+			<p>Lorsque JPA doit charger une entité depuis la base de données (qu'il s'agisse d'une appel à <code>EntityManager.find(...)</code> ou d'une requête),
+			la question est de savoir quelles informations doivent être chargées. Doit-il charger tous les attributs d'une entité ? Parmi
+			ces attributs, doit-il charger les entités qui sont en relation avec l'entité chargée ? Ces questions sont importantes,
+			car la façon d'y répondre peut avoir un impact sur les performances de l'application.</p>
+			<p>Dans JPA, l'opération de chargement d'une entité depuis la base de données est appelée <strong>fetch</strong>.
+			Un fetch peut avoir deux stratégies&nbsp;: <strong>eager</strong> ou <strong>lazy</strong> 
+			(que l'on peut traduire respectivement et approximativement par <em>chargement immédiat</em> et <em>chargement différé</em>). 
+			On peut décider de la stratégie pour chaque membre de la classe grâce à l'attribut <code>fetch</code> présent sur les annotations
+			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Basic.html"><code>@Basic</code></a>,
+			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/OneToOne.html"><code>@OneToOne</code></a>,
+			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/ManyToOne.html"><code>@ManyToOne</code></a>,
+			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/OneToMany.html"><code>@OneToMany</code></a> et
+			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/ManyToMany.html"><code>@ManyToMany</code></a>.</p>
+			<ul>
+				<li><strong>eager</strong> signifie que l'information doit être chargée sytématiquement lorsque l'entité est chargée.
+				Cette stratégie est appliquée par défaut pour <code>@Basic</code>, <code>@OneToOne</code> et <code>@ManyToOne</code>.</li>
+				<li><strong>lazy</strong> signifie que l'information ne sera chargée qu'à la demande (par exemple lorsque la méthode
+				<code>get</code> de l'attribut sera appelée). Cette stratégie est appliquée par défaut pour 
+				<code>@OneToMany</code> et <code>@ManyToMany</code>.</li>
+			</ul>
+
+			<figure>
+				<figcaption>Exemple d'utilisation de fetch lazy</figcaption>
+				<pre><code class="java">
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+
+@Entity
+public class Individu {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  private Societe societe;
+
+  /*
+   * Stocke la photo d'identité sous une forme binaire. Comme l'information peut être
+   * volumineuse, on déclare un fetch lazy pour ne déclencher le chargement qu'à l'appel
+   * de getPhoto(), c'est-à-dire quand l'application en a vraiment besoin.
+   */
+  @Lob
+  @Basic(fetch = FetchType.LAZY)
+  private byte[] photo;
+
+  // getters et setters omis ...
+}
+
+</code></pre>
+				<pre><code class="java">
+  // Exécute une requête de la forme : SELECT i.id FROM Individu i WHERE i.id = ?
+  // Un appel à la méthode find ne charge pas les attributs marqués avec un fetch lazy.
+  Individu persistedIndividu = entityManager.find(Individu.class, individuId);
+
+  // Exécute une requête de la forme : SELECT i.photo FROM Individu i WHERE i.id = ?
+  byte[] photo = persistedIndividu.getPhoto();
+  
+  // Exécute une requête de la forme :  SELECT * FROM Societe WHERE id = ?
+  Societe societe = persistedIndividu.getSociete();
+
+</code></pre>
+			</figure>
+			
+			<aside>
+				<p>La définition des stratégies de fetch est une partie importante du tuning
+				dans le développement d'une application utilisant JPA.
+				</p>
+			</aside>
+
 		</section>
 	</article>
 </body>

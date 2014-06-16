@@ -713,6 +713,116 @@ public class IndividuController {
 			de composant n'a pas à se préoccuper d'appeler les méthodes <code>close()</code> sur ces instances.</p>
 			
 		</section>
+
+		<section>
+			<h2>Amélioration de code</h2>
+			<p>L'amélioration (enhancement) de code est une technique pour ajouter des instructions dans le code produit
+			afin d'enrichir le comportement d'une classe. Cette technique est largement utilisée par les implémentations
+			de JPA afin, notamment, de détecter les modifications d'état d'une entité ou d'exécuter des chargements différés (Cf. partie 2).
+			</p>
+			<p>Dans les implémentations de JPA, l'amélioration de code est généralement réalisée grâce à un des trois procédés suivants&nbsp;:</p>
+			<ul>
+				<li>Après la compilation, on utilise un utilitaire pour modifier les fichiers <em>class</em> des entités. Comme
+				la compilation Java traduit le code source en <strong>byte code</strong>, l'amélioration se fait par modification directe
+				du byte code dans chaque fichier.</li>
+				<li>Au moment du chargement du byte code par la JVM, il est possible de l'intercepter et donc de le modifier
+				à la volée. Cette opération est possible car Java est un langage avec une édition dynamique des liens.</li>
+				<li>Au moment du chargement du byte code par la JVM, il est possible de créer à la volée une classe héritant de la classe que l'on souhaite
+				améliorer en redéfinissant (override) les méthodes souhaitées.</li>
+			</ul>
+			
+			<p>L'amélioration de code est cependant une technique lourde à mettre en place. Une amélioration après compilation
+			nécessite les outils adéquats (pas toujours bien intégrés dans les IDE et/ou les outils de build).
+			Une amélioration au chargement des classes par la JVM impose des conditions de mise en place par la JVM elle-même pour
+			des raisons de sécurité. Enfin, la méthode par génération d'une classe fille est la plus simple à mettre en place mais
+			celle qui est le plus source de bugs&nbsp;: le développeur croit manipuler une instance de sa propre classe alors
+			qu'au moment de l'exécution, il s'agira d'une instance d'une classe générée à la volée.</p>
+			
+			<p>OpenJPA, par exemple, supporte les trois techniques avec plus ou moins de facilité pour les développeurs d'application.
+			La page du site d'OpenJPA traitant de ce sujet est accessible <a href="http://openjpa.apache.org/entity-enhancement.html">ici</a>.</p>
+		</section>
+		
+		<section>
+			<h3>OpenJPA&nbsp;: amélioration après la compilation</h3>
+			
+			<p>Il n'existe plus de plugin Eclipse maintenu pour une prise en charge de l'amélioration de code dans cet IDE.
+			Il existe cependant un plugin Maven mais qui nécessite de réaliser la compilation par Maven (et donc en dehors de l'IDE).
+			Pour un projet gérer par Maven, il suffit d'ajouter dans le <code>pom.xml</code> le plugin suivant&nbsp;:</p>
+			
+			<figure>
+				<figcaption>Déclaration du plugin d'amélioration dans Maven</figcaption>
+				<pre><code class="xml">
+  &lt;plugin&gt;
+    &lt;groupId&gt;org.apache.openjpa&lt;/groupId&gt;
+    &lt;artifactId&gt;openjpa-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;2.3.0&lt;/version&gt;
+    &lt;configuration&gt;
+      &lt;includes&gt;**/*.class&lt;/includes&gt;
+      &lt;addDefaultConstructor&gt;true&lt;/addDefaultConstructor&gt;
+      &lt;enforcePropertyRestrictions&gt;true&lt;/enforcePropertyRestrictions&gt;
+    &lt;/configuration&gt;
+    &lt;executions&gt;
+      &lt;execution&gt;
+        &lt;id&gt;enhancer&lt;/id&gt;
+        &lt;phase&gt;process-classes&lt;/phase&gt;
+        &lt;goals&gt;
+          &lt;goal&gt;enhance&lt;/goal&gt;
+        &lt;/goals&gt;
+      &lt;/execution&gt;
+    &lt;/executions&gt;
+  &lt;/plugin&gt;
+
+</code></pre>
+			</figure>
+			
+			<aside class="tip">
+				<header>Écrire son propre programme d'amélioration de code</header>
+				<p>Dans un projet qui utilise OpenJPA, on peut aussi écrire son propre programme qui va
+				réaliser l'amélioration de code sur les classes compilées. En effet, l'outil OpenJPA est lui-même
+				écrit en Java. On peut donc écrire le petit utilitaire suivant&nbsp;:</p>
+				<pre><code class="java">
+public class OpenJpaEnhancer {
+
+  public static void main(String[] args) throws Exception {
+    // Pour un projet Maven, les classes compilées sont à rechercher dans le répertoire target/classes
+    org.apache.openjpa.enhance.PCEnhancer.main(new String[] { "-d", "target/classes" });
+  }
+
+}
+
+</code></pre>
+				<p>Comme ce programme doit être lancé après chaque modification des classes entités, cette solution
+				n'est pas vraiment viable pour une projet "grandeur nature".</p>
+			</aside>
+		</section>
+		<section>
+			<h3>OpenJPA&nbsp;: amélioration à l'exécution</h3>
+			
+			<p>L'amélioration du code au moment du chargement de la classe par la JVM évite l'étape supplémentaire
+			au moment de la compilation sans réelle pénalité à l'éxécution. Cependant, cette option est rendue
+			compliquée pour des raisons de sécurité. En effet, il n'est pas souhaitable que du code malveillant
+			puisse modifier à son gré les classes chargées par la JVM. En Java, on spécifie un <em>agent</em> qui est
+			passé en argument au moment du lancement de l'application Java.</p>
+			<p>TomEE fournit son propre agent (qui semble actif par défaut). Par contre, pour une application 
+			standalone, il est nécessaire de passer l'option <code>-javaagent:[lien vers le jar openjpa]</code> au lancement de la JVM.</p>
+
+		</section>
+		<section>
+			<h3>OpenJPA&nbsp;: amélioration par héritage</h3>
+			
+			<p>L'amélioration de code par héritage est une technique supportée par OpenJPA mais officiellement déconseillée. En effet,
+			elle peut entraîner divers bugs et limitations. Il est cependant possible d'activer cette technique dans le fichier
+			<code>persistence.xml</code> en ajoutant la propriété suivante&nbsp;:</p>
+			
+			<figure>
+				<figcaption>Activation de l'amélioration par héritage dans le fichier persistence.xml</figcaption>
+				<pre><code class="xml">
+  &lt;property name="openjpa.RuntimeUnenhancedClasses" value="supported"/&gt;
+
+</code></pre>
+			</figure>
+		</section>
+
 	</article>
 
 	<article class="exercice">
@@ -736,10 +846,9 @@ public class IndividuController {
 			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
 		</dl>
 	</article>
-
+	
 	<article>
 		<section>
-
 			<h2>JPA et JTA</h2>
 			<p>JTA (Java Transaction API) est une API dédiée à la gestion de la transaction. Cette API ne se limite pas aux transactions
 			avec des SGBDR mais a pour but d'offrir une interface unique pour tous les systèmes transactionnels. Ainsi, un SGBDR
@@ -793,7 +902,7 @@ public class MyServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
-                                                  throws ServletException, IOException {
+                                  throws ServletException, IOException {
 
     boolean transactionOk = false;
     try {

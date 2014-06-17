@@ -743,5 +743,34 @@ public class Individu {
 
 		</section>
 	</article>
+
+	<article class="exercice">
+		<h2>Exercice&nbsp;: Ajout de l'accès à une base de données pour une application Web</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Faites évoluer l'application fournie comme modèle de cet exercice afin d'ajouter l'interaction avec
+			la base de données en utilisant JPA. 
+			<p>La classe <code>fr.epsi.individu.IndividuController</code> doit être modifiée (ainsi que tout 
+			ce qui vous jugerez nécessaire dans le projet) afin d'ajouter le code manquant.</p>
+			<p>Une fois terminée, l'application doit permettre&nbsp;:</p>
+			<ul>
+				<li>d'enregistrer un nouvel individu dans le système (en spécifiant son	nom, son prénom et son âge)</li>
+				<li>de récupérer la liste de tous les individus enregistrés dans le système</li>
+				<li>de supprimer les informations d'un individu</li>
+			</ul>
+			<aside class="tip">
+				N'oubliez pas que vous devez déclarer une <code>DataSource</code> avec le fichier src/main/webapp/WEB-INF/resources.xml 
+				et que vous devez définir une unité de persistance JPA avec le fichier src/main/resources/META-INF/persistence.xml.
+			</aside>
+
+			<dt>Mise en place du projet</dt>
+			<dd>Le modèle de projet à télécharger est <a href="assets/templates/jsfmvc-with-jpa.zip">jsfmvc-with-jpa.zip</a>.
+			Il s'agit d'une application Web basée sur JSF.
+			</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
 </body>
 </html>

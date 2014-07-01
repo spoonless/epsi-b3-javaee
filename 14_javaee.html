@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Java EE</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet" media="screen">
+	<link href="css/print-article.css" rel="stylesheet" media="print">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<script src="js/toc.js"></script>
+</head>
+<body>
+	<div id="titleBar">
+		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
+ 		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>
+		<script>document.write(document.title)</script> - EPSI B3 2013/2014 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a>
+	</div>
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		<section id="toc"></section>
+		
+		<section>
+			<p>Tout au long des chapitres précédents, nous avons vu que Java Enterprise Edition (Java EE)
+			est un ensemble de standards Java pour le développement d'application déployable dans
+			un serveur d'applications.</p>
+			<p>Les standards sont définis à travers les 
+			<a target="wiki" href="http://fr.wikipedia.org/wiki/Java_Specification_Requests">Java Specification Requests (JSR)</a>
+			et approuvés par le <a target="wiki" href="http://fr.wikipedia.org/wiki/JCP">Java Community Process (JCP)</a>.</p>
+		</section>
+		<section>
+			<h2>Les caractéristiques de Java EE</h2>
+			<p>Java EE se caractérise par :</p>
+			<ul>
+				<li>Un environnement client/serveur</li>
+				<li>Un langage unique : Java</li>
+				<li>Une approche déclarative (annotations et/ou XML)</li>
+				<li>Une définition par standards (JSR)</li>
+				<li>Une large communauté</li>
+				<li>Des implémentations multiples</li>
+			</ul>
+		</section>
+		<section>
+			<h2>Conteneurs et services</h2>
+			<p>Java EE peut également être considéré comme l'intégration d'un ensemble de conteneurs et de services&nbsp;:</p>
+			<dl>
+				<dt>Conteneur</dt>
+				<dd>
+					<p>Un conteneur est une brique logicielle dans lequel sont déployés des <strong>composants</strong>.
+					Les composants sont fournis par les développeurs d'application et sont regroupés en module.</p> 
+					<p>Le conteneur a la charge	de gérer le cycle de vie des composants, d'orchestrer leurs interactions 
+					et de leur donner accès à un ensemble de services.</p>
+					<p>Un environnement Java EE complet dispose de quatre conteneurs&nbsp;: le conteneur d'applet (dans le navigateur client), 
+					le conteneur d'application cliente, le conteneur Web et le conteneur EJB.</p>
+					<figure>
+						<figcaption>Les conteneurs Java EE et leurs relations</figcaption>
+						<img src="assets/javaee-containers.gif" alt="Les conteneurs Java EE et leurs relations" />
+					</figure>
+				</dd>
+				<dt>Service</dt>
+				<dd>
+					<p>Un service est simplement une bibliothèque logicielle qui est rendue accessible aux composants Java EE.
+					Parmi les services disponibles, il y a&nbsp;: l'injection de dépendance (CDI), la validation de données (Bean Validation),
+					la gestion des transactions (JTA), l'envoi et la réception de mail (JavaMail)...</p>
+				</dd>
+			</dl>
+			<p>Cette approche <em>traditionnelle</em> de Java EE comme intégration technique d'un ensemble de conteneurs et de services, devient de moins en moins
+			pertinente au fil des versions de Java EE. D'abord, avec le succés des services Web et des applications Web riches (RIA), les conteneurs d'applet
+			et d'application cliente ne sont plus vraiment utilisés. Ensuite, avec l'intégration de services tels que CDI (pour la dépendance d'injection et les managed
+			beans) ou la possibilité d'embarquer un conteneur d'EJB au sein d'une application Web (EJB lite), les applications Java EE se sont nettement simplifiées
+			dans leur structure et leur système de déploiement par rapport au modèle d'origine.</p>
+		</section>
+		
+		<section>
+			<h2>Modèle d'architecture d'application</h2>
+			<p>Java EE est surtout un modèle prescriptif en terme d'architecture logicielle. Chaque composant Java EE est défini par ses responsabilités.
+			L'ensemble de ces composants forme une application multi-couche (N-tiers).</p>
+			<figure>
+				<figcaption>Le modèle N-tiers</figcaption>
+				<img src="assets/javaee-multitiered.gif" alt="Le modèle N-tiers" />
+			</figure>
+			<dl>
+				<dt>Couche client (Client tier)</dt>
+				<dd>Pour une application Web, il s'agit des pages Web et du code Javascript téléchargés par le navigateur client. Cette couche est responsable de l'affichage et de l'interaction avec l'utilisateur.</dd>
+				
+				<dt>Couche Web (Web tier)</dt>
+				<dd>Il s'agit du point d'échange entre le client et le serveur. Les composants principaux sont les Servlets/JSP et les Facelets JSF.
+				La logique de ces composants se limite à valider les données en entrée et à produire une représentation des données en sortie.</dd>
+				
+				<dt>Couche métier (Business tier)</dt>
+				<dd>Il s'agit de l'ensemble des traitements propres à l'application. Les composants sont les EJB.</dd>
+				
+				<dt>Couche du système d'information (Enterprise Information System tier)</dt>
+				<dd>Il s'agit principalement des serveurs de bases de données. L'application interagit avec ces serveurs grâce
+				au service JDBC ou aux Entity Bean (JPA).</dd>
+			</dl>
+		</section>
+	</article>
+
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Les annotations</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet" media="screen">
+	<link href="css/print-article.css" rel="stylesheet" media="print">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<script src="js/toc.js"></script>
+</head>
+<body>
+	<div id="titleBar">
+		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
+ 		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>
+		<script>document.write(document.title)</script> - EPSI B3 2013/2014 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a>
+	</div>
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		<section id="toc"></section>
+
+		<section>
+			<p>Les annotations en Java sont des marqueurs qui permettent d'ajouter des méta-données aux classes, 
+			aux méthodes, aux attributs, aux paramètres, aux variables, aux paquets ou aux annotations elles-mêmes.</p>
+			<p>Les annotations sont utilisées dans des domaines divers. Leur intérêt principal est de fournir une
+			<em>méta-information</em> qui pourra être exploitée par un programme.</p>
+		</section>
+		<section>
+			<h2>Utilisation des annotations</h2>
+			<p>Une annotation est un type (comme une classe ou une interface) du langage Java : 
+			elle peut être référencée par son nom complet ou importée depuis un autre paquet grâce au mot-clé 
+			<strong>import</strong>.</p>
+			<p>Une annotation n'est pas instanciée, elle est simplement accolée à l'élément qu'elle vient enrichir :</p>
+			<figure>
+				<pre><code class="java">
+import java.io.IOException;
+
+import javax.ejb.EJB;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+// Une annotation de classe
+@WebServlet("/MyServlet")
+public class MyServlet extends HttpServlet {
+
+  // Une annotation sur un attribut
+  @EJB
+  private IndividuRepository individuRepository;
+
+  // Une annotation sur une méthode
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+    // ...
+  }
+
+}
+
+</code></pre>
+			</figure>
+        				
+			<p>Certaines annotations déclarent des attributs
+			(par exemple l'annotation <a target="javadoc" href="http://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebServlet.html">javax.servlet.annotation.WebServlet</a>)</p>
+			<figure>
+				<pre><code class="java">
+@WebServlet(urlPatterns = "/MyServlet", loadOnStartup = 1, displayName = "Ma servlet à moi")
+public class MyServlet extends HttpServlet {
+  // ...
+}
+
+</code></pre>
+			</figure>
+
+			<p>Par convention, si un attribut de l'annotation s'appelle <strong>value</strong>
+			et qu'il est le seul paramètre spécifié, alors son nom peut être omis pour plus de lisibilité.</p>
+			<figure>
+				<pre><code class="java">
+  @SuppressWarnings("deprecation") 
+  public void myMethod() {
+    //...
+  }
+
+  @SuppressWarnings(value="deprecation") 
+  public void myOtherMethod() {
+    //...
+  }
+
+</code></pre>
+			</figure> 
+
+			<p>Un nombre très limité d'annotations sont exploitées directement par le compilateur.</p>
+			<p>On trouve les annotations déclarées dans le paquet <strong>java.lang</strong>&nbsp;: </p>
+			<ul>
+				<li><a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Deprecated.html">Deprecated</a></li>
+				<li><a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Override.html">Override</a></li>
+				<li><a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/SuppressWarnings.html">SuppressWarnings</a></li>
+				<li><a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/SafeVarargs.html">SafeVarargs</a> (introduite en Java 7)</li>
+			</ul>
+		</section>
+		<section>
+			<h2>Déclaration d'une annotation</h2>
+			<figure>
+				<figcaption>Une déclaration d'annotation</figcaption>
+				<pre><code class="java">
+public @interface MyAnnotation {
+}
+
+</code></pre>
+			</figure>
+			<figure>
+				<figcaption>Une déclaration d'annotation avec attributs</figcaption>
+				<pre><code class="java">
+public @interface MyAnnotation {
+  String  name();
+  boolean isOk();
+  int[]   range() default {1, 2, 3};
+}
+
+</code></pre>
+			</figure>
+		</section>
+		<section>
+			<p>Une annotation implémente implicitement 
+			<a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/Annotation.html">Annotation</a> et rien d'autre !</p> 
+			<p>Les attributs d'une annotation peuvent être uniquement :</p> 
+			<ul>
+				<li>Un type primitif,</li> 
+				<li>une chaîne de caractères (java.lang.String),</li> 
+				<li>une référence de classe (java.lang.Class),</li> 
+				<li>une Annotation (java.lang.annotation.Annotation),</li> 
+				<li>un type énuméré (enum),</li> 
+				<li>un tableau à une dimension d'un de ces types.</li>
+			</ul>
+			<p>Le mot-clé <strong>default</strong> permet de spécifier une valeur d'attribut par défaut.</p>
+
+			<p>Une annotation peut elle-même être annotée. Les annotations d'annotation fournies par Java 7 sont :</p> 
+			<ul>
+				<li><a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/Documented.html">Documented</a></li> 
+				<li><a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/Inherited.html">Inherited</a></li> 
+				<li><a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/Retention.html">Retention</a></li> 
+				<li><a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/Target.html">Target</a></li> 
+			</ul>
+		</section>
+		<section>
+			<h2>Rétention d'une annotation</h2>
+			<p>Une annotation est définie par sa <a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/Retention.html">rétention</a>, 
+			c'est-à-dire la façon dont une annotation sera conservée. Les différentes rétentions d'annotation sont :</p>
+			<dl>
+				<dt>source</dt>
+				<dd>L'annotation est accessible durant la compilation mais n'est pas intégrée dans le fichier class généré.</dd>
+				
+				<dt>class</dt>
+				<dd>L'annotation est accessible durant la compilation, elle est intégrée dans le fichier class généré mais elle n'est pas chargée dans la JVM à l'exécution.</dd>
+				
+				<dt>runtime</dt>
+				<dd>L'annotation est accessible durant la compilation, elle est intégrée dans le fichier class généré et elle est chargée dans la JVM à l'exécution. Elle est accessible par introspection.</dd>
+			</dl>
+			
+			<aside>
+				<p>Pour les annotations de rétention <strong>source</strong>, la JVM prévoit un mécanisme pour inclure lors de la compilation 
+				des <a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/javax/annotation/processing/Processor.html">processeurs d'annotations</a>. 
+				Par exemple, ces processeurs peuvent servir à vérifier le code ou générer du code supplémentaire.</p>
+				<p><a target="lombok" href="http://projectlombok.org/">Lombok</a> est un exemple de projet open-source fournissant des annotations permettant de générer du code
+				au moment de la compilation <i>via</i> un processeur d'annotations.</p>
+			</aside>
+
+		</section>
+	</article>
+
+
+	<article class="exercice">
+		<h2>Exercice&nbsp;: framework de tests unitaires</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Réaliser un framework d'exécution de tests unitaires. Ce framework doit appeler
+			une à une les méthode publiques d'un objet qui portent l'annotation suivante&nbsp;:
+			<dd>
+
+			<figure>
+				<pre><code class="java">
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+/**
+ * Désigne une méthode comme étant un test unitaire. 
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+@Documented
+public @interface Test {
+  String description();
+}
+
+</code></pre>
+			</figure>
+			
+			<p>Avant chaque appel, le framework écrit sur la sortie standard le contenu de l'attribut <code>description</code>.</p>
+			<p>On pourra utiliser la classe suivante pour créer le framework&nbsp;:</p>
+
+			<figure>
+				<pre><code class="java">
+/**
+ * Le framework de tests unitaires 
+ */
+public class UnitTestFramework {
+
+  public void run(Object o) {
+    // ...
+  }
+
+}
+
+</code></pre>
+			</figure>
+			<p>Pour exploiter les annotations de rétention <code>runtime</code> d'un objet, il faut utiliser l'API
+			de reflexivité de Java afin de consulter la définition de la classe. On utilisera
+			la méthode <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#getClass%28%29">Object.getClass()</a>
+			héritée de <code>Object</code>.</p>
+		</dl>
+	</article>
+</body>
+</html>

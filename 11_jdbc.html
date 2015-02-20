@@ -32,11 +32,11 @@
 			<strong>Ne pas fermer correctement les objets fournis par JDBC est un bug</strong> qui conduit habituellement
 			 à un épuisement des ressources système, empêchant l'application de fonctionner correctement.</p>
 			 
-			<p>Java 7 a introduit l'interface <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/AutoCloseable.html">AutoCloseable</a>
+			<p>Java 7 a introduit l'interface <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html">AutoCloseable</a>
 			ainsi qu'une nouvelle syntaxe dénommée <a href="http://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html"><strong>try-with-resources</strong></a>. 
 			L'API JDBC utilise massivement l'interface <code>AutoCloseable</code> et autorise donc le try-with-resources.
 			Ainsi, les deux codes ci-dessous sont équivalents puisque la classe 
-			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">java.sql.Connection</a>
+			<a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html">java.sql.Connection</a>
 			implémente <code>AutoCloseable</code>&nbsp;:</p>
 			
 			<figure>
@@ -113,14 +113,14 @@
 		</section>
 		<section>
 			<h2>Création d'une connexion</h2>
-			<p>Une connexion à une base de données est représentée par une instance de la classe <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">Connection</a>.
+			<p>Une connexion à une base de données est représentée par une instance de la classe <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html">Connection</a>.
 			Il existe plusieurs façons d'obtenir une instance de cet objet. Nous simplifierons légèrement le propos en considérant deux cas d'utilisation : 
 			la création d'une connexion sans Java EE et la création d'un connexion avec Java EE.</p>
 
 			<h3>Création d'une connexion sans Java EE</h3>
 			<p>Comme nous l'avons précisé au début de ce chapitre, JDBC fait partie de l'API standard du JDK. Il n'est donc pas
 			nécessaire de disposer d'un conteneur Java EE ou d'un serveur d'application pour l'utiliser. Pour une utilisation
-			hors de Java EE, la classe <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/DriverManager.html">DriverManager</a> permet
+			hors de Java EE, la classe <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/DriverManager.html">DriverManager</a> permet
 			d'enregister un pilote JDBC et de créer une connexion&nbsp;:</p>
 			<figure>
 				<figcaption>Création d'une connexion MySQL avec le DriverManager</figcaption>
@@ -146,7 +146,7 @@
 			
 			<h3 id="creation_connexion_avec_javaee">Création d'une connexion avec Java EE</h3>
 			<p>Dans un serveur d'application, l'utilisation du <code>DriverManager</code> est remplacée par celle
-			de la <a href="http://docs.oracle.com/javase/7/docs/api/javax/sql/DataSource.html"><code>DataSource</code></a>.
+			de la <a href="http://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html"><code>DataSource</code></a>.
 			L'interface <code>DataSource</code> n'offre que deux méthodes&nbsp;:</p>
 			<figure>
 				<pre><code class="java">
@@ -309,29 +309,29 @@ public class MyServlet extends HttpServlet {
 		</section>
 		<section>
 			<h2>Les requêtes SQL (Statement)</h2>
-			<p>L'interface <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">Connection</a> permet,
+			<p>L'interface <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html">Connection</a> permet,
 			entre autres, de créer des <code>Statements</code>. Un <code>Statement</code> est une interface qui permet
 			d'effectuer des requêtes SQL. On distingue 3 types de <code>Statement</code>&nbsp;:</p>
 			<ul>
-				<li><a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html"><code>Statement</code></a>&nbsp;:
+				<li><a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Statement.html"><code>Statement</code></a>&nbsp;:
 				Permet d'exécuter une requête SQL et d'en connaître le résultat.
 				</li>
-				<li><a href="http://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html"><code>PreparedStatement</code></a>&nbsp;:
+				<li><a href="http://docs.oracle.com/javase/8/docs/api/java/sql/PreparedStatement.html"><code>PreparedStatement</code></a>&nbsp;:
 				Comme le <code>Statement</code>, le <code>PreparedStatement</code> permet d'exécuter une requête SQL et d'en connaître le résultat.
 				Le <code>PreparedStatement</code> est une requête paramétrable. Pour des raisons de performance, on peut préparer une requête
 				et ensuite l'exécuter autant de fois que nécessaire en passant des paramètres différents. Le <code>PreparedStatement</code>
 				est également pratique pour se prémunir efficacement des failles de sécurité par injection SQL.
 				</li>
-				<li><a href="http://docs.oracle.com/javase/7/docs/api/java/sql/CallableStatement.html"><code>CallableStatement</code></a>&nbsp;:
+				<li><a href="http://docs.oracle.com/javase/8/docs/api/java/sql/CallableStatement.html"><code>CallableStatement</code></a>&nbsp;:
 				permet d'exécuter des procédures stockées sur le SGBDR. On peut ainsi passer des paramètres en entrée du <code>CallableStatement</code>
 				et récupérer les paramètres de sortie après exécution.
 			</ul> 
 		</section>
 		<section>
 			<h2>Le Statement</h2>
-			<p>Un <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html"><code>Statement</code></a>
+			<p>Un <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Statement.html"><code>Statement</code></a>
 			 est créé à partir d'une des méthodes <code>createStatement</code> de l'interface
-			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">Connection</a>. &Agrave; partir
+			<a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html">Connection</a>. &Agrave; partir
 			d'un <code>Statement</code>, il est possible d'exécuter des requêtes SQL&nbsp;:</p>
 			<figure>
 				<figcaption>Utilisation d'un Statement</figcaption>
@@ -389,10 +389,10 @@ public class MyServlet extends HttpServlet {
 		<section>
 			<h2>Le ResultSet</h2>
 			<p>Lorsqu'on exécute une requête SQL de type <code>select</code>, JDBC nous donne accès à
-			une instance de <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/ResultSet.html"><code>ResultSet</code></a>.
+			une instance de <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/ResultSet.html"><code>ResultSet</code></a>.
 			Avec un <code>ResultSet</code>, il est possible de parcourir ligne à ligne les résultats de la requête 
 			(comme avec un itérateur) grâce à la méthode
-			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/ResultSet.html#next%28%29">ResultSet.next()</a>.
+			<a href="http://docs.oracle.com/javase/8/docs/api/java/sql/ResultSet.html#next--">ResultSet.next()</a>.
 			Pour chaque résultat, il est possible d'extraire les données dans un type supporté par Java.</p>
 			<p>Le <code>ResultSet</code> offre une liste de méthodes de la forme&nbsp;:</p>
 			<figure>
@@ -437,9 +437,9 @@ public class MyServlet extends HttpServlet {
 		</section>
 		<section>
 			<h2>Le PreparedStatement</h2>
-			<p>Un <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html"><code>PreparedStatement</code></a>
+			<p>Un <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/PreparedStatement.html"><code>PreparedStatement</code></a>
 			 est créé à partir d'une des méthodes <code>prepareStatement</code> de l'interface
-			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">Connection</a>.
+			<a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html">Connection</a>.
 			Lors de l'appel à <code>prepareStatement</code>, il faut passer la requête SQL à exécuter. Cependant, cette requête
 			peut contenir des <strong>?</strong> indiquant l'emplacement des paramètres.</p>
 			<p>L'interface <code>PreparedStatement</code> fournit des méthodes de la forme&nbsp;:</p>
@@ -454,7 +454,7 @@ public class MyServlet extends HttpServlet {
 			
 			<aside class="tip">
 				&Agrave; noter que pour positionner un paramètre SQL à NULL, il faut utiliser la méthode
-				<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html#setNull%28int,%20int%29">setNull(int parameterIndex, int sqlType)</a>.
+				<a href="http://docs.oracle.com/javase/8/docs/api/java/sql/PreparedStatement.html#setNull-int-int-">setNull(int parameterIndex, int sqlType)</a>.
 			</aside>
 
 			<figure>
@@ -486,9 +486,9 @@ public class MyServlet extends HttpServlet {
 			
 			<p>Le <code>PreparedStatement</code> reprend une API similaire à celle du <code>Statement</code>&nbsp;:</p>
 			<ul>
-				<li>une méthode <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html#execute%28%29"><code>execute</code></a> pour tous les types de requête SQL</li>
-				<li>une méthode <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html#executeQuery%28%29"><code>executeQuery</code></a> (qui retourne un <code>ResultSet</code>) pour les requêtes SQL de type select</li>
-				<li>une méthode <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html#executeUpdate%28%29"><code>executeUpdate</code></a> pour toutes les requêtes SQL qui ne sont pas des select</li>
+				<li>une méthode <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/PreparedStatement.html#execute--"><code>execute</code></a> pour tous les types de requête SQL</li>
+				<li>une méthode <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/PreparedStatement.html#executeQuery--"><code>executeQuery</code></a> (qui retourne un <code>ResultSet</code>) pour les requêtes SQL de type select</li>
+				<li>une méthode <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/PreparedStatement.html#executeUpdate--"><code>executeUpdate</code></a> pour toutes les requêtes SQL qui ne sont pas des select</li>
 			</ul>
 			
 			<p>Le <code>PreparedStatement</code> offre trois avantages&nbsp;:</p>
@@ -564,10 +564,10 @@ public class MyServlet extends HttpServlet {
 		</section>
 		<section>
 			<h2>Le CallableStatement</h2>
-			<p>Un <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/CallableStatement.html"><code>CallableStatement</code></a>
+			<p>Un <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/CallableStatement.html"><code>CallableStatement</code></a>
 			permet d'appeler des procédures ou des fonctions stockées.
 			Il est créé à partir d'une des méthodes <code>prepareCall</code> de l'interface
-			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">Connection</a>.
+			<a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html">Connection</a>.
 			Comme pour le <code>PreparedStatement</code>, il est nécessaire de passer la requête lors de l'appel à <code>prepareCall</code>
 			et l'utilisation de <strong>?</strong> permet de spécifier les paramètres.</p>
 			<p>Cependant, il n'existe pas de syntaxe standard en SQL pour appeler des procédures ou des fonctions stockées.
@@ -647,9 +647,9 @@ public class MyServlet extends HttpServlet {
 			
 			<p>Avec JDBC, il faut d'abord s'assurer que le pilote ne commite pas sytématiquement à chaque requête SQL (l'auto commit). Une opération de commit à chaque requête SQL
 			équivaut en fait à ne pas avoir de démarcation transactionnelle. Sur l'interface 
-			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html"><code>Connection</code></a>, il existe les méthodes
-			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html#setAutoCommit%28boolean%29"><code>setAutoCommit(boolean)</code></a> et
-			<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html#getAutoCommit%28%29"><code>getAutoCommit()</code></a> pour nous aider à gérer
+			<a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html"><code>Connection</code></a>, il existe les méthodes
+			<a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html#setAutoCommit-boolean-"><code>setAutoCommit(boolean)</code></a> et
+			<a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html#getAutoCommit--"><code>getAutoCommit()</code></a> pour nous aider à gérer
 			ce comportement. <strong>Attention</strong>, dans la plupart des implémentations des pilotes JDBC, l'auto commit est activé par défaut (mais ce n'est pas une règle).</p>
 			<p>Dans les serveurs d'application Java EE, l'activation ou non de l'auto commit par défaut et souvent configurable au niveau de la <code>DataSource</code>.
 			C'est le cas pour TomEE, puisque l'attribut <code>defaultAutoCommit</code> peut être positionné sur une balise <code>Resource</code>. Cet attribut vaut
@@ -675,8 +675,8 @@ public class MyServlet extends HttpServlet {
 			
 			<p>&Agrave; partir du moment où l'auto commit n'est plus actif sur une connexion, il est de la responsabilité du développeur
 			d'appeler sur l'instance de <code>Connection</code> 
-			la méthode <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html#commit%28%29"><code>commit()</code></a>
-			(ou <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html#rollback%28%29"><code>rollback()</code></a>).</p>
+			la méthode <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html#commit--"><code>commit()</code></a>
+			(ou <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html#rollback--"><code>rollback()</code></a>).</p>
 			
 			<p>Le contrôle de la démarcation transactionnelle par programmation est surtout utile lorsque l'on souhaite garantir
 			l'atomicité d'un ensemble de requêtes SQL.</p>

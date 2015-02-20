@@ -97,10 +97,10 @@ public class MyServlet extends HttpServlet {
 			<p>Un nombre très limité d'annotations sont exploitées directement par le compilateur.</p>
 			<p>On trouve les annotations déclarées dans le paquet <strong>java.lang</strong>&nbsp;: </p>
 			<ul>
-				<li><a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Deprecated.html">Deprecated</a></li>
-				<li><a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Override.html">Override</a></li>
-				<li><a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/SuppressWarnings.html">SuppressWarnings</a></li>
-				<li><a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/SafeVarargs.html">SafeVarargs</a> (introduite en Java 7)</li>
+				<li><a target="javadoc" href="http://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html">Deprecated</a></li>
+				<li><a target="javadoc" href="http://docs.oracle.com/javase/8/docs/api/java/lang/Override.html">Override</a></li>
+				<li><a target="javadoc" href="http://docs.oracle.com/javase/8/docs/api/java/lang/SuppressWarnings.html">SuppressWarnings</a></li>
+				<li><a target="javadoc" href="http://docs.oracle.com/javase/8/docs/api/java/lang/SafeVarargs.html">SafeVarargs</a> (introduite en Java 7)</li>
 			</ul>
 		</section>
 		<section>
@@ -127,7 +127,7 @@ public @interface MyAnnotation {
 		</section>
 		<section>
 			<p>Une annotation implémente implicitement 
-			<a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/Annotation.html">Annotation</a> et rien d'autre !</p> 
+			<a target="javadoc" href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html">Annotation</a> et rien d'autre !</p> 
 			<p>Les attributs d'une annotation peuvent être uniquement :</p> 
 			<ul>
 				<li>Un type primitif,</li> 
@@ -141,15 +141,15 @@ public @interface MyAnnotation {
 
 			<p>Une annotation peut elle-même être annotée. Les annotations d'annotation fournies par Java 7 sont :</p> 
 			<ul>
-				<li><a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/Documented.html">Documented</a></li> 
-				<li><a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/Inherited.html">Inherited</a></li> 
-				<li><a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/Retention.html">Retention</a></li> 
-				<li><a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/Target.html">Target</a></li> 
+				<li><a target="javadoc" href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Documented.html">Documented</a></li> 
+				<li><a target="javadoc" href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html">Inherited</a></li> 
+				<li><a target="javadoc" href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html">Retention</a></li> 
+				<li><a target="javadoc" href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html">Target</a></li> 
 			</ul>
 		</section>
 		<section>
 			<h2>Rétention d'une annotation</h2>
-			<p>Une annotation est définie par sa <a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/Retention.html">rétention</a>, 
+			<p>Une annotation est définie par sa <a target="javadoc" href="http://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html">rétention</a>, 
 			c'est-à-dire la façon dont une annotation sera conservée. Les différentes rétentions d'annotation sont :</p>
 			<dl>
 				<dt>source</dt>
@@ -164,7 +164,7 @@ public @interface MyAnnotation {
 			
 			<aside>
 				<p>Pour les annotations de rétention <strong>source</strong>, la JVM prévoit un mécanisme pour inclure lors de la compilation 
-				des <a target="javadoc" href="http://docs.oracle.com/javase/7/docs/api/javax/annotation/processing/Processor.html">processeurs d'annotations</a>. 
+				des <a target="javadoc" href="http://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html">processeurs d'annotations</a>. 
 				Par exemple, ces processeurs peuvent servir à vérifier le code ou générer du code supplémentaire.</p>
 				<p><a target="lombok" href="http://projectlombok.org/">Lombok</a> est un exemple de projet open-source fournissant des annotations permettant de générer du code
 				au moment de la compilation <i>via</i> un processeur d'annotations.</p>
@@ -223,7 +223,7 @@ public class UnitTestFramework {
 			</figure>
 			<p>Pour exploiter les annotations de rétention <code>runtime</code> d'un objet, il faut utiliser l'API
 			de reflexivité de Java afin de consulter la définition de la classe. On utilisera
-			la méthode <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#getClass%28%29">Object.getClass()</a>
+			la méthode <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#getClass--">Object.getClass()</a>
 			héritée de <code>Object</code>.</p>
 		</dl>
 	</article>

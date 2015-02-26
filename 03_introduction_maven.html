@@ -147,12 +147,12 @@
     La version de notre projet. Maven gère le versionnage
     afin de permettre le suivi des évolutions d'un projet.
     Ici, le suffixe "-SNAPSHOT" indique à Maven que le projet
-    est en dans une version en cours de développement 
+    est en cours de développement pour cette version. 
   --&gt; 
   &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
   
   &lt;!--
-    Le type de packaging, c'est-à-dire le type notre projet.
+    Le type de packaging, c'est-à-dire le type de projet.
     Ici, on indique à Maven que le projet doit être packagé
     sous la forme d'un WAR. Donc pour Maven, il s'agit d'une
     application Web.
@@ -166,7 +166,7 @@
   --&gt; 
   &lt;properties&gt;
     &lt;!--
-      Propriété standard définissant la version minimale de Java supporté
+      Propriété standard définissant la version minimale de Java supportée
       par les fichiers sources (ici 1.8 pour Java 8).
     --&gt; 
     &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
@@ -180,7 +180,7 @@
     &lt;!--
       Le format d'encodage des fichiers source du projet. Attention, l'encodage
       par défaut n'est pas le même sous Windows et sous les systèmes *NIX.
-      Il est donc plus sage de toujours positionner cette propriété dans une fichier pom.xml.
+      Il est donc plus sage de toujours positionner cette propriété dans le fichier pom.xml.
     --&gt; 
     &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
   &lt;/properties&gt;
@@ -259,7 +259,7 @@
 			<aside>
 				<header>Exécution de Maven dans Eclipse</header>
 				<p>Même si vous n'avez pas installé Maven, vous exécutez la version embarquée dans Eclipse.
-				Faites un click droit sur le nom du projet et sélectionnez "Run As... &gt; Maven build...".
+				Faites un clic droit sur le nom du projet et sélectionnez "Run As... &gt; Maven build...".
 				Dans la fenête "Edit Configuration", saisissez la cible Maven (goal) que vous voulez
 				exécuter (Cf. ci-dessous) et cliquez sur "Run".</p>
 				<img width="60%" src="assets/eclipse_run_maven.png" alt="Exécution de Maven dans Eclipse">

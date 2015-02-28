@@ -32,45 +32,7 @@
 				d'être intégré dans le serveur d'application TomEE.</p>
 			</aside>
 		</section>
-	</article>
-	
-	<article class="exercice">
-		<h2>Exercice&nbsp;: Formulaire MVC avec JSF</h2>
-		<dl>
-			<dt>Objectif</dt>
-			<dd>Développer une application MVC pour la saisie d'un formulaire d'adhésion en ligne.
-			Le formulaire doit permettre de saisir les informations suivantes : login et email. De plus, l'utilisateur
-			doit pouvoir cocher la case "J'ai lu et approuvé les conditions générales de ce site". 
-			<p>Au moment de la soumission du formulaire, le serveur doit vérifier que tous les champs ont été
-			correctement renseignés&nbsp;: le login et l'email doivent être renseignés et la case doit être cochée.
-			Si des champs n'ont pas été saisis correctement,
-			le formulaire doit être réaffiché avec un message d'erreur indiquant clairement ce qui n'est pas correct.</p>
-			<p>Lorsque tous les champs sont saisis correctement, une page de confirmation d'adhésion doit être affichée avec la mention&nbsp;:
-			<pre><code>Bienvenue &lt;login&gt;, votre inscription a bien été prise en compte le &lt;date&gt; à &lt;heure&gt;.</code></pre>
-			<p>Pour réaliser cette application, vous utiliserez le framework JSF.</p>
-			<dd>
 
-			<dt>Modèle Maven du projet à télécharger</dt>
-			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a>
-				<aside class="warn">
-					<p><strong>Attention ce modèle ne permet pas de faire fonctionner une application JSF !</strong>
-					Vous devez suivre les indications de la section <em><a href="#creer_projet">Créer un projet avec JSF</a></em>
-					pour compléter la configuration de votre projet.
-					</p>
-				</aside>
-			</dd>
-
-			<dt>Mise en place du projet</dt>
-			<dd>&Eacute;diter le fichier pom.xml du template et modifier la balise artifactId pour spécifier le nom de votre projet.
-			Modifier ensuite la section &lt;developers&gt; pour indiquer vos nom et email.
-			</dd>
-
-			<dt>Intégration du projet dans Eclipse</dt>
-			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
-		</dl>
-	</article>
-
-	<article>
 		<section>
 			<h2 id="creer_projet">Créer un projet avec JSF</h2>
 			<aside class="warn">
@@ -883,29 +845,7 @@ public class MonControleur {
 </code></pre>
 			</figure>
 		</section>
-	</article>
 
-	<article class="exercice">
-		<h2>Exercice&nbsp;: Formulaire MVC avec JSF en Ajax</h2>
-		<dl>
-			<dt>Objectif</dt>
-			<dd>Faites évoluer l'application réalisée lors de l'exercice proposé au début de ce chapitre.
-			Maintenant l'application va utiliser une requête Ajax pour l'adhésion de l'utilisateur.
-			Lorsque l'utilisateur adhère en ligne, il n'est plus redirigé vers une nouvelle page
-			mais on lui confirme sur la même page que son inscription a été prise en compte.
-			Bien sûr, la validation des données de formulaire doit continuer à fonctionner.
-			<dd>
-
-			<dt>Mise en place du projet</dt>
-			<dd>Utiliser une copie de votre projet précédent ou ajouter une nouvelle facelet dans le projet.
-			</dd>
-
-			<dt>Intégration du projet dans Eclipse</dt>
-			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
-		</dl>
-	</article>
-
-	<article>
 		<section>
 			<h2 id="conclusion">... et bien plus</h2>
 			<p>Ce chapitre n'avait pour ambition que de présenter les fonctionnalités les plus essentielles de JSF.

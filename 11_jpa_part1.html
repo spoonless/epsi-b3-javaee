@@ -824,31 +824,6 @@ public class OpenJpaEnhancer {
 			</figure>
 		</section>
 
-	</article>
-
-	<article class="exercice">
-		<h2>Exercice&nbsp;: expérimentons JPA</h2>
-		<dl>
-			<dt>Objectif</dt>
-			<dd>Expérimenter les méthodes de gestion d'une entité fournies par l'<code>EntityManager</code>&nbsp;: <code>find</code>, 
-    		<code>persist</code>, <code>merge</code>, <code>detach</code>, <code>refresh</code>, <code>remove</code>.
-			<p>Vous devez créer et déclarer dans le fichier <code>persistence.xml</code> votre propre entité JPA. Le template de projet fournit un environnement de test JPA
-			basé sur OpenJPA et JUnit. Créez une classe de tests unitaires en héritant de la classe <code>fr.epsi.JpaTestCase</code>.
-			Le fichier <code>persistence.xml</code> déclare une connexion vers une base de données mémoire HSQLDB. Ainsi
-			pour chaque classe de test, une base de données sera instanciée en mémoire et OpenJPA créera automatiquement
-			les tables, conformément aux annotations de votre entité.</p>
-			<dd>
-
-			<dt>Mise en place du projet</dt>
-			<dd>Le modèle de projet à télécharger est <a href="assets/templates/testjpa.zip">testjpa.zip</a>
-			</dd>
-
-			<dt>Intégration du projet dans Eclipse</dt>
-			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
-		</dl>
-	</article>
-	
-	<article>
 		<section>
 			<h2>JPA et JTA</h2>
 			<p>JTA (Java Transaction API) est une API dédiée à la gestion de la transaction. Cette API ne se limite pas aux transactions

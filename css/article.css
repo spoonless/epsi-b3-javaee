@@ -53,6 +53,10 @@ article.exercice {
 	background: #FFFFF0;
 }
 
+article.note {
+	border: 3px solid #8A0808;
+}
+
 h1, h2, h3, h4, h5, h6 {
 	color: rgb(71,71,71);
 	font-family: "Quicksand", sans-serif;

@@ -837,5 +837,43 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 		</dl>
 	</article>
 
+	<article class="exercice note">
+		<h2>Exercice à rendre&nbsp;: Mastermind</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>
+			Réaliser une application Web permettant de jouer au Mastermind contre le serveur.
+			<p>La Mastermind est un jeu dans lequel un premier joueur choisit une combinaison secrête composée de 4 couleurs parmi 8.
+			L'autre joueur doit casser le code secret en proposant à chaque tour une combinaison à quatre couleurs. Le premier joueur doit alors
+			indiquer&nbsp;:</p>
+			<ul>
+				<li>le nombre de couleurs qui sont bien placées (sans dire lesquelles)</li>
+				<li>le nombre de couleurs proposées qui	sont présentes dans le code mais qui ne sont pas à la bonne place.</li>
+			</ul>
+			<p>Pour plus d'information sur les règles, consultez la page <a href="https://fr.wikipedia.org/wiki/Mastermind">Wikipedia consacrée à ce jeu</a>.</p>
+			
+			<dd>
+
+			<dt>Réalisation</dt>
+			<dd>Vous devez mettre en pratique le modèle MVC en dissociant le traitement des actions dans le contrôleur (Servlet)
+			et le rendu de la page renvoyée au navigateur (JSP). Le modèle est en partie fourni dans le template de projet.
+			<ul>
+				<li>Le jeu doit se jouer seul. Le serveur tire au hasard la combinaison secrête. Il indique, à chaque propostion du joueur, le nombre de couleurs bien placées ou présentes.</li>
+				<li>Si le joueur ne trouve pas la combinaison au bout de 10 essais, il a perdu et la partie s'arrête.</li>
+				<li>&Agrave; tout moment, le joueur peut décider de commencer une nouvelle partie.</li>
+			</ul>
+			<dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd>Téléchargez le modèle de projet <strong><a href="assets/templates/mastermind.zip">mastermind.zip</a></strong>. Ce modèle contient une implémentation du jeu Mastermind.
+			L'objectif est de fournir l'implémentation manquante pour en faire une application Web.</dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>&Eacute;diter le fichier pom.xml du template et modifier la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
 </body>
 </html>

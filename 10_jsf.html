@@ -139,7 +139,7 @@
 			facelet. Par contre, il s'agit de deux technologies différentes&nbsp;: les balises supportées ne sont pas les
 			mêmes et une facelet n'est pas transformée en Servlet. 
 			</p>
-			<p>Une facelet est un document XHTML 1.0. Une facelets <strong>doit</strong> se conformer à la DTD XHTML-1.0-Transitional.
+			<p>Une facelet est un document XHTML 1.0 qui <strong>doit</strong> se conformer à la DTD XHTML-1.0-Transitional.
 			Avec le succés de HTML5, des adaptations ont été faites dans JSF (Java EE 7) pour permettre de développer des facelets HTML5. Néanmoins,
 			une facelet doit être un document XML bien formé.</p>
 			
@@ -258,12 +258,12 @@
 			<aside class="warn">
 				<p><strong>Une facelet est un fichier qui doit porter l'extension .xhtml</strong>. En effet, la servlet
 				JSF est configurée pour traiter les requêtes de type *.xhtml. Ainsi, le serveur ne 
-				renvoit jamais les fichiers XHTML bruts. Il délègue le traitement à la servlet JSF
+				renvoie jamais les fichiers XHTML bruts. Il délègue le traitement à la servlet JSF
 				qui interprète la facelet.</p>
 			</aside>
 			
-			<p>On retrouve beaucoup de similitudes entre facelets et JSP. Par exemple, voici l'équivalent d'une
-			page JSP affichant les paramètres en entrée avec la technologie facelets&nbsp;:</p>
+			<p>On retrouve beaucoup de similitudes entre facelets et JSP. Par exemple, voici une facelet 
+			affichant les paramètres de la requête HTTP&nbsp;:</p>
 			
 			<figure>
 				<figcaption>Exemple&nbsp;: Une facelet affichant les paramètres</figcaption>
@@ -297,26 +297,27 @@
 			</figure>
 			
 			<p>Il existe quasiment les mêmes <a href="08_jsp.html#objets_implicites">objets implicites</a>
-			accéssibles avec l'expression language (EL) que pour les JSP. Comme une JSP, une facelet peut accéder
+			accessibles avec l'expression language (EL) que pour les JSP. Comme une JSP, une facelet peut accéder
 			aux attributs des différentes portées (page, request, session, application). Cependant pour créer ces
 			attributs, nous n'allons plus utiliser l'API servlet comme vu précédemment, nous allons utiliser
 			le service <strong>CDI</strong>.</p>
 
 			<aside class="tip">
 				<header>Activer le support de JSF dans Eclipse</header>
-				<p>Eclipse supporte la complétion des balises JSF dans les facelets. Pour un projet
-				créé avec Maven, Eclipse ne détecte pas automatiquement qu'il s'agit d'un projet intégrant
-				JSF. Il est néanmoins possible d'activer manuellement le support de JSF pour le projet.
-				Dans l'explorateur de projet, faites un clique droit sur le nom du projet et sélectionnez "Properties" (ou <kbd>ALT+Entrée</kbd>).
-				Dans l'arborescence des propriétés, sélectionnez "Project Facets" et, dans la liste des Facets, cochez "Java Server Faces" puis
-				cliquez sur "Ok".</p>
+				<p>Eclipse supporte la complétion des balises JSF dans les fichiers de facelets. Si vous
+				ne disposez pas de cette fonctionnalité par défaut, il vous faut peut-être activer manuellement le support de JSF pour votre projet&nbsp;:</p>
+				<ul>
+					<li>dans l'explorateur de projet, faites un clique droit sur le nom du projet et sélectionnez "Properties" (ou <kbd>ALT+Entrée</kbd>),</li>
+					<li>dans l'arborescence des propriétés, sélectionnez "Project Facets" et, dans la liste des Facets, cochez "Java Server Faces",</li>
+					<li>cliquez sur "OK".</li>
+				</ul>
 				<img width="90%" src="assets/eclipse_configure_jsf.png" alt="Configuration de JSF dans Eclipse" />
 			</aside>
 		</section>
 		
 		<section>
 			<h2 id="introduction_cdi">Une introduction à CDI</h2>
-			<p>Contexts and Dependency Injection ou <strong>CDI</strong> est un service Java EE permettant
+			<p><strong>Contexts and Dependency Injection</strong> (CDI) est un service Java EE permettant
 			de déclarer des objets Java qui seront automatiquement créés par le serveur et positionnés comme
 			attributs dans la portée désirée. Ensuite ces objets sont accessibles depuis une JSP ou une facelets
 			ou encore peuvent être injectés dans un composant Java EE ou un autre objet géré par CDI.</p>
@@ -745,7 +746,7 @@ public class Personne {
 			<h2 id="ajax">Les requêtes Ajax</h2>
 
 			<aside class="tip">
-				<p>Vous pouvez télécharger un projet Maven de démonstration d'utilisation d'Ajax dans JSF&nbsp;: <a href="assets/corrections/demoajax.zip">demoajax.zip</a></p>
+				<p>Vous pouvez télécharger un projet Maven de démonstration d'utilisation d'Ajax dans JSF&nbsp;: <a href="assets/templates/demoajax.zip">demoajax.zip</a></p>
 			</aside>
 			
 			<p>Une requête Ajax est une requête asynchrone qui est exécutée par le navigateur. Lorsque le serveur renvoie

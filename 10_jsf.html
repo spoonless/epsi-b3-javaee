@@ -859,5 +859,77 @@ public class MonControleur {
 		</section>
 	</article>
 
+	<article class="exercice note">
+		<aside class="tip"><strong>Choisissez un des deux exercices suivants à réaliser.</strong></aside>
+		<h2>Exercice à rendre&nbsp;: JSF et JDBC</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>
+				<p>Créer une application Web basée sur JSF permettant d'effectuer les opérations suivantes&nbsp;:</p>
+				<ul>
+					<li>Créer un individu</li>
+					<li>Consulter la liste des individus créés</li>
+					<li>Modifier un individu après l'avoir sélectionné dans la liste</li>
+				</ul>
+				<p>Les individus seront définis par&nbsp;:</p>
+				<ul>
+					<li>Un identifiant numérique (la clé choisie par l'application)</li>
+					<li>Un nom</li>
+					<li>Une date de naissance</li>
+				</ul>
+				<p>&Agrave; la création, le nouvel individu est stocké dans une base de données.</p>
+			</dd>
+
+			<dt>Contraintes</dt>
+			<dd>
+				<p>Lors de la création et de la modification d'un individu, l'application doit contrôler que l'individu a un nom et que sa date de naissance correspond à une date dans le passé.
+				Si ce n'est pas le cas, le message d'erreur approprié doit être affiché à l'utilisateur.</p>
+				<p>Lorsque l'utilisateur sélectionne un individu dans la liste, il est dirigé vers une facelet affichant le formulaire de modification renseigné avec les informations existantes
+				de l'individu.</p>
+				<p>On ne peut pas modifier l'identifiant numérique d'un individu.</p>
+			</dd>
+
+			<dt>Réalisation</dt>
+			<dd>
+				<p>Pour une base de données MySQL, le script de création de la table Individu sera&nbsp;:</p>
+				<figure>
+					<figcaption>Script MySQL de création de la table Individu</figcaption>
+					<pre><code class="sql">
+CREATE TABLE IF NOT EXISTS Individu (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  nom varchar(200) NOT NULL,
+  dateNaissance timestamp NOT NULL,
+  PRIMARY KEY (id)
+) engine=innodb;
+        			</code></pre>
+				</figure>
+				 
+			<dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a> (pensez à <a href="#pilote_jdbc">déclarer la dépendance</a> vers le pilote JDBC dans le fichier pom.xml)</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+
+		<h2>Ou exercice à rendre&nbsp;: Mastermind</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>
+				<p>Réaliser la même application Mastermind que celle proposée dans le chapitre sur les JSP mais en utilisant la technologie JSF.
+				Cliquez <a href="08_jsp.html#exo_mastermind">ici</a> pour consulter l'énoncé original de l'exercice.</p>
+				<p>Si vous aimez les défis, vous pouvez réaliser le portage en utilisant ajax...</p>
+			</dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd>Téléchargez le modèle de projet <strong><a href="assets/templates/mastermind.zip">mastermind.zip</a></strong>. Vous pouvez également partir d'une implémentation du mastermind
+			avec des Servlets et des JSP et réaliser une migration vers JSF.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
+
 </body>
 </html>

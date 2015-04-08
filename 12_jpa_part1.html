@@ -507,8 +507,8 @@ CREATE TABLE `individu` (
 			méthode pour récupérer un <code>EntityManager</code> va être différente selon que le code s'exécute dans une application
 			"simple" ou dans une application déployée dans un serveur Java EE.</p>
 			<p>Quel que soit le contexte, il faut fournir à l'implémentation de JPA un fichier XML de déploiement nommé <strong>persistence.xml</strong>. 
-			Ce fichier <strong>doit</strong> se situer dans le répertoire META-INF et être disponible dans le classpath à l'exécution. Dans un projet Maven, il
-			suffit de créer ce fichier dans le répertoire src/main/resources/META-INF du projet (créez les répertoires manquants si nécessaire).</p>
+			Ce fichier <strong>doit se situer dans le répertoire META-INF</strong> et être disponible dans le classpath à l'exécution. Dans un projet Maven, il
+			suffit de créer ce fichier dans le répertoire <strong>src/main/resources/META-INF</strong> du projet (créez les répertoires manquants si nécessaire).</p>
 			
 			<figure>
 				<figcaption>Contenu du fichier persistence.xml</figcaption>
@@ -686,7 +686,25 @@ public class MyServlet extends HttpServlet {
 			et la plupart des EJB sont des composants Java EE dans lesquels on peut injecter en toute sécurité un <code>EntityManager</code>.</p>
 			
 			<figure>
-				<figcaption>Injection d'un EntityManager dans un composant Java EE</figcaption>
+				<figcaption>Injection d'un EntityManager dans un EJB</figcaption>
+				<pre><code class="java">
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.ejb.Stateless;
+
+@Stateless
+public class IndividuRepository {
+	
+  @PersistenceContext(unitName="individuPersistenceUnit")
+  private EntityManager entityManager;
+
+}
+
+</code></pre>
+			</figure>
+
+			<figure>
+				<figcaption>Injection d'un EntityManager dans un composant Java EE géré par CDI</figcaption>
 				<pre><code class="java">
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -713,6 +731,92 @@ public class IndividuController {
 			différentes instances d'<code>EntityManagerFactory</code> et d'<code>EntityManager</code>. Autrement dit, le développeur
 			de composant n'a pas à se préoccuper d'appeler les méthodes <code>close()</code> sur ces instances.</p>
 			
+		</section>
+
+		<section>
+			<h2>JPA et JTA</h2>
+			<p>JTA (Java Transaction API) est une API dédiée à la gestion de la transaction. Cette API ne se limite pas aux transactions
+			avec des SGBDR mais a pour but d'offrir une interface unique pour tous les systèmes transactionnels. Ainsi, un SGBDR
+			n'est plus qu'un système transactionnel parmi d'autres.</p>
+			<p>L'inconvénient de l'utilisation de JTA est qu'il rend obsolète la méthode <code>EntityManager.getTransaction()</code>. Ainsi,
+			ce qui a été dit précédemment sur la démarcation de la transaction avec JPA <strong>n'est pas applicable</strong> pour les sources
+			de données utilisant le support de JTA.</p>
+			<p>Dans TomEE, une <code>DataSource</code> gérée par le serveur <strong> doit utiliser obligatoirement JTA</strong> pour fonctionner.
+			Il faut donc penser à activer le support JTA dans la déclaration de la <code>DataSource</code>
+			</p>
+			<figure>
+				<figcaption>Activation du support JTA dans une DataSource TomEE</figcaption>
+				<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;tomee&gt;
+&lt;Resource id="nomDeLaDataSource" type="javax.sql.DataSource"&gt;
+  JdbcDriver com.mysql.jdbc.Driver
+  JdbcUrl jdbc:mysql://localhost:3306/myDataBase
+  UserName root
+  Password root
+  JtaManaged true
+&lt;/Resource&gt;
+&lt;/tomee&gt;
+
+</code></pre>
+			</figure>
+			<p>Pour signaler la démarcation transactionnelle, il existe deux solutions&nbsp;:</p>
+			<ul>
+				<li>Soit on utilise une forme déclarative avec les EJB (Cf. <a href="11_ejb.html#gestion_des_transactions">la gestion des transactions dans les EJB</a>)</li>
+				<li>Soit on utilise un forme programmatique grâce à l'objet <code><a href="http://docs.oracle.com/javaee/6/api/javax/transaction/UserTransaction.html">UserTransaction</a></code></li>
+			</ul>
+			<p>Pour la méthode programmatique, une instance de cet object peut être récupérée par injection grâce à l'annotation <code>@Resource</code> dans un composant Java EE.</p>
+			<figure>
+				<figcaption>Utilisation de l'API JTA dans un composant Java EE</figcaption>
+				<pre><code class="java">
+import java.io.IOException;
+
+import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.transaction.UserTransaction;
+
+@WebServlet("/myServlet")
+public class MyServlet extends HttpServlet {
+
+  @Resource
+  private UserTransaction userTransaction;
+
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+                                  throws ServletException, IOException {
+
+    boolean transactionOk = false;
+    try {
+      userTransaction.begin();
+
+      // ...
+
+      transactionOk = true;
+    } catch (Exception e) {
+      // ...
+    } finally {
+      try {
+        if (transactionOk) {
+          userTransaction.commit();
+        } else {
+          userTransaction.rollback();
+        }
+      } catch (Exception e) {
+        // ...
+      }
+    }
+  }
+
+}
+</code></pre>
+			</figure>
+
+			<p>L'utilisation de l'API JTA est très verbeuse. De plus, chaque méthode peut jeter plusieurs exceptions et il n'est pas toujours facile de savoir comment les traiter.
+			En général, il est plus simple d'opter pour une approche déclarative (basée par exemple sur les EJB).</p>
 		</section>
 
 		<section>
@@ -823,92 +927,6 @@ public class OpenJpaEnhancer {
 </code></pre>
 			</figure>
 		</section>
-
-		<section>
-			<h2>JPA et JTA</h2>
-			<p>JTA (Java Transaction API) est une API dédiée à la gestion de la transaction. Cette API ne se limite pas aux transactions
-			avec des SGBDR mais a pour but d'offrir une interface unique pour tous les systèmes transactionnels. Ainsi, un SGBDR
-			n'est plus qu'un système transactionnel parmi d'autres.</p>
-			<p>L'inconvénient de l'utilisation de JTA est qu'il rend obsolète la méthode <code>EntityManager.getTransaction()</code>. Ainsi,
-			ce qui a été dit précédemment sur la démarcation de la transaction avec JPA <strong>n'est pas applicable</strong> pour les sources
-			de données utilisant le support de JTA.</p>
-			<p>Dans TomEE, une <code>DataSource</code> gérée par le serveur <strong> doit utiliser obligatoirement JTA</strong> pour fonctionner.
-			Il faut donc penser à activer le support JTA dans la déclaration de la <code>DataSource</code>
-			</p>
-			<figure>
-				<figcaption>Activation du support JTA dans une DataSource TomEE</figcaption>
-				<pre><code class="xml">
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;tomee&gt;
-&lt;Resource id="nomDeLaDataSource" type="javax.sql.DataSource"&gt;
-  JdbcDriver com.mysql.jdbc.Driver
-  JdbcUrl jdbc:mysql://localhost:3306/myDataBase
-  UserName root
-  Password root
-  JtaManaged true
-&lt;/Resource&gt;
-&lt;/tomee&gt;
-
-</code></pre>
-			</figure>
-			<p>Pour signaler la démarcation transactionnelle, il existe deux solutions&nbsp;:</p>
-			<ul>
-				<li>Soit on utilise une forme déclarative avec les EJB (nous verrons cette méthode lorsque nous traiterons des EJB)</li>
-				<li>Soit on utilise un forme programmatique grâce à l'objet <code><a href="http://docs.oracle.com/javaee/6/api/javax/transaction/UserTransaction.html">UserTransaction</a></code></li>
-			</ul>
-			<p>Pour la méthode programmatique, une instance de cet object peut être récupérée par injection grâce à l'annotation <code>@Resource</code> dans un composant Java EE.</p>
-			<figure>
-				<figcaption>Utilisation de l'API JTA dans un composant Java EE</figcaption>
-				<pre><code class="java">
-import java.io.IOException;
-
-import javax.annotation.Resource;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.transaction.UserTransaction;
-
-@WebServlet("/myServlet")
-public class MyServlet extends HttpServlet {
-
-  @Resource
-  private UserTransaction userTransaction;
-
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
-                                  throws ServletException, IOException {
-
-    boolean transactionOk = false;
-    try {
-      userTransaction.begin();
-
-      // ...
-
-      transactionOk = true;
-    } catch (Exception e) {
-      // ...
-    } finally {
-      try {
-        if (transactionOk) {
-          userTransaction.commit();
-        } else {
-          userTransaction.rollback();
-        }
-      } catch (Exception e) {
-        // ...
-      }
-    }
-  }
-
-}
-</code></pre>
-			</figure>
-		</section>
-		
-		<p>L'utilisation de l'API JTA est très verbeuse. De plus, chaque méthode peut jeter plusieurs exceptions et il n'est pas toujours facile de savoir comment les traiter.
-		En général, il est plus simple d'opter pour une approche déclarative (basée par exemple sur les EJB).</p>
 
 	</article>
 

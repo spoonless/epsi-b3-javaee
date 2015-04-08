@@ -818,7 +818,57 @@ public class MyServlet extends HttpServlet {
 			<p>L'utilisation de l'API JTA est très verbeuse. De plus, chaque méthode peut jeter plusieurs exceptions et il n'est pas toujours facile de savoir comment les traiter.
 			En général, il est plus simple d'opter pour une approche déclarative (basée par exemple sur les EJB).</p>
 		</section>
+	</article>
+	
+	<article class="exercice note">
+		<h2>Exercice à rendre&nbsp;: évolution d'une application Web</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>
+				<p>Faire évoluer l'application Web de gestion des individus afin d'intégrer les technologies EJB et JPA.</p>
+			</dd>
 
+			<dt>Réalisation</dt>
+			<dd>
+				<p>Reprenez soit l'application réalisée avec les Servlets/JDBC soit l'application réalisée avec JSF/JDBC.</p>
+				<ul>
+					<li>Remplacez JDBC par l'utilisation de JPA en définissant la classe <code>Individu</code> comme une entité.</li>
+					<li>Utilisez la technologie EJB pour gérer la démarcation transactionnelle.</li>
+				</ul>
+
+				<p>Pensez à modifier la déclaration de votre fichier <strong>resources.xml</strong> afin d'activer le support pour JTA (Java Transaction API)&nbsp;:</p>
+				<figure>
+					<figcaption>Exemple de fichier resources.xml</figcaption>
+					<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;tomee&gt;
+&lt;Resource id="epsiDatabase" type="javax.sql.DataSource"&gt;
+  JdbcDriver com.mysql.jdbc.Driver
+  JdbcUrl jdbc:mysql://localhost:3306/epsi
+  UserName root
+  Password root
+  JtaManaged true
+&lt;/Resource&gt;
+&lt;/tomee&gt;
+        			</code></pre>
+				</figure>
+				
+				<aside>
+					<p>Pour recupérer la liste complète des individus, vous aurez besoin de réaliser une requête SQL ou JPQL. 
+					L'exécution des requêtes dans JPA est abordée dans <a href="12_jpa_part2.html#jpql">la partie 2 du cours</a>.
+					En lisant attentivement cette section du cours, vous y trouverez le bout de code qui vous est nécessaire...</p>
+				</aside>
+			<dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd>Utilisez votre propre projet Servlet/JDBC ou JSF/JDBC. Vous pouvez également partir d'une implémentation fournie par l'enseignant.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
+
+	<article>
 		<section>
 			<h2>Amélioration de code</h2>
 			<p>L'amélioration (enhancement) de code est une technique pour ajouter des instructions dans le code produit

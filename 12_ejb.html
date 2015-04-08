@@ -23,7 +23,7 @@
 		<section id="toc"></section>
 
 		<section>
-			<p>Les EJB sont des composants Java EE fournis par les développeurs d'application.
+			<p>Les Enterprise Java Beans (EJB) sont des composants Java EE fournis par les développeurs d'application. Ils sont définis par la <a href="https://jcp.org/aboutJava/communityprocess/final/jsr318/">JSR 318</a>.
 			Ils encapsulent la logique de traitement de l'application (également appelée logique métier).</p>
 			<p>À travers les EJB, le développeur dispose de services fournis par le conteneur EJB tels que&nbsp;:</p>
 			<ul>
@@ -36,15 +36,19 @@
 				<li>accès distant pour un client à travers une interface remote</li>
 			</ul>
 			
-			<p>Avec les EJB, nous terminons le tour des composants Java EE. Nous disposons maintenant de tous les composants
-			nécessaires pour le développement d'une application Web&nbsp;:</p>
-			<ul>
-				<li>Les Servlet et/ou les back beans JSF pour prendre en charge les interactions Web</li>
-				<li>Les EJB pour abriter les traitements applicatifs spécifiques</li>
-				<li>Les entités JPA pour représenter les données qui seront persistantes</li>
-			</ul>
+			<p>Avec les EJB, nous abordons les composants qui ne sont plus liés à la présentation Web. Les EJB ont une longue histoire depuis J2EE jusqu'à 
+			leur version 3 actuelle dans Java EE. Ils peuvent être utilisés dans de nombreux contextes applicatifs. 
+			Ils ont aussi été ignorés par une grande partie des développeurs Java. Dans le cadre de cours, nous nous bornerons à aborder le modèle de threading et le
+			support de la transaction supportés par les EJB.</p>
 		</section>
 
+		<section>
+			<h2>Le conteneur d'EJB</h2>
+			<p>Nous avons vu que le cycle de vie des Servlets et les JSP est pris en charge par un conteneur de Servlet. Il en va de même pour les EJB.
+			Le serveur d'application fournit un conteneur d'EJB qui a la responsabilité de gérer le cycle de vie des composants EJB fournis par
+			les développeurs d'application.</p>
+		</section>
+		
 		<section>
 			<h2>Les types d'EJB</h2>
 			<p>On distingue plusieurs types d'EJB :</p>
@@ -58,8 +62,12 @@
 				On utilise généralement cet EJB dans des applications de type bus d'entreprise ou MOM (Middleware Orienté Messages).</dd>
 
 				<dt>Les Entity Bean</dt>
-				<dd>Les EJB pour gérer la persistance. Nous les avons déjà étudiés lors du chapitre sur <a href="12_jpa_part1.html">JPA</a>.</dd>
+				<dd>Les EJB pour gérer la persistance. Depuis EJB 3, l'API JPA définit les entity beans. Nous les aborderons lors du chapitre sur <a href="12_jpa_part1.html">JPA</a>.</dd>
 			</dl>
+			
+			<aside>
+				<p>Il existe une autre famille d'EJB que nous ne traiterons pas dans ce cours&nbsp;: les Message Driven Beans. Il s'agit des EJB utilisés pour traiter des messages de manière asynchone.</p>
+			</aside>
 		</section>
 		
 		<section>
@@ -78,7 +86,7 @@
 		</section>
 		<section>
 			<h2>EJB session stateful</h2>
-			<p>L'EJB session stateful (avec état conversationnel) est créé pour représenter une interaction entre entre le client et le serveur.
+			<p>L'EJB session stateful (avec état conversationnel) est créé pour représenter une interaction entre le client et le serveur.
 			Cela signifie qu'il existe une instance par interaction. Il s'agit du cas le plus simple pour le développeur puisqu'il n'y a pas
 			de problème de concurrence entre les clients (chacun disposant de sa propre instance). Il s'agit cependant du cas le plus complexe à gérer
 			pour le conteneur d'application Java EE. Un cas d'utilisation consiste à utiliser un EJB session comme backing bean JPA.
@@ -105,7 +113,7 @@ public class UserBasket {
 			<p>L'exemple traditionnel du panier sur un site marchand correspond à une utilisation classique de l'EJB session. Chaque utilisateur dispose
 			de son instance de panier. Cette instance est conservée tant que la session de l'utilisateur existe. De plus, on peut conserver des informations
 			propres à l'utilisateur comme membres de l'EJB (dans cet exemple la liste des items)&nbsp;: d'où le nom de stateful.</p>
-
+			
 		</section>
 		<section>
 			<h2>EJB session stateless</h2>
@@ -114,9 +122,9 @@ public class UserBasket {
 			et le serveur. N'importe quel utilisateur peut avoir recours à un EJB stateless et donc, il <strong>ne faut pas</strong> stocker dans un
 			EJB stateless d'information liée à la requête où à la session d'un utilisateur. On retrouve ainsi les mêmes restrictions que pour
 			le développement de Servlet. Néanmoins, les EJB stateless fournissent un modèle d'exécution concurrent (threading model) sûr. En effet,
-			le serveur crée un pool d'instances d'un EJB stateless. Ainsi à un instant T, toutes les requêtes qui s'exécutent en parallèle sur un serveur
-			utilisent une instance particulière d'un EJB stateless. Lorsque la requête est achevée, le serveur récupère l'instance de l'EJB stateless
-			dans le pool afin de la réutiliser avec une nouvelle requête. Lorsqu'on développe un EJB stateless, il n'est donc pas nécessaire
+			le conteneur d'EJB crée un pool d'instances pour chaque classe d'EJB stateless. Ainsi à un instant T, toutes les requêtes qui s'exécutent en parallèle sur un serveur
+			utilisent une instance particulière d'un EJB stateless. Lorsque la requête est achevée, le conteneur d'EJB récupère l'instance de l'EJB stateless
+			dans le pool afin de la réutiliser pour le traitement d'une requête à venir. Lorsqu'on développe un EJB stateless, il n'est donc pas nécessaire
 			de protéger le code contre les accès concurrents.</p>
 			<figure>
 				<figcaption>EJB stateless : l'implémentation d'un repository</figcaption>
@@ -177,7 +185,7 @@ public class SharedResource {
 			<h2>Accès à un EJB session</h2>
 			<p>Pour avoir accès à une instance d'un EJB session, une application <strong>ne la crée pas</strong>, elle demande au conteneur EJB de la lui fournir par injection.</p>
 			<p>La méthode la plus simple, consiste à utiliser l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/ejb/EJB.html">@EJB</a> 
-			sur un attribut d'un autre composant Java EE (Servlet, bean CDI, EJB).</p>
+			sur un attribut d'un autre composant Java EE (Servlet, bean CDI ou même EJB).</p>
 			<figure>
 				<figcaption>Injection d'une instance d'EJB session</figcaption>
 				<pre><code class="java">
@@ -206,12 +214,33 @@ public class MyServlet extends HttpServlet {
 
 </code></pre>
 			</figure>
+
+			<aside>
+				<p>Pour utiliser un EJB comme backing bean JSF, il doit également disposer de l'annotation <code>@Named</code> exploitée par le service CDI.</p>
+				<figure>
+					<figcaption>Un EJB utiliser comme backing bean JSF</figcaption>
+					<pre><code class="java">
+import javax.ejb.Stateful;
+import javax.inject.Named;
+
+@Stateful
+@Named
+public class UserBasket {
+  
+  // ...
+
+}
+
+</code></pre>
+				</figure>
+			</aside>
+
 		</section>
 
 		<section>
 			<h2>La gestion des transactions</h2>
 			<p>Un service intéressant dans l'utilisation des EJB est la prise en charge du support transactionnel sur chacune de leur méthode.
-			Il est ainsi possible de gérer automatiquement les transactions JTA en utilisant un appel de méthode comme démarcation transactionnelle&nbsp;: 
+			Il est ainsi possible de gérer automatiquement les transactions JTA (Java Transaction API) en utilisant un appel de méthode comme démarcation transactionnelle&nbsp;: 
 			lors de l'appel d'une méthode d'un EJB, le conteneur commence une transaction JTA et, au retour de la méthode, le conteneur effectue un commit ou un rollback.</p>
 	
 			<p>Deux annotations permettent de déclarer le support transactionnel pour les EJB : </p>

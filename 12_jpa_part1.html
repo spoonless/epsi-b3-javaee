@@ -875,6 +875,13 @@ public class MyServlet extends HttpServlet {
 	<article>
 		<section>
 			<h2>Amélioration de code</h2>
+			
+			<aside>
+				<p>Cette section détaille une spécificité technique exploitée par les implémentations JPA. L'amélioration de code est une fonctionnalité
+				<strong>activée par défaut dans le serveur TomEE</strong> avec OpenJPA. Les informations données ci-dessous s'adressent donc au lecteur
+				désireux de comprendre un peu mieux les mécanismes sous-jacents à l'utilisation de JPA.</p>
+			</aside>
+			
 			<p>L'amélioration (enhancement) de code est une technique pour ajouter des instructions dans le code produit
 			afin d'enrichir le comportement d'une classe. Cette technique est largement utilisée par les implémentations
 			de JPA afin, notamment, de détecter les modifications d'état d'une entité ou d'exécuter des chargements différés (Cf. partie 2).
@@ -962,7 +969,7 @@ public class OpenJpaEnhancer {
 			compliquée pour des raisons de sécurité. En effet, il n'est pas souhaitable que du code malveillant
 			puisse modifier à son gré les classes chargées par la JVM. En Java, on spécifie un <em>agent</em> qui est
 			passé en argument au moment du lancement de l'application Java.</p>
-			<p>TomEE fournit son propre agent (qui semble actif par défaut). Par contre, pour une application 
+			<p>TomEE fournit son propre agent au démarrage du serveur qui permet l'amélioration de code des entités JPA. Par contre, pour une application 
 			standalone, il est nécessaire de passer l'option <code>-javaagent:[lien vers le jar openjpa]</code> au lancement de la JVM.</p>
 
 		</section>

@@ -58,7 +58,7 @@ import javax.persistence.Table;
 public class Individu {
   @Id
   @Column(name = "individuId")
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Basic
@@ -303,7 +303,7 @@ import javax.persistence.OneToOne;
 public class Individu {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @OneToOne
@@ -323,7 +323,7 @@ import javax.persistence.Id;
 public class Abonnement {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   // getters et setters omis ...
@@ -350,7 +350,7 @@ import javax.persistence.OneToOne;
 public class Individu {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @OneToOne
@@ -382,7 +382,7 @@ import javax.persistence.ManyToOne;
 public class Individu {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne
@@ -402,7 +402,7 @@ import javax.persistence.Id;
 public class Societe {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   // getters et setters omis ...
@@ -434,7 +434,7 @@ import javax.persistence.ManyToOne;
 public class Individu {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne
@@ -473,7 +473,7 @@ import javax.persistence.OneToMany;
 public class Societe {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @OneToMany
@@ -493,7 +493,7 @@ import javax.persistence.Id;
 public class Individu {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   // getters et setters omis ...
@@ -532,7 +532,7 @@ import javax.persistence.ManyToMany;
 public class Individu {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToMany
@@ -569,7 +569,7 @@ import javax.persistence.ManyToMany;
 public class Individu {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToMany
@@ -609,7 +609,7 @@ import javax.persistence.ManyToMany;
 public class Individu {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToMany
@@ -647,7 +647,7 @@ import javax.persistence.ManyToOne;
 public class Individu {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -702,7 +702,7 @@ import javax.persistence.ManyToOne;
 public class Individu {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)

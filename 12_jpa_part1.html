@@ -73,7 +73,7 @@ public class Individu {
   @Id
   // Permet de définir la statégie de génération
   // de la clé lors d'une insertion en base de données.
-  @GeneratedValue(strategy=GenerationType.AUTO)
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Long id;
 
   public Long getId() {
@@ -157,8 +157,12 @@ public class Individu {
 					</tr>
 					<tr>
 						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/GeneratedValue.html"><code>@GeneratedValue</code></a></td>
-						<td>Indique la stratégie à appliquer pour la génération de la clé lors de l'insertion d'une entité en base.
-						En pratique, on pourra utiliser la stratégie par défaut qui consiste à laisser décider le moteur ORM selon le SGBDR.</td>
+						<td>Indique la stratégie à appliquer pour la génération de la clé lors de l'insertion d'une entité en base. Les valeurs possibles sont données
+						par l'énumération <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/GenerationType.html">GenerationType</a>.<br>
+						Si vous utilisez MySQL et la propriété <code>autoincrement</code> sur une colonne, alors vous devez utiliser <code>GenerationType.IDENTITY</code> (ce sera
+						le cas pour les exemples de ce cours).<br>
+						Si vous utilisez Oracle et un système de séquence, alors vous devez utiliser <code>GenerationType.SEQUENCE</code> et préciser le nom
+						de la séquence dans l'attribut <code>generator</code> de <code>@GeneratedValue</code>.</td>
 					</tr>
 					<tr>
 						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Column.html"><code>@Column</code></a></td>
@@ -195,7 +199,7 @@ public class Individu {
 
   @Id
   @Column(name="individuId")
-  @GeneratedValue(strategy=GenerationType.AUTO)
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Long id;
 
   @Basic

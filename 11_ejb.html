@@ -216,14 +216,17 @@ public class MyServlet extends HttpServlet {
 			</figure>
 
 			<aside>
-				<p>Pour utiliser un EJB comme backing bean JSF, il doit également disposer de l'annotation <code>@Named</code> exploitée par le service CDI.</p>
+				<p>Pour utiliser un EJB comme backing bean JSF, il doit également disposer de l'annotation <code>@Named</code> exploitée par le service CDI.
+				Et de l'annotation précisant la portée du bean (requête, session ou application)</p>
 				<figure>
 					<figcaption>Un EJB utiliser comme backing bean JSF</figcaption>
 					<pre><code class="java">
 import javax.ejb.Stateful;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 @Stateful
+@SessionScoped
 @Named
 public class UserBasket {
   

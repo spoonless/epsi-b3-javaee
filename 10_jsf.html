@@ -336,25 +336,12 @@ import javax.inject.Named;
 
 @Named
 @RequestScoped
-public class Personne {
-  private String nom;
-  private int age;
+public class PersonneControleur {
 
-  public String getNom() {
-    return nom;
+  public Personne getPersonne() {
+    // ...
   }
 
-  public void setNom(String nom) {
-    this.nom = nom;
-  }
-
-  public int getAge() {
-    return age;
-  }
-
-  public void setAge(int age) {
-    this.age = age;
-  }
 }
 
 </code></pre>
@@ -387,9 +374,11 @@ import javax.inject.Named;
 
 @Named
 @SessionScoped
-public class Personne implements java.io.Serializable {
+public class PersonneControleur implements java.io.Serializable {
 
-  // ...
+  public Personne getPersonne() {
+    // ...
+  }
 
 }
 
@@ -414,15 +403,15 @@ public class Personne implements java.io.Serializable {
   &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
 &lt;/h:head&gt;
 &lt;h:body&gt;
-  &lt;p&gt;Bonjour #{personne.nom}&lt;/p&gt;
+  &lt;p&gt;Bonjour #{personneControleur.personne.name}&lt;/p&gt;
 &lt;/h:body&gt;
 &lt;/html&gt;
 
 </code></pre>
 			</figure>
-			<p>S'il n'existe pas d'attribut <code>personne</code>, celui-ci sera automatiquement créé avec une portée requête.</p>
+			<p>S'il n'existe pas d'attribut <code>personneControleur</code>, celui-ci sera automatiquement créé avec une portée requête.</p>
 			<p>Il est également possible de spécifier soi-même le nom du bean dans l'annotation <code>@Named</code>&nbsp;:</p>
-			<pre><code class="java">@Named("unePersonne")</code></pre>
+			<pre><code class="java">@Named("monControleurDePersonne")</code></pre>
 
 			<h3>Le fichier de déploiement beans.xml</h3>
 			<p>Comme la plupart des services Java EE, CDI dispose d'un fichier de déploiement appelé <strong>beans.xml</strong>.
@@ -447,11 +436,10 @@ public class Personne implements java.io.Serializable {
 		</section>
 		<section>
 			<h2 id="modele">Le modèle</h2>
-			<p>Dans une application JSF, n'importe quelle instance d'objet Java gérée par CDI peut jouer le rôle du modèle.
-			Dans la terminologie JSF, on parle de <em>backing beans</em> pour désigner les objets Java avec lesquels
-			la facelet iteragit.
-			Par exemple, une instance de la classe <code>Personne</code> vue précédemment peut être utilisée comme modèle
-			dans un formulaire d'une facelet&nbsp;:
+			<p>Dans une application JSF, n'importe quelle instance d'objet Java peut jouer le rôle du modèle. Le
+			modèle peut-être un objet géré par CDI ou rendu disponible par un objet géré par CDI (ce dernier jouant alors le rôle de contrôleur).
+			Par exemple, une instance de la classe <code>Personne</code> peut être utilisée comme modèle
+			dans un formulaire d'une facelet en y accédant <i>via</i> le bean CDI personneControleur vu précédemment&nbsp;:
 			</p>
 			<figure>
 				<figcaption>Utilisation d'un bean CDI dans un formulaire</figcaption>
@@ -468,10 +456,10 @@ public class Personne implements java.io.Serializable {
 &lt;h:body&gt;
   &lt;h:form acceptcharset="UTF-8" &gt;
     &lt;h:outputLabel for="nom" value="nom" /&gt;
-    &lt;h:inputText id="nom" value="#{personne.nom}"/&gt;
+    &lt;h:inputText id="nom" value="#{personneControleur.personne.nom}"/&gt;
 
     &lt;h:outputLabel for="age" value="âge" /&gt;
-    &lt;h:inputText id="age" value="#{personne.age}" /&gt;
+    &lt;h:inputText id="age" value="#{personneControleur.personne.age}" /&gt;
 
     &lt;h:commandButton /&gt;
   &lt;/h:form&gt;
@@ -485,7 +473,7 @@ public class Personne implements java.io.Serializable {
 			sont délimitées par <strong>#{ }</strong>. Comme pour les JSP, JSF supporte l'écriture d'une EL
 			sous la forme <strong>${ }</strong>. Cependant, l'utilisation du caractère <strong>#</strong>
 			indique que l'on souhaite activer le <em>value binding</em>. Cette fonctionnalité
-			indique au moteur JSF, que le contenu du bean <code>personne</code> devra également être mis à jour
+			indique au moteur JSF, que le contenu du bean <code>personneControleur.personne</code> devra également être mis à jour
 			avec les données envoyées par le client. Concrètement, il est plus simple d'utiliser
 			systématiquement avec JSF la notation <strong>#{ }</strong>.</p>
 		</section>
@@ -494,7 +482,8 @@ public class Personne implements java.io.Serializable {
 			<h2 id="controleur">Le contrôleur</h2>
 			<p>JSF est basé sur l'API servlet mais il permet aux développeurs d'application Web de s'en affranchir.
 			Ainsi, avec JSF, un contrôleur est simplement une classe Java gérée par CDI qui expose des méthodes
-			qui seront appelées par JSF lors de la réception des requêtes du client.</p>
+			qui seront appelées par JSF lors de la réception des requêtes du client.
+			Dans la terminologie JSF, on parle de <strong>backing beans</strong> pour désigner les objets Java avec lesquels la facelet iteragit.</p>
 			<p>La génération d'action vers le contrôleur se fait lorsque le client envoie des données vers le serveur. 
 			En HTML, cela se fait par la soumission de formulaire. Avec JSF, la soumission de formulaire peut se faire avec la balise <code>h:commandLink</code> ou
 			la balise <code>h:commandButton</code>. Ces deux balise JSF disposent de l'attribut <code>action</code>
@@ -515,12 +504,12 @@ public class Personne implements java.io.Serializable {
 &lt;h:body&gt;
   &lt;h:form acceptcharset="UTF-8" &gt;
     &lt;h:outputLabel for="nom" value="nom" /&gt;
-    &lt;h:inputText id="nom" value="#{personne.nom}"/&gt;
+    &lt;h:inputText id="nom" value="#{personneControleur.personne.nom}"/&gt;
 
     &lt;h:outputLabel for="age" value="âge" /&gt;
-    &lt;h:inputText id="age" value="#{personne.age}" /&gt;
+    &lt;h:inputText id="age" value="#{personneControleur.personne.age}" /&gt;
 
-    &lt;h:commandButton action="#{referentielPersonne.chercher(personne)}" 
+    &lt;h:commandButton action="#{personneControleur.chercher()}" 
                      value="chercher" /&gt;
   &lt;/h:form&gt;
 &lt;/h:body&gt;
@@ -530,11 +519,11 @@ public class Personne implements java.io.Serializable {
 			</figure>
 			
 			<p>Dans la facelet ci-dessus, l'action déclenchée par le bouton "chercher" est&nbsp;:</p>
-			<pre><code class="el">#{referentielPersonne.chercher(personne)}</code></pre>
-			<p>Cela signifie que JSF va chercher un bean CDI portant le nom "referentielPersonne"
-			et il va invoquer la méthode <code>chercher</code> en passant en paramètre une instance
-			de la classe Personne dont les attributs <code>nom</code> et <code>age</code> auront
-			été au préalable renseignés avec les valeurs envoyées dans la requête.</p>
+			<pre><code class="el">#{personneControleur.chercher()}</code></pre>
+			<p>Cela signifie que JSF va chercher un bean CDI portant le nom "personneControleur"
+			et il va invoquer la méthode <code>chercher</code>. Au préalable, les attributs <code>nom</code> et <code>age</code> 
+			de la propriété <code>personneControleur.personne</code> auront
+			été mis à jour avec les valeurs envoyées dans la requête.</p>
 			
 			<p>Ainsi un contrôleur valide pourrait être&nbsp;:</p>
 			
@@ -543,21 +532,36 @@ public class Personne implements java.io.Serializable {
 				<pre><code class="java">
 package fr.epsi;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 @Named
-@ApplicationScoped
-public class ReferentielPersonne {
+@RequestScoped
+public class PersonneControleur {
 
-  public void chercher(Personne personne) {
-    // ...
+  private Personne personne = new Personne();
+
+  public Personne getPersonne() {
+    return personnes;
+  }
+  
+  public void chercher() {
+    String nomAChercher = personne.getNom();
+    // ... effectuer la recherche dans un référentiel de personnes
   }
 
 }
 
 </code></pre>
 			</figure>
+			
+			<aside>
+				<p>L'implémentation ci dessus rappelle le modèle de conception <a href="https://fr.wikipedia.org/wiki/Commande_%28patron_de_conception%29">Commande</a>.
+				&Agrave; l'usage, c'est effectivement vers ce type de conception que semble nous orienter JSF.</p>
+				<p>Si n'importe quelle classe peut prétendre être gérée par CDI et utilisée directement dans une facelet, 
+				on se rend compte que les classes qui représentent notre modèle (comme la classe <code>Personne</code> ci-dessus)
+				ne doivent pas être gérées par CDI car nous verrons plus tard qu'elles peuvent avoir le statut d'entités persistantes (Cf. <a href="12_jpa_part1.html">JPA</a>)</p>
+			</aside>
 		</section>
 		<section>
 			<h2 id="navigation">La navigation</h2>
@@ -576,17 +580,24 @@ public class ReferentielPersonne {
 				<pre><code class="java">
 package fr.epsi;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 @Named
-@ApplicationScoped
-public class ReferentielPersonne {
+@RequestScoped
+public class PersonneControleur {
 
-  public String chercher(Personne personne) {
-    // ...
-    
-    // il doit exister une fichier resultat.xhtml qui correspond
+  private Personne personne = new Personne();
+
+  public Personne getPersonne() {
+    return personnes;
+  }
+  
+  public String chercher() {
+    String nomAChercher = personne.getNom();
+    // ... effectuer la recherche dans un référentiel de personnes
+
+    // il doit exister un fichier resultat.xhtml qui correspond
     // à la facelet qui génèrera la vue.
     return "resultat";
   }
@@ -653,18 +664,18 @@ public class ReferentielPersonne {
 &lt;h:body&gt;
   &lt;h:form acceptcharset="UTF-8" &gt;
     &lt;h:outputLabel for="nom" value="nom" /&gt;
-    &lt;h:inputText id="nom" value="#{personne.nom}"&gt;
+    &lt;h:inputText id="nom" value="#{personneControleur.personne.nom}"&gt;
       &lt;f:validateLength minimum="1"/&gt;
     &lt;/h:inputText&gt;
     &lt;h:message for="nom"/&gt;
 
     &lt;h:outputLabel for="age" value="âge" /&gt;
-    &lt;h:inputText id="age" value="#{personne.age}"&gt;
+    &lt;h:inputText id="age" value="#{personneControleur.personne.age}"&gt;
       &lt;f:validateLongRange minimum="1" maximum="99"/&gt;
     &lt;/h:inputText&gt;
     &lt;h:message for="age"/&gt;
 
-    &lt;h:commandButton action="#{referentielPersonne.chercher(personne)}" 
+    &lt;h:commandButton action="#{personneControleur.chercher()}" 
                      value="chercher" /&gt;
   &lt;/h:form&gt;
 &lt;/h:body&gt;
@@ -697,14 +708,10 @@ public class ReferentielPersonne {
 				<pre><code class="java">
 package fr.epsi;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
-@Named
-@RequestScoped
 public class Personne {
 
   @Size(min = 1, message = "Le nom est obligatoire !")

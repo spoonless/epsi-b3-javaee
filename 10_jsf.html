@@ -403,7 +403,7 @@ public class PersonneControleur implements java.io.Serializable {
   &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
 &lt;/h:head&gt;
 &lt;h:body&gt;
-  &lt;p&gt;Bonjour #{personneControleur.personne.name}&lt;/p&gt;
+  &lt;p&gt;Bonjour #{personneControleur.personne.nom}&lt;/p&gt;
 &lt;/h:body&gt;
 &lt;/html&gt;
 
@@ -412,6 +412,8 @@ public class PersonneControleur implements java.io.Serializable {
 			<p>S'il n'existe pas d'attribut <code>personneControleur</code>, celui-ci sera automatiquement créé avec une portée requête.</p>
 			<p>Il est également possible de spécifier soi-même le nom du bean dans l'annotation <code>@Named</code>&nbsp;:</p>
 			<pre><code class="java">@Named("monControleurDePersonne")</code></pre>
+			
+			<!-- TODO: section Injecter un objet CDI (exemple avec @Inject) -->
 
 			<h3>Le fichier de déploiement beans.xml</h3>
 			<p>Comme la plupart des services Java EE, CDI dispose d'un fichier de déploiement appelé <strong>beans.xml</strong>.
@@ -437,7 +439,7 @@ public class PersonneControleur implements java.io.Serializable {
 		<section>
 			<h2 id="modele">Le modèle</h2>
 			<p>Dans une application JSF, n'importe quelle instance d'objet Java peut jouer le rôle du modèle. Le
-			modèle peut-être un objet géré par CDI ou rendu disponible par un objet géré par CDI (ce dernier jouant alors le rôle de contrôleur).
+			modèle peut être un objet géré par CDI ou rendu disponible par un objet géré par CDI (ce dernier jouant alors le rôle de contrôleur).
 			Par exemple, une instance de la classe <code>Personne</code> peut être utilisée comme modèle
 			dans un formulaire d'une facelet en y accédant <i>via</i> le bean CDI personneControleur vu précédemment&nbsp;:
 			</p>
@@ -557,10 +559,12 @@ public class PersonneControleur {
 			
 			<aside>
 				<p>L'implémentation ci dessus rappelle le modèle de conception <a href="https://fr.wikipedia.org/wiki/Commande_%28patron_de_conception%29">Commande</a>.
-				&Agrave; l'usage, c'est effectivement vers ce type de conception que semble nous orienter JSF.</p>
-				<p>Si n'importe quelle classe peut prétendre être gérée par CDI et utilisée directement dans une facelet, 
-				on se rend compte que les classes qui représentent notre modèle (comme la classe <code>Personne</code> ci-dessus)
-				ne doivent pas être gérées par CDI car nous verrons plus tard qu'elles peuvent avoir le statut d'entités persistantes (Cf. <a href="12_jpa_part1.html">JPA</a>)</p>
+				&Agrave; l'usage, c'est effectivement vers ce type de conception que souhaite nous orienter les concepteurs de JSF.</p>
+				<p>Si n'importe quelle classe peut être gérée par CDI et être utilisée directement dans une facelet, 
+				on se rend compte que les classes qui représentent notre modèle (comme la classe <code>Personne</code> dans notre exemple)
+				ne doivent pas être gérées par CDI. Nous verrons plus tard que de telles classes peuvent avoir le statut d'entités persistantes (Cf. <a href="12_jpa_part1.html">JPA</a>).
+				&Agrave; ce titre, elles disposent d'un cycle de vie qui n'est pas compatible avec celui imposé par CDI.
+				</p>
 			</aside>
 		</section>
 		<section>

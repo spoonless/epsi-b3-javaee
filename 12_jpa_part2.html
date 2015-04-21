@@ -39,7 +39,7 @@
 				grâce à la méthode <code>setMaxResults(int)</code>)</li>
 				
 				<li>On exécute la requête grâce aux méthodes <code>executeUpdate()</code> (pour un update ou un delete), <code>getSingleResult()</code>
-				(pour une requête SELECT ne retournant qu'un seul résultat) ou <code>getResultList()</code> (pour une requête SELECT ne retournant une liste de résultats).</li>
+				(pour une requête SELECT ne retournant qu'un seul résultat) ou <code>getResultList()</code> (pour une requête SELECT retournant une liste de résultats).</li>
 			</ol>
 			
 			<p>Pour les différents exemples de requêtes qui suivent, nous nous baserons sur l'entité JPA suivante&nbsp;:</p>
@@ -666,7 +666,7 @@ public class Individu {
 		<section>
 			<h2>Fetch lazy ou fetch eager</h2>
 			<p>Lorsque JPA doit charger une entité depuis la base de données (qu'il s'agisse d'une appel à <code>EntityManager.find(...)</code> ou d'une requête),
-			la question est de savoir quelles informations doivent être chargées. Doit-il charger tous les attributs d'une entité ? Parmi
+			la question est de savoir quelles informations doivent être chargées. Doit-il charger tous les attributs d'une entité&nbsp;? Parmi
 			ces attributs, doit-il charger les entités qui sont en relation avec l'entité chargée ? Ces questions sont importantes,
 			car la façon d'y répondre peut avoir un impact sur les performances de l'application.</p>
 			<p>Dans JPA, l'opération de chargement d'une entité depuis la base de données est appelée <strong>fetch</strong>.

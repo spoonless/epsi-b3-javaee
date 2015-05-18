@@ -8,7 +8,7 @@ a, a:link, a:visited {
 }
 body {
 	font-family: "Open Sans", sans-serif;
-	margin-top: 6em;
+	margin-top: 3em;
 	background: rgb(233, 233, 233);
 	font-size: 11pt;
 }
@@ -38,6 +38,30 @@ figcaption, table>caption {
 	text-align: left;
 }
 
+body > header {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 60em;
+	padding-right: 2em;
+	padding-left: 2em;
+	padding-top:2em;
+	padding-bottom:2em;
+	box-shadow: -1px 2px 5px 1px rgba(100, 100, 100, 0.7);
+	background-image: url('title-pattern.png');
+}
+
+body > header > h1 {
+	color: white;
+	margin: 0em;
+	border:0;
+	padding:0;
+	background-image: url('logo.png');
+	background-repeat: no-repeat;
+	min-height: 90px;
+	font-size: 450%;
+}
+
+
 article {
 	margin-left: auto;
 	margin-right: auto;
@@ -46,6 +70,7 @@ article {
 	background: white;
 	padding: 2em;
 	box-shadow: -1px 2px 5px 1px rgba(100, 100, 100, 0.7);
+	margin-top: 0px;
 	margin-bottom: 6em;
 }
 

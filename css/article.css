@@ -74,6 +74,16 @@ article {
 	margin-bottom: 6em;
 }
 
+footer.license {
+	font-size: 80%;
+	text-align: center;
+	margin-bottom: 6em;
+}
+
+#titleBar .license {
+	float: right;
+}
+
 article.exercice {
 	background: #FFFFF0;
 }

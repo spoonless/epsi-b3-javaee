@@ -38,7 +38,7 @@
 			prenne en compte nos modifications dans les JSP à la volée sans qu'il soit nécessaire de redéployer l'application.
 			Pour des raisons de performance, la prise en compte à chaud des modifications n'est pas le comportement par défaut de TomEE.</p>
 			<p>Pour activer ce comportement, il va falloir modifier la configuration du serveur. Pour cela, allez dans le répertoire
-			d'installation de TomEE et ouvez le fichier <strong>conf/web.xml</strong>. Aux alentours de la ligne 225, vous allez trouver la
+			d'installation de TomEE et ouvez le fichier <strong>conf/web.xml</strong>. Aux alentours de la ligne 229, vous allez trouver la
 			déclaration suivante&nbsp;:</p>
 			<pre><code class="xml">
 &lt;servlet&gt;
@@ -60,7 +60,7 @@
 &lt;/servlet&gt;
 
 </code></pre>
-			<p>Faites un backup de ce fichier et remplacez cette configuration par celle-ci&nbsp;:</p>
+			<p>Faites une sauvegarde de ce fichier et remplacez cette configuration par celle-ci&nbsp;:</p>
 			<pre><code class="xml">
 &lt;servlet&gt;
   &lt;servlet-name&gt;jsp&lt;/servlet-name&gt;

@@ -25,8 +25,12 @@
 		<h1><script>document.write(document.title)</script></h1>
 		<section id="toc"></section>
 		<p>Une servlet est un <strong>composant Web</strong> de Java EE. Elle permet de traiter une requête entrante sur un
-		serveur et de générer une réponse dynamique.</p>
-		<p>L'API <strong>servlet</strong> est définie par la spécification <a href="http://jcp.org/aboutJava/communityprocess/final/jsr315/index.html">JSR 315</a> et la version actuelle est la 3.0.</p>
+		serveur et de générer une réponse dynamique. La plupart du temps, les servlets sont utilisées pour traiter des requêtes HTTP et générer dynamiquement une réponse.</p>
+		<p>L'API <strong>servlet</strong> est définie par la spécification <a href="https://jcp.org/aboutJava/communityprocess/final/jsr340/index.html">JSR 340</a> et la version actuelle est la 3.1.</p>
+		
+		<aside>
+			La version de TomEE que nous utilisons dans ce cours implémente la version 3.0 de l'API servlet.
+		</aside>
 
 		<section>
 			<h2>Structure d'une servlet HTTP</h2>
@@ -145,8 +149,8 @@ public class HelloServlet extends HttpServlet {
 		
 		<section>
 			<h2>Configuration du déploiement d'une servlet</h2>
-			<p>Une servlet n'est pas une classe Java comme les autres, il s'agit d'un composant
-			Java EE qui va être pris en charge par le serveur d'application. Le serveur d'application
+			<p>Une servlet n'est pas une classe Java comme les autres, il s'agit d'un <strong>composant
+			Java EE</strong> qui va être pris en charge par le serveur d'application. Le serveur d'application
 			a besoin de savoir pour quelle(s) URL cette servlet sera responsable de traiter les
 			requêtes et de fournir la réponse.</p>
 			<p>La méthode la plus simple pour configurer le déploiement d'une servlet consiste à utiliser
@@ -253,9 +257,9 @@ public class HelloServlet extends HttpServlet {
 		<h2>Exercice à rendre&nbsp;: traitement d'un formulaire</h2>
 		<dl>
 			<dt>Objectif</dt>
-			<dd>Réaliser une application qui fournit une page d'accueil présentant un formulaire Web.
-			Le formulaire permet de saisir son nom et son age et de soumettre les données au serveur par une méthode HTTP POST.
-			Le serveur doit répondre une page Web générée par une servlet et affichant les données envoyées.</dd>
+			<dd>Réaliser une application Web qui fournit une page d'accueil présentant un formulaire Web.
+			Le formulaire permet de saisir un nom de site et une URL et de soumettre les données au serveur par une méthode HTTP POST.
+			Le serveur doit répondre une page Web générée par une servlet qui affiche les données envoyées.</dd>
 
 			<dt>Modèle Maven du projet à télécharger</dt>
 			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a></dd>
@@ -266,31 +270,12 @@ public class HelloServlet extends HttpServlet {
 
 			<dt>Intégration du projet dans Eclipse</dt>
 			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+
+			<dt>Remarque</dt>
+			<dd>Si vous le désirez, vous pouvez réaliser cet exercice dans le même projet que l'exercice précédent.</dd>
 		</dl>
 	</article>
 
-	<article class="exercice note">
-		<h2>Exercice à rendre&nbsp;: traitement d'un formulaire (suite)</h2>
-		<dl>
-			<dt>Objectif</dt>
-			<dd>Améliorer l'application Web de l'exercice précédent. Maintenant le serveur doit valider que le client
-			a bien envoyé son nom et que l'age est bien un nombre strictement positif. Si les données sont fausses,
-			le serveur doit retourner une erreur HTTP 400.</dd>
-
-			<dt>Modèle du projet</dt>
-			<dd>Pour cet exercice, vous reprendrez le projet de l'exercice précédent pour l'améliorer.</dd>
-		</dl>
-		<aside class="tip">Afin de valider l'age envoyé au serveur, vous pouvez utiliser la méthode 
-		<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html#valueOf-java.lang.String-">Integer.valueOf(String)</a>.
-		Cette méthode jette une exception <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NumberFormatException.html">java.lang.NumberFormatException</a>
-		si la chaîne de caractères ne peut pas être convertie en entier.</aside>
-		
-		<aside class="tip">
-			Pour retourner une erreur HTTP, on utilisera <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletResponse.html#sendError%28int%29">HttpServletResponse.sendError(int)</a>
-			qui génère automatiquement une page d'erreur HTML.
-		</aside>
-	</article>
-	
 	<article>
 		<h2>Utilisation du fichier de déploiement web.xml</h2>
 		<section>
@@ -321,7 +306,7 @@ public class HelloServlet extends HttpServlet {
   &lt;servlet-mapping&gt;
     &lt;servlet-name&gt;nomLogiqueDeLaServlet&lt;/servlet-name&gt;
     &lt;!-- le motif d'url (par exemple *.html ou /servlet) --&gt;
-    &lt;url-pattern&gt;*&lt;/url-pattern&gt;
+    &lt;url-pattern&gt;/ma-servlet&lt;/url-pattern&gt;
   &lt;/servlet-mapping&gt;
 
 &lt;/web-app&gt;
@@ -341,14 +326,13 @@ public class HelloServlet extends HttpServlet {
 	</article>
 	<article class="exercice note">
 		<h2>Exercice à rendre&nbsp;: déploiement à partir du web.xml</h2>
-		<strong>Cet exercice est optionnel</strong>
 		<dl>
 			<dt>Objectif</dt>
 			<dd>Déployer une servlet en utilisant le fichier de déploiement web.xml. Pour cela, vous allez déployer une servlet fournie
 			par une bibliothèque tierce : <b>barcode4j</b>. Cette servlet génère des codes barres à la volée.</dd>
 
 			<dt>Modèle de projet</dt>
-			<dd>Utilisez le même projet que pour l'exercice précédent. Vous verrez ainsi que l'on peut mélanger dans une même application
+			<dd>Utilisez <strong>le même projet</strong> que pour l'exercice précédent. Vous verrez ainsi que l'on peut mélanger dans une même application
 			des servlets déclarées par annotations avec des servlets déclarées dans le fichier de déploiement. Le fichier web.xml
 			doit déjà être présent et ne contenir que la balise racine <code>&lt;web-app&gt;</code>.</dd>
 			
@@ -370,9 +354,21 @@ public class HelloServlet extends HttpServlet {
 			<p>La sauvegarde du fichier pom.xml dans votre IDE doit entraîner un téléchargement par Maven de ces dépendances et leur ajout
 			dans la configuration du projet.</p>
 			<p>La servlet fournie par barcode4j s'appelle&nbsp;: <code><strong>org.krysalis.barcode4j.servlet.BarcodeServlet</strong></code></p>
+			<p>Une fois la servlet déclarée, vous pouvez y accéder en passant des paramètres HTTP détaillés dans la <a href="http://barcode4j.sourceforge.net/2.1/servlet.html">documentation</a>.</p>
+			</dd>
+
+			<dt>Évolution de l'application de traitement d'un formulaire</dt>
+			<dd>
+			Faites évoluer l'application de l'exercice précédent. Lorsque l'utilisateur soumet le formulaire, le serveur doit afficher les informations transmises (nom et URL)
+			et le code barre 2D de l'URL. Un code barre 2D correspond au type <strong>datamatrix</strong> pour la servlet barcode4J.
+			Autrement dit, il faut passer <code>type=datamatrix</code> comme paramètre à cette servlet.
+			<figure>
+				<figcaption>Exemple de code barre 2D (datamatrix) généré par barcode4</figcaption>
+				<img alt="exemple de code barre de type datamatrix" src="assets/barcode4j-example.png">
+			</figure>
 			</dd>
 		</dl>
-		<p>Une fois la servlet déclarée, vous pouvez y accéder en passant des paramètres HTTP détaillés dans la <a href="http://barcode4j.sourceforge.net/2.1/servlet.html">documentation</a>.</p>
+		
 	</article>
 
 	<footer class="license">

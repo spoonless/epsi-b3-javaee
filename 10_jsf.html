@@ -199,7 +199,7 @@
 					<tr>
 						<td>c</td>
 						<td>http://java.sun.com/jsp/jstl/core</td>
-						<td>Contient les balises de la bibliothèque JSTL core (Cf <a href="08_jsp.html#jstl">cours sur les JSP</a>).
+						<td>Contient les balises de la bibliothèque JSTL core (Cf <a href="07_jsp.html#jstl">cours sur les JSP</a>).
 						<b>Attention</b> cette bibliothèque a été amputée notamment de la balise c:out par rapport à la version JSP.
 						En JSF, on utilise <code>h:outputText</code> à la place.</td>
 						<td>c:if c:forEach</td>
@@ -207,7 +207,7 @@
 					<tr>
 						<td>fn</td>
 						<td>http://java.sun.com/jsp/jstl/functions</td>
-						<td>Contient les fonctions de la bibliothèque JSTL functions (Cf <a href="08_jsp.html#jstl">cours sur les JSP</a>).
+						<td>Contient les fonctions de la bibliothèque JSTL functions (Cf <a href="07_jsp.html#jstl">cours sur les JSP</a>).
 						Cette bibliothèque ne contient pas de balise.</td>
 						<td>fn:contains fn:join</td>
 					</tr>
@@ -299,7 +299,7 @@
 </code></pre>
 			</figure>
 			
-			<p>Il existe quasiment les mêmes <a href="08_jsp.html#objets_implicites">objets implicites</a>
+			<p>Il existe quasiment les mêmes <a href="07_jsp.html#objets_implicites">objets implicites</a>
 			accessibles avec l'expression language (EL) que pour les JSP. Comme une JSP, une facelet peut accéder
 			aux attributs des différentes portées (page, request, session, application). Cependant pour créer ces
 			attributs, nous n'allons plus utiliser l'API servlet comme vu précédemment, nous allons utiliser
@@ -874,7 +874,6 @@ public class MonControleur {
 	</article>
 
 	<article class="exercice note">
-		<aside class="tip"><strong>Choisissez un des deux exercices suivants à réaliser.</strong></aside>
 		<h2>Exercice à rendre&nbsp;: JSF et JDBC</h2>
 		<dl>
 			<dt>Objectif</dt>
@@ -922,23 +921,6 @@ CREATE TABLE IF NOT EXISTS Individu (
 
 			<dt>Modèle Maven du projet à télécharger</dt>
 			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a> (pensez à <a href="#pilote_jdbc">déclarer la dépendance</a> vers le pilote JDBC dans le fichier pom.xml)</dd>
-
-			<dt>Intégration du projet dans Eclipse</dt>
-			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
-		</dl>
-
-		<h2>Ou exercice à rendre&nbsp;: Mastermind</h2>
-		<dl>
-			<dt>Objectif</dt>
-			<dd>
-				<p>Réaliser la même application Mastermind que celle proposée dans le chapitre sur les JSP mais en utilisant la technologie JSF.
-				Cliquez <a href="08_jsp.html#exo_mastermind">ici</a> pour consulter l'énoncé original de l'exercice.</p>
-				<p>Si vous aimez les défis, vous pouvez réaliser le portage en utilisant ajax...</p>
-			</dd>
-
-			<dt>Modèle Maven du projet à télécharger</dt>
-			<dd>Téléchargez le modèle de projet <strong><a href="assets/templates/mastermind.zip">mastermind.zip</a></strong>. Vous pouvez également partir d'une implémentation du mastermind
-			avec des Servlets et des JSP et réaliser une migration vers JSF.</dd>
 
 			<dt>Intégration du projet dans Eclipse</dt>
 			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>

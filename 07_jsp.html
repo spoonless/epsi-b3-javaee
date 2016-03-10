@@ -170,8 +170,10 @@ public class index extends HttpServlet {
 			<p>Nous allons voir maintenant comment nous pouvons ajouter du contenu dynamique dans une JSP.</p>
 			<aside>
 				<p>La spécification JSP a considérablement changé depuis son origine. Cela signifie qu'il existe différentes façons
-				de dynamiser une page JSP. Nous ne verrons dans la suite du cours que les dernières techniques qui sont considérées
-				comme la "bonne" façon de réaliser des applications Web avec des JSP.</p>
+				de dynamiser une page JSP.</p>
+				<p>Dans la première version de la technologie JSP, il était proposé d'insérer du code Java grâce
+				aux balises <strong>scriptlets</strong>. Ce procédé est totalement déprécié et, même si on en trouve
+				de nombreux exemples sur le Web, nous n'utiliserons absolument pas cette technique dans la suite de ce chapitre.</p>
 			</aside>
 		</section>
 		<h2>EL : Expression Language</h2>
@@ -665,8 +667,18 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 					permet de réaliser un échappement des caractères réservés en HTML. Les caractères comme &lt; et &gt; seront
 					automatiquement transformés en &amp;lt; et &amp;gt;&nbsp;:</p>
 					<figure>
-						<figcaption>&Eacute;chappement des caractères HTML</figcaption>
 						<pre><code>&lt;c:out value="&lt;div&gt;Quel est le résultat de ce tag ?&lt;/div&gt;"/&gt;</code></pre>
+					</figure>
+
+
+					<p>Il est également possible de générer des URL absolues grâce à la balise <code>url</code>. Cette balise
+					se charge de reconstruire l'URL à partir du contexte racine de l'application. Par exemple, pour le code JSP suivant&nbsp;:</p>
+					<figure>
+						<pre><code>&lt;a href="&lt;c:url value="/page_suivante.jsp"/&gt;"&gt;Lien&lt;/a&gt;</code></pre>
+					</figure>
+					<p>Si l'application est déployée dans le contexte racine <strong>monappli</strong>, alors le code HTML généré par la JSP sera&nbsp;:</p>
+					<figure>
+						<pre><code>&lt;a href="/monappli/page_suivante.jsp"&gt;Lien&lt;/a&gt;</code></pre>
 					</figure>
 				</dd>
 
@@ -687,47 +699,6 @@ ${not empty maliste ? maliste[0] : "liste vide"}
   &lt;/head&gt;
   &lt;body&gt;
     &lt;fmt:formatNumber value="${1024 * 1024}"/&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-
-</code></pre>
-					</figure>
-				</dd>
-
-				<dt><a href="http://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/sql/tld-summary.html">JSTL SQL</a></dt>
-				<dd>
-					<pre><code>&lt;%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %&gt;</code></pre>
-					<p>Comme son nom l'indique, cette bibliothèque permet d'exécuter des requêtes SQL dans les JSP.
-					Nous verrons par la suite que son utilisation reste très limitée car dans une architecture Java EE,
-					les accès aux bases de données sont généralement gérés par des composants dédiés.</p>
-				</dd>
-
-				<dt><a href="http://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/x/tld-summary.html">JSTL XML</a></dt>
-				<dd>
-					<pre><code>&lt;%@taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %&gt;</code></pre>
-					<p>Cette bibliothèque permet de lire et de manipuler des documents XML directement dans les JSP.</p>
-					<figure>
-						<figcaption>Analyse d'un document XML</figcaption>
-						<pre><code class="html">
-&lt;%@page pageEncoding="UTF-8" contentType="text/html" %&gt;
-&lt;%@taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %&gt;
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;!-- on peut aussi charger un document XML externe grâce à l'attribut doc --&gt;
-    &lt;x:parse var="u"&gt;
-      &lt;utilisateur&gt;
-        &lt;nom&gt;jean&lt;/nom&gt;
-        &lt;age&gt;21&lt;/age&gt;
-      &lt;/utilisateur&gt;
-    &lt;/x:parse&gt;
-    
-    &lt;x:forEach var="e" select="$u/utilisateur/*"&gt;
-      &lt;x:out select="name($e)"/&gt; : &lt;x:out select="$e"/&gt;&lt;br&gt;
-    &lt;/x:forEach&gt;
   &lt;/body&gt;
 &lt;/html&gt;
 
@@ -773,6 +744,47 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 </code></pre>
 					</figure>
 				</dd>
+
+				<dt><a href="http://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/sql/tld-summary.html">JSTL SQL</a></dt>
+				<dd>
+					<pre><code>&lt;%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %&gt;</code></pre>
+					<p>Comme son nom l'indique, cette bibliothèque permet d'exécuter des requêtes SQL dans les JSP.
+					Nous verrons par la suite que son utilisation reste très limitée car dans une architecture Java EE,
+					les accès aux bases de données sont généralement gérés par des composants dédiés.</p>
+				</dd>
+
+				<dt><a href="http://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/x/tld-summary.html">JSTL XML</a></dt>
+				<dd>
+					<pre><code>&lt;%@taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %&gt;</code></pre>
+					<p>Cette bibliothèque permet de lire et de manipuler des documents XML directement dans les JSP.</p>
+					<figure>
+						<figcaption>Analyse d'un document XML</figcaption>
+						<pre><code class="html">
+&lt;%@page pageEncoding="UTF-8" contentType="text/html" %&gt;
+&lt;%@taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- on peut aussi charger un document XML externe grâce à l'attribut doc --&gt;
+    &lt;x:parse var="u"&gt;
+      &lt;utilisateur&gt;
+        &lt;nom&gt;jean&lt;/nom&gt;
+        &lt;age&gt;21&lt;/age&gt;
+      &lt;/utilisateur&gt;
+    &lt;/x:parse&gt;
+    
+    &lt;x:forEach var="e" select="$u/utilisateur/*"&gt;
+      &lt;x:out select="name($e)"/&gt; : &lt;x:out select="$e"/&gt;&lt;br&gt;
+    &lt;/x:forEach&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre>
+					</figure>
+				</dd>
 			</dl>
 		</section>
 	</article>
@@ -784,6 +796,94 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 			<dd>&Eacute;crire une JSP (sans code Java) qui donne la date et l'heure du serveur. La date et l'heure doivent être 
 			mises en forme de la façon suivante :
 			12&nbsp;mai&nbsp;2018&nbsp;12:01:24
+			<dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a></dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>&Eacute;diter le fichier pom.xml du template et modifier la balise artifactId pour spécifier le nom de votre projet.
+			Modifier ensuite la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
+
+	<article class="exercice note">
+		<h2>Exercice à rendre&nbsp;: Implémenter un formulaire en plusieurs étapes avec des JSP</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Réaliser une application qui permet à un utilisateur de s'inscrire en donnant des informations personnelles.
+			<p>La saisie d'information doit se faire en plusieurs étapes&nbsp;:</p>
+			<ol>
+				<li>Une première page Web demande à l'utilisateur de saisir son nom et son âge. Puis l'utilisateur 
+				clique sur le bouton "suivant".</li>
+				<li>Une nouvelle page demande à l'utilisateur de saisir son adresse (rue, code postal et ville). Puis
+				l'utilisateur clique sur le bouton "valider".</li>
+				<li>Finalement une page récapitulative s'affiche avec toutes les informations de l'utilisateur.</li>
+			</ol>
+			<p>Pour réaliser cette inscription en plusieurs étapes, vous <strong>devez utiliser</strong> des JSP. N'employez aucune servlet.
+			Il est <strong>très</strong> fortement recommandé de passer par une classe <code>Utilisateur</code> qui contiendra les données collectées à chaque étape&nbsp;:</p>
+			
+<pre><code class="java">
+package fr.epsi;
+
+public class Utilisateur {
+	private String nom;
+	private int age;
+	private String adresse;
+	private String codePostal;
+	private String ville;
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
+	public String getCodePostal() {
+		return codePostal;
+	}
+
+	public void setCodePostal(String codePostal) {
+		this.codePostal = codePostal;
+	}
+
+	public String getVille() {
+		return ville;
+	}
+
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+}
+</code></pre>
+			
+			<aside class="warn">
+				Attention, une JSP traite systématiquement les paramètres d'une requête dans l'encodage ISO-8859-1 (Latin-1).
+				Il est fortement recommandé d'écrire les pages JSP dans cet encodage ou d'utiliser l'attribut 
+				<a href="http://www.w3schools.com/tags/att_form_accept_charset.asp"><code>accept-charset</code></a> de la balise HTML <code>form</code>
+				pour forcer l'encodage ISO-8859-1 pour les données du formulaire.
+			</aside>
 			<dd>
 
 			<dt>Modèle Maven du projet à télécharger</dt>

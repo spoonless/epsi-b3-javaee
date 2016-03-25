@@ -187,17 +187,347 @@ public class LoggingListener implements ServletContextListener {
 			<h2>Les filtres de Servlet</h2>
 			
 			<p>Il est parfois intéressant d'effectuer des opérations avant et/ou après l'invocation de la servlet.
-			Il s'agit souvent d'opérations communes à un ensemble de requêtes possibles dans l'application.</p>
-			<p>Un cas facilement compréhensible est celui d'une application Web qui réalisent tous ces échanges
-			en UTF-8. Nous avons vu que par défaut, le containeur Web utilise l'encodage ISO-8859-1 (Latin-1).
-			Il est donc nécessaire de positionner le bon encodage grâce à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#setCharacterEncoding(java.lang.String)"><code>ServletRequest.setCharacterEncoding(String)</code></a>.
-			Cette opération répétitive est source d'oubli (et donc de bug). Il serait préférable de garantir que cette méthode serait
-			systématiquement appelé avant chaque traitement de Servlet. Ce type de comportement peut très facilement être
-			implémenté au moyen d'un filtre Web.</p>
+			Il s'agit souvent d'opérations communes à un ensemble de requêtes d'une application Web.</p>
 			
 			<p>Un filtre de Servlet est une classe implémentant l'interface <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/Filter.html">Filter</a>.
+			Un filtre a son propre cycle de vie. Une fois créé, le conteneur initialise le filtre en appelant sa méthode
+			<a href="http://docs.oracle.com/javaee/6/api/javax/servlet/Filter.html#init(javax.servlet.FilterConfig)"><code>init</code></a> et il signalera
+			la destruction du filtre en appelant sa méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/Filter.html#destroy()"><code>destroy</code></a>.
+			L'opération de filtrage est réalisée grâce à la méthode 
+			<a href="http://docs.oracle.com/javaee/6/api/javax/servlet/Filter.html#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)">doFilter</a>.
 			</p>
+			<figure>
+				<figcaption>Exemple d'implémentation d'un filtre Web</figcaption>
+					<pre><code class="java">
+package fr.epsi;
+
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
+public class MyFilter implements Filter {
+
+  @Override
+  public void init(FilterConfig filterConfig) throws ServletException {
+    // ...
+  }
+
+  @Override
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+      throws IOException, ServletException {
+    // ...
+  }
+
+  @Override
+  public void destroy() {
+    // ...
+  }
+
+}
+
+</code></pre>
+			</figure>
 		</section>
+		
+		<section>
+			<h2>Déclaration des filtres</h2>
+			
+			<p>La déclaration d'un filtre Web auprès du conteneur se fait soit par
+			l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/annotation/WebFilter.html"><code><strong>@WebFilter</strong></code></a>
+			soit dans le fichier de déploiement <strong>web.xml</strong>.</p>
+			<p>Comme pour une Servlet, un filtre est associé à un ou plusieurs motifs d'URL (URL pattern) indiquant au conteneur
+			pour quelles requêtes HTTP le filtre doit être appelé.</p>
+
+			<figure>
+				<figcaption>Déclaration d'un filtre Web par annotation</figcaption>
+					<pre><code class="java">
+package fr.epsi;
+
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+
+@WebFilter({"/subpart/*", "/otherpart/*"})
+public class MyFilter implements Filter {
+
+  @Override
+  public void init(FilterConfig filterConfig) throws ServletException {
+    // ...
+  }
+
+  @Override
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+      throws IOException, ServletException {
+    // ...
+  }
+
+  @Override
+  public void destroy() {
+    // ...
+  }
+
+}
+
+</code></pre>
+			</figure>
+			
+			<p>Si l'<strong>on ne souhaite pas utiliser une annotation</strong>, il est également possible de déclarer un listener dans le fichier de déploiement web.xml grâce aux balises <code>filter</code> et <code>filter-mapping</code>.</p>
+
+			<figure>
+				<figcaption>Déclaration d'un filtre dans le fichier web.xml</figcaption>
+<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;web-app 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns="http://java.sun.com/xml/ns/javaee" 
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+  version="3.0"&gt;
+
+  &lt;filter&gt;
+  	&lt;filter-name&gt;MyFilter&lt;/filter-name&gt;
+  	&lt;filter-class&gt;fr.epsi.MyFilter&lt;/filter-class&gt;
+  &lt;/filter&gt;
+  
+  &lt;filter-mapping&gt;
+  	&lt;filter-name&gt;MyFilter&lt;/filter-name&gt;
+  	&lt;url-pattern&gt;/subpart/*&lt;/url-pattern&gt;
+  &lt;/filter-mapping&gt;
+
+  &lt;filter-mapping&gt;
+  	&lt;filter-name&gt;MyFilter&lt;/filter-name&gt;
+  	&lt;url-pattern&gt;/otherpart/*&lt;/url-pattern&gt;
+  &lt;/filter-mapping&gt;
+&lt;/web-app&gt;
+
+</code></pre>
+				</figure>
+				
+				<aside class="tip">
+					<p>Il est également possible de déclarer qu'un filtre doit être utilisé pour des requêtes traitées par des Servlets spécifiques plutôt que d'utiliser un modèle d'URL.</p>
+				</aside>
+			</section>
+				
+			<section>
+				<h2>Implémentation d'un filtre</h2>
+				
+				<p>L'opération de filtrage est réalisée par la méthode
+				<a href="http://docs.oracle.com/javaee/6/api/javax/servlet/Filter.html#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)">doFilter</a>.
+				</p>
+					
+				<figure>
+					<figcaption>Principe général d'implémentation d'un filtre</figcaption>
+						<pre><code class="java">
+  @Override
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+      throws IOException, ServletException {
+    // réaliser des opérations avant le traitement de la requête
+
+    // appeler l'élément suivant dans la chaîne de filtrage
+    chain.doFilter(request, response);
+
+    // réaliser des opérations après le traitement de la requête
+  }
+
+</code></pre>
+				</figure>
+
+				<p>Si plusieurs filtres doivent être déclenchés pour le traitement d'une requête, alors l'appel à <code>chain.doFilter(...)</code>
+				permet de passer au filtre suivant. Un fois le dernier filtre appelé, l'appel à <code>chain.doFilter(...)</code> passera
+				au traitement normal de la requête (Servlet, JSP ou ressource statique).</p>
+				
+				<aside>
+					<p>Il est recommandé d'implémenter des filtres de manière à ce qu'ils soient indépendants les uns des autres. En effet, si plusieurs filtres sont appelés
+					pour le traitement d'une requête, l'ordre dans lequel ces filtres seront appelés n'est pas prédictible s'ils ont été déclarés
+					avec l'annotation <code>@WebFilter</code>. En revanche, ils seront appelés dans l'ordre des balises <code>filter-mapping</code>
+					s'ils ont été déclarés à partir du fichier de déploiement <code>web.xml</code></p>
+				</aside>
+
+				<aside class="tip">
+					<p>Une implémentation de filtre peut très bien ne pas appeler <code>chain.doFilter(...)</code> et choisir de générer directement
+					une réponse.</p>
+				</aside>
+			</section>
+			
+			<section>
+				<h2>Cas d'utilisation de filtres</h2>
+				
+				<p>Deux exemples d'implémentation de filtres simples mais efficaces.</p>
+				
+				<h3>Gestion de l'UTF-8</h3>
+
+				<p>Un cas facilement compréhensible est celui d'une application Web qui poste les données de tous ses formulaires HTML
+				en UTF-8. Nous avons vu que par défaut, le conteneur Web utilise l'encodage ISO-8859-1 (Latin-1).
+				Il est donc nécessaire de positionner le bon encodage grâce à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#setCharacterEncoding(java.lang.String)"><code>ServletRequest.setCharacterEncoding(String)</code></a>.
+				Cette opération répétitive est source d'oubli (et donc de bug). Il serait préférable de garantir que cette méthode soit
+				systématiquement appelée avant chaque traitement de Servlet. Ce type de comportement peut très facilement être
+				implémenté au moyen d'un filtre Web.</p>
+
+				<figure>
+					<figcaption>Filtre UTF-8</figcaption>
+						<pre><code class="java">
+package fr.epsi;
+
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+
+@WebFilter("/*")
+public class Utf8RequestEncodingFilter implements Filter {
+
+  @Override
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+      throws IOException, ServletException {
+    request.setCharacterEncoding("UTF-8");
+    chain.doFilter(request, response);
+  }
+
+  @Override
+  public void init(FilterConfig filterConfig) throws ServletException {
+  }
+
+  @Override
+  public void destroy() {
+  }
+
+}
+
+</code></pre>
+				</figure>
+
+				<h3>Génération de log</h3>
+				
+				<p>Il peut être intéressant de garder une trace des paramètres HTTP reçus lors des tests ou pour des statistiques.
+				Le filtre ci-dessous écrit dans les logs du serveur le nom et la valeur de tous les paramètres reçus&nbsp;:</p>
+
+				<figure>
+					<figcaption>Filtre de log de paramètres</figcaption>
+						<pre><code class="java">
+package fr.epsi;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+
+@WebFilter("/*")
+public class LogFilter implements Filter {
+
+  @Override
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+      throws IOException, ServletException {
+    request.getServletContext().log("parameters received: " + parametersToString(request));
+    chain.doFilter(request, response);
+  }
+
+  private List&lt;String&gt; parametersToString(ServletRequest request) {
+    List&lt;String&gt; parameters = new ArrayList&lt;&gt;();
+    request.getParameterMap().forEach((k, v) -> parameters.add(k + "=" + Arrays.toString(v)));
+    return parameters;
+  }
+
+  @Override
+  public void init(FilterConfig filterConfig) throws ServletException {
+  }
+
+  @Override
+  public void destroy() {
+  }
+
+}
+
+</code></pre>
+				</figure>
+				
+				<aside>
+					<p>L'utilisation conjointe des deux filtres ci-dessus peut poser problème.
+					En effet, la méthode <code>request.setCharacterEncoding(...)</code> dans la classe
+					<code>Utf8RequestEncodingFilter</code> doit être appelée avant que les paramètres de la requête ne soient accédés.
+					Le filtre <code>Utf8RequestEncodingFilter</code> doit donc être placé <strong>avant</strong> le filtre <code>LogFilter</code>.
+					Malheureusement, cela ne peut pas être garanti par l'utilisation de l'annotation <code>@WebFilter</code>.</p>
+				</aside>
+
+				<p>On peut imaginer des traitements bien plus complexes grâce aux filtres&nbsp;: contrôle
+				des droits d'accès (autorisation), optimisation d'image, chiffrement des données...</p>
+			</section>
+	</article>
+	
+	<article class="exercice note">
+		<h2>Exercice&nbsp;: nombre de personnes connectées</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Rependre l'application avec le formulaire d'adhésion du chapitre précédent et ajouter
+			la fonctionnalité suivante&nbsp;: en bas de chaque page affichée par l'application, on doit
+			lire "Actuellement X personnes accèdent à ce site". Ce nombre sera basé sur le nombre
+			de sessions HTTP valides au moment de l'affichage de la page. 
+			
+			<aside>
+				<p>Vous pouvez régler le nombre de minutes d'inactivité avant qu'une session HTTP soit
+				invalidée par le serveur. Pour cela, utiliser la balise <code>session-config</code>
+				dans le fichier de déploiement <code>web.xml</code>&nbsp;:</p>
+<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;web-app 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns="http://java.sun.com/xml/ns/javaee" 
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+  version="3.0"&gt;
+
+  &lt;session-config&gt;
+    &lt;session-timeout&gt;2&lt;/session-timeout&gt;
+  &lt;/session-config&gt;
+&lt;/web-app&gt;
+
+</code></pre>
+			</aside>
+			
+			<aside class="tip">
+				Le nombre de sessions sera certainement une information globale à l'ensemble de l'application.
+			</aside>
+		</dl>
+	
+	</article>
+
+	<article class="exercice note">
+		<h2>Exercice&nbsp;: filtre par adresse IP</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Rependre l'application avec le formulaire d'adhésion du chapitre précédent et ajouter
+			la fonctionnalité suivante&nbsp;: l'application Web ne doit être disponible que pour un
+			nombre limité d'adresses IP client (principe de la liste blanche). Si un client avec une
+			adresse IP non autorisée tente de se connecter à l'application Web, il doit recevoir
+			comme réponse une erreur HTTP 403 (Forbidden) à toutes ses requêtes.
+			
+			<p><strong>La liste des adresses IP autorisées doit être configurable à partir du fichier 
+			de déploiement <code>web.xml</code></strong>.</p> 
+		</dl>
+	
 	</article>
 
 	<footer class="license">

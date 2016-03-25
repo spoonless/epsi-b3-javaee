@@ -643,19 +643,19 @@ ${not empty maliste ? maliste[0] : "liste vide"}
   &lt;body&gt;
     &lt;!-- c:if n'autorise pas le else --&gt;
     &lt;c:if test="${param['age'] lt 18}"&gt;
-      Vous être mineur !
+      Vous êtes mineur !
     &lt;/c:if&gt;
     &lt;c:if test="${param['age'] ge 18}"&gt;
-      Vous être majeur !
+      Vous êtes majeur !
     &lt;/c:if&gt;
 
     &lt;!-- c:choose permet de spécifier autant de c:when que l'on souhaite --&gt;
     &lt;c:choose&gt;
       &lt;c:when test="${param['age'] lt 18}"&gt;
-        Vous être mineur !
+        Vous êtes mineur !
       &lt;/c:when&gt;
       &lt;c:otherwise&gt;
-        Vous être majeur !
+        Vous êtes majeur !
       &lt;/c:otherwise&gt;
     &lt;/c:choose&gt;
   &lt;/body&gt;

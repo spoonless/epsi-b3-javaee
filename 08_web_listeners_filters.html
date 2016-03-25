@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Listeners et filtres Web</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet" media="screen">
+	<link href="css/print-article.css" rel="stylesheet" media="print">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<script src="js/toc.js"></script>
+</head>
+<body>
+	<div id="titleBar">
+		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
+ 		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>
+		<script>document.write(document.title)</script> - EPSI B3 2015/2016 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a>
+		<span class="license"><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/fr/80x15.png" /></a></span>
+	</div>
+
+	<header></header>
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		<section id="toc"></section>
+		<section>
+			<p>Les servlets ne sont pas les seuls composants gérés par le conteneur Web, ce dernier a également la responsabilité
+			de gérer le cycle de vie des <strong>listeners</strong> et des <strong>filtres</strong> Web.</p>
+		</section>
+		
+		<section>
+			<h2>Les listeners Web</h2>
+			<p>Un listener (écouteur) est un terme couramment utilisé en Java pour désigner un objet qui sera notifié lors
+			d'une modification de son environnement. Dans les patrons de conception (Design Patterns) Objet, on
+			l'appelle plus généralement <a href="http://fr.wikipedia.org/wiki/Observateur_%28patron_de_conception%29">Observateur</a>.</p>
+			<p>Pour le conteneur Web Java EE, un listener designe une classe qui implémente une des interfaces définies dans l'API servlet.<p>
+			<p>Le principe d'utilisation est le même pour tous les types de listeners Web. Si l'application souhaite être avertie d'un événement
+			particulier survenant pour un <code>ServletContext</code> (c'est-à-dire pour l'ensemble de l'application Web), une requête ou une session HTTP
+			alors elle doit fournir une implémentation d'un listener. Une méthode de ce dernier sera appelée par le conteneur à chaque fois que l'événement concerné surviendra
+			lors de la vie de l'application.</p>
+			
+			<p>Les différents types de listeners sont représentés dans l'API Servlet par les <strong>interfaces</strong> Java suivantes&nbsp;:</p>
+			
+			<dl>
+				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContextListener.html">javax.servlet.ServletContextListener</a></dt>
+				<dd>Permet d'écouter les changements d'état du <code>ServletContext</code>. Le conteneur Web avertit l'application de la création du <code>ServletContext</code>
+				grâce à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContextListener.html#contextInitialized(javax.servlet.ServletContextEvent)">
+				<code>contextInitialized</code></a> et de la destruction du <code>ServletContext</code> grâce à la méthode 
+				<a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContextListener.html#contextDestroyed(javax.servlet.ServletContextEvent)"><code>contextDestroyed</code></a>.
+				<aside>
+				Il est important de comprendre que le <code>ServletContext</code> représente l'application Web. 
+				Donc un <code>ServletContextListener</code> est un moyen
+				de réaliser des traitements au moment du lancement de l'application Web et/ou au moment de son arrêt.
+				</aside>
+				</dd>
+
+				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContextAttributeListener.html">javax.servlet.ServletContextAttributeListener</a></dt>
+				<dd>Permet d'écouter les changements d'état des attributs stockés dans le <code>ServletContext</code> (les attributs de portée application).
+				Le conteneur avertit l'application de l'ajout d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContextAttributeListener.html#attributeAdded(javax.servlet.ServletContextAttributeEvent)"><code>attributeAdded</code></a>),
+				de la suppression d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContextAttributeListener.html#attributeRemoved(javax.servlet.ServletContextAttributeEvent)"><code>attributeRemoved</code></a>)
+				et de la modification d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContextAttributeListener.html#attributeReplaced(javax.servlet.ServletContextAttributeEvent)"><code>attributeReplaced</code></a>).</dd>
+
+				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequestListener.html">javax.servlet.ServletRequestListener</a></dt>
+				<dd>Permet d'écouter l'entrée et/ou la sortie d'une requête de l'environnement de l'application Web.
+				Le conteneur avertit l'application de l'entrée d'une requête à traiter grâce à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequestListener.html#requestInitialized(javax.servlet.ServletRequestEvent)"><code>requestInitialized</code></a>
+				et de la sortie de la requête grâce à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequestListener.html#requestDestroyed(javax.servlet.ServletRequestEvent)"><code>requestDestroyed</code></a>.
+				</dd>
+
+				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequestAttributeListener.html">javax.servlet.ServletRequestAttributeListener</a></dt>
+				<dd>Permet d'écouter les changements d'état des attributs stockés dans la <code>HttpServletRequest</code> (les attributs de portée requête).
+				Le conteneur avertit l'application de l'ajout d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequestAttributeListener.html#attributeAdded(javax.servlet.ServletRequestAttributeEvent)"><code>attributeAdded</code></a>),
+				de la suppression d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequestAttributeListener.html#attributeRemoved(javax.servlet.ServletRequestAttributeEvent)"><code>attributeRemoved</code></a>)
+				et de la modification d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequestAttributeListener.html#attributeReplaced(javax.servlet.ServletRequestAttributeEvent)"><code>attributeReplaced</code></a>).</dd>
+
+				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionListener.html">javax.servlet.http.HttpSessionListener</a></dt>
+				<dd>Permet d'écouter la création et la suppression d'une <code>HttpSession</code>.
+				Le conteneur avertit l'application de la création d'une session grâce à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionListener.html#sessionCreated(javax.servlet.http.HttpSessionEvent)"><code>sessionCreated</code></a>
+				et de la suppression d'une session grâce à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionListener.html#sessionDestroyed(javax.servlet.http.HttpSessionEvent)"><code>sessionDestroyed</code></a>.
+				La suppression d'une session signifie que soit elle a été invalidée par l'application elle-même grâce à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSession.html#invalidate()">HttpSession.invalidate()</a>
+				soit elle est arrivée à expiration et le conteneur a décidé de l'invalider.
+				</dd>
+
+				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionAttributeListener.html">javax.servlet.http.HttpSessionAttributeListener</a></dt>
+				<dd>Permet d'écouter les changements d'état des attributs stockés dans la <code>HttpSession</code> (les attributs de portée session).
+				Le conteneur avertit l'application de l'ajout d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionAttributeListener.html#attributeAdded(javax.servlet.http.HttpSessionBindingEvent)"><code>attributeAdded</code></a>),
+				de la suppression d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionAttributeListener.html#attributeRemoved(javax.servlet.http.HttpSessionBindingEvent)"><code>attributeRemoved</code></a>)
+				et de la modification d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionAttributeListener.html#attributeReplaced(javax.servlet.http.HttpSessionBindingEvent)"><code>attributeReplaced</code></a>).</dd>
+			</dl>
+			<aside>
+				<p>Il existe également deux autres listeners Web&nbsp;: Le <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionActivationListener.html">HttpSessionActivationListener</a>
+				et le <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionBindingListener.html">HttpSessionBindingListener</a>. Ils ne sont pas décrits ici car
+				ils sont réservés à des usages plus avancés de l'API Servlet.</p>
+			</aside>
+		</section>
+		<section>
+			<h2>Déclaration des listeners Web</h2>
+			<p>Une classe implémentant une ou plusieurs interfaces la désignant comme un listener Web doit également être déclarée auprès du conteneur Web.
+			Pour cela, il suffit d'ajouter l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/annotation/WebListener.html">@WebListener</a>
+			à la classe&nbsp;:</p>
+			
+			<figure>
+				<figcaption>Exemple de <code>ServletRequestListener</code></figcaption>
+					<pre><code class="java">
+package fr.epsi;
+
+import javax.servlet.ServletRequestEvent;
+import javax.servlet.ServletRequestListener;
+import javax.servlet.annotation.WebListener;
+
+@WebListener
+public class MyServletRequestListener implements ServletRequestListener {
+
+  @Override
+  public void requestInitialized(ServletRequestEvent sre) {
+    // ...
+  }
+
+  @Override
+  public void requestDestroyed(ServletRequestEvent sre) {
+    // ...
+  }
+}
+
+</code></pre>
+			</figure>
+			
+			<p>Si l'<strong>on ne souhaite pas utiliser une annotation</strong>, il est également possible de déclarer
+			un listener dans le fichier de déploiement <code>web.xml</code> grâce à la balise <code>listener</code>.</p>
+
+			<figure>
+				<figcaption>Déclaration d'un listener dans le fichier web.xml</figcaption>
+<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;web-app 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns="http://java.sun.com/xml/ns/javaee" 
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+  version="3.0"&gt;
+
+  &lt;listener&gt;
+  	&lt;listener-class&gt;fr.epsi.MyServletRequestListener&lt;/listener-class&gt;
+  &lt;/listener&gt;
+
+&lt;/web-app&gt;
+
+</code></pre>
+			</figure>
+
+		</section>
+		
+		<section>
+			<h2>Exemple d'utilisation d'un listener</h2>
+			
+			<p>L'exemple (simple) ci-dessous consiste en un <code>ServletConfigListener</code> dont le rôle
+			est de réaliser un log applicatif signalant respectivement le lancement et l'arrêt
+			de l'application Web&nbsp;:</p>
+
+			<figure>
+				<figcaption>Exemple de <code>ServletRequestListener</code></figcaption>
+					<pre><code class="java">
+package fr.epsi;
+
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
+
+@WebListener
+public class LoggingListener implements ServletContextListener {
+  @Override
+  public void contextInitialized(ServletContextEvent sce) {
+    sce.getServletContext().log("## Lancement de l'application ##");
+  }
+
+  @Override
+  public void contextDestroyed(ServletContextEvent sce) {
+    sce.getServletContext().log("## Arrêt de l'application ##");
+  }
+}
+
+</code></pre>
+			</figure>
+		</section>
+		
+		<section>
+			<h2>Les filtres de Servlet</h2>
+			
+			<p>Il est parfois intéressant d'effectuer des opérations avant et/ou après l'invocation de la servlet.
+			Il s'agit souvent d'opérations communes à un ensemble de requêtes possibles dans l'application.</p>
+			<p>Un cas facilement compréhensible est celui d'une application Web qui réalisent tous ces échanges
+			en UTF-8. Nous avons vu que par défaut, le containeur Web utilise l'encodage ISO-8859-1 (Latin-1).
+			Il est donc nécessaire de positionner le bon encodage grâce à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#setCharacterEncoding(java.lang.String)"><code>ServletRequest.setCharacterEncoding(String)</code></a>.
+			Cette opération répétitive est source d'oubli (et donc de bug). Il serait préférable de garantir que cette méthode serait
+			systématiquement appelé avant chaque traitement de Servlet. Ce type de comportement peut très facilement être
+			implémenté au moyen d'un filtre Web.</p>
+			
+			<p>Un filtre de Servlet est une classe implémentant l'interface <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/Filter.html">Filter</a>.
+			</p>
+		</section>
+	</article>
+
+	<footer class="license">
+		<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/fr/88x31.png" /></a><br />Cette œuvre est mise à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/fr/">Licence Creative Commons Attribution -  Partage dans les Mêmes Conditions 3.0 France</a>.
+	</footer>
+</body>
+</html>

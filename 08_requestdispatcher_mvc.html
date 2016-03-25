@@ -52,7 +52,7 @@
 				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContext.html#getNamedDispatcher%28java.lang.String%29">getNamedDispatcher(String name)</a></dt>
 				<dd>Permet de récupérer une instance de RequestDispatcher pour transferer le traitement à la servlet dont le nom est passé en paramètre
 					<pre><code class="java">
-  RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("maServlet");
+  RequestDispatcher dispatcher = getServletContext().getNamedDispatcher("maServlet");
 
 </code></pre>
 					<p>Une servlet peut être nommée dans le fichier web.xml grâce à la balise &lt;servlet-name&gt; ou avec

@@ -93,7 +93,7 @@
 &lt;dependency&gt;
   &lt;groupId&gt;mysql&lt;/groupId&gt;
   &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-  &lt;version&gt;5.1.30&lt;/version&gt;
+  &lt;version&gt;5.1.38&lt;/version&gt;
 &lt;/dependency&gt;
 
 </code></pre>
@@ -758,43 +758,38 @@ public class MyServlet extends HttpServlet {
 		<dl>
 			<dt>Objectif</dt>
 			<dd>
-				<p>Créer une application Web permettant d'effectuer les opérations suivantes&nbsp;:</p>
+				<p>Reprendre l'application du <a href="08_requestdispatcher_mvc.html#exo_formulaire_mvc">formulaire d'adhésion</a> et ajouter le support d'une base de données MySQL.</p>
+				<p>Vous devez ajouter les fonctionnalités suivantes&nbsp;:</p>
 				<ul>
-					<li>Créer un individu</li>
-					<li>Consulter la liste des individus créés</li>
-					<li>Supprimer un individu</li>
+					<li>La page du formulaire d'adhésion doit également afficher la liste des utilisateurs déjà inscrits&nbsp;: email et site Web (si disponible)</li>
+					<li>Il doit être possible de supprimer un utilisateur en cliquant sur un bouton de suppression sur sa ligne</li>
+					<li>Après une adhésion réussie, l'utilisateur doit apparaître dans la liste des inscrits&nbsp;: email et site Web (si disponible)</li>
 				</ul>
-				<p>Les individus seront définis par&nbsp;:</p>
-				<ul>
-					<li>Un identifiant numérique (choisi par l'application)</li>
-					<li>Un nom</li>
-					<li>Une date de naissance</li>
-				</ul>
-				<p>&Agrave; la création, le nouvel individu est stocké dans une base de données.</p>
+				<aside>
+					<p>Il n'est pas demandé de gérer d'éventuels problèmes de doublon. Il peut être possible d'avoir deux utilisateurs avec un email identique.</p>
+				</aside>
 			</dd>
 
-			<dt>Réalisation</dt>
+			<dt>Script SQL</dt>
 			<dd>
-				<p>Ne consommez pas trop de temps sur la conception de l'interface Web. 
-				Une seule page présentant un formulaire d'ajout d'un individu et la liste des individus existants sera suffisante.</p>
-				<p>Pour une base de données MySQL, le script de création de la table Individu sera&nbsp;:</p>
+				<p>Pour la base de données MySQL, le script de création de la table Adherent sera&nbsp;:</p>
 				<figure>
 					<figcaption>Script MySQL de création de la table Individu</figcaption>
 					<pre><code class="sql">
-CREATE TABLE IF NOT EXISTS Individu (
+CREATE TABLE IF NOT EXISTS Adherent (
   id int(11) NOT NULL AUTO_INCREMENT,
-  nom varchar(200) NOT NULL,
-  dateNaissance date NOT NULL,
+  email varchar(200) NOT NULL,
+  motDePasse varchar(200) NOT NULL,
+  siteWeb varchar(200),
+  dateAdhesion date NOT NULL,
   PRIMARY KEY (id)
 ) engine=innodb;
         			</code></pre>
 				</figure>
-				 
 			<dd>
-
-			<dt>Modèle Maven du projet à télécharger</dt>
-			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a> (pensez à <a href="#pilote_jdbc">déclarer la dépendance</a> vers le pilote JDBC dans le fichier pom.xml)</dd>
-
+			<dt>Mise en place du projet</dt>
+			<dd>Vous pouvez repartir de votre projet sur le <a href="08_requestdispatcher_mvc.html#exo_formulaire_mvc">formulaire d'adhésion</a> ou utiliser la correction fournie.</dd>
+			
 			<dt>Intégration du projet dans Eclipse</dt>
 			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
 		</dl>

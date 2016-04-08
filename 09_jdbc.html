@@ -761,12 +761,22 @@ public class MyServlet extends HttpServlet {
 				<p>Reprendre l'application du <a href="08_requestdispatcher_mvc.html#exo_formulaire_mvc">formulaire d'adhésion</a> et ajouter le support d'une base de données MySQL.</p>
 				<p>Vous devez ajouter les fonctionnalités suivantes&nbsp;:</p>
 				<ul>
+					<li>Après une adhésion réussie, l'adhésion doit être insérée en base de données.</li>
 					<li>La page du formulaire d'adhésion doit également afficher la liste des utilisateurs déjà inscrits&nbsp;: email et site Web (si disponible)</li>
-					<li>Il doit être possible de supprimer un utilisateur en cliquant sur un bouton de suppression sur sa ligne</li>
-					<li>Après une adhésion réussie, l'utilisateur doit apparaître dans la liste des inscrits&nbsp;: email et site Web (si disponible)</li>
 				</ul>
 				<aside>
 					<p>Il n'est pas demandé de gérer d'éventuels problèmes de doublon. Il peut être possible d'avoir deux utilisateurs avec un email identique.</p>
+				</aside>
+				
+				<aside class="tip">
+					<p>Vous pouvez simplement commencer par valider la configuration de votre connection à la base de données. Essayer d'exécuter une requête simple
+					dans votre application Web comme&nbsp;:</p>
+					<pre><code class="sql">
+select 1
+
+</code></pre>
+					<p>Et écrivez le résultat sur la sortie standard de votre serveur (disponible dans le panneau "Console" d'Eclipse.</p>
+					
 				</aside>
 			</dd>
 

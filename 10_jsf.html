@@ -830,7 +830,7 @@ public class BooleanValidator implements Validator {
   public void validate(FacesContext ctx, UIComponent uiComponent, Object value) 
       throws ValidatorException {
     // Puisque ce validateur est utilisé avec un h:selectBooleanCheckbox, 
-    // on s'attent à ce que value soit de type Boolean
+    // on s'attend à ce que value soit de type Boolean.
     if (! Boolean.TRUE.equals(value)) {
       // Si la valeur n'est pas true, le validateur signale une ValidatorException.
       // Le message d'erreur du validateur est directement extrait de l'attribut

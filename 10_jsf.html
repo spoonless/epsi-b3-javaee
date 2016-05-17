@@ -756,6 +756,95 @@ public class PersonneControleur {
 				<p>Il est également possible de redéfinir les messages par défaut de JSF pour les adapter
 				à son application. Pour plus d'information, vous pouvez vous reporter à ce <a href="http://www.mkyong.com/jsf2/customize-validation-error-message-in-jsf-2-0/">post</a>.</p>
 			</aside>
+			
+			<p>Il est également possible de fournir sa propre implémentation d'un validateur. Pour cela, il suffit de créer une classe qui implémente l'interface 
+			<a href="http://docs.oracle.com/javaee/6/api/javax/faces/validator/Validator.html"><code>javax.faces.validator.Validator</code></a>.
+			Cette interface ne contient la déclaration que d'une seule méthode&nbsp;:</p>
+			
+			<figure>
+				<pre><code class="java">
+  void validate(FacesContext context, UIComponent component, Object value) 
+     throws ValidatorException
+
+</code></pre>
+			</figure>
+			<p>La validation échoue si un appel à cette méthode lance une <a href="http://docs.oracle.com/javaee/6/api/javax/faces/validator/ValidatorException.html"><code>ValidatorException</code></a>. 
+			Le premier paramètre représente le contexte d'exécution JSF, le deuxième paramètre représente le composant graphique pour lequel la validation a été demandée.
+			Par exemple, pour un champ de formulaire de type <code>input</code>, ce composant sera une instance de 
+			<a href="http://docs.oracle.com/javaee/6/api/javax/faces/component/UIInput.html"><code>UIInput</code></a>
+			qui hérite de <a href="http://docs.oracle.com/javaee/6/api/javax/faces/component/UIComponent.html"><code>UIComponent</code></a>. 
+			Enfin le troisième paramètre représente la valeur qui doit être validée. Selon le type de composant, cette valeur peut être de type String, Boolean...</p>
+			
+			<p>La classe du validateur doit également porter l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/faces/validator/FacesValidator.html"><code>@FacesValidator</code></a> indiquant le
+			nom du validateur qui sera utilisé pour le référencer dans les facelets.</p>
+			
+			<p>L'exemple ci-dessous montre un exemple de validateur permettant de s'assurer qu'une case à cocher (checkbox) a bien été cochée par l'utilisateur.</p>
+
+			<figure>
+				<figcaption>Exemple de facelet utilisant un validateur booleanValidator fourni par l'application</figcaption>
+				<pre><code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!DOCTYPE html PUBLIC 
+          "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" &gt;
+&lt;h:head&gt;
+  &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;/h:head&gt;
+&lt;h:body&gt;
+  &lt;h:form acceptcharset="UTF-8" &gt;
+    &lt;h:selectBooleanCheckbox id="myCheckbox" validatorMessage="Vous devez cocher la case"&gt;
+      &lt;f:validator validatorId="booleanValidator"/&gt;
+    &lt;/h:selectBooleanCheckbox&gt;
+    &lt;h:outputLabel for="myCheckbox" value="case à cocher" /&gt;
+    &lt;h:message styleClass="error" for="myCheckbox"/&gt;&lt;br/&gt;
+
+    &lt;h:commandButton action="#{controleur.doSomething()}" value="Go" /&gt;
+  &lt;/h:form&gt;
+&lt;/h:body&gt;
+&lt;/html&gt;
+
+</code></pre>
+			</figure>
+
+			<figure>
+				<figcaption>L'implémentation de booleanValidator qui vérifie que la valeur vaut true (et donc que la case a été cochée).</figcaption>
+				<pre><code class="java">
+package fr.epsi;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.FacesValidator;
+import javax.faces.validator.Validator;
+import javax.faces.validator.ValidatorException;
+
+// L'annotation ci-dessous permet de déclarer le nom du validateur pour JSF
+@FacesValidator("booleanValidator")
+public class BooleanValidator implements Validator {
+
+  @Override
+  public void validate(FacesContext ctx, UIComponent uiComponent, Object value) 
+      throws ValidatorException {
+    // Puisque ce validateur est utilisé avec un h:selectBooleanCheckbox, 
+    // on s'attent à ce que value soit de type Boolean
+    if (! Boolean.TRUE.equals(value)) {
+      // Si la valeur n'est pas true, le validateur signale une ValidatorException.
+      // Le message d'erreur du validateur est directement extrait de l'attribut
+      // validatorMessage du composant dans la facelet.
+      UIInput uiInput = (UIInput) uiComponent;
+      throw new ValidatorException(new FacesMessage(uiInput.getValidatorMessage()));
+    }
+  }
+
+}
+
+</code></pre>
+			</figure>
+
 		</section>
 		<section>
 			<h2 id="bean_validation">La validation avec <em>Bean Validation</em></h2>

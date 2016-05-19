@@ -836,14 +836,14 @@ public class MyServlet extends HttpServlet {
 		<dl>
 			<dt>Objectif</dt>
 			<dd>
-				<p>Faire évoluer l'application Web de gestion des individus afin d'intégrer les technologies EJB et JPA.</p>
+				<p>Faire évoluer l'application Web de gestion des adhésions afin d'intégrer les technologies EJB et JPA.</p>
 			</dd>
 
 			<dt>Réalisation</dt>
 			<dd>
-				<p>Reprenez soit l'application réalisée avec les Servlets/JDBC soit l'application réalisée avec JSF/JDBC.</p>
+				<p>Reprenez soit l'application réalisée avec les Servlets/JSP/JDBC soit l'application réalisée avec JSF/JDBC.</p>
 				<ul>
-					<li>Remplacez JDBC par l'utilisation de JPA en définissant la classe <code>Individu</code> comme une entité.</li>
+					<li>Remplacez JDBC par l'utilisation de JPA en définissant la classe <code>Subscription</code> comme une entité.</li>
 					<li>Utilisez la technologie EJB pour gérer la démarcation transactionnelle.</li>
 				</ul>
 
@@ -854,8 +854,8 @@ public class MyServlet extends HttpServlet {
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;tomee&gt;
 &lt;Resource id="epsiDatabase" type="javax.sql.DataSource"&gt;
-  JdbcDriver com.mysql.jdbc.Driver
-  JdbcUrl jdbc:mysql://localhost:3306/epsi
+  JdbcDriver com.mysql.jdbc.Driverindividus
+  JdbcUrl jdbc:mysql://localhost:3306/adhesion
   UserName root
   Password root
   JtaManaged true
@@ -865,7 +865,7 @@ public class MyServlet extends HttpServlet {
 				</figure>
 				
 				<aside>
-					<p>Pour recupérer la liste complète des individus, vous aurez besoin de réaliser une requête SQL ou JPQL. 
+					<p>Pour recupérer la liste complète des adhésions, vous aurez besoin de réaliser une requête SQL ou JPQL. 
 					L'exécution des requêtes dans JPA est abordée dans <a href="12_jpa_part2.html#jpql">la partie 2 du cours</a>.
 					En lisant attentivement cette section du cours, vous y trouverez le bout de code qui vous est nécessaire...</p>
 				</aside>

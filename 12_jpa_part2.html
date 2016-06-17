@@ -747,6 +747,63 @@ public class Individu {
 		</section>
 	</article>
 
+	<article class="exercice note">
+		<h2>Exercice à rendre&nbsp;: Application de gestion des adhérents avec des adresses</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>
+				<p>Ajouter le code manquant pour finaliser les nouvelles fonctionnalités de l'application de gestion des adhérents.</p>
+				<p>Dans cette nouvelle version, <strong>chaque adhérent peut avoir entre 0 et N adresses</strong>. Une adresse se caractérise par une rue, un code postal et une ville.</p>
+				<p>Les fonctionnalités suivantes sont en cours d'implémentation&nbsp;:</p>
+				<ul>
+					<li>Suppression d'une adhésion à partir de la liste des adhésions</li>
+					<li>Mise à jour des informations d'une adhésion (email et site Web) à partir de son écran d'édition</li>
+					<li>Affichage de la liste des adresses à partir d'un écran d'édition d'une adhésion</li>
+					<li>Ajout d'une adresse à partir d'un écran d'édition d'une adhésion</li>
+				</ul>
+				<p>L'application Web est réalisée avec JSF. Cependant, il manque des parties de code liées à la persistance. 
+				Le schéma de base de données pour MySQL est décrit ci-dessous&nbsp;:</p>
+				<figure>
+					<figcaption>Le schéma de base de données MySQL</figcaption>
+					<pre><code class="sql">
+CREATE DATABASE adhesion;
+
+CREATE TABLE IF NOT EXISTS adhesion.Adherent (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  email varchar(200) NOT NULL,
+  motDePasse varchar(200) NOT NULL,
+  siteWeb varchar(200),
+  dateAdhesion date NOT NULL,
+  PRIMARY KEY (id)
+) engine=innodb;
+
+CREATE TABLE IF NOT EXISTS adhesion.Adresse (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  rue varchar(200) NOT NULL,
+  codePostal varchar(20) NOT NULL,
+  ville varchar(200),
+  adhesionId int(11) NOT NULL,
+  CONSTRAINT FOREIGN KEY (adhesionId) REFERENCES adhesion.Adherent(id),
+  PRIMARY KEY (id)
+) engine=innodb;
+        			</code></pre>
+				</figure>
+				
+				<aside class="tip">
+					N'oubliez pas de vous assurer que le fichier <code>src/main/webapp/WEB-INF/resources.xml</code> définit correctement
+					l'accès à votre base de données MySQL.
+				</aside>
+			<dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd>Vous devez partir du projet <strong><a href="assets/templates/adhesion-webapp-jpa-template.zip">adhesion-webapp-jpa-template.zip</a></strong> afin
+			de finaliser le développement. Le code contient des <strong>TODO</strong> qui indiquent les parties manquantes dans l'application.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
+
 	<footer class="license">
 		<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/fr/88x31.png" /></a><br />Cette œuvre est mise à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/fr/">Licence Creative Commons Attribution -  Partage dans les Mêmes Conditions 3.0 France</a>.
 	</footer>

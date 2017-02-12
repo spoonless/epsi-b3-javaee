@@ -73,11 +73,11 @@ h5 {
 
 aside {
     border: 1em solid #6699CC;
-    border-width: 0.1em 0.1em 0.1em 0.8em; 
+    border-width: 0.1em 0.1em 0.1em 0.8em;
     margin-top: 1em;
     clear: both;
     overflow: hidden;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     padding: 1em 1em 1em 1em;
     font-size: 90%;
 }
@@ -129,9 +129,9 @@ tbody td {
 code.hljs {
     font-size: 70%;
     font-family: monospace;
-	border-radius: 10px;
+	/*border-radius: 10px;*/
     border-left: 1em solid #A8A8A8;
-    border-width: 0.1em 0.1em 0.1em 0.8em; 
+    border-width: 0.1em 0.1em 0.1em 0.8em;
 }
 
 section#toc {

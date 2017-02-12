@@ -46,7 +46,7 @@ body > header {
 	padding-left: 2em;
 	padding-top:2em;
 	padding-bottom:2em;
-	box-shadow: -1px 2px 5px 1px rgba(100, 100, 100, 0.7);
+	/*box-shadow: -1px 2px 5px 1px rgba(100, 100, 100, 0.7);*/
 	background-image: url('title-pattern.png');
 }
 
@@ -69,9 +69,9 @@ article {
 	text-align: justify;
 	background: white;
 	padding: 2em;
-	box-shadow: -1px 2px 5px 1px rgba(100, 100, 100, 0.7);
+	/*box-shadow: -1px 2px 5px 1px rgba(100, 100, 100, 0.7);*/
 	margin-top: 0px;
-	margin-bottom: 6em;
+	margin-bottom: 3em;
 }
 
 footer.license {
@@ -107,7 +107,7 @@ h1 {
 }
 
 h2 {
-	margin-top: 2em;
+	margin-top: 1em;
 	font-size: 250%;
 }
 
@@ -126,15 +126,15 @@ h5 {
 aside {
     background: rgb(243, 243, 243);
     border: 1em solid #6699CC;
-    border-width: 0.1em 0.1em 0.1em 0.8em; 
+    border-width: 0.1em 0.1em 0.1em 0.8em;
     margin-top: 1em;
     clear: both;
     overflow: hidden;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     padding: 1em 1em 1em 1em;
     font-size: 90%;
     margin-left:1em;
-	box-shadow: -1px 2px 5px 1px rgba(100, 100, 100, 0.7);
+	/*box-shadow: -1px 2px 5px 1px rgba(100, 100, 100, 0.7);*/
 }
 
 aside>header {
@@ -159,7 +159,7 @@ dt {
 }
 
 ul>li {
-	list-style: url("bullet_blue.png");
+	list-style: square;
 }
 
 
@@ -193,10 +193,10 @@ tbody tr:nth-child(even) {
 
 code.hljs {
     font-size: 90%;
-	border-radius: 10px;
+	/*border-radius: 10px;*/
     border-left: 1em solid #A8A8A8;
-    border-width: 0.1em 0.1em 0.1em 0.8em; 
-    margin-left:1em;
+    border-width: 0.1em 0.1em 0.1em 0.8em;
+		margin-left:1em;
 }
 
 section#toc {

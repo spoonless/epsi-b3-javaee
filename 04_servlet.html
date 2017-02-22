@@ -226,66 +226,16 @@ public class HelloServlet extends HttpServlet {
 			<pre><code class="java">// Toutes les URL commençant par /hello/
 @WebServlet("/hello/*")</code></pre>
 		</section>
-	</article>
-	
-	<article class="exercice note">
-		<h2>Exercice à rendre&nbsp;: Servlet de temps</h2>
-		<dl>
-			<dt>Objectif</dt>
-			<dd>Réaliser une application qui retourne une page web affichant la date et l'heure du serveur.
-			La page Web de résultat sera générée par une servlet.</dd>
 
-			<dt>Modèle Maven du projet à télécharger</dt>
-			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a></dd>
-
-			<dt>Mise en place du projet</dt>
-			<dd>&Eacute;diter le fichier pom.xml du template et modifier la balise artifactId pour spécifier le nom de votre projet.
-			Modifier ensuite la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
-
-			<dt>Intégration du projet dans Eclipse</dt>
-			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
-		</dl>
-		<aside class="tip">
-			Pour afficher la date et l'heure du serveur, vous aurez besoin de représenter une
-			date sous la forme d'une chaîne de caractères. 
-			Pour cela, la classe <a href="http://docs.oracle.com/javase/8/docs/api/java/text/DateFormat.html">java.text.DateFormat</a>
-			fournie par l'API Java vous sera très utile.
-		</aside>
-	</article>
-
-	<article class="exercice note">
-		<h2>Exercice à rendre&nbsp;: traitement d'un formulaire</h2>
-		<dl>
-			<dt>Objectif</dt>
-			<dd>Réaliser une application Web qui fournit une page d'accueil présentant un formulaire Web.
-			Le formulaire permet de saisir un nom de site et une URL et de soumettre les données au serveur par une méthode HTTP POST.
-			Le serveur doit répondre une page Web générée par une servlet qui affiche les données envoyées.</dd>
-
-			<dt>Modèle Maven du projet à télécharger</dt>
-			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a></dd>
-
-			<dt>Mise en place du projet</dt>
-			<dd>&Eacute;diter le fichier pom.xml du template et modifier la balise artifactId pour spécifier le nom de votre projet.
-			Modifier ensuite la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
-
-			<dt>Intégration du projet dans Eclipse</dt>
-			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
-
-			<dt>Remarque</dt>
-			<dd>Si vous le désirez, vous pouvez réaliser cet exercice dans le même projet que l'exercice précédent.</dd>
-		</dl>
-	</article>
-
-	<article>
-		<h2>Utilisation du fichier de déploiement web.xml</h2>
 		<section>
+			<h2>Utilisation du fichier de déploiement web.xml</h2>
 			<p>Nous avons vu que l'annotation <code>@WebServlet</code> permet d'indiquer comment une servlet doit être déployée dans le serveur. S'il préfère, 
 			le développeur a la possibilité	de spécifier ces informations dans le fichier de déploiement <strong>web.xml</strong> plutôt que d'utiliser une annotation.</p>
-		</section>
-		<aside>Les annotations n'ont été introduites dans le langage Java que depuis la version 5. Pour J2EE, le recours au fichier de déploiement web.xml
-		était la seule façon de déclarer les servlets. Ce fichier reste donc encore aujourd'hui très utilisé par les développeurs, particulièrement
-		pour déclarer des servlets provenant de frameworks et de bibliothèques tiers.</aside>
-		<section>
+
+			<aside>Les annotations n'ont été introduites dans le langage Java que depuis la version 5. Pour J2EE, le recours au fichier de déploiement web.xml
+			était la seule façon de déclarer les servlets. Ce fichier reste donc encore aujourd'hui très utilisé par les développeurs, particulièrement
+			pour déclarer des servlets provenant de frameworks et de bibliothèques tiers.</aside>
+
 			<p>Pour déclarer une servlet dans une fichier web.xml, il suffit d'associer un identifiant avec le nom de la classe de la servlet. Ensuite, on précise
 			un ou des motifs d'URL pour cette servlet de la façon suivante&nbsp;:</p>
 <pre><code class="xml">&lt;web-app 
@@ -314,61 +264,16 @@ public class HelloServlet extends HttpServlet {
 			<p>Pour rappel, le fichier web.xml doit <strong>obligatoirement</strong> se trouver dans le répertoire WEB-INF
 			de l'application Web finale. Dans un projet Maven, on placera donc ce fichier dans le répertoire 
 			<strong>src/main/webapp/WEB-INF</strong>.</p>
+
+			<aside>
+				<header>Java EE : annotation ou descripteur de déploiement ?</header>
+				<p>Java EE est une plate-forme pour laquelle les développeurs d'applications implémentent des <strong>composants</strong> (Web, métier, ...).
+				Pour fournir les informations de deploiement de ces composants, nous verrons qu'il est toujours possible d'utiliser des annotations ou des
+				descripteurs de déploiement (des fichiers XML). L'utilisation d'annotations offre l'avantage de déclarer les informations au plus près du code.
+				Au contraire, le descripteur de déploiement centralise l'ensemble des informations pour une application. Il permet une plus grande souplesse
+				au détriment de la verbosité et de la nécessité de maintenir un fichier XML.</p>
+			</aside>
 		</section>
-		<aside>
-			<header>Java EE : annotation ou descripteur de déploiement ?</header>
-			<p>Java EE est une plate-forme pour laquelle les développeurs d'applications implémentent des <strong>composants</strong> (Web, métier, ...).
-			Pour fournir les informations de deploiement de ces composants, nous verrons qu'il est toujours possible d'utiliser des annotations ou des
-			descripteurs de déploiement (des fichiers XML). L'utilisation d'annotations offre l'avantage de déclarer les informations au plus près du code.
-			Au contraire, le descripteur de déploiement centralise l'ensemble des informations pour une application. Il permet une plus grande souplesse
-			au détriment de la verbosité et de la nécessité de maintenir un fichier XML.</p>
-		</aside>
-	</article>
-	<article class="exercice note">
-		<h2>Exercice à rendre&nbsp;: déploiement à partir du web.xml</h2>
-		<dl>
-			<dt>Objectif</dt>
-			<dd>Déployer une servlet en utilisant le fichier de déploiement web.xml. Pour cela, vous allez déployer une servlet fournie
-			par une bibliothèque tierce : <b>barcode4j</b>. Cette servlet génère des codes barres à la volée.</dd>
-
-			<dt>Modèle de projet</dt>
-			<dd>Utilisez <strong>le même projet</strong> que pour l'exercice précédent. Vous verrez ainsi que l'on peut mélanger dans une même application
-			des servlets déclarées par annotations avec des servlets déclarées dans le fichier de déploiement. Le fichier web.xml
-			doit déjà être présent et ne contenir que la balise racine <code>&lt;web-app&gt;</code>.</dd>
-			
-			<dt>Ajout de barcode4j dans le projet</dt>
-			<dd>
-			Maven va vous permettre de récupérer automatiquement les bibliothèques qui vont vous être utiles pour cet exercice.
-			Ouvrez le fichier pom.xml du projet et dans la balise <code>&lt;dependencies&gt;</code>, ajoutez les deux dépendences suivantes :
-<pre><code class="xml">&lt;dependency&gt;
-  &lt;groupId&gt;net.sf.barcode4j&lt;/groupId&gt;
-  &lt;artifactId&gt;barcode4j&lt;/artifactId&gt;
-  &lt;version&gt;2.1&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-  &lt;groupId&gt;avalon-framework&lt;/groupId&gt;
-  &lt;artifactId&gt;avalon-framework-api&lt;/artifactId&gt;
-  &lt;version&gt;4.2.0&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre>
-			<p>La sauvegarde du fichier pom.xml dans votre IDE doit entraîner un téléchargement par Maven de ces dépendances et leur ajout
-			dans la configuration du projet.</p>
-			<p>La servlet fournie par barcode4j s'appelle&nbsp;: <code><strong>org.krysalis.barcode4j.servlet.BarcodeServlet</strong></code></p>
-			<p>Une fois la servlet déclarée, vous pouvez y accéder en passant des paramètres HTTP détaillés dans la <a href="http://barcode4j.sourceforge.net/2.1/servlet.html">documentation</a>.</p>
-			</dd>
-
-			<dt>Évolution de l'application de traitement d'un formulaire</dt>
-			<dd>
-			Faites évoluer l'application de l'exercice précédent. Lorsque l'utilisateur soumet le formulaire, le serveur doit afficher les informations transmises (nom et URL)
-			et le code barre 2D de l'URL. Un code barre 2D correspond au type <strong>datamatrix</strong> pour la servlet barcode4J.
-			Autrement dit, il faut passer <code>type=datamatrix</code> comme paramètre à cette servlet.
-			<figure>
-				<figcaption>Exemple de code barre 2D (datamatrix) généré par barcode4</figcaption>
-				<img alt="exemple de code barre de type datamatrix" src="assets/barcode4j-example.png">
-			</figure>
-			</dd>
-		</dl>
-		
 	</article>
 
 	<footer class="license">

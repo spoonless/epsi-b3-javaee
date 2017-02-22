@@ -477,59 +477,6 @@ public class LogFilter implements Filter {
 			</section>
 	</article>
 	
-	<article class="exercice note">
-		<h2>Exercice à rendre&nbsp;: nombre de personnes connectées</h2>
-		<dl>
-			<dt>Objectif</dt>
-			<dd>Rependre l'application avec le formulaire d'adhésion du chapitre précédent et ajouter
-			la fonctionnalité suivante&nbsp;: en bas de chaque page affichée par l'application, on doit
-			lire "Actuellement X personnes accèdent à ce site". Ce nombre sera basé sur le nombre
-			de sessions HTTP valides au moment de l'affichage de la page. 
-			
-			<aside>
-				<p>Vous pouvez régler le nombre de minutes d'inactivité avant qu'une session HTTP soit
-				invalidée par le serveur. Pour cela, utiliser la balise <code>session-config</code>
-				dans le fichier de déploiement <code>web.xml</code>&nbsp;:</p>
-<pre><code class="xml">
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;web-app 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xmlns="http://java.sun.com/xml/ns/javaee" 
-  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
-                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
-  version="3.0"&gt;
-
-  &lt;session-config&gt;
-    &lt;session-timeout&gt;2&lt;/session-timeout&gt;
-  &lt;/session-config&gt;
-&lt;/web-app&gt;
-
-</code></pre>
-			</aside>
-			
-			<aside class="tip">
-				Le nombre de sessions sera certainement une information globale à l'ensemble de l'application.
-			</aside>
-		</dl>
-	
-	</article>
-
-	<article class="exercice note">
-		<h2>Exercice à rendre&nbsp;: filtre par adresse IP</h2>
-		<dl>
-			<dt>Objectif</dt>
-			<dd>Rependre l'application avec le formulaire d'adhésion du chapitre précédent et ajouter
-			la fonctionnalité suivante&nbsp;: l'application Web ne doit être disponible que pour un
-			nombre limité d'adresses IP client (principe de la liste blanche). Si un client avec une
-			adresse IP non autorisée tente de se connecter à l'application Web, il doit recevoir
-			comme réponse une erreur HTTP 403 (Forbidden) à toutes ses requêtes.
-			
-			<p><strong>La liste des adresses IP autorisées doit être configurable à partir du fichier 
-			de déploiement <code>web.xml</code></strong>.</p> 
-		</dl>
-	
-	</article>
-
 	<footer class="license">
 		<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/fr/88x31.png" /></a><br />Cette œuvre est mise à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/fr/">Licence Creative Commons Attribution -  Partage dans les Mêmes Conditions 3.0 France</a>.
 	</footer>

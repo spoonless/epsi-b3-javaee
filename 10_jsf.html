@@ -134,60 +134,7 @@
 </code></pre>
 			</figure>
 		</section>
-	</article>
-	<article class="exercice note">
-		<h2>Exercice à rendre&nbsp;: JSF et JDBC</h2>
-		<dl>
-			<dt>Objectif</dt>
-			<dd>Développer un site pour la saisie d'adhésion en ligne à l'aide des technologies JSF, CDI, Bean Validation et JDBC.
-			Le formulaire doit permettre de saisir les informations suivantes : email, mot de passe et site Web personnel.
-			Un champ permet de saisir à nouveau le mot de passe afin de s'assurer que l'utilisateur n'a pas fait d'erreur de saisie. 
-			De plus, l'utilisateur doit pouvoir cocher la case "J'ai lu et approuvé les conditions générales de ce site". 
-			<p>Au moment de la soumission du formulaire, le serveur doit effectuer les vérifications suivantes&nbsp;:</p>
-			<ol>
-				<li>Le champ email doit être rempli et contenir une adresse mail valide</li>
-				<li>Le champ mot de passe contient au moins 8 caractères et il correspond à celui saisi une seconde fois</li>
-				<li>Le champ "site Web personnel" n'est pas obligatoire</li>
-				<li>La case "J'ai lu et approuvé les conditions générales de ce site" est bien cochée</li>
-			</ol>
-			<p>Si une vérification échoue, le formulaire doit être réaffiché avec un message d'erreur indiquant clairement ce qui n'est pas correct.
-			De plus, le formulaire doit se réafficher en renseignant les données saisies précédemment <strong>sauf</strong> le mot de passe.</p>
-			<p>Lorsque tous les champs sont saisis correctement, l'adhésion est sauvegardée en base de données et 
-			une page de confirmation d'adhésion doit être affichée avec la mention&nbsp;:
-			<pre><code>Votre inscription a bien été prise en compte le &lt;date&gt; à &lt;heure&gt; pour l'adresse mail &lt;email&gt;.</code></pre>
-			
-			<p>Une page doit également afficher la liste des adhésions déjà enregistrées sur le site. Pour chaque adhésion, on affichera l'email et le site Web (s'il a été renseigné).
-			Si vous le souhaitez, il est possible d'afficher la liste des adhésions directement depuis la page du formulaire de saisie.
-			</p>
-			<dd>
 
-			<dt>Script SQL</dt>
-			<dd>
-				<p>Pour la base de données MySQL, le script de création de la table Adherent sera&nbsp;:</p>
-				<figure>
-					<figcaption>Script MySQL de création de la table Individu</figcaption>
-					<pre><code class="sql">
-CREATE TABLE IF NOT EXISTS Adherent (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  email varchar(200) NOT NULL,
-  motDePasse varchar(200) NOT NULL,
-  siteWeb varchar(200),
-  dateAdhesion date NOT NULL,
-  PRIMARY KEY (id)
-) engine=innodb;
-        			</code></pre>
-				</figure>
-			<dd>
-
-			<dt>Modèle Maven du projet à télécharger</dt>
-			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a> (pensez à <a href="09_jdbc.html#pilote_jdbc">déclarer la dépendance</a> vers le pilote JDBC dans le fichier pom.xml)</dd>
-
-			<dt>Intégration du projet dans Eclipse</dt>
-			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
-		</dl>
-	</article>
-	
-	<article>		
 		<section>
 			<h2 id="facelets">La vue : facelets</h2>
 			<p>JSF n'utilise pas les JSP, JSF dispose de son propre langage de déclaration de vue appelé <strong>facelet</strong>.

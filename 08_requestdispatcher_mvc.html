@@ -113,47 +113,6 @@
 		</section>
 	</article>
 
-	<article id="exo_formulaire_mvc" class="exercice note">
-		<h2>Exercice à rendre&nbsp;: Formulaire MVC</h2>
-		<dl>
-			<dt>Objectif</dt>
-			<dd>Développer une page MVC pour la saisie d'un formulaire d'adhésion en ligne.
-			Le formulaire doit permettre de saisir les informations suivantes : email, mot de passe et site Web personnel.
-			Un champ permet de saisir à nouveau le mot de passe afin de s'assurer que l'utilisateur n'a pas fait d'erreur de saisie. 
-			De plus, l'utilisateur doit pouvoir cocher la case "J'ai lu et approuvé les conditions générales de ce site". 
-			<p>Au moment de la soumission du formulaire, le serveur doit effectuer les vérifications suivantes&nbsp;:</p>
-			<ol>
-				<li>Le champ email doit être rempli et contenir une adresse mail valide</li>
-				<li>Le champ mot de passe contient au moins 8 caractères et il correspond à celui saisi une seconde fois</li>
-				<li>Le champ "site Web personnel" n'est pas obligatoire mais s'il est rempli, le serveur doit vérifier que le site
-				est accessible (le serveur effectue une requête HTTP qui retourne un succès).</li>
-				<li>La case "J'ai lu et approuvé les conditions générales de ce site" est bien cochée</li>
-			</ol>
-			<p>Si une vérification échoue, le formulaire doit être réaffiché avec un message d'erreur indiquant clairement ce qui n'est pas correct.
-			De plus, le formulaire doit se réafficher en renseignant les données saisies précédemment <strong>sauf</strong> le mot de passe.</p>
-			
-			<aside class="warn">
-				<p>Pour cet exercice, n'utiliserez <strong>aucun</strong> contrôle de champ côté client.</p>
-			</aside>
-			
-			<p>Lorsque tous les champs sont saisis correctement, une page de confirmation d'adhésion doit être affichée avec la mention&nbsp;:
-			<pre><code>Votre inscription a bien été prise en compte le &lt;date&gt; à &lt;heure&gt; pour l'adresse mail &lt;email&gt;.</code></pre>
-			<p>Pour réaliser cette application, vous utiliserez une architecture MVC en utilisant notamment des JSP pour réaliser les vues.
-			À vous de concevoir la ou les classes Java qui représenteront le modèle.</p>
-			<dd>
-
-			<dt>Modèle Maven du projet à télécharger</dt>
-			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a></dd>
-
-			<dt>Mise en place du projet</dt>
-			<dd>&Eacute;diter le fichier pom.xml du template et modifier la balise artifactId pour spécifier le nom de votre projet.
-			Modifier ensuite la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
-
-			<dt>Intégration du projet dans Eclipse</dt>
-			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
-		</dl>
-	</article>
-	
 	<footer class="license">
 		<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/fr/88x31.png" /></a><br />Cette œuvre est mise à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/fr/">Licence Creative Commons Attribution -  Partage dans les Mêmes Conditions 3.0 France</a>.
 	</footer>

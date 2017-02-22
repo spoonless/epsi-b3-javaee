@@ -68,16 +68,26 @@
 			homogénéité entre les projets. Ainsi un projet Maven se conforme à une organisation assez stricte
 			des répertoires et des fichiers.</p>
 			<aside>
-				<p>Il existe d'autres outils de construction de projet en Java. Un autre outil très répandu
-				est <a href="http://ant.apache.org/">Ant</a> également promu par la communauté Apache.
-				Ant suit un principe très proche de Make.</p>
+				<p>Il existe d'autres outils de construction de projet en Java. 
+				<a href="http://ant.apache.org/">Ant</a>, également promu par la communauté Apache, a été (et reste) beaucoup utilisé.
+				Ant suit un principe très proche de Make. <a href="https://gradle.org/">Gradle</a> est un autre outil de construction bien connu des
+				développeurs Android.</p>
 			</aside>
 		</section>
 		<section>
-			<h2>Installation de Maven (optionnelle)</h2>
-			<p>Maven est nativement intégré dans Eclipse. Il n'est donc pas nécessaire de l'installer.
-			Néanmoins pour ceux qui désirent tester l'outil en ligne de commande, il suffit 
-			de télécharger l'archive et de suivre les indications d'installation à cette <a href="http://maven.apache.org/download.cgi">adresse</a>.</p>
+			<h2>Installation de Maven</h2>
+			<p>Maven est nativement intégré dans Eclipse. Il est tout de même utile de disposer de cet outil en ligne de commande
+			(notamment pout mettre en place un processus d'intégration continue).</p>
+			<p>Maven se présente sous la forme d'une archive à télcharger à <a href="http://maven.apache.org/download.cgi">http://maven.apache.org</a></p>
+			<p>Une fois téléchargé, vous pouvez extraire ou vous voulez et ajouter le répertoire <code>apache-maven-3.3.9/bin</code> dans votre chemin d'exécution.</p>
+			
+			<aside class="tip">
+				<p>Si vous utilisez une machine GNU/Linux, vous trouverez certainement maven dans les dépôts logiciel. Pour une
+				distribution de type Debian, vous pouvez utiliser la commange&nbsp;:</p>
+				<pre><code class="bash">
+sudo apt get maven
+				</code></pre>
+			</aside>
 		</section>
 		<section>
 			<h2>Un premier projet avec Maven</h2>
@@ -241,10 +251,10 @@
 		</section>
 		<section>
 			<h2>Gérer le projet avec Maven</h2>
-			<p>Si vous avez installé directement Maven, vous pouvez utiliser la ligne de commande depuis
-			le répertoire d'un projet Maven.</p>
+			<p>Vous pouvez utiliser la ligne de commande <code>mvn</code> depuis le répertoire contenant le fichier <strong>pom.xml</strong>  pour réaliser les opérations sur un projet.
+			Maven crée un répertoire de travail nommé <strong>target</strong> dans lequel il stocke les fichiers produits (y compris les fichier war)</p>
 			<figure>
-				<figcaption>nettoyer le répertoire de travail</figcaption>
+				<figcaption>nettoyer le répertoire de travail <strong>target</strong></figcaption>
 				<pre><code class="shell">mvn clean</code></pre>
 			</figure>
 			<figure>

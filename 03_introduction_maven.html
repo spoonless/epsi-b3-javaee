@@ -83,7 +83,7 @@
 			
 			<aside class="tip">
 				<p>Si vous utilisez une machine GNU/Linux, vous trouverez certainement maven dans les dépôts logiciel. Pour une
-				distribution de type Debian, vous pouvez utiliser la commange&nbsp;:</p>
+				distribution de type Debian, vous pouvez utiliser la commande&nbsp;:</p>
 				<pre><code class="bash">
 sudo apt get maven
 				</code></pre>
@@ -280,6 +280,55 @@ sudo apt get maven
 				dans le répertoire de travail <strong>target</strong>.</p>
 			</aside>
 		</section>
+	</article>
+
+	<article class="exercice">
+		<h2>Exercice&nbsp;: ajout du plugin TomEE dans le fichier pom.xml</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>Exécuter un serveur tomEE directement à partir de Maven</dd>
+		</dl>
+		<p>Il est possible de déclarer des plugins dans un fichier <code>pom.xml</code> de son projet.
+		Il existe de très nombreux plugins disponibles depuis des dépôts Maven. Cela signifie que la
+		déclaration d'un plugin permet de déclencher automatiquement son téléchargement, son installation et son exécution.</p>
+		<p>Lorsqu'on crée un projet pour une application Web, il peut être intéressant de pouvoir l'exécuter depuis Maven,
+		c'est-à-dire de lancer un serveur d'application Java EE et de déployer l'application dans ce serveur.</p>
+		<p>Pour TomEE, on peut utiliser le <a href="https://tomee.apache.org/maven/index.html"><code>tomee-maven-plugin</code></a>. Reprenez le <a href="assets/hello-webapp.zip">projet Maven</a> que vous venez
+		d'importer dans Eclipse et éditez le fichier <code>pom.xml</code>. À la suite de la section <code>properties</code>, ajoutez
+		la déclaration suivante&nbsp;:</p>
+		<pre><code class="xml">
+&lt;build&gt;
+  &lt;plugins&gt;
+    &lt;plugin&gt;
+      &lt;!-- le plugin pour démarrer TomEE depuis la ligne de commande avec maven : 
+          mvn package tomee:run
+      --&gt;
+      &lt;groupId&gt;org.apache.tomee.maven&lt;/groupId&gt;
+      &lt;artifactId&gt;tomee-maven-plugin&lt;/artifactId&gt;
+      &lt;version&gt;7.0.2&lt;/version&gt;
+      &lt;configuration&gt;
+        &lt;tomeeVersion&gt;7.0.2&lt;/tomeeVersion&gt;
+        &lt;tomeeClassifier&gt;plus&lt;/tomeeClassifier&gt;
+      &lt;/configuration&gt;
+    &lt;/plugin&gt;
+  &lt;/plugins&gt;
+&lt;/build&gt;
+		</code></pre>
+		
+		<p>Ouvrez ensuite un terminal et allez dans le répertoire de votre projet. Tapez la commande&nbsp;:</p>
+
+		<pre><code class="bash">
+mvn package tomee:run
+		</code></pre>
+		
+		<p><code>package</code> indique à Maven qu'il doit construire le projet, exécuter les tests unitaires et créer la package (dans notre cas un fichier war).
+		Puis <code>tomee:run</code> appelle directement le <code>tomee-maven-plugin</code> et lui demande de lancer le serveur en déployant le fichier war créé. 
+		</p>
+		
+		<aside class="warn">
+			<p>Le plugin <code>tomee-maven-plugin</code> déploie l'application dans le contexte racine [artifact-id]-[version].
+			Pour le projet de test, le contexte de déploiement sera donc <strong>hello-0.0.1-SNAPSHOT</strong></p>
+		</aside>
 	</article>
 
 	<footer class="license">

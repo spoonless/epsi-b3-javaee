@@ -349,13 +349,13 @@ public class PersonneControleur {
 
 </code></pre>
 			</figure>
-			<p>L'annotation <code><a href="http://docs.oracle.com/javaee/6/api/javax/inject/Named.html">@Named</a></code> 
+			<p>L'annotation <code><a href="http://docs.oracle.com/javaee/7/api/javax/inject/Named.html">@Named</a></code> 
 			suffit à indiquer que cette classe peut être gérée par CDI.
-			L'annotation <code><a href="http://docs.oracle.com/javaee/6/api/javax/enterprise/context/RequestScoped.html">@RequestScoped</a></code> 
+			L'annotation <code><a href="http://docs.oracle.com/javaee/7/api/javax/enterprise/context/RequestScoped.html">@RequestScoped</a></code> 
 			indique que l'instance de l'objet sera un attribut de portée requête.
 			Sur le même principe, il existe les annotations 
-			<code><a href="http://docs.oracle.com/javaee/6/api/javax/enterprise/context/SessionScoped.html">@SessionScoped</a></code> 
-			et <code><a href="http://docs.oracle.com/javaee/6/api/javax/enterprise/context/ApplicationScoped.html">@ApplicationScoped</a></code>.</p>
+			<code><a href="http://docs.oracle.com/javaee/7/api/javax/enterprise/context/SessionScoped.html">@SessionScoped</a></code> 
+			et <code><a href="http://docs.oracle.com/javaee/7/api/javax/enterprise/context/ApplicationScoped.html">@ApplicationScoped</a></code>.</p>
 			
 			<aside class="warn">
 				<header><code>@SessionScoped</code> et la passivation</header>
@@ -705,7 +705,7 @@ public class PersonneControleur {
 			</aside>
 			
 			<p>Il est également possible de fournir sa propre implémentation d'un validateur. Pour cela, il suffit de créer une classe qui implémente l'interface 
-			<a href="http://docs.oracle.com/javaee/6/api/javax/faces/validator/Validator.html"><code>javax.faces.validator.Validator</code></a>.
+			<a href="http://docs.oracle.com/javaee/7/api/javax/faces/validator/Validator.html"><code>javax.faces.validator.Validator</code></a>.
 			Cette interface ne contient la déclaration que d'une seule méthode&nbsp;:</p>
 			
 			<figure>
@@ -715,14 +715,14 @@ public class PersonneControleur {
 
 </code></pre>
 			</figure>
-			<p>La validation échoue si un appel à cette méthode lance une <a href="http://docs.oracle.com/javaee/6/api/javax/faces/validator/ValidatorException.html"><code>ValidatorException</code></a>. 
+			<p>La validation échoue si un appel à cette méthode lance une <a href="http://docs.oracle.com/javaee/7/api/javax/faces/validator/ValidatorException.html"><code>ValidatorException</code></a>. 
 			Le premier paramètre représente le contexte d'exécution JSF, le deuxième paramètre représente le composant graphique pour lequel la validation a été demandée.
 			Par exemple, pour un champ de formulaire de type <code>input</code>, ce composant sera une instance de 
-			<a href="http://docs.oracle.com/javaee/6/api/javax/faces/component/UIInput.html"><code>UIInput</code></a>
-			qui hérite de <a href="http://docs.oracle.com/javaee/6/api/javax/faces/component/UIComponent.html"><code>UIComponent</code></a>. 
+			<a href="http://docs.oracle.com/javaee/7/api/javax/faces/component/UIInput.html"><code>UIInput</code></a>
+			qui hérite de <a href="http://docs.oracle.com/javaee/7/api/javax/faces/component/UIComponent.html"><code>UIComponent</code></a>. 
 			Enfin le troisième paramètre représente la valeur qui doit être validée. Selon le type de composant, cette valeur peut être de type String, Boolean...</p>
 			
-			<p>La classe du validateur doit également porter l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/faces/validator/FacesValidator.html"><code>@FacesValidator</code></a> indiquant le
+			<p>La classe du validateur doit également porter l'annotation <a href="http://docs.oracle.com/javaee/7/api/javax/faces/validator/FacesValidator.html"><code>@FacesValidator</code></a> indiquant le
 			nom du validateur qui sera utilisé pour le référencer dans les facelets.</p>
 			
 			<p>L'exemple ci-dessous montre un exemple de validateur permettant de s'assurer qu'une case à cocher (checkbox) a bien été cochée par l'utilisateur.</p>
@@ -839,7 +839,7 @@ public class Personne {
 			
 			<p>La documentation des annotations de Bean Validation est disponible dans la
 			documentation de l'API Java EE&nbsp;: 
-			<a class="explicit" href="http://docs.oracle.com/javaee/6/api/javax/validation/constraints/package-summary.html">http://docs.oracle.com/javaee/6/api/javax/validation/constraints/package-summary.html</a></p>
+			<a class="explicit" href="http://docs.oracle.com/javaee/7/api/javax/validation/constraints/package-summary.html">http://docs.oracle.com/javaee/7/api/javax/validation/constraints/package-summary.html</a></p>
 			
 			<p>Bean Validation est une bonne alternative aux balises JSF de validation si un bean doit être
 			réutilisé comme modèle dans des facelets différentes.</p>

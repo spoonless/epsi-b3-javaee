@@ -304,7 +304,7 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 				<dd>Map permettant d'accéder aux paramètres d'initialisation (déclarées dans le web.xml).</dd>
 
 				<dt>pageContext</dt>
-				<dd>L'objet <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/jsp/PageContext.html">PageContext</a> de la page JSP.
+				<dd>L'objet <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/jsp/PageContext.html">PageContext</a> de la page JSP.
 				On trouve notamment dans cet objet les attributs request et response (respectivement de type HttpServletRequest et HttpServletResponse).</dd>
 			</dl>
 			
@@ -342,7 +342,7 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 			
 			<aside class="tip">
 				La recherche d'un attribut dans les différentes portées est réalisée par la méthode
-				<a href="http://docs.oracle.com/javaee/6/api/javax/servlet/jsp/JspContext.html#findAttribute%28java.lang.String%29">JspContext.findAttribute(String name)</a>
+				<a href="http://docs.oracle.com/javaee/7/api/javax/servlet/jsp/JspContext.html#findAttribute-java.lang.String-">JspContext.findAttribute(String name)</a>
 			</aside>
 			
 			<h3>Expression Language et gestion des exceptions</h3>
@@ -382,7 +382,7 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 
 				<dt>isErrorPage</dt>
 				<dd>Indique si la JSP est une JSP d'erreur. Dans ce cas, <code>errorData</code> est disponible dans
-				le <code>pageContext</code>. <code>errorData</code> est de type <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/jsp/ErrorData.html">javax.servlet.jsp.ErrorData</a>
+				le <code>pageContext</code>. <code>errorData</code> est de type <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/jsp/ErrorData.html">javax.servlet.jsp.ErrorData</a>
 					<figure>
 						<figcaption>Exemple d'une JSP d'erreur</figcaption>
 						<pre><code class="html">
@@ -543,7 +543,7 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 				<dd>Permet d'inclure dynamiquement une page (statique ou une autre JSP). &Agrave; la différence de la directive <code>&lt;%@include&nbsp;%&gt;</code>,
 				la balise action <code>&lt;jsp:include&gt;</code> est interprétée à chaque exécution de la JSP. Cela signifie
 				que l'adresse de la page à inclure peut être calculée dynamiquement grâce à une EL.
-				Cette balise est similaire à un appel à <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/RequestDispatcher.html#include%28javax.servlet.ServletRequest,%20javax.servlet.ServletResponse%29">RequestDispatcher.include</a>
+				Cette balise est similaire à un appel à <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html#include-javax.servlet.ServletRequest-javax.servlet.ServletResponse-">RequestDispatcher.include</a>
 					<figure>
 						<figcaption>Inclusion d'une page en fonction d'un paramètre</figcaption>
 						<pre><code class="html">
@@ -578,7 +578,7 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 				
 				<dt>&lt;jsp:forward/&gt;</dt>
 				<dd>Permet de déléguer le traitement de la requête à une autre ressource de l'application.
-				Cette balise est similaire à un appel à <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/RequestDispatcher.html#forward%28javax.servlet.ServletRequest,%20javax.servlet.ServletResponse%29">RequestDispatcher.forward</a>.
+				Cette balise est similaire à un appel à <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html#forward-javax.servlet.ServletRequest-javax.servlet.ServletResponse-">RequestDispatcher.forward</a>.
 					<figure>
 						<figcaption>Un simple forward vers une autre page en fonction d'un paramètre</figcaption>
 						<pre><code class="html">

@@ -29,13 +29,13 @@
 			<h2>Exécuter des requêtes avec JPA</h2>
 
 			<p>Les méthodes <code>find</code>, <code>persist</code>, <code>merge</code>, <code>detach</code>, <code>refresh</code> et <code>remove</code>
-			disponibles avec une instance d'<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/EntityManager.html"><code>EntityManager</code></a> 
+			disponibles avec une instance d'<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/EntityManager.html"><code>EntityManager</code></a> 
 			permettent de gérer simplement une entité mais ne permettent pas de réaliser des requêtes très élaborées.</p>
 
 			<p>Heureusement, un <code>EntityManager</code> fournit également différentes API pour exécuter des requêtes. Le principe est toujours le même&nbsp;:</p>
 			<ol>
-				<li>On crée un objet de type <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Query.html"><code>Query</code></a>
-				ou <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/TypedQuery.html"><code>TypedQuery</code></a> grâce à l'API</li>
+				<li>On crée un objet de type <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Query.html"><code>Query</code></a>
+				ou <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/TypedQuery.html"><code>TypedQuery</code></a> grâce à l'API</li>
 				<li>Pour les requêtes paramétrées, on positionne la valeur des paramètres grâce aux méthodes <code>setParameter(String name, XXX xxx)</code>
 				ou <code>setParameter(int position, XXX xxx)</code></li>
 				<li>On peut optionnellement positionner plusieurs autres informations pour la requête (par exemple, le nombre maximum de résultats pour une consultation
@@ -216,7 +216,7 @@ CREATE TABLE `individu` (
 			<h2>Les requêtes par programmation</h2>
 			<p>Lorsque l'on souhaite construire une requête JPQL dynamiquement, il n'est pas toujours très facile de construire la requête
 			par simple concaténation de chaînes de caractères. Pour cela, JPA fournit une API permettant de définir entièrement une
-			requête JPQL par programmation. On crée cette requête à travers un <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/criteria/CriteriaBuilder.html"><code>CriteriaBuilder</code></a>
+			requête JPQL par programmation. On crée cette requête à travers un <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/criteria/CriteriaBuilder.html"><code>CriteriaBuilder</code></a>
 			que l'on peut récupérer grâce à la méthode <code>EntityManager.getCriteriaBuilder()</code>.</p>
 
 			<figure>
@@ -275,10 +275,10 @@ CREATE TABLE `individu` (
 			dans un modèle de base de données relationnelle. JPA définit des modèles de relation qui peuvent être 
 			déclarés par annotation.</p>
 			<p>Les relations sont spécifiées par les annotations&nbsp;:
-			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/OneToOne.html"><code>@OneToOne</code></a>,
-			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/ManyToOne.html"><code>@ManyToOne</code></a>,
-			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/OneToMany.html"><code>@OneToMany</code></a>,
-			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/ManyToMany.html"><code>@ManyToMany</code></a>.
+			<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/OneToOne.html"><code>@OneToOne</code></a>,
+			<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/ManyToOne.html"><code>@ManyToOne</code></a>,
+			<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/OneToMany.html"><code>@OneToMany</code></a>,
+			<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/ManyToMany.html"><code>@ManyToMany</code></a>.
 			</p>
 
 			<aside class="tip">
@@ -289,7 +289,7 @@ CREATE TABLE `individu` (
 
 		<section>
 			<h2>La relation 1:1 (one to one)</h2>
-			<p>L'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/OneToOne.html"><code>@OneToOne</code></a>
+			<p>L'annotation <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/OneToOne.html"><code>@OneToOne</code></a>
 			définit une relation 1:1 entre deux entités. Si cette relation n'est pas forcément très courante dans un modèle
 			relationnel de base de données, elle se rencontre très souvent dans une modèle objet.</p>
 
@@ -337,7 +337,7 @@ public class Abonnement {
 			
 			<p>L'annotation <code>@OneToOne</code> implique que la table <code>Individu</code> contient une colonne qui est une
 			clé étrangère contenant la clé d'un abonnement. Par défaut, JPA s'attend à ce que cette colonne se nomme
-			ABONNEMENT_ID, mais il est possible de changer ce nom grâce à l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/JoinColumn.html"><code>@JoinColumn</code></a>&nbsp;:</p>
+			ABONNEMENT_ID, mais il est possible de changer ce nom grâce à l'annotation <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/JoinColumn.html"><code>@JoinColumn</code></a>&nbsp;:</p>
 
 			<figure>
 				<figcaption>Déclaration de la clé étrangère</figcaption>
@@ -369,7 +369,7 @@ public class Individu {
 
 		<section>
 			<h2>La relation n:1 (many to one)</h2>
-			<p>L'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/ManyToOne.html"><code>@ManyToOne</code></a>
+			<p>L'annotation <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/ManyToOne.html"><code>@ManyToOne</code></a>
 			définit une relation n:1 entre deux entités.</p>
 
 			<figure>
@@ -416,10 +416,10 @@ public class Societe {
 			
 			<p>L'annotation <code>@ManyToOne</code> implique que la table <code>Individu</code> contient une colonne qui est une
 			clé étrangère contenant la clé d'une société. Par défaut, JPA s'attend à ce que cette colonne se nomme
-			SOCIETE_ID, mais il est possible de changer ce nom grâce à l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/JoinColumn.html"><code>@JoinColumn</code></a>.
+			SOCIETE_ID, mais il est possible de changer ce nom grâce à l'annotation <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/JoinColumn.html"><code>@JoinColumn</code></a>.
 			Plutôt que par une colonne, il est également possible d'indiquer à JPA qu'il doit passer par une table d'association pour établir la relation
 			entre les deux entités avec l'annotation
-			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/JoinTable.html"><code>@JoinTable</code></a>&nbsp;:
+			<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/JoinTable.html"><code>@JoinTable</code></a>&nbsp;:
 			</p>
 
 			<figure>
@@ -456,7 +456,7 @@ public class Individu {
 
 		<section>
 			<h2>La relation 1:n (one to many)</h2>
-			<p>L'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/OneToMany.html"><code>@OneToMany</code></a>
+			<p>L'annotation <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/OneToMany.html"><code>@OneToMany</code></a>
 			définit une relation 1:n entre deux entités. Cette annotation ne peut être utilisée qu'avec une collection d'éléments
 			puisqu'elle implique qu'il peut y avoir plusieurs entités associées.</p>
 
@@ -507,10 +507,10 @@ public class Individu {
 			
 			<p>L'annotation <code>@OneToMany</code> implique que la table <code>Individu</code> contient une colonne qui est une
 			clé étrangère contenant la clé d'une société. Par défaut, JPA s'attend à ce que cette colonne se nomme
-			SOCIETE_ID, mais il est possible de changer ce nom grâce à l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/JoinColumn.html"><code>@JoinColumn</code></a>.
+			SOCIETE_ID, mais il est possible de changer ce nom grâce à l'annotation <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/JoinColumn.html"><code>@JoinColumn</code></a>.
 			Il est également possible d'indiquer à JPA qu'il doit passer par une table d'association pour établir la relation
 			entre les deux entités avec l'annotation
-			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/JoinTable.html"><code>@JoinTable</code></a>.
+			<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/JoinTable.html"><code>@JoinTable</code></a>.
 			Ainsi, <code>@ManyToOne</code> fonctionne exactement comme <code>@OneToMany</code> sauf que cette annotation
 			porte sur l'autre côté de la relation.
 			</p>
@@ -518,7 +518,7 @@ public class Individu {
 
 		<section>
 			<h2>La relation n:n (many to many)</h2>
-			<p>L'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/ManyToMany.html"><code>@ManyToMany</code></a>
+			<p>L'annotation <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/ManyToMany.html"><code>@ManyToMany</code></a>
 			définit une relation n:n entre deux entités. Cette annotation ne peut être utilisée qu'avec une collection d'éléments
 			puisqu'elle implique qu'il peut y avoir plusieurs entités associées.</p>
 
@@ -551,7 +551,7 @@ public class Individu {
 			<code>Individu_Individu</code> qui contient les clés étrangères <code>INDIVIDU_ID</code> et <code>ENFANTS_ID</code>
 			permettant de modéliser la relation. 
 			Il est possible de décrire explicitement la relation grâce à l'annotation
-			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/JoinTable.html"><code>@JoinTable</code></a>&nbsp;:
+			<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/JoinTable.html"><code>@JoinTable</code></a>&nbsp;:
 			</p>
 			
 			<figure>
@@ -676,11 +676,11 @@ public class Individu {
 			Un fetch peut avoir deux stratégies&nbsp;: <strong>eager</strong> ou <strong>lazy</strong> 
 			(que l'on peut traduire respectivement et approximativement par <em>chargement immédiat</em> et <em>chargement différé</em>). 
 			On peut décider de la stratégie pour chaque membre de la classe grâce à l'attribut <code>fetch</code> présent sur les annotations
-			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Basic.html"><code>@Basic</code></a>,
-			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/OneToOne.html"><code>@OneToOne</code></a>,
-			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/ManyToOne.html"><code>@ManyToOne</code></a>,
-			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/OneToMany.html"><code>@OneToMany</code></a> et
-			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/ManyToMany.html"><code>@ManyToMany</code></a>.</p>
+			<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Basic.html"><code>@Basic</code></a>,
+			<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/OneToOne.html"><code>@OneToOne</code></a>,
+			<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/ManyToOne.html"><code>@ManyToOne</code></a>,
+			<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/OneToMany.html"><code>@OneToMany</code></a> et
+			<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/ManyToMany.html"><code>@ManyToMany</code></a>.</p>
 			<ul>
 				<li><strong>eager</strong> signifie que l'information doit être chargée sytématiquement lorsque l'entité est chargée.
 				Cette stratégie est appliquée par défaut pour <code>@Basic</code>, <code>@OneToOne</code> et <code>@ManyToOne</code>.</li>

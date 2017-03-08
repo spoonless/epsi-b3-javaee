@@ -25,21 +25,21 @@
 		<h1><script>document.write(document.title)</script></h1>
 		<section id="toc"></section>
 		<section>
-			<p>Le <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/RequestDispatcher.html">request dispatcher</a> 
+			<p>Le <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html">request dispatcher</a> 
 			est un objet fourni par le conteneur Web. Il permet d'inclure ou de déléguer des traitements
 			lors de la prise en charge d'une requête HTTP. Nous allons voir dans un premier temps comment 
 			cet objet peut être utilisé. Dans un second temps, nous verrons ce que l'utilisation d'un request dispatcher
 			apporte dans la conception d'achitecture Web en prenant comme exemple le modèle MVC.</p>
 			
 			<h2>Le request dispatcher</h2>
-			<p>Nous avons vu précédemment qu'il existe une classe <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContext.html">ServletContext</a>
+			<p>Nous avons vu précédemment qu'il existe une classe <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a>
 			permettant notamment de stocker les attributs de portée application. Le ServletContext représente le contexte
 			d'une application Web et est accessible depuis une servlet grâce à la méthode 
-			<a href="http://docs.oracle.com/javaee/6/api/javax/servlet/GenericServlet.html#getServletContext%28%29">getServletContext()</a>.</p>
+			<a href="http://docs.oracle.com/javaee/7/api/javax/servlet/GenericServlet.html#getServletContext--">getServletContext()</a>.</p>
 			<p>Une instance de ServletContext permet également de récupérer une instance de RequestDispatcher grâce
 			aux méthodes&nbsp;: </p>
 			<dl>
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContext.html#getRequestDispatcher%28java.lang.String%29">getResquestDispatcher(String path)</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html#getRequestDispatcher-java.lang.String-">getResquestDispatcher(String path)</a></dt>
 				<dd>Permet de récupérer une instance de RequestDispatcher pour transferer le traitement à la ressource dont le chemin d'URL est passé en paramètre
 					<pre><code class="java">
   RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/un/chemin");
@@ -49,14 +49,14 @@
 					Cependant, le chemin est interprété relativement au contexte racine de l'application.</p>
 				</dd>
 
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContext.html#getNamedDispatcher%28java.lang.String%29">getNamedDispatcher(String name)</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html#getNamedDispatcher-java.lang.String-">getNamedDispatcher(String name)</a></dt>
 				<dd>Permet de récupérer une instance de RequestDispatcher pour transferer le traitement à la servlet dont le nom est passé en paramètre
 					<pre><code class="java">
   RequestDispatcher dispatcher = getServletContext().getNamedDispatcher("maServlet");
 
 </code></pre>
 					<p>Une servlet peut être nommée dans le fichier web.xml grâce à la balise &lt;servlet-name&gt; ou avec
-					l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/annotation/WebServlet.html">@WebServlet</a> 
+					l'annotation <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebServlet.html">@WebServlet</a> 
 					grâce à l'attribut name de l'annotation.</p>
 				</dd>
 			</dl>
@@ -65,13 +65,13 @@
 			méthodes disponibles&nbsp;:</p>
 			
 			<dl>
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/RequestDispatcher.html#include%28javax.servlet.ServletRequest,%20javax.servlet.ServletResponse%29">void RequestDispatcher.include(ServletRequest request, ServletResponse response)</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html#include-javax.servlet.ServletRequest-javax.servlet.ServletResponse-">void RequestDispatcher.include(ServletRequest request, ServletResponse response)</a></dt>
 				<dd>Inclut le contenu de la ressource dans le résultat final renvoyé au client. Si le request dispatcher pointe sur 
 				un fichier HTML, l'ensemble	du fichier sera inséré dans la réponse. Si le request dispatcher pointe sur une servlet,
 				cette dernière est exécutée et sa sortie est insérée dans la réponse.
 				</dd>
 
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/RequestDispatcher.html#forward%28javax.servlet.ServletRequest,%20javax.servlet.ServletResponse%29">void RequestDispatcher.forward(ServletRequest request, ServletResponse response)</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html#forward-javax.servlet.ServletRequest-javax.servlet.ServletResponse-">void RequestDispatcher.forward(ServletRequest request, ServletResponse response)</a></dt>
 				<dd>Délègue le traitement de la requête à une nouvelle ressource. La différence avec la méthode <code>include</code> est que
 				la servlet qui appelle <code>forward</code> ne doit pas avoir produit de contenu dans la réponse.</dd>
 			</dl>

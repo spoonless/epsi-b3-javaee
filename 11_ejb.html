@@ -171,7 +171,7 @@ public class SharedResource {
 </code></pre>
 			</figure>
 
-			<p>L'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/ejb/Lock.html">@Lock</a> permet de contrôler si l'instance ou une méthode
+			<p>L'annotation <a href="http://docs.oracle.com/javaee/7/api/javax/ejb/Lock.html">@Lock</a> permet de contrôler si l'instance ou une méthode
 			autorise des accès concurrents (lock de type READ) ou des accès avec acquisition d'un verrou (lock de type WRITE).</p>
 			<p>L'utilisation d'un verrou (lock de type WRITE) est équivalent au mot-clé <code>synchronized</code> en Java. C'est-à-dire qu'à un 
 			instant T, un seul thread peut exécuter le code d'une méthode.</p>
@@ -187,7 +187,7 @@ public class SharedResource {
 		<section>
 			<h2>Accès à un EJB session</h2>
 			<p>Pour avoir accès à une instance d'un EJB session, une application <strong>ne la crée pas</strong>, elle demande au conteneur EJB de la lui fournir par injection.</p>
-			<p>La méthode la plus simple, consiste à utiliser l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/ejb/EJB.html">@EJB</a> 
+			<p>La méthode la plus simple, consiste à utiliser l'annotation <a href="http://docs.oracle.com/javaee/7/api/javax/ejb/EJB.html">@EJB</a> 
 			sur un attribut d'un autre composant Java EE (Servlet, bean CDI ou même EJB).</p>
 			<figure>
 				<figcaption>Injection d'une instance d'EJB session</figcaption>
@@ -251,12 +251,12 @@ public class UserBasket {
 	
 			<p>Deux annotations permettent de déclarer le support transactionnel pour les EJB : </p>
 			<dl>
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/ejb/TransactionManagement.html">@TransactionManagement</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/ejb/TransactionManagement.html">@TransactionManagement</a></dt>
 				<dd>Définit si la transaction est gérée par le conteneur (valeur CONTAINER par défaut) ou si la transaction est gérée par le bean lui-même (valeur BEAN).
 				Une transaction gérée par le bean signifie que le développeur souhaite gérer la transaction par programmation.</dd>
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/ejb/TransactionAttribute.html">@TransactionAttribute</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/ejb/TransactionAttribute.html">@TransactionAttribute</a></dt>
 				<dd>Permet de déclarer sous quelle condition une transaction gérée par le conteneur peut être démarrée lors de l'appel à une méthode de l'EJB.
-				Pour plus d'information, on se reportera à la documentation de l'énumération <a href="http://docs.oracle.com/javaee/6/api/javax/ejb/TransactionAttributeType.html">TransactionAttributeType</a>
+				Pour plus d'information, on se reportera à la documentation de l'énumération <a href="http://docs.oracle.com/javaee/7/api/javax/ejb/TransactionAttributeType.html">TransactionAttributeType</a>
 				qui est spécifiée dans cette annotation. Si l'annotation est omise, cela signifie que la transaction est de type <code>REQUIRED</code>.
 				<code>REQUIRED</code> signifie que si une transaction existe au moment de l'appel à la méthode, elle est utilisée ou sinon une nouvelle transaction est démarrée.</dd>
 			</dl>
@@ -287,8 +287,8 @@ public class IndividuRepository {
 				<p>Même si vous ne positionnez pas d'annotation pour la gestion de transaction sur un EJB session, ce service est tout de même activé.</p>
 			</aside>
 	
-			<p>Le développeur d'EJB peut décider de gérer la transaction par programmation grâce à l'objet <a href="http://docs.oracle.com/javaee/6/api/javax/transaction/UserTransaction.html">UserTransaction</a>
-			injecté par le conteneur grâce à l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/annotation/Resource.html">@Resource</a>.
+			<p>Le développeur d'EJB peut décider de gérer la transaction par programmation grâce à l'objet <a href="http://docs.oracle.com/javaee/7/api/javax/transaction/UserTransaction.html">UserTransaction</a>
+			injecté par le conteneur grâce à l'annotation <a href="http://docs.oracle.com/javaee/7/api/javax/annotation/Resource.html">@Resource</a>.
 			Dans ce cas, l'utilisation de l'annotation <code>@TransactionManagement</code> est obligatoire pour indiquer au conteneur que l'EJB gère lui-même les transactions.
 			</p>
 	
@@ -323,7 +323,7 @@ public class IndividuRepository {
 			<ul>
 				<li>la méthode de l'EJB se termine par une exception runtime</li>
 				<li>la méthode de l'EJB se termine par une exception portant l'annotation 
-				<a href="http://docs.oracle.com/javaee/6/api/javax/ejb/ApplicationException.html">@ApplicationException</a>
+				<a href="http://docs.oracle.com/javaee/7/api/javax/ejb/ApplicationException.html">@ApplicationException</a>
 				avec l'attribut <strong>rollback</strong> avec la valeur true</li>
 			</ul>
 			<p>Dans tous les autres cas, la transaction est <strong>commitée</strong>.</p>

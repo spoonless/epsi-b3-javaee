@@ -28,13 +28,9 @@
 		serveur et de générer une réponse dynamique. La plupart du temps, les servlets sont utilisées pour traiter des requêtes HTTP et générer dynamiquement une réponse.</p>
 		<p>L'API <strong>servlet</strong> est définie par la spécification <a href="https://jcp.org/aboutJava/communityprocess/final/jsr340/index.html">JSR 340</a> et la version actuelle est la 3.1.</p>
 		
-		<aside>
-			La version de TomEE que nous utilisons dans ce cours implémente la version 3.0 de l'API servlet.
-		</aside>
-
 		<section>
 			<h2>Structure d'une servlet HTTP</h2>
-			<p>Une servlet HTTP est une classe Java qui hérite de la classe <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServlet.html">javax.servlet.http.HttpServlet</a>&nbsp;:</p>
+			<p>Une servlet HTTP est une classe Java qui hérite de la classe <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServlet.html">javax.servlet.http.HttpServlet</a>&nbsp;:</p>
 			<pre><code class="java">
 package fr.epsi;
 
@@ -46,7 +42,7 @@ public class MyServlet extends HttpServlet {
 
 </code></pre>
 			
-			<p>Par défaut, la classe <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServlet.html">javax.servlet.http.HttpServlet</a> fournit des méthodes
+			<p>Par défaut, la classe <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServlet.html">javax.servlet.http.HttpServlet</a> fournit des méthodes
 			doXXX (XXX représentant une méthode HTTP) qui seront appelées lorsque la servlet devra traiter une requête HTTP de la méthode correspondante.</p>
 			
 			<aside>
@@ -84,29 +80,29 @@ public class MyServlet extends HttpServlet {
 
 </code></pre>
 	
-			<p>Les méthodes doXXX ont toutes deux paramètres : <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html">javax.servlet.http.HttpServletRequest</a> et <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletResponse.html">javax.servlet.http.HttpServletResponse</a>
+			<p>Les méthodes doXXX ont toutes deux paramètres : <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html">javax.servlet.http.HttpServletRequest</a> et <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html">javax.servlet.http.HttpServletResponse</a>
 			qui représentent respectivement la requête HTTP entrante et la réponse renvoyée par le serveur.</p>
 			<p>Pour l'instant, les méthodes qui vont nous intéresser sur ces classes sont :</p>
 			<dl>
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#setCharacterEncoding%28java.lang.String%29">String HttpServletRequest.setCharacterEncoding(String)</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#setCharacterEncoding-java.lang.String-">String HttpServletRequest.setCharacterEncoding(String)</a></dt>
 				<dd>Spécifie le format d'encodage des paramètres de la requête. Par défaut, l'encodage utilisé est <a href="http://fr.wikipedia.org/wiki/ISO_8859-1">ISO 8859-1</a> (Latin-1).</dd>
 
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getParameter%28java.lang.String%29">String HttpServletRequest.getParameter(String)</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">String HttpServletRequest.getParameter(String)</a></dt>
 				<dd>Retourne la valeur d'un paramètre d'une requête GET ou POST. La méthode attend le nom du paramètre et retourne sa valeur
 				ou null si le paramètre n'existe pas.</dd>
 	
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getParameter%28java.lang.String%29">java.util.Map&lt;java.lang.String,java.lang.String[]&gt; HttpServletRequest.getParameterMap()</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">java.util.Map&lt;java.lang.String,java.lang.String[]&gt; HttpServletRequest.getParameterMap()</a></dt>
 				<dd>Retourne une Map des paramètres d'une requête GET ou POST. La clé dans la Map correspond au nom du paramètre.
 				La valeur est un tableau de chaînes de caractères. En effet, un paramètre peut être présent plusieurs fois dans une requête.</dd>
 	
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletResponse.html#setContentType%28java.lang.String%29">void HttpServletResponse.setContentType(String)</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#setContentType-java.lang.String-">void HttpServletResponse.setContentType(String)</a></dt>
 				<dd>Positionne le type de contenu MIME de la réponse HTTP pour informer le client du format
 				de la réponse. Par exemple : "text/html" pour une page HTML.</dd>
 				
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletResponse.html#setCharacterEncoding%28java.lang.String%29">void HttpServletResponse.setCharacterEncoding(String)</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#setCharacterEncoding-java.lang.String-">void HttpServletResponse.setCharacterEncoding(String)</a></dt>
 				<dd>Indique l'encodage caractère du flux de réponse. L'appel à HttpServletResponse.getWriter() tient compte de l'encodage positionné. Il faut donc appeler cette méthode avant HttpServletResponse.getWriter()</dd>
 	
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletResponse.html#getWriter%28%29">java.io.PrintWriter HttpServletResponse.getWriter()</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#getWriter--">java.io.PrintWriter HttpServletResponse.getWriter()</a></dt>
 				<dd>Retourne un objet de type PrintWriter qui permet d'écrire la réponse dans le flux
 				de sortie. L'objet PrintWriter offre des méthodes write pour générer une réponse au format texte (comme une page HTML).</dd>
 	
@@ -154,7 +150,7 @@ public class HelloServlet extends HttpServlet {
 			a besoin de savoir pour quelle(s) URL cette servlet sera responsable de traiter les
 			requêtes et de fournir la réponse.</p>
 			<p>La méthode la plus simple pour configurer le déploiement d'une servlet consiste à utiliser
-			l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/annotation/WebServlet.html">@WebServlet</a>
+			l'annotation <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebServlet.html">@WebServlet</a>
 			sur la classe.</p>
 	
 			<pre><code class="java">

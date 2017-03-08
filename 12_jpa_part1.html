@@ -57,10 +57,10 @@
 			<h2>Les entités JPA</h2>
 			<p>JPA permet de définir des entités (<em>entities</em>). Une entité est simplement une instance d'une classe qui sera <em>persistante</em> (que
 			l'on pourra sauvegarder dans / charger depuis une base de données relationnelle). Une entité est signalée par l'annotation 
-			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Entity.html"><code>@Entity</code></a> sur la classe. 
+			<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Entity.html"><code>@Entity</code></a> sur la classe. 
 			De plus, une entité JPA <strong>doit disposer d'un
 			ou plusieurs attributs définissant un identifiant</strong> grâce à l'annotation
-			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Id.html"><code>@Id</code></a>
+			<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Id.html"><code>@Id</code></a>
 			. Cet identifiant correspondra à la clé primaire dans la table associée.</p>
 			<figure>
 				<figcaption>Un exemple de classe entité avec la déclaration de son identifiant</figcaption>
@@ -109,34 +109,34 @@ public class Individu {
 				</thead>
 				<tbody>
 					<tr>
-						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Entity.html"><code>@Entity</code></a></td>
+						<td><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Entity.html"><code>@Entity</code></a></td>
 						<td>Définit qu'une classe est une entité. Le nom de l'entité est donné par l'attribut <code>name</code> (en son absence le nom de l'entité correspond au nom de la classe).</td>
 					</tr>
 					<tr>
-						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Id.html"><code>@Id</code></a></td>
+						<td><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Id.html"><code>@Id</code></a></td>
 						<td>Définit l'attribut qui sert de clé primaire dans la table. Il est recommandé au départ d'utiliser
 						un type primitif, un wrapper de type primitif ou une <code>String</code> pour représenter un id.
 						Pour les clés composites, la mise en &oelig;uvre est plus compliquée. Afin de ne pas se compliquer inutilement
 						la tâche, il vaut mieux prévoir une clé technique simple pour chaque entité.</td>
 					</tr>
 					<tr>
-						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Basic.html"><code>@Basic</code></a></td>
+						<td><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Basic.html"><code>@Basic</code></a></td>
 						<td>Définit un mapping simple pour un attribut (par exemple <code>VARCHAR</code> pour <code>String</code>). Si on ne souhaite pas changer
 						la valeur des attributs par défaut de cette annotation, alors il est possible de ne pas la spécifier
 						puisqu'elle représente le mapping par défaut.</td>
 					</tr>
 					<tr>
-						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Temporal.html"><code>@Temporal</code></a></td>
+						<td><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Temporal.html"><code>@Temporal</code></a></td>
 						<td>Pour un attribut de type <code>java.util.Date</code> et <code>java.util.Calendar</code>, cette annotation
 						permet de préciser le type de mapping vers le type SQL (DATE, TIME ou TIMESTAMP).</td>
 					</tr>
 					<tr>
-						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Transient.html"><code>@Transient</code></a></td>
+						<td><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Transient.html"><code>@Transient</code></a></td>
 						<td>Indique qu'un attribut <strong>ne doit pas</strong> être persisté. Cet attribut ne sera donc jamais pris
 						en compte lors de l'exécution des requêtes vers la base de données.</td>
 					</tr>
 					<tr>
-						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Lob.html"><code>@Lob</code></a></td>
+						<td><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Lob.html"><code>@Lob</code></a></td>
 						<td>Indique que la colonne correspondante en base de données est un LOB (large object).</td>
 					</tr>
 				</tbody>
@@ -153,22 +153,22 @@ public class Individu {
 				</thead>
 				<tbody>
 					<tr>
-						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Table.html"><code>@Table</code></a></td>
+						<td><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Table.html"><code>@Table</code></a></td>
 						<td>Permet de définir les informations sur la table représentant cette entité en base de données. Il
 						est possible de définir le nom de la table grâce à l'attribut <code>name</code>. Par défaut le nom de la table
 						correspond au nom de l'entité (qui par défaut correspond au nom de la classe).</td>
 					</tr>
 					<tr>
-						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/GeneratedValue.html"><code>@GeneratedValue</code></a></td>
+						<td><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/GeneratedValue.html"><code>@GeneratedValue</code></a></td>
 						<td>Indique la stratégie à appliquer pour la génération de la clé lors de l'insertion d'une entité en base. Les valeurs possibles sont données
-						par l'énumération <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/GenerationType.html">GenerationType</a>.<br>
+						par l'énumération <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/GenerationType.html">GenerationType</a>.<br>
 						Si vous utilisez MySQL et la propriété <code>autoincrement</code> sur une colonne, alors vous devez utiliser <code>GenerationType.IDENTITY</code> (ce sera
 						le cas pour les exemples de ce cours).<br>
 						Si vous utilisez Oracle et un système de séquence, alors vous devez utiliser <code>GenerationType.SEQUENCE</code> et préciser le nom
 						de la séquence dans l'attribut <code>generator</code> de <code>@GeneratedValue</code>.</td>
 					</tr>
 					<tr>
-						<td><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Column.html"><code>@Column</code></a></td>
+						<td><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Column.html"><code>@Column</code></a></td>
 						<td>Permet de déclarer des informations relatives à la colonne sur laquelle un attribut doit être mappé.
 						Si cette annotation est absente, le nom de la colonne correspond au nom de l'attribut.
 						Avec cette annotation, il est possible de donner le nom de la colonne (l'attribut <code>name</code>) mais également
@@ -257,7 +257,7 @@ CREATE TABLE `individu` (
 			<h2>L'EntityManager</h2>
 			<p>Les annotations JPA que nous avons vues dans la section précédente, ne servent à rien si elle ne sont pas
 			exploitées programmatiquement. Dans JPA, l'interface centrale qui va exploiter ces annotations est 
-			l'<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/EntityManager.html"><strong><code>EntityManager</code></strong></a>.
+			l'<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/EntityManager.html"><strong><code>EntityManager</code></strong></a>.
 			&Agrave; partir d'une instance d'<code>EntityManager</code>, nous allons pouvoir manipuler les entités afin de les créer,
 			les modifier, les charger ou les supprimer. Pour cela, nous disposons de six méthodes&nbsp;:</p>
 			<ul>
@@ -385,12 +385,12 @@ CREATE TABLE `individu` (
 			<h3>La méthode persist</h3>
 			<p>La méthode <code>persist</code> ne se contente pas d'enregistrer une entité en base, elle positionne également la valeur de l'attribut
 			représentant la clé de l'entité. La détermination de la valeur de la clé dépend de la stratégie spécifiée par 
-			<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/GeneratedValue.html"><code>@GeneratedValue</code></a>.
+			<a href="http://docs.oracle.com/javaee/7/api/javax/persistence/GeneratedValue.html"><code>@GeneratedValue</code></a>.
 			L'insertion en base ne se fait pas nécessairement au moment de l'appel à la méthode <code>persist</code> (on peut toutefois
 			forcer l'insertion avec la méthode <code>EntityManager.flush()</code>). Cependant, l'<code>EntityManager</code> garantit que des appels
 			successifs à sa méthode <code>find</code> permettront de récupérer l'instance de l'entité.</p>
 			<p>C'est une erreur d'appeler la méthode <code>EntityManager.persist</code> en passant une entité dont l'attribut représentant
-			la clé est non null. La méthode jette alors l'exception <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/EntityExistsException.html"><code>EntityExistsException</code></a>.</p>
+			la clé est non null. La méthode jette alors l'exception <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/EntityExistsException.html"><code>EntityExistsException</code></a>.</p>
 
 			<h3>La méthode find</h3>
 			<p>La méthode <code>EntityManager.find (Class&lt;T&gt;, Object)</code> permet de rechercher une entité en donnant sa clé primaire. 
@@ -578,9 +578,9 @@ CREATE TABLE `individu` (
 			</aside>
 
 			<h3>Dans une application Java</h3>
-			<p>Pour une application Java "simple", il faut utiliser la classe <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Persistence.html"><code>Persistence</code></a>.
-			Grâce à cette classe, nous allons pouvoir créer une instance de <code><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/EntityManagerFactory.html">EntityManagerFactory</a></code>.
-			Cette dernière, comme son nom l'indique, permet de fabriquer une instance d'<code><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/EntityManager.html">EntityManager</a></code>.</p>
+			<p>Pour une application Java "simple", il faut utiliser la classe <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Persistence.html"><code>Persistence</code></a>.
+			Grâce à cette classe, nous allons pouvoir créer une instance de <code><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/EntityManagerFactory.html">EntityManagerFactory</a></code>.
+			Cette dernière, comme son nom l'indique, permet de fabriquer une instance d'<code><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/EntityManager.html">EntityManager</a></code>.</p>
 			
 			<figure>
 				<figcaption>Exemple d'initialisation de JPA</figcaption>
@@ -669,7 +669,7 @@ CREATE TABLE `individu` (
 			
 			<p>Il est possible d'obtenir une instance d'<code>EntityManagerFactory</code> par injection dans n'importe quel
 			composant Java EE (servlet, managed bean CDI, EJB) grâce à l'annotation 
-			<code><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/PersistenceUnit.html">@PersistenceUnit</a></code>&nbsp;:</p>
+			<code><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/PersistenceUnit.html">@PersistenceUnit</a></code>&nbsp;:</p>
 
 			<figure>
 				<figcaption>Injection d'une EntityManagerFactory dans un composant Java EE</figcaption>
@@ -691,7 +691,7 @@ public class MyServlet extends HttpServlet {
 			</figure>
 			
 			<p>Il est également possible d'obtenir un <code>EntityManager</code> grâce à l'annotation 
-			<code><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/PersistenceContext.html">@PersistenceContext</a></code>.
+			<code><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/PersistenceContext.html">@PersistenceContext</a></code>.
 			<strong>Attention, un <code>EntityManager</code> n'est pas thread-safe</strong>. Il ne doit pas être injecté dans un
 			composant Java EE qui est utilisé dans des accès concurrents. Les beans CDI de portée requête (<code>@RequestScope</code>)
 			et la plupart des EJB sont des composants Java EE dans lesquels on peut injecter en toute sécurité un <code>EntityManager</code>.</p>
@@ -774,7 +774,7 @@ public class IndividuController {
 			<p>Pour signaler la démarcation transactionnelle, il existe deux solutions&nbsp;:</p>
 			<ul>
 				<li>Soit on utilise une forme déclarative avec les EJB (Cf. <a href="11_ejb.html#gestion_des_transactions">la gestion des transactions dans les EJB</a>)</li>
-				<li>Soit on utilise un forme programmatique grâce à l'objet <code><a href="http://docs.oracle.com/javaee/6/api/javax/transaction/UserTransaction.html">UserTransaction</a></code></li>
+				<li>Soit on utilise un forme programmatique grâce à l'objet <code><a href="http://docs.oracle.com/javaee/7/api/javax/transaction/UserTransaction.html">UserTransaction</a></code></li>
 			</ul>
 			<p>Pour la méthode programmatique, une instance de cet object peut être récupérée par injection grâce à l'annotation <code>@Resource</code> dans un composant Java EE.</p>
 			<figure>

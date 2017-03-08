@@ -43,11 +43,11 @@
 			<p>Les différents types de listeners sont représentés dans l'API Servlet par les <strong>interfaces</strong> Java suivantes&nbsp;:</p>
 			
 			<dl>
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContextListener.html">javax.servlet.ServletContextListener</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html">javax.servlet.ServletContextListener</a></dt>
 				<dd>Permet d'écouter les changements d'état du <code>ServletContext</code>. Le conteneur Web avertit l'application de la création du <code>ServletContext</code>
-				grâce à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContextListener.html#contextInitialized(javax.servlet.ServletContextEvent)">
+				grâce à la méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html#contextInitialized-javax.servlet.ServletContextEvent-">
 				<code>contextInitialized</code></a> et de la destruction du <code>ServletContext</code> grâce à la méthode 
-				<a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContextListener.html#contextDestroyed(javax.servlet.ServletContextEvent)"><code>contextDestroyed</code></a>.
+				<a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html#contextDestroyed-javax.servlet.ServletContextEvent-"><code>contextDestroyed</code></a>.
 				<aside>
 				Il est important de comprendre que le <code>ServletContext</code> représente l'application Web. 
 				Donc un <code>ServletContextListener</code> est un moyen
@@ -55,48 +55,48 @@
 				</aside>
 				</dd>
 
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContextAttributeListener.html">javax.servlet.ServletContextAttributeListener</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html">javax.servlet.ServletContextAttributeListener</a></dt>
 				<dd>Permet d'écouter les changements d'état des attributs stockés dans le <code>ServletContext</code> (les attributs de portée application).
-				Le conteneur avertit l'application de l'ajout d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContextAttributeListener.html#attributeAdded(javax.servlet.ServletContextAttributeEvent)"><code>attributeAdded</code></a>),
-				de la suppression d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContextAttributeListener.html#attributeRemoved(javax.servlet.ServletContextAttributeEvent)"><code>attributeRemoved</code></a>)
-				et de la modification d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletContextAttributeListener.html#attributeReplaced(javax.servlet.ServletContextAttributeEvent)"><code>attributeReplaced</code></a>).</dd>
+				Le conteneur avertit l'application de l'ajout d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html#attributeAdded-javax.servlet.ServletContextAttributeEvent-"><code>attributeAdded</code></a>),
+				de la suppression d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html#attributeRemoved-javax.servlet.ServletContextAttributeEvent-"><code>attributeRemoved</code></a>)
+				et de la modification d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html#attributeReplaced-javax.servlet.ServletContextAttributeEvent-"><code>attributeReplaced</code></a>).</dd>
 
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequestListener.html">javax.servlet.ServletRequestListener</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html">javax.servlet.ServletRequestListener</a></dt>
 				<dd>Permet d'écouter l'entrée et/ou la sortie d'une requête de l'environnement de l'application Web.
-				Le conteneur avertit l'application de l'entrée d'une requête à traiter grâce à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequestListener.html#requestInitialized(javax.servlet.ServletRequestEvent)"><code>requestInitialized</code></a>
-				et de la sortie de la requête grâce à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequestListener.html#requestDestroyed(javax.servlet.ServletRequestEvent)"><code>requestDestroyed</code></a>.
+				Le conteneur avertit l'application de l'entrée d'une requête à traiter grâce à la méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html#requestInitialized-javax.servlet.ServletRequestEvent-"><code>requestInitialized</code></a>
+				et de la sortie de la requête grâce à la méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html#requestDestroyed-javax.servlet.ServletRequestEvent-"><code>requestDestroyed</code></a>.
 				</dd>
 
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequestAttributeListener.html">javax.servlet.ServletRequestAttributeListener</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html">javax.servlet.ServletRequestAttributeListener</a></dt>
 				<dd>Permet d'écouter les changements d'état des attributs stockés dans la <code>HttpServletRequest</code> (les attributs de portée requête).
-				Le conteneur avertit l'application de l'ajout d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequestAttributeListener.html#attributeAdded(javax.servlet.ServletRequestAttributeEvent)"><code>attributeAdded</code></a>),
-				de la suppression d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequestAttributeListener.html#attributeRemoved(javax.servlet.ServletRequestAttributeEvent)"><code>attributeRemoved</code></a>)
-				et de la modification d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequestAttributeListener.html#attributeReplaced(javax.servlet.ServletRequestAttributeEvent)"><code>attributeReplaced</code></a>).</dd>
+				Le conteneur avertit l'application de l'ajout d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html#attributeAdded-javax.servlet.ServletRequestAttributeEvent-"><code>attributeAdded</code></a>),
+				de la suppression d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html#attributeRemoved-javax.servlet.ServletRequestAttributeEvent-"><code>attributeRemoved</code></a>)
+				et de la modification d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html#attributeReplaced-javax.servlet.ServletRequestAttributeEvent-"><code>attributeReplaced</code></a>).</dd>
 
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionListener.html">javax.servlet.http.HttpSessionListener</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html">javax.servlet.http.HttpSessionListener</a></dt>
 				<dd>Permet d'écouter la création et la suppression d'une <code>HttpSession</code>.
-				Le conteneur avertit l'application de la création d'une session grâce à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionListener.html#sessionCreated(javax.servlet.http.HttpSessionEvent)"><code>sessionCreated</code></a>
-				et de la suppression d'une session grâce à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionListener.html#sessionDestroyed(javax.servlet.http.HttpSessionEvent)"><code>sessionDestroyed</code></a>.
-				La suppression d'une session signifie que soit elle a été invalidée par l'application elle-même grâce à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSession.html#invalidate()">HttpSession.invalidate()</a>
+				Le conteneur avertit l'application de la création d'une session grâce à la méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html#sessionCreated-javax.servlet.http.HttpSessionEvent-"><code>sessionCreated</code></a>
+				et de la suppression d'une session grâce à la méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html#sessionDestroyed-javax.servlet.http.HttpSessionEvent-"><code>sessionDestroyed</code></a>.
+				La suppression d'une session signifie que soit elle a été invalidée par l'application elle-même grâce à la méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html#invalidate--">HttpSession.invalidate()</a>
 				soit elle est arrivée à expiration et le conteneur a décidé de l'invalider.
 				</dd>
 
-				<dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionAttributeListener.html">javax.servlet.http.HttpSessionAttributeListener</a></dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html">javax.servlet.http.HttpSessionAttributeListener</a></dt>
 				<dd>Permet d'écouter les changements d'état des attributs stockés dans la <code>HttpSession</code> (les attributs de portée session).
-				Le conteneur avertit l'application de l'ajout d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionAttributeListener.html#attributeAdded(javax.servlet.http.HttpSessionBindingEvent)"><code>attributeAdded</code></a>),
-				de la suppression d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionAttributeListener.html#attributeRemoved(javax.servlet.http.HttpSessionBindingEvent)"><code>attributeRemoved</code></a>)
-				et de la modification d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionAttributeListener.html#attributeReplaced(javax.servlet.http.HttpSessionBindingEvent)"><code>attributeReplaced</code></a>).</dd>
+				Le conteneur avertit l'application de l'ajout d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html#attributeAdded-javax.servlet.http.HttpSessionBindingEvent-"><code>attributeAdded</code></a>),
+				de la suppression d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html#attributeRemoved-javax.servlet.http.HttpSessionBindingEvent-"><code>attributeRemoved</code></a>)
+				et de la modification d'un attribut (appel à la méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html#attributeReplaced-javax.servlet.http.HttpSessionBindingEvent-"><code>attributeReplaced</code></a>).</dd>
 			</dl>
 			<aside>
-				<p>Il existe également deux autres listeners Web&nbsp;: Le <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionActivationListener.html">HttpSessionActivationListener</a>
-				et le <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpSessionBindingListener.html">HttpSessionBindingListener</a>. Ils ne sont pas décrits ici car
+				<p>Il existe également deux autres listeners Web&nbsp;: Le <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionActivationListener.html">HttpSessionActivationListener</a>
+				et le <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingListener.html">HttpSessionBindingListener</a>. Ils ne sont pas décrits ici car
 				ils sont réservés à des usages plus avancés de l'API Servlet.</p>
 			</aside>
 		</section>
 		<section>
 			<h2>Déclaration des listeners Web</h2>
 			<p>Une classe implémentant une ou plusieurs interfaces la désignant comme un listener Web doit également être déclarée auprès du conteneur Web.
-			Pour cela, il suffit d'ajouter l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/annotation/WebListener.html">@WebListener</a>
+			Pour cela, il suffit d'ajouter l'annotation <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebListener.html">@WebListener</a>
 			à la classe&nbsp;:</p>
 			
 			<figure>
@@ -189,12 +189,12 @@ public class LoggingListener implements ServletContextListener {
 			<p>Il est parfois intéressant d'effectuer des opérations avant et/ou après l'invocation de la servlet.
 			Il s'agit souvent d'opérations communes à un ensemble de requêtes d'une application Web.</p>
 			
-			<p>Un filtre de Servlet est une classe implémentant l'interface <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/Filter.html">Filter</a>.
+			<p>Un filtre de Servlet est une classe implémentant l'interface <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html">Filter</a>.
 			Un filtre a son propre cycle de vie. Une fois créé, le conteneur initialise le filtre en appelant sa méthode
-			<a href="http://docs.oracle.com/javaee/6/api/javax/servlet/Filter.html#init(javax.servlet.FilterConfig)"><code>init</code></a> et il signalera
-			la destruction du filtre en appelant sa méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/Filter.html#destroy()"><code>destroy</code></a>.
+			<a href="http://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html#init-javax.servlet.FilterConfig-"><code>init</code></a> et il signalera
+			la destruction du filtre en appelant sa méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html#destroy--"><code>destroy</code></a>.
 			L'opération de filtrage est réalisée grâce à la méthode 
-			<a href="http://docs.oracle.com/javaee/6/api/javax/servlet/Filter.html#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)">doFilter</a>.
+			<a href="http://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html#doFilter-javax.servlet.ServletRequest-javax.servlet.ServletResponse-javax.servlet.FilterChain-">doFilter</a>.
 			</p>
 			<figure>
 				<figcaption>Exemple d'implémentation d'un filtre Web</figcaption>
@@ -238,7 +238,7 @@ public class MyFilter implements Filter {
 			<h2>Déclaration des filtres</h2>
 			
 			<p>La déclaration d'un filtre Web auprès du conteneur se fait soit par
-			l'annotation <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/annotation/WebFilter.html"><code><strong>@WebFilter</strong></code></a>
+			l'annotation <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebFilter.html"><code><strong>@WebFilter</strong></code></a>
 			soit dans le fichier de déploiement <strong>web.xml</strong>.</p>
 			<p>Comme pour une Servlet, un filtre est associé à un ou plusieurs motifs d'URL (URL pattern) indiquant au conteneur
 			pour quelles requêtes HTTP le filtre doit être appelé.</p>
@@ -323,7 +323,7 @@ public class MyFilter implements Filter {
 				<h2>Implémentation d'un filtre</h2>
 				
 				<p>L'opération de filtrage est réalisée par la méthode
-				<a href="http://docs.oracle.com/javaee/6/api/javax/servlet/Filter.html#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)">doFilter</a>.
+				<a href="http://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html#doFilter-javax.servlet.ServletRequest-javax.servlet.ServletResponse-javax.servlet.FilterChain-">doFilter</a>.
 				</p>
 					
 				<figure>
@@ -369,7 +369,7 @@ public class MyFilter implements Filter {
 
 				<p>Un cas facilement compréhensible est celui d'une application Web qui poste les données de tous ses formulaires HTML
 				en UTF-8. Nous avons vu que par défaut, le conteneur Web utilise l'encodage ISO-8859-1 (Latin-1).
-				Il est donc nécessaire de positionner le bon encodage grâce à la méthode <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#setCharacterEncoding(java.lang.String)"><code>ServletRequest.setCharacterEncoding(String)</code></a>.
+				Il est donc nécessaire de positionner le bon encodage grâce à la méthode <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#setCharacterEncoding-java.lang.String-"><code>ServletRequest.setCharacterEncoding(String)</code></a>.
 				Cette opération répétitive est source d'oubli (et donc de bug). Il serait préférable de garantir que cette méthode soit
 				systématiquement appelée avant chaque traitement de Servlet. Ce type de comportement peut très facilement être
 				implémenté au moyen d'un filtre Web.</p>

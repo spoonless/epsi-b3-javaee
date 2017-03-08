@@ -42,7 +42,7 @@
 			<h2>Cycle de vie des servlets</h2>
 			<p>Le conteneur Web gère le cycle de vie des servlets : la création, l'initialisation et la destruction.
 			&Agrave; chacune de ces étapes, une instance de servlet est informée par un appel à une méthode déclarée
-			dans l'interface <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/Servlet.html">Servlet</a>
+			dans l'interface <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/Servlet.html">Servlet</a>
 			et qui peut être surchargée pour chaque servlet.</p>
 			
 			<pre><code class="java">
@@ -79,7 +79,7 @@ public class MaClasse {
 </code></pre>
 			</aside>
 			<p>Lors de l'appel à la méthode <code>init(ServletConfig)</code>, le conteneur passe en paramètre
-			une instance de <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/ServletConfig.html">ServletConfig</a>
+			une instance de <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletConfig.html">ServletConfig</a>
 			qui permet, entre-autres, à la servlet de récupérer des paramètres d'initialisation. Notez que la méthode <code>init(ServletConfig)</code>
 			autorise l'implémentation à jeter une <code><strong>ServletException</strong></code>. Si cela se produit, le conteneur considère que la servlet n'a
 			pas pu s'initialiser correctement et elle ne sera pas déployée dans le conteneur : elle ne sera donc pas accessible !</p>

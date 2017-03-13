@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>L'API JAX-RS</title>
+	<meta name="author" content="David Gayerie">
+	<link href="css/article.css" rel="stylesheet" media="screen">
+	<link href="css/print-article.css" rel="stylesheet" media="print">
+	<link href="highlight/styles/zenburn.css" rel="stylesheet">
+	
+	<script src="highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<script src="js/toc.js"></script>
+</head>
+<body>
+	<div id="titleBar">
+		<a href="index.html" title="Retourner au sommaire"><img src="assets/go-home.png"></a>
+ 		<a href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip" title="Télécharger tout le cours"><img src="assets/download.png"></a>
+		<script>document.write(document.title)</script> - EPSI B3 2016/2017 - <a href="mailto:david.gayerie.epsi@mailoo.org">David Gayerie</a>
+		<span class="license"><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/fr/80x15.png" /></a></span>
+	</div>
+
+	<header></header>
+	<article>
+		<h1><script>document.write(document.title)</script></h1>
+		<section id="toc"></section>
+		
+		<p>JAX-RS est l'API conçue pour implémenter des API Web (aussi appelées Web Services RESTful).
+		Les API Web exploitent les possibilités du protocole HTTP pour permettre à des systèmes d'information
+		de communiquer et de s'échanger des services. JAX-RS est donc une API de programmation pour implémenter
+		rapidement des applications basées sur HTTP. Ainsi, comme nous le verrons plus loin, son utilisation
+		n'est pas réservée à l'implémentation de services mais il peut tout aussi bien être utilisé pour
+		développer des applications Web plus traditionnelles.
+		</p>
+		
+		<p>JAX-RS2 est défini par la JSR 339. Comme pour tous les services et toutes API Java EE, il
+		existe plusieurs implémentations de cette spécifications&nbsp;: Jersey (l'implémentation de référence), RestEasy, Apache CXF...
+		TomEE intègre l'implèmentation CXF.</p>
+		
+		<aside>
+			<p>Dans un serveur d'application tel que TomEE, JAX-RS est disponible par défaut. Mais il est aussi possible
+			de utiliser une implémentation dans des conteneurs plus légers comme Tomcat ou Jetty sous la forme d'un framework tiers que l'on peut
+			incorporer dans son application Web. Vous devez alors vous reporter à la documentation de l'implémentation choisie pour
+			connaître la marche à suivre.</p>
+		</aside>
+		
+		<section>
+			<h2>La notion de ressource</h2>
+			
+			<p>Dans le Web, ce qui est désigné par une URI est appelé une <strong>ressource</strong>. Une ressource offre
+			une interface uniforme qui est définie dans HTTP par l'ensemble des méthodes&nbsp;: GET, HEAD, POST, PUT, DELETE, OPTIONS...
+			Un client HTTP positionne dans sa requête une méthode pour indiquer le type d'opération que le serveur doit effectuer sur la ressource.</p>
+
+			<dl>
+				<dt><a href="http://tools.ietf.org/html/rfc7231#section-4.3.1">GET</a></dt>
+				<dd>Demande au serveur une représentation de la ressource cible.</dd>
+
+				<dt><a href="http://tools.ietf.org/html/rfc7231#section-4.3.2">HEAD</a></dt>
+				<dd>Comme un GET sauf que la réponse ne contient jamais de corps. Cette méthode est utile pour obtenir les informations des en-têtes HTTP et valider une requête sans envoyer ni recevoir de corps de message.</dd>
+
+				<dt><a href="http://tools.ietf.org/html/rfc7231#section-4.3.4">PUT</a></dt>
+				<dd>Crée ou met à jour l'état d'une ressource identifiée par l'URI.</dd>
+
+				<dt><a href="http://tools.ietf.org/html/rfc7231#section-4.3.5">DELETE</a></dt>
+				<dd>Détruit l'association de l'URI avec l'état de la ressource.</dd>
+
+				<dt><a href="http://tools.ietf.org/html/rfc7231#section-4.3.3">POST</a></dt>
+				<dd>La sémantique de la méthode POST est probablement la plus compliquée à saisir car cette méthode est utilisable dans différentes situations.
+					<ul>
+						<li>Le client souhaite créer une ressource sur le serveur en laissant au serveur le choix de l'URI final de la ressource.</li>
+						<li>Le client souhaite ajouter une ressource à une ressource représentant une collection.</li>
+						<li>Le client souhaite que le serveur effectue un traitment.</li>
+						<li>Le client souhate modifier partiellement une ressource.</li>
+					</ul>
+				
+				</dd>
+
+				<dt><a href="http://tools.ietf.org/html/rfc7231#section-4.3.7">OPTIONS</a></dt>
+				<dd>Permet d'obtenir les options de communication (par exemple : les méthodes autorisées pour l'URI). Le serveur doit retourner ces informations dans les en-têtes de réponse.
+				Ainsi l'en-tête de réponse <a href="http://tools.ietf.org/html/rfc7231#section-7.4.1"><code>Allow</code></a> liste les méthodes HTTP autorisées pour cette URI.</dd>
+
+				<dt><a href="http://tools.ietf.org/html/rfc7231#section-4.3.8">TRACE</a></dt>
+				<dd>Permet de simuler un écho de la requête. Cette méthode n'est pas utilisée pour la réalisation d'API Web car elle est surtout utile pour tester la configuration du réseau et obtenir des informations des proxies.</dd>
+
+				<dt><a href="http://tools.ietf.org/html/rfc7231#section-4.3.6">CONNECT</a></dt>
+				<dd>&Eacute;tablit un tunnel à travers un proxy. Cette méthode n'est pas utilisée pour la réalisation d'API Web.</dd>
+			</dl>
+			
+		</section>
+		<section>
+			<h2>Implémenter des ressources avec JAX-RS</h2>
+			
+			<p>JAX-RS permet d'implémenter des ressources sous la forme de composants Java EE. Une classe représentant une ressource est
+			identifiée grâce à l'annotation <strong><code>@Path</code></strong>.</p>
+			
+			
+			<dl>
+				<dt>@Path</dt>
+				<dd>L'annotation <code><strong>@javax.ws.rs.Path</strong></code> indique le chemin d'URI qui identifie la ressource.
+				Cette annotation est utilisable sur une classe et sur les méthodes. Utilisée sur une classe, cette annotation permet
+				d'identifier la classe comme une ressource racine qui devient dès lors un composant géré par le serveur d'application.
+
+<pre><code class="java">
+package fr.epsi;
+
+import javax.ws.rs.Path;
+
+@Path("/user")
+public class UserResource {
+
+}
+
+</code></pre>
+					<aside>
+						<p>Pour l'exemple ci-dessus, la ressource sera identifiée par l'URI&nbsp;: <strong>http://[hôte]/[contexte racine]/user</strong></p>
+					</aside>
+					<p>Utilisée sur une méthode, cette annotation permet de spécifier une sous chemin dans la ressource. Si cette méthode retourne une classe
+					utilisant des annotations JAX-RS, on parle alors de <strong>sous ressource</strong>.
+					</p>
+					
+				
+<pre><code class="java">
+package fr.epsi;
+
+import javax.ws.rs.Path;
+
+@Path("/user")
+public class UserResource {
+	
+  @Path("/geo")
+  public GeoLocation getGeographicalLocation() {
+    //...
+  }
+
+}
+
+</code></pre>
+					<aside>
+						<p>Pour l'exemple ci-dessus, l'instance de la classe <code>GeoLocation</code> retournée par la méthode
+						est accessible par l'URI&nbsp;: <strong>http://[hôte]/[contexte racine]/user/geo</strong></p>
+					</aside>
+
+					<p>Dans l'exemple précédent, si la classe <code>GeoLocation</code> utilise elle-même des annotations JAX-RS alors on dit qu'il
+					s'agit d'une sous-ressource. Il devient possible de créer des arborescences de ressources en Java basées sur le chemin de l'URI.</p>
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt>Les annotations de méthodes</dt>
+				<dd>JAX-RS fournit une annotation pour presque toutes les méthodes HTTP&nbsp;:
+					<ul>
+						<li><code><a href="">@javax.ws.rs.GET</a></code></li>
+						<li><code><a href="">javax.ws.rs.HEAD</a></code></li>
+						<li><code><a href="">javax.ws.rs.POST</a></code></li>
+						<li><code><a href="">javax.ws.rs.POST</a></code></li>
+						<li><code><a href="">javax.ws.rs.PUT</a></code></li>
+						<li><code><a href="">javax.ws.rs.DELETE</a></code></li>
+						<li><code><a href="">javax.ws.rs.OPTIONS</a></code></li>
+					</ul> 
+					<p>Elles permettent d'indiquer quelle méthode Java doit être appelée pour traiter la méthode de la requête HTTP entrante.</p>
+<pre><code class="java">
+package fr.epsi;
+
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+
+@Path("/user")
+public class UserResource {
+
+  @GET
+  public User get() {
+    //....
+  }
+
+  @PUT
+  public User createOrUpdate() {
+    //....
+  }
+  
+  @DELETE
+  public void delete() {
+    //....
+  }
+
+  @POST
+  @Path("/subscription")
+  public void subscribe() {
+    //....
+  }
+
+}
+
+</code></pre>
+
+					<aside class="tip">
+						<p>Si aucune méthode Java n'est déclarée pour traiter la méthode HTTP de la requête entrante, alors
+						le serveur répondra automatiquement le code erreur <code>405</code> (Method not allowed) sauf pour
+						les méthodes <code>HEAD</code> et <code>OPTIONS</code>. Pour la méthode HTTP <code>HEAD</code>, JAX-RS tente
+						d'appeler la méthode Java associée à <code>GET</code> et ignore le corps de la réponse (ce qui est exactement le comportement attendu par un client
+						HTTP qui effectue ce type de requête). Pour la méthode HTTP <code>OPTIONS</code>, JAX-RS génère une réponse
+						contenant l'en-tête <code>Allow</code> donnant la liste des méthodes HTTP autorisées pour cette ressource
+						en se basant sur les annotations JAX-RS présentes dans la classe.</p>
+					</aside>
+
+				</dd>
+				
+				<dt>Paramètre dans le chemin d'URI</dt>
+				<dd>
+					Comme chaque ressource Web est identifiée par une URI, il est important pour le serveur de pouvoir récupérer dans le chemin
+					les informations qui vont lui permettre de réaliser cette identification dynamiquement. Par exemple, le serveur peut
+					extraire du chemin de la ressource une clé primaire lui permettant d'effectuer une recherche en base de données.
+					<p>Avec JAX-RS, on déclare des paramètres de chemin entre accolades et on utilise l'annotation
+					<code><a href="">javax.ws.rs.PathParam</a></code> pour récupérer leur valeur dans les paramètres des méthodes&nbsp;:</p>
+
+<pre><code class="java">
+package fr.epsi;
+
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+
+@Path("/user/{id}")
+public class UserResource {
+  
+  @GET
+  public User get(@PathParam("id") long id) {
+    //....
+  }
+
+  @PUT
+  public User createOrUpdate(@PathParam("id") long id, User user) {
+    //....
+  }
+  
+  @DELETE
+  public void delete(@PathParam("id") long id) {
+    //....
+  }
+
+  @POST
+  @Path("/subscription")
+  public void subscribe(@PathParam("id") long id) {
+    //....
+  }
+
+  @GET
+  @Path("/subscription/{idSubscription}")
+  public Subscription getSubscription(@PathParam("id") long id, @PathParam("idSubscription") String idSub) {
+    //....
+  }
+}
+
+</code></pre>
+
+					<aside class="tip">
+						<p>JAX-RS est une API très versatile. Elle autorise beaucoup plus de souplesse que la plupart des autres API Java EE.
+						Pour l'exemple précédent, comme le paramètre <code>{id}</code> permettant d'identifier un utilisateur
+						est déclaré au niveau de la classe, on devrait pouvoir obtenir cet identifiant à la construction de l'instance.
+						JAX-RS permet effectivement cette implémentation qui semble plus conforme à un modèle objet&nbsp;:</p>
+<pre><code class="java">
+package fr.epsi;
+
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+
+@Path("/user/{id}")
+public class UserResource {
+  
+  private final long id;
+  
+  public UserResource(@PathParam("id") long id) {
+    this.id = id;
+  }
+  
+  @GET
+  public User get() {
+    // ...
+  }
+
+  @PUT
+  public User createOrUpdate(User user) {
+    // ...
+  }
+  
+  @DELETE
+  public void delete() {
+    //....
+  }
+
+  @POST
+  @Path("/subscription")
+  public void subscribe() {
+    //....
+  }
+
+  @GET
+  @Path("/subscription/{idSubscription}")
+  public Subscription getSubscription(@PathParam("idSubscription") String idSub) {
+    //....
+  }
+}
+
+</code></pre>		
+						<p>Contrairement à l'API Servlet, l'API JAX-RS <strong>crée une instance</strong> de <code>UserResource</code> pour chaque
+						requête. Il est donc possible de stocker dans l'état de l'instance des informations
+						spécifiques à la requête (comme l'identifiant de l'utilisateur).</p>
+					</aside>
+					
+					<p>JAX-RS peut réaliser le transtypage d'un paramètre de chemin vers les types primitifs et les chaînes de caractères.
+					Cela permet de garantir un premier contrôle de la validité de la donnée. Si la valeur attendue doit avoir un motif
+					particulier, il possible de le spécifier avec une expression régulière&nbsp;:</p>
+
+<pre><code class="java">
+package fr.epsi;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+
+@Path("/user/{id: [0-9]{5}}")
+public class UserResource {
+  
+  private final long id;
+  
+  public UserResource(@PathParam("id") long id) {
+    this.id = id;
+  }
+  
+  @GET
+  public User get() {
+    // ...
+  }
+
+}
+
+</code></pre>
+					<p>Par défaut, JAX-RS utilise comme expression régulière pour un paramètre de chemin <code><strong>[^/]+?</strong></code></p>	
+
+				</dd>
+				
+				<dt>@Consumes / @Produces</dt>
+				<dd>
+					Lorsqu'un client soumet une requête pour transmettre des informations au serveur (comme des données de formulaire) et
+					quand un serveur retourne du contenu à un client, il est nécessaire de préciser le type de contenu. On utilise pour cela
+					l'en-tête HTTP <code><a href="http://tools.ietf.org/html/rfc7231#section-3.1.1.5">Content-type</a></code> avec comme valeur le type 
+					<a href="http://fr.wikipedia.org/wiki/Type_MIME">MIME</a>.
+					<p>Une liste (non exhaustive) des types MIME les plus courants est&nbsp;:</p>
+					<table>
+						<tbody>
+							<tr>
+								<td>text/plain</td>
+								<td>Un fichier texte</td>
+							</tr>
+							<tr>
+								<td>text/plain;charset=utf-8</td>
+								<td>Un fichier texte encodé en UTF-8</td>
+							</tr>
+							<tr>
+								<td>text/html</td>
+								<td>Un fichier HTML</td>
+							</tr>
+							<tr>
+								<td>application/x-www-form-urlencoded</td>
+								<td>Le format de données pour la soumission d'un formulaire HTML</td>
+							</tr>
+							<tr>
+								<td>text/xml ou application/xml</td>
+								<td>Un fichier XML</td>
+							</tr>
+							<tr>
+								<td>text/json ou application/json</td>
+								<td>Un fichier JSON</td>
+							</tr>
+							<tr>
+								<td>image/jpeg</td>
+								<td>Une image au format jpeg</td>
+							</tr>
+							<tr>
+								<td>application/octet-stream</td>
+								<td>Un flux d'octets sans type particulier. Il s'agit du format par défaut si l'en-tête <code>Content-type</code> est absent.</td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<p>La classe et/ou les méthodes d'une Ressource JAX-RS peuvent utiliser les annotations @javax.ws.rs.Consumes 
+					et @javax.ws.rs.Produces pour indiquer respectivement le type de contenu attendu pour le contenu de la requête
+					et pour le contenu de la réponse.</p>
+				
+<pre><code class="java">
+package fr.epsi;
+
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.core.MediaType;
+
+@Path("/user/{id}")
+public class UserResource {
+  
+  private final long id;
+  
+  public UserResource(@PathParam("id") long id) {
+    this.id = id;
+  }
+  
+  @GET
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  public User get() {
+    // ...
+  }
+
+  @PUT
+  @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  public User createOrUpdate(User user) {
+    // ...
+  }
+  
+  @DELETE
+  public void delete() {
+    //....
+  }
+
+  @POST
+  @Path("/subscription")
+  public void subscribe() {
+    //....
+  }
+
+  @GET
+  @Path("/subscription/{idSubscription}")
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  public Subscription getSubscription(@PathParam("idSubscription") String idSub) {
+    //....
+  }
+}
+
+</code></pre>
+			
+					<aside>
+						<p>Plutôt que d'écrire&nbsp;:</p>
+<pre><code class="java">@Produces("application/json")
+</code></pre>
+					<p>Il est recommandé d'utiliser les constantes déclarées dans la classe <code>javax.ws.rs.core.MediaType</code>&nbsp;</p>
+<pre><code class="java">@Produces(MediaType.APPLICATION_JSON)
+</code></pre>
+				</aside>
+	
+				</dd>
+				
+				<dt>@QueryParam</dt>
+				<dd>Comme pour les paramètres de chemin, il est possible de récupérer la valeur des paramètres de requêtes comme arguments
+				des méthodes de la ressource JAX-RS grâce à l'annotation <code><strong>@QueryParam</strong></code>.
+	
+<pre><code class="java">
+  @GET
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  public List&lt;User&gt; search(@QueryParam("name") String name) {
+    // ...
+  }
+
+</code></pre>
+				</dd>
+
+
+				<dt>@FormParam</dt>
+				<dd>Les données transmises <i>via</i> un formulaire HTML peuvent être récupérées comme arguments
+				des méthodes de la ressource JAX-RS grâce à l'annotation <code><strong>@FormParam</strong></code>.
+				Pour le cas d'une requête de formulaire, le contenu attendu est presque toujours de type <code>application/x-www-form-urlencoded</code>.
+				
+	
+<pre><code class="java">
+  @POST
+  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+  public void create(@FormParam("name") String name, @FormParam("age") int age) {
+    // ...
+  }
+
+</code></pre>
+					<aside class="tip">
+						<p>Sur le même principe, il est également possible de récupérer d'autres informations d'une requête&nbsp;:</p>
+						<ul>
+							<li>Pour récupérer la valeur d'un en-tête HTTP, il faut utiliser l'annotation <code><strong>@javax.ws.rs.HeaderParam</strong></code></li>
+							<li>Pour récupérer la valeur d'un Cookie HTTP, il faut utiliser l'annotation <code><strong>@javax.ws.rs.CookieParam</strong></code></li>
+						</ul>
+					</aside>
+				</dd>
+			</dl>
+		</section>
+	</article>
+	
+	<!-- 
+	
+	* Mapping XML et JSON
+
+	* @Context
+	
+	* gestion des exceptions
+	
+	* Exemple avancé : MessageBodyWriter
+	
+	* Utilisation de Bean Validation
+
+	* Utilisation de CDI
+	
+	 -->
+
+	<footer class="license">
+		<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/fr/88x31.png" /></a><br />Cette œuvre est mise à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/fr/">Licence Creative Commons Attribution -  Partage dans les Mêmes Conditions 3.0 France</a>.
+	</footer>
+</body>
+</html>

@@ -24,7 +24,7 @@
 		<h1><script>document.write(document.title)</script></h1>
 		<section id="toc"></section>
 		
-		<p>JAX-RS est l'API conçue pour implémenter des API Web (aussi appelées Web Services RESTful).
+		<p><a href="https://jax-rs-spec.java.net/">JAX-RS</a> est l'API conçue pour implémenter des API Web (aussi appelées Web Services RESTful).
 		Les API Web exploitent les possibilités du protocole HTTP pour permettre à des systèmes d'information
 		de communiquer et de s'échanger des services. JAX-RS est donc une API de programmation pour implémenter
 		rapidement des applications basées sur HTTP. Ainsi, comme nous le verrons plus loin, son utilisation
@@ -32,14 +32,14 @@
 		développer des applications Web plus traditionnelles.
 		</p>
 		
-		<p>JAX-RS2 est défini par la JSR 339. Comme pour tous les services et toutes API Java EE, il
-		existe plusieurs implémentations de cette spécifications&nbsp;: Jersey (l'implémentation de référence), RestEasy, Apache CXF...
-		TomEE intègre l'implèmentation CXF.</p>
+		<p>JAX-RS 2.x est défini par la <a href="https://jcp.org/en/jsr/detail?id=339">JSR 339</a>. Comme pour tous les services et toutes API Java EE, il
+		existe plusieurs implémentations de cette spécification&nbsp;: <a href="https://jersey.java.net/">Jersey</a> (l'implémentation de référence), <a href="http://resteasy.jboss.org/">RestEasy</a>, <a href="https://cxf.apache.org/docs/jax-rs.html">Apache CXF</a>...
+		TomEE intègre l'implèmentation Apache CXF.</p>
 		
 		<aside>
 			<p>Dans un serveur d'application tel que TomEE, JAX-RS est disponible par défaut. Mais il est aussi possible
-			de utiliser une implémentation dans des conteneurs plus légers comme Tomcat ou Jetty sous la forme d'un framework tiers que l'on peut
-			incorporer dans son application Web. Vous devez alors vous reporter à la documentation de l'implémentation choisie pour
+			d'utiliser une implémentation dans des conteneurs plus légers comme Tomcat ou Jetty sous la forme d'un framework 
+			tiers ajouté à une application Web. Vous devez alors vous reporter à la documentation de l'implémentation choisie pour
 			connaître la marche à suivre.</p>
 		</aside>
 		
@@ -66,10 +66,10 @@
 				<dt><a href="http://tools.ietf.org/html/rfc7231#section-4.3.3">POST</a></dt>
 				<dd>La sémantique de la méthode POST est probablement la plus compliquée à saisir car cette méthode est utilisable dans différentes situations.
 					<ul>
-						<li>Le client souhaite créer une ressource sur le serveur en laissant au serveur le choix de l'URI final de la ressource.</li>
+						<li>Le client souhaite créer une ressource sur le serveur en laissant au serveur le choix de l'URI de la ressource.</li>
 						<li>Le client souhaite ajouter une ressource à une ressource représentant une collection.</li>
 						<li>Le client souhaite que le serveur effectue un traitment.</li>
-						<li>Le client souhate modifier partiellement une ressource.</li>
+						<li>Le client souhaite modifier partiellement une ressource.</li>
 					</ul>
 				
 				</dd>
@@ -90,12 +90,12 @@
 			<h2>Implémenter des ressources avec JAX-RS</h2>
 			
 			<p>JAX-RS permet d'implémenter des ressources sous la forme de composants Java EE. Une classe représentant une ressource est
-			identifiée grâce à l'annotation <strong><code>@Path</code></strong>.</p>
+			identifiée grâce à l'annotation <strong><code><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/Path.html">@Path</a></code></strong>.</p>
 			
 			
 			<dl>
-				<dt>@Path</dt>
-				<dd>L'annotation <code><strong>@javax.ws.rs.Path</strong></code> indique le chemin d'URI qui identifie la ressource.
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/Path.html">@Path</a></dt>
+				<dd>L'annotation <code><strong><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/Path.html">@javax.ws.rs.Path</a></strong></code> indique le chemin d'URI qui identifie la ressource.
 				Cette annotation est utilisable sur une classe et sur les méthodes. Utilisée sur une classe, cette annotation permet
 				d'identifier la classe comme une ressource racine qui devient dès lors un composant géré par le serveur d'application.
 
@@ -106,15 +106,14 @@ import javax.ws.rs.Path;
 
 @Path("/user")
 public class UserResource {
-
 }
 
 </code></pre>
 					<aside>
 						<p>Pour l'exemple ci-dessus, la ressource sera identifiée par l'URI&nbsp;: <strong>http://[hôte]/[contexte racine]/user</strong></p>
 					</aside>
-					<p>Utilisée sur une méthode, cette annotation permet de spécifier une sous chemin dans la ressource. Si cette méthode retourne une classe
-					utilisant des annotations JAX-RS, on parle alors de <strong>sous ressource</strong>.
+					<p>Utilisée sur une méthode, cette annotation permet de spécifier une sous-chemin dans la ressource. Si cette méthode retourne une classe
+					utilisant des annotations JAX-RS, on parle alors de <strong>sous-ressource</strong>.
 					</p>
 					
 				
@@ -148,13 +147,12 @@ public class UserResource {
 				<dt>Les annotations de méthodes</dt>
 				<dd>JAX-RS fournit une annotation pour presque toutes les méthodes HTTP&nbsp;:
 					<ul>
-						<li><code><a href="">@javax.ws.rs.GET</a></code></li>
-						<li><code><a href="">javax.ws.rs.HEAD</a></code></li>
-						<li><code><a href="">javax.ws.rs.POST</a></code></li>
-						<li><code><a href="">javax.ws.rs.POST</a></code></li>
-						<li><code><a href="">javax.ws.rs.PUT</a></code></li>
-						<li><code><a href="">javax.ws.rs.DELETE</a></code></li>
-						<li><code><a href="">javax.ws.rs.OPTIONS</a></code></li>
+						<li><code><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/GET.html">@javax.ws.rs.GET</a></code></li>
+						<li><code><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/HEAD.html">@javax.ws.rs.HEAD</a></code></li>
+						<li><code><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/POST.html">@javax.ws.rs.POST</a></code></li>
+						<li><code><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/PUT.html">@javax.ws.rs.PUT</a></code></li>
+						<li><code><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/DELETE.html">@javax.ws.rs.DELETE</a></code></li>
+						<li><code><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/OPTIONS.html">@javax.ws.rs.OPTIONS</a></code></li>
 					</ul> 
 					<p>Elles permettent d'indiquer quelle méthode Java doit être appelée pour traiter la méthode de la requête HTTP entrante.</p>
 <pre><code class="java">
@@ -212,7 +210,8 @@ public class UserResource {
 					les informations qui vont lui permettre de réaliser cette identification dynamiquement. Par exemple, le serveur peut
 					extraire du chemin de la ressource une clé primaire lui permettant d'effectuer une recherche en base de données.
 					<p>Avec JAX-RS, on déclare des paramètres de chemin entre accolades et on utilise l'annotation
-					<code><a href="">javax.ws.rs.PathParam</a></code> pour récupérer leur valeur dans les paramètres des méthodes&nbsp;:</p>
+					<code><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/PathParam.html">javax.ws.rs.PathParam</a></code> 
+					pour récupérer leur valeur dans les paramètres des méthodes&nbsp;:</p>
 
 <pre><code class="java">
 package fr.epsi;
@@ -317,7 +316,7 @@ public class UserResource {
 					
 					<p>JAX-RS peut réaliser le transtypage d'un paramètre de chemin vers les types primitifs et les chaînes de caractères.
 					Cela permet de garantir un premier contrôle de la validité de la donnée. Si la valeur attendue doit avoir un motif
-					particulier, il possible de le spécifier avec une expression régulière&nbsp;:</p>
+					particulier, il est possible de le spécifier avec une expression régulière&nbsp;:</p>
 
 <pre><code class="java">
 package fr.epsi;
@@ -347,7 +346,7 @@ public class UserResource {
 
 				</dd>
 				
-				<dt>@Consumes / @Produces</dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/Consumes.html">@Consumes</a> / <a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/Produces.html">@Produces</a></dt>
 				<dd>
 					Lorsqu'un client soumet une requête pour transmettre des informations au serveur (comme des données de formulaire) et
 					quand un serveur retourne du contenu à un client, il est nécessaire de préciser le type de contenu. On utilise pour cela
@@ -391,9 +390,9 @@ public class UserResource {
 						</tbody>
 					</table>
 					
-					<p>La classe et/ou les méthodes d'une Ressource JAX-RS peuvent utiliser les annotations @javax.ws.rs.Consumes 
-					et @javax.ws.rs.Produces pour indiquer respectivement le type de contenu attendu pour le contenu de la requête
-					et pour le contenu de la réponse.</p>
+					<p>La classe et/ou les méthodes d'une Ressource JAX-RS peuvent utiliser les annotations <a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/Consumes.html">@Consumes</a> 
+					et <a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/Produces.html">@Produces</a> pour indiquer respectivement le type de contenu attendu dans la requête
+					et le type de contenu de la réponse.</p>
 				
 <pre><code class="java">
 package fr.epsi;
@@ -455,16 +454,17 @@ public class UserResource {
 						<p>Plutôt que d'écrire&nbsp;:</p>
 <pre><code class="java">@Produces("application/json")
 </code></pre>
-					<p>Il est recommandé d'utiliser les constantes déclarées dans la classe <code>javax.ws.rs.core.MediaType</code>&nbsp;</p>
+					<p>Il est recommandé d'utiliser les constantes déclarées dans la classe 
+					<code><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/core/MediaType.html">javax.ws.rs.core.MediaType</a></code>&nbsp;</p>
 <pre><code class="java">@Produces(MediaType.APPLICATION_JSON)
 </code></pre>
 				</aside>
 	
 				</dd>
 				
-				<dt>@QueryParam</dt>
-				<dd>Comme pour les paramètres de chemin, il est possible de récupérer la valeur des paramètres de requêtes comme arguments
-				des méthodes de la ressource JAX-RS grâce à l'annotation <code><strong>@QueryParam</strong></code>.
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/QueryParam.html">@QueryParam</a></dt>
+				<dd>Comme pour les paramètres de chemin, il est possible de récupérer la valeur des paramètres de la requête comme arguments
+				des méthodes de la ressource JAX-RS grâce à l'annotation <code><strong><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/QueryParam.html">@javax.ws.rs.QueryParam</a></strong></code>.
 	
 <pre><code class="java">
   @GET
@@ -477,9 +477,9 @@ public class UserResource {
 				</dd>
 
 
-				<dt>@FormParam</dt>
+				<dt><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/FormParam.html">@FormParam</a></dt>
 				<dd>Les données transmises <i>via</i> un formulaire HTML peuvent être récupérées comme arguments
-				des méthodes de la ressource JAX-RS grâce à l'annotation <code><strong>@FormParam</strong></code>.
+				des méthodes de la ressource JAX-RS grâce à l'annotation <code><strong><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/FormParam.html">@javax.ws.rs.FormParam</a></strong></code>.
 				Pour le cas d'une requête de formulaire, le contenu attendu est presque toujours de type <code>application/x-www-form-urlencoded</code>.
 				
 	
@@ -494,8 +494,8 @@ public class UserResource {
 					<aside class="tip">
 						<p>Sur le même principe, il est également possible de récupérer d'autres informations d'une requête&nbsp;:</p>
 						<ul>
-							<li>Pour récupérer la valeur d'un en-tête HTTP, il faut utiliser l'annotation <code><strong>@javax.ws.rs.HeaderParam</strong></code></li>
-							<li>Pour récupérer la valeur d'un Cookie HTTP, il faut utiliser l'annotation <code><strong>@javax.ws.rs.CookieParam</strong></code></li>
+							<li>Pour récupérer la valeur d'un en-tête HTTP, il faut utiliser l'annotation <code><strong><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/HeaderParam.html">@javax.ws.rs.HeaderParam</a></strong></code></li>
+							<li>Pour récupérer la valeur d'un Cookie HTTP, il faut utiliser l'annotation <code><strong><a href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/CookieParam.html">@javax.ws.rs.CookieParam</a></strong></code></li>
 						</ul>
 					</aside>
 				</dd>

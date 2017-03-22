@@ -129,12 +129,12 @@ public class LogServlet extends HttpServlet {
 
   @Override
   public void init() throws ServletException {
-    this.log("################################# init " + getServletName());
+    System.out.println("################################# init " + getServletName());
   }
 
   @Override
   public void destroy() {
-    this.log("################################# destroy " + getServletName());
+    System.out.println("################################# destroy " + getServletName());
   }
 
   @Override

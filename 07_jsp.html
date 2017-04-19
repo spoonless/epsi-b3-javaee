@@ -788,6 +788,69 @@ ${not empty maliste ? maliste[0] : "liste vide"}
 		</section>
 	</article>
 	
+	<article class="exercice note">
+		<h2>Exercice à rendre&nbsp;: JSP de temps</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>&Eacute;crire une JSP (sans code Java) qui donne la date et l'heure du serveur. La date et l'heure doivent être 
+			mises en forme de la façon suivante :
+			12&nbsp;mai&nbsp;2018&nbsp;12:01:24
+			<dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a></dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>&Eacute;diter le fichier pom.xml du template et modifier la balise artifactId pour spécifier le nom de votre projet.
+			Modifier ensuite la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
+
+	<article class="exercice note">
+		<h2>Exercice à rendre&nbsp;: Affichage des paramètres dans une JSP</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>&Eacute;crire une JSP (sans code Java) qui génère un tableau HTML contenant tous les paramètres HTTP reçus.
+			La JSP doit gérer correctement le fait qu'un même paramètre peut être transmis plusieurs fois.
+			Dans ce cas, les différentes valeurs seront séparées par une virgule. La JSP doit gérer correctement le fait
+			qu'un paramètre peut contenir du code HTML. Dans ce cas, le code HTML doit être échappé pour s'afficher sous la forme d'un texte.
+			<p>Si on envoie les paramètres suivants</p>
+			<pre><code>?language=java&amp;version=1.6&amp;version=1.7&amp;version=1.8&amp;motto=&lt;strong&gt;compile once, run anywhere&lt;/strong&gt;</code></pre>
+			<p>Le résultat doit être&nbsp;:</p>
+			<table>
+				<tbody>
+					<tr>
+						<td>motto</td>
+						<td>&lt;strong&gt;compile once, run anywhere&lt;/strong&gt;</td>
+					</tr>
+					<tr>
+						<td>language</td>
+						<td>java</td>
+					</tr>
+					<tr>
+						<td>version</td>
+						<td>1.6, 1.7, 1.8</td>
+					</tr>
+				</tbody>
+			</table>
+			<p>L'ordre des lignes dans le tableau HTML est indifférent, cela n'a pas d'importance pour l'exercice.</p>
+			<dd>
+
+			<dt>Modèle Maven du projet à télécharger</dt>
+			<dd><a href="assets/templates/webapp-template.zip">webapp-template.zip</a></dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>&Eacute;diter le fichier pom.xml du template et modifier la balise artifactId pour spécifier le nom de votre projet.
+			Modifier ensuite la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
+
 	<footer class="license">
 		<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/fr/88x31.png" /></a><br />Cette œuvre est mise à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/fr/">Licence Creative Commons Attribution -  Partage dans les Mêmes Conditions 3.0 France</a>.
 	</footer>

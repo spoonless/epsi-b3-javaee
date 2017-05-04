@@ -7,7 +7,7 @@
 	<link href="css/article.css" rel="stylesheet" media="screen">
 	<link href="css/print-article.css" rel="stylesheet" media="print">
 	<link href="highlight/styles/zenburn.css" rel="stylesheet">
-	
+
 	<script src="highlight/highlight.pack.js"></script>
 	<script>hljs.initHighlightingOnLoad();</script>
 	<script src="js/toc.js"></script>
@@ -33,14 +33,14 @@
 			le développeur doit <strong>impérativement</strong> fermer par l'appel à des méthodes <code>close()</code>.
 			<strong>Ne pas fermer correctement les objets fournis par JDBC est un bug</strong> qui conduit habituellement
 			 à un épuisement des ressources système, empêchant l'application de fonctionner correctement.</p>
-			 
+
 			<p>Java 7 a introduit l'interface <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html">AutoCloseable</a>
-			ainsi qu'une nouvelle syntaxe dénommée <a href="http://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html"><strong>try-with-resources</strong></a>. 
+			ainsi qu'une nouvelle syntaxe dénommée <a href="http://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html"><strong>try-with-resources</strong></a>.
 			L'API JDBC utilise massivement l'interface <code>AutoCloseable</code> et autorise donc le try-with-resources.
-			Ainsi, les deux codes ci-dessous sont équivalents puisque la classe 
+			Ainsi, les deux codes ci-dessous sont équivalents puisque la classe
 			<a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html">java.sql.Connection</a>
 			implémente <code>AutoCloseable</code>&nbsp;:</p>
-			
+
 			<figure>
 				<figcaption>Avec try-with-resources</figcaption>
 				<pre><code class="java">
@@ -66,7 +66,7 @@
 
 </code></pre>
 			</figure>
-			<p>La version utilisant la syntaxe du try-with-resources est plus compacte et prend en charge automatiquement l'appel à la méthode <code>close()</code>. 
+			<p>La version utilisant la syntaxe du try-with-resources est plus compacte et prend en charge automatiquement l'appel à la méthode <code>close()</code>.
 			Tout au long de ce chapitre sur JDBC, nous utiliserons alternativement l'une ou l'autre des syntaxes.</p>
 		</section>
 		<section>
@@ -83,7 +83,7 @@
 			<a href="http://msdn.microsoft.com/en-us/sqlserver/aa937724.aspx">SQLServer</a>,
 			<a href="http://www.sqlite.org/">SQLite</a>,
 			<a href="http://hsqldb.org/">HSQLDB (HyperSQL DataBase)</a>, ...</p>
-			
+
 			<p>Pour un projet géré par Maven, le pilote JDBC est une dépendance logicielle comme une autre. Pour l'intégrer
 			dans le livrable, il suffit de le déclarer dans le fichier pom.xml dans la section <code>dependencies</code>&nbsp;:</p>
 			<figure>
@@ -92,31 +92,31 @@
 &lt;dependency&gt;
   &lt;groupId&gt;mysql&lt;/groupId&gt;
   &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-  &lt;version&gt;5.1.38&lt;/version&gt;
+  &lt;version&gt;5.1.42&lt;/version&gt;
 &lt;/dependency&gt;
 
 </code></pre>
 			</figure>
-			
+
 			<p>On peut rechercher le pilote souhaité sur le site du <a href="http://mvnrepository.com">Maven Repository</a>.</p>
-			
+
 			<aside class="warn">
 				<p><strong>Attention</strong>, pour des raisons de licence, certains pilotes JDBC ne sont pas disponibles
 				dans les référentiels Maven. C'est le cas notamment du pilote JDBC pour <b>Oracle</b>.</p>
 				<p>Vous devez télécharger le pilote vous-même sur <a href="http://www.oracle.com/technetwork/database/features/jdbc/index-091264.html">le site d'Oracle</a>.
 				Si vous souhaitez ajouter le pilote Oracle dans votre référentiel Maven en local, consultez <a href="http://www.mkyong.com/maven/how-to-add-oracle-jdbc-driver-in-your-maven-local-repository/">cet article</a>.</p>
 			</aside>
-			
+
 			<p>Pour l'utilisation de JDBC dans un serveur d'application Java EE, il est aussi possible d'<strong>installer le
-			pilote JDBC directement dans le serveur</strong> plutôt que de l'ajouter comme dépendance de l'application. Pour <strong>TomEE</strong>, 
+			pilote JDBC directement dans le serveur</strong> plutôt que de l'ajouter comme dépendance de l'application. Pour <strong>TomEE</strong>,
 			il suffit de télécharger le fichier jar du pilote JDBC et de le copier dans le répertoire <code>lib</code> du répertoire
 			d'installation du serveur.</p>
-			
+
 		</section>
 		<section>
 			<h2>Création d'une connexion</h2>
 			<p>Une connexion à une base de données est représentée par une instance de la classe <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html">Connection</a>.
-			Il existe plusieurs façons d'obtenir une instance de cet objet. Nous simplifierons légèrement le propos en considérant deux cas d'utilisation : 
+			Il existe plusieurs façons d'obtenir une instance de cet objet. Nous simplifierons légèrement le propos en considérant deux cas d'utilisation :
 			la création d'une connexion sans Java EE et la création d'un connexion avec Java EE.</p>
 
 			<h3>Création d'une connexion sans Java EE</h3>
@@ -129,14 +129,14 @@
 				<pre><code class="java">
   DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 
-  // Connexion à la base myschema sur la machine localhost 
+  // Connexion à la base myschema sur la machine localhost
   // en utilisant le login "username" et le password "password"
-  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/myschema", 
+  Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/myschema",
                                                       "username", "password");
 
 </code></pre>
 			</figure>
-			
+
 			<p>Lorsque la connexion n'est plus nécessaire, <strong>il faut libérer les ressources allouées</strong> en la fermant avec la méthode <code>close()</code>.
 			La classe <code>Connection</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un <a href="#tryWithResources">try-with-resources</a>.</p>
 			<figure>
@@ -145,7 +145,7 @@
 
 </code></pre>
 			</figure>
-			
+
 			<h3 id="creation_connexion_avec_javaee">Création d'une connexion avec Java EE</h3>
 			<p>Dans un serveur d'application, l'utilisation du <code>DriverManager</code> est remplacée par celle
 			de la <a href="http://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html"><code>DataSource</code></a>.
@@ -160,7 +160,7 @@ Connection getConnection(String username, String password)
 
 </code></pre>
 			</figure>
-			
+
 			<p>Il n'est pas possible de spécifier l'URL de connection à la base de données avec une <code>DataSource</code>.
 			Par contre une <code>DataSource</code> peut être injectée dans n'importe quel composant Java EE (Servlet, Bean CDI, EJB)
 			grâce à l'annotation <a href="http://docs.oracle.com/javaee/7/api/javax/annotation/Resource.html"><code>@Resource</code></a>&nbsp;:</p>
@@ -185,7 +185,7 @@ public class MyServlet extends HttpServlet {
   private DataSource dataSource;
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                           throws ServletException, IOException {
 
     try (Connection connection = dataSource.getConnection()) {
@@ -203,11 +203,11 @@ public class MyServlet extends HttpServlet {
 			Mais comment le serveur d'application fait-il pour lier une DataSource avec une connexion vers une base de données&nbsp;?
 			Malheureusement, il n'existe pas de standard et chaque serveur d'application dispose de sa procédure. Pour <strong>TomEE</strong>,
 			une DataSource se configure dans le fichier <strong>tomee.xml</strong>. Ce fichier se trouve dans le répertoire <code>conf</code>
-			du répertoire d'installation du serveur. On peut ainsi déclarer une source de données directement dans le serveur. 
+			du répertoire d'installation du serveur. On peut ainsi déclarer une source de données directement dans le serveur.
 			Il est également possible d'ajouter un fichier <strong>resources.xml</strong> dans le répertoire <code>WEB-INF</code> de son application.
 			Ce fichier a le même format que le fichier tomee.xml mais il fournit une définition des sources de données uniquement pour cette application.
 			</p>
-			
+
 			<figure>
 				<figcaption>Exemple de déclaration d'une DataSource MySQL dans le fichier resources.xml (ou tomee.xml)</figcaption>
 				<pre><code class="xml">
@@ -224,7 +224,7 @@ public class MyServlet extends HttpServlet {
 
 </code></pre>
 			</figure>
-			<p>Le nom de la source de données est indiqué par l'attribut <code>id</code> de la balise <code>Resource</code>. 
+			<p>Le nom de la source de données est indiqué par l'attribut <code>id</code> de la balise <code>Resource</code>.
 			La documentation officielle de TomEE contient des informations intéressantes à consulter&nbsp;:</p>
 			<ul>
 				<li><a href="http://tomee.apache.org/datasource-config.html">DataSource Configuration</a> (documentation des paramètres de la balise <code>Resource</code>)</li>
@@ -235,7 +235,7 @@ public class MyServlet extends HttpServlet {
 			d'application apporte généralement des fonctionnalités supplémentaires telles que la mise en cache et la réutilisation
 			de connexions (pour améliorer les performances), les tests permettant de vérifier que les connexions sont correctements
 			établies, la supervision des connexions, ...</p>
-			
+
 			<aside class="info">
 				<header>DataSource et JNDI</header>
 				<p>L'annotation <code>@Resource</code> se base sur <strong>JNDI</strong> (Java Naming and Directory Interface) pour rechercher
@@ -245,15 +245,15 @@ public class MyServlet extends HttpServlet {
 				<p>Les ressources telles que les <code>DataSources</code> sont donc stockées dans un annuaire interne et
 				il est possible d'y accéder avec l'API JNDI. Les ressources sont classées dans une arborescence (comme le sont
 				les fichiers dans un système de fichiers). Une ressource est stockée dans l'arborescence <code>java:/comp/env</code>.</p>
-				
+
 				<figure>
 					<figcaption>Exemple de récupération d'une DataSource en utilisant l'API JNDI</figcaption>
 					<pre><code class="java">
   // javax.naming.InitialContext désigne le contexte racine de l'annuaire.
-  // Un annuaire JDNI est constitué d'instances de javax.naming.Context 
+  // Un annuaire JDNI est constitué d'instances de javax.naming.Context
   // (qui sont l'équivalent des répertoires dans un système de fichiers).
   Context envContext = InitialContext.doLookup("java:/comp/env");
-  
+
   // On récupère la source de données dans le contexte java:/comp/env
   DataSource dataSource = DataSource.class.cast(envContext.lookup("nomDeLaDataSource"));
 
@@ -327,7 +327,7 @@ public class MyServlet extends HttpServlet {
 				<li><a href="http://docs.oracle.com/javase/8/docs/api/java/sql/CallableStatement.html"><code>CallableStatement</code></a>&nbsp;:
 				permet d'exécuter des procédures stockées sur le SGBDR. On peut ainsi passer des paramètres en entrée du <code>CallableStatement</code>
 				et récupérer les paramètres de sortie après exécution.
-			</ul> 
+			</ul>
 		</section>
 		<section>
 			<h2>Le Statement</h2>
@@ -340,8 +340,8 @@ public class MyServlet extends HttpServlet {
 				<pre><code class="java">
   java.sql.Statement stmt = connection.createStatement();
 
-  // méthode la plus générique d'un statement. Retourne true si la requête SQL 
-  // exécutée est un select (c'est-à-dire si la requête produit un résultat) 
+  // méthode la plus générique d'un statement. Retourne true si la requête SQL
+  // exécutée est un select (c'est-à-dire si la requête produit un résultat)
   stmt.execute("insert into myTable (col1, col2) values ('value1', 'value1')");
 
   // méthode spécialisée pour l'exécution d'un select. Cette méthode retourne
@@ -363,9 +363,9 @@ public class MyServlet extends HttpServlet {
 
 </code></pre>
 			</figure>
-			
+
 			<p>La classe <code>Statement</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un <a href="#tryWithResources">try-with-resources</a>.</p>
-			
+
 			<p>Pour des raisons de performance, il est également possible d'utiliser un <code>Statement</code>
 			en mode batch. Cela signifie, que l'on accumule l'ensemble des requêtes SQL côté client, puis
 			on les envoie en bloc au serveur plutôt que de les exécuter séquentiellement.</p>
@@ -392,7 +392,7 @@ public class MyServlet extends HttpServlet {
 			<h2>Le ResultSet</h2>
 			<p>Lorsqu'on exécute une requête SQL de type <code>select</code>, JDBC nous donne accès à
 			une instance de <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/ResultSet.html"><code>ResultSet</code></a>.
-			Avec un <code>ResultSet</code>, il est possible de parcourir ligne à ligne les résultats de la requête 
+			Avec un <code>ResultSet</code>, il est possible de parcourir ligne à ligne les résultats de la requête
 			(comme avec un itérateur) grâce à la méthode
 			<a href="http://docs.oracle.com/javase/8/docs/api/java/sql/ResultSet.html#next--">ResultSet.next()</a>.
 			Pour chaque résultat, il est possible d'extraire les données dans un type supporté par Java.</p>
@@ -414,13 +414,13 @@ public class MyServlet extends HttpServlet {
 
   try (java.sql.Statement stmt = connection.createStatement();
        java.sql.ResultSet resultSet = stmt.executeQuery(request);) {
-    
+
     // on parcourt l'ensemble des résultats retourné par la requête
     while (resultSet.next()) {
       String titre = resultSet.getString("titre");
       java.sql.Date dateSortie = resultSet.getDate("date_sortie");
       long duree = resultSet.getLong("duree");
-      
+
       // ...
     }
   }
@@ -453,7 +453,7 @@ public class MyServlet extends HttpServlet {
 			</figure>
 			<p>XXX représente le type du paramètre, parameterIndex sa position dans la requête SQL (<strong>attention</strong>, le premier paramètre a l'indice <strong>1</strong>) et
 			x sa valeur.</p>
-			
+
 			<aside class="tip">
 				&Agrave; noter que pour positionner un paramètre SQL à NULL, il faut utiliser la méthode
 				<a href="http://docs.oracle.com/javase/8/docs/api/java/sql/PreparedStatement.html#setNull-int-int-">setNull(int parameterIndex, int sqlType)</a>.
@@ -465,11 +465,11 @@ public class MyServlet extends HttpServlet {
   String request = "insert into films (titre, date_sortie, duree) values (?, ?, ?)";
 
   try (java.sql.PreparedStatement pstmt = connection.prepareStatement(request)) {
-    
+
     pstmt.setString(1, "live JDBC");
     pstmt.setDate(2, new java.sql.Date(System.currentTimeMillis()));
     pstmt.setInt(3, 120);
-    
+
     pstmt.executeUpdate();
   }
 
@@ -485,14 +485,14 @@ public class MyServlet extends HttpServlet {
 </code></pre>
 			</figure>
 			<p>La classe <code>PreparedStatement</code> implémente <code>AutoCloseable</code>, ce qui l'autorise à être utilisée dans un <a href="#tryWithResources">try-with-resources</a></p>
-			
+
 			<p>Le <code>PreparedStatement</code> reprend une API similaire à celle du <code>Statement</code>&nbsp;:</p>
 			<ul>
 				<li>une méthode <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/PreparedStatement.html#execute--"><code>execute</code></a> pour tous les types de requête SQL</li>
 				<li>une méthode <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/PreparedStatement.html#executeQuery--"><code>executeQuery</code></a> (qui retourne un <code>ResultSet</code>) pour les requêtes SQL de type select</li>
 				<li>une méthode <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/PreparedStatement.html#executeUpdate--"><code>executeUpdate</code></a> pour toutes les requêtes SQL qui ne sont pas des select</li>
 			</ul>
-			
+
 			<p>Le <code>PreparedStatement</code> offre trois avantages&nbsp;:</p>
 			<ul>
 				<li>il permet de convertir efficacement les types Java en types SQL pour les données en entrée</li>
@@ -500,7 +500,7 @@ public class MyServlet extends HttpServlet {
 				noter que le <code>PreparedStatement</code> supporte lui aussi le mode batch</li>
 				<li>il permet de se prémunir de failles de sécurité telles que l'injection SQL</li>
 			</ul>
-			
+
 			<aside class="info">
 				<header>L'injection SQL</header>
 				<p>L'injection SQL est une faille de sécurité qui permet à un utilisateur malveillant de modifier une requête SQL
@@ -512,9 +512,9 @@ public class MyServlet extends HttpServlet {
   public boolean isUserAuthorized(String login, String password) {
     try (java.sql.Statement stmt = connection.createStatement()) {
 
-      String request = "select * from users where login = '" + login 
+      String request = "select * from users where login = '" + login
                        + "' and password = '" + password + "'";
-    
+
       try (java.sql.ResultSet resultSet = stmt.executeQuery(request)) {
         return resultSet.next();
       }
@@ -535,17 +535,17 @@ public class MyServlet extends HttpServlet {
 				</figure>
 				<p>Cette requête SQL retourne toutes les lignes de la table <code>users</code> et l'utilisateur sera
 				donc considéré comme autorisé par l'application.</p>
-				
+
 				<p>Si on modifie le code précédent pour utiliser un <code>PreparedStatement</code>, ce comportement non souhaité disparaît&nbsp;:</p>
 				<figure>
 					<pre><code class="java">
   public boolean isUserAuthorized(String login, String password) {
     String request = "select * from users where login = ? and password = ?";
     try (java.sql.PreparedStatement stmt = connection.prepareStatement(request)) {
-      
+
       stmt.setString(1, login);
       stmt.setString(2, password);
-    
+
       try (java.sql.ResultSet resultSet = stmt.executeQuery()) {
         return resultSet.next();
       }
@@ -593,7 +593,7 @@ public class MyServlet extends HttpServlet {
 			de type <code>getXXX</code> comme on peut trouver dans l'interface <code>ResultSet</code>. Comme pour le <code>PreparedStatement</code>,
 			on retrouve les méthodes <code>execute</code>, <code>executeUpdate</code> et <code>executeQuery</code> pour réaliser l'appel
 			à la base de données.</p>
-			
+
 			<figure>
 				<figcaption>Exemple de procédure stockée MySQL</figcaption>
 				<pre><code class="sql">
@@ -604,7 +604,7 @@ public class MyServlet extends HttpServlet {
 
 </code></pre>
 			</figure>
-			
+
 			<figure>
 				<figcaption>Exemple d'appel de la procédure stockée avec JDBC</figcaption>
 				<pre><code class="java">
@@ -646,9 +646,9 @@ public class MyServlet extends HttpServlet {
 			</ul>
 			<p>Une transaction est définie par un début et une fin qui peut être soit une validation des modifications (commit), soit une annulation des modifications effectuées (rollback).
 			On parle de <em>démarcation transactionnelle</em> pour désigner la portion de code qui doit s'exécuter dans le cadre d'une transaction.</p>
-			
+
 			<p>Avec JDBC, il faut d'abord s'assurer que le pilote ne commite pas sytématiquement à chaque requête SQL (l'auto commit). Une opération de commit à chaque requête SQL
-			équivaut en fait à ne pas avoir de démarcation transactionnelle. Sur l'interface 
+			équivaut en fait à ne pas avoir de démarcation transactionnelle. Sur l'interface
 			<a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html"><code>Connection</code></a>, il existe les méthodes
 			<a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html#setAutoCommit-boolean-"><code>setAutoCommit(boolean)</code></a> et
 			<a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html#getAutoCommit--"><code>getAutoCommit()</code></a> pour nous aider à gérer
@@ -674,47 +674,47 @@ public class MyServlet extends HttpServlet {
 
 </code></pre>
 			</figure>
-			
+
 			<p>&Agrave; partir du moment où l'auto commit n'est plus actif sur une connexion, il est de la responsabilité du développeur
-			d'appeler sur l'instance de <code>Connection</code> 
+			d'appeler sur l'instance de <code>Connection</code>
 			la méthode <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html#commit--"><code>commit()</code></a>
 			(ou <a href="http://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html#rollback--"><code>rollback()</code></a>).</p>
-			
+
 			<p>Le contrôle de la démarcation transactionnelle par programmation est surtout utile lorsque l'on souhaite garantir
 			l'atomicité d'un ensemble de requêtes SQL.</p>
-			
+
 			<figure>
 				<figcaption>Exemple de démarcation transactionnelle avec JDBC</figcaption>
 				<pre><code class="java">
   // si nécessaire on force la désactivation de l'auto commit
   connection.setAutoCommit(false);
   boolean transactionOk = false;
-  
+
   try {
-  
+
     // on ajoute un produit avec une quantité donnée dans la facture
-    String requeteAjoutProduit = 
+    String requeteAjoutProduit =
               "insert into ligne_facture (facture_id, produit_id, quantite) values (?, ?, ?)";
 
     try (PreparedStatement pstmt = connection.prepareStatement(requeteAjoutProduit)) {
       pstmt.setString(1, factureId);
       pstmt.setString(2, produitId);
       pstmt.setLong(3, quantite);
-    
+
       pstmt.executeUpdate();
     }
-  
+
     // on déstocke la quantité de produit qui a été ajoutée dans la facture
-    String requeteDestockeProduit = 
+    String requeteDestockeProduit =
               "update stock_produit set quantite = (quantite - ?) where produit_id = ?";
 
     try (PreparedStatement pstmt = connection.prepareStatement(requeteDestockeProduit)) {
       pstmt.setLong(1, quantite);
       pstmt.setString(2, produitId);
-    
+
       pstmt.executeUpdate();
     }
-  
+
     transactionOk = true;
   }
   finally {
@@ -736,22 +736,22 @@ public class MyServlet extends HttpServlet {
 
 </code></pre>
 			</figure>
-			
+
 			<aside class="info">
 				<header>JTA (Java Transaction API)</header>
 				<p>Le recours aux transactions ne se limite pas aux systèmes de base de données. N'importe quel service logiciel
 				peut fournir un support à la transaction. Quand plusieurs systèmes transactionnels sont inclus au sein d'une même transaction,
 				il peut être nécessaire d'avoir recours à une transaction distribuée pour les synchroniser.</p>
-				<p>Pour ces raisons, Java EE fournit une API dédiée uniquement à la gestion des transactions&nbsp;: <strong>JTA</strong>. 
+				<p>Pour ces raisons, Java EE fournit une API dédiée uniquement à la gestion des transactions&nbsp;: <strong>JTA</strong>.
 				Cette API est indépendante de JDBC et elle est aussi plus complète (et donc plus compliquée).
-				TomEE nous laisse le choix de gérer les transactions avec JTA ou avec JDBC pour les <code>DataSources</code>. Le paramètre 
+				TomEE nous laisse le choix de gérer les transactions avec JTA ou avec JDBC pour les <code>DataSources</code>. Le paramètre
 				<code>JtaManaged</code> disponible dans la balise <code>Resource</code> permet d'indiquer si l'on souhaite ou non qu'une
 				<code>DataSource</code> soit gérable avec JTA. Nous reviendrons sur JTA lorsque nous
 				parlerons de JPA et des EJB.
 			</aside>
 		</section>
 	</article>
-	
+
 	<article class="exercice note">
 		<h2>Exercice à rendre&nbsp;: Application Web et JDBC</h2>
 		<dl>
@@ -766,7 +766,7 @@ public class MyServlet extends HttpServlet {
 				<aside>
 					<p>Il n'est pas demandé de gérer d'éventuels problèmes de doublon. Il peut être possible d'avoir deux utilisateurs avec un email identique.</p>
 				</aside>
-				
+
 				<aside class="tip">
 					<p>Vous pouvez simplement commencer par valider la configuration de votre connection à la base de données. Essayer d'exécuter une requête simple
 					dans votre application Web comme&nbsp;:</p>
@@ -775,7 +775,7 @@ select 1
 
 </code></pre>
 					<p>Et écrivez le résultat sur la sortie standard de votre serveur (disponible dans le panneau "Console" d'Eclipse.</p>
-					
+
 				</aside>
 			</dd>
 
@@ -803,7 +803,7 @@ CREATE TABLE IF NOT EXISTS Adherent (
 			<dt>Mise en place du projet</dt>
 			<dd>Vous pouvez repartir de votre projet sur le <a href="08_requestdispatcher_mvc.html#exo_formulaire_mvc">formulaire d'adhésion</a> ou utiliser la correction fournie.
 			Pensez à <a href="#pilote_jdbc">déclarer la dépendance</a> vers le pilote JDBC dans le fichier <code>pom.xml</code></dd>
-			
+
 			<dt>Intégration du projet dans Eclipse</dt>
 			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
 		</dl>

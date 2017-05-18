@@ -1132,7 +1132,7 @@ public class PersonResource {
 			</figure>
 		</section>
 		
-		<section>
+		<section id="jaxrs-client">
 			<h2>Implémenter un client HTTP</h2>
 			<p>JAX-RS fournit également une API pour implémenter un client HTTP.
 			On utilise la classe <a href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/client/ClientBuilder.html"><strong><code>ClientBuilder</code></strong></a>
@@ -1162,6 +1162,44 @@ public class ExempleClient {
 </code></pre>
 			</figure>			
 		</section>
+	</article>
+
+	<article class="exercice note">
+		<h2>Exercice à rendre&nbsp;: API Web pour un service d'adhésion</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>
+				<p>Reprendre l'application du <a href="09_jdbc.html#exo_jdbc">formulaire d'adhésion</a> et ajouter une API Web
+				en utilisant JAX-RS.</p>
+				
+				<p>Avec l'API Web, il doit être possible de&nbsp;:</p>
+				<ul>
+					<li>créer une adhésion en envoyant au serveur un document JSON (si les informations email et mot de passe sont correctes).</li>
+					<li>recupérer la liste de tous les adhérents (email et date) au format JSON.</li>
+					<li>supprimer un adhérent à partir de son email</li>
+				</ul>
+				<aside class="warn">
+					<p>Pour la consultation de la liste des adhérents, vous rencontrerez un problème pour le formatage de la date de création
+					en JSON et XML car il n'existe pas de transformation standard entre un <code>java.util.Date</code> et une représention en JSON.
+					Pour contourner ce problème, vous pouvez créer à partir de la liste retournée depuis la base de données, une nouvelle liste contenant
+					des objets pour lesquels l'attribut dateCreation est de type String.</p>
+				</aside>
+
+				<p>Compléter le projet client HTTP en Java grâce à <a href="#jaxrs-client">l'API JAX-RS</a>. Le programme client doit&nbsp;:</p>
+				<ul>
+					<li>envoyer une requête HTTP pour créer une nouvelle adhésion pour le mail david.gayerie.epsi@mailoo.org</li>
+					<li>envoyer une requête HTTP pour supprimer l'adhésion pour le mail david.gayerie.epsi@mailoo.org</li>
+				</ul>
+			</dd>
+
+			<dt>Mise en place du projet</dt>
+			<dd>Vous pouvez repartir de votre projet ou utiliser la correction fournie pour la partie serveur.
+			Le projet du client HTTP à utiliser est disponible <a href="assets/templates/httpclient.zip">ici</a>
+			</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
 	</article>
 
 	<footer class="license">

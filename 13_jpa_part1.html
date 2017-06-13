@@ -512,9 +512,7 @@ CREATE TABLE `individu` (
 			<p>Comme pour JDBC, le recours à un conteneur Java EE n'est pas nécessaire pour utiliser JPA. Ainsi l'initialisation et la
 			méthode pour récupérer un <code>EntityManager</code> va être différente selon que le code s'exécute dans une application
 			"simple" ou dans une application déployée dans un serveur Java EE.</p>
-			<p>Quel que soit le contexte, il faut fournir à l'implémentation de JPA un fichier XML de déploiement nommé <strong>persistence.xml</strong>. 
-			Ce fichier <strong>doit se situer dans le répertoire META-INF</strong> et être disponible dans le classpath à l'exécution. Dans un projet Maven, il
-			suffit de créer ce fichier dans le répertoire <strong>src/main/resources/META-INF</strong> du projet (créez les répertoires manquants si nécessaire).</p>
+			<p>Quel que soit le contexte, il faut fournir à l'implémentation de JPA un fichier XML de déploiement nommé <strong>persistence.xml</strong>.</p>
 			
 			<figure>
 				<figcaption>Contenu du fichier persistence.xml</figcaption>
@@ -544,8 +542,18 @@ CREATE TABLE `individu` (
 			balise <code>&lt;properties&gt;</code> permet de spécifier des propriétés propres à une implémentation de JPA et que
 			indique comment se connecter au SGBDR.</p>
 			
+			<aside class="info">
+				<p>Pour information, la liste complète des paramètres de configuration propres à OpenJPA est disponible dans la 
+				<a href="http://openjpa.apache.org/builds/2.3.0/apache-openjpa/docs/ref_guide_conf_openjpa.html">documentation</a>.</p>
+			</aside>
+			
+			<h3>Dans une application Java</h3>
+
+			<p>Le fichier <strong>persistence.xml doit se situer dans le répertoire META-INF</strong> et être disponible dans le classpath à l'exécution. Dans un projet Maven, il
+			suffit de créer ce fichier dans le répertoire <strong>src/main/resources/META-INF</strong> du projet (créez les répertoires manquants si nécessaire).</p>
+
 			<figure>
-				<figcaption>Exemple de persistence.xml pour une utilisation d'OpenJPA avec une base MySQL</figcaption>
+				<figcaption>Exemple de persistence.xml pour une utilisation d'OpenJPA avec une base MySQL dans une application Java standalone</figcaption>
 				<pre><code class="xml">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;persistence version="2.0"
@@ -570,14 +578,8 @@ CREATE TABLE `individu` (
 
 </code></pre>
 			</figure>
-			
-			<aside class="info">
-				<p>Pour information, la liste complète des paramètres de configuration propres à OpenJPA est disponible dans la 
-				<a href="http://openjpa.apache.org/builds/2.3.0/apache-openjpa/docs/ref_guide_conf_openjpa.html">documentation</a>.</p>
-			</aside>
 
-			<h3>Dans une application Java</h3>
-			<p>Pour une application Java "simple", il faut utiliser la classe <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Persistence.html"><code>Persistence</code></a>.
+			<p>Pour initialiser JPA, il faut utiliser la classe <a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Persistence.html"><code>Persistence</code></a>.
 			Grâce à cette classe, nous allons pouvoir créer une instance de <code><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/EntityManagerFactory.html">EntityManagerFactory</a></code>.
 			Cette dernière, comme son nom l'indique, permet de fabriquer une instance d'<code><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/EntityManager.html">EntityManager</a></code>.</p>
 			
@@ -600,8 +602,7 @@ CREATE TABLE `individu` (
 			
 			<p>Pour des raisons de performance, <strong>une seule instance</strong> d'<code>EntityManagerFactory</code>
 			devrait être créée par unité de persistance et par application.</p>
-			<p>Par contre, une instance d'<code>EntityManager</code> n'est pas prévue pour être conservée trop longtemps
-			(dans une application Web, sa durée de vie se limite généralement au traitement de la requête).
+			<p>Par contre, une instance d'<code>EntityManager</code> n'est pas prévue pour être conservée trop longtemps.
 			De plus, un <code>EntityManager</code> n'est pas conçu pour être utilisé dans un environnement concurrent.
 			Pour des applications multi-threadées, on utilisera une instance d'<code>EntityManager</code> par thread.</p>
 			
@@ -633,8 +634,8 @@ CREATE TABLE `individu` (
 			
 			<p>Pour une application déployée dans un serveur d'application Java EE, l'initialisation de JPA est un peu
 			différente car le serveur utilise la notion de <code>DataSource</code> JDBC et gère les transactions avec JTA
-			(Java Transaction API). Le fichier
-			persistence.xml est toujours présent mais il ne déclare plus une URL JDBC mais un <code>DataSource</code>.</p>
+			(Java Transaction API). De plus, <strong>le fichier persistence.xml doit être présent dans répertoire WEB-INF</strong> de l'application Web. 
+			Il ne contient pas de déclaration à une URL JDBC mais une <code>DataSource</code>.</p>
 
 			<figure>
 				<figcaption>Exemple de persistence.xml pour une utilisation d'OpenJPA avec une base MySQL</figcaption>
@@ -704,30 +705,6 @@ import javax.ejb.Stateless;
 
 @Stateless
 public class IndividuRepository {
-	
-  @PersistenceContext(unitName="individuPersistenceUnit")
-  private EntityManager entityManager;
-
-}
-
-</code></pre>
-			</figure>
-
-			<figure>
-				<figcaption>Injection d'un EntityManager dans un composant Java EE géré par CDI</figcaption>
-				<pre><code class="java">
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-/*
-* Notez que ce composant Java EE porte l'annotation @RequestScope.
-* Il est donc possible d'injecter en toute sécurité un EntityManager.
-*/
-@Named
-@RequestScoped
-public class IndividuController {
 	
   @PersistenceContext(unitName="individuPersistenceUnit")
   private EntityManager entityManager;
@@ -828,7 +805,34 @@ public class MyServlet extends HttpServlet {
 			<p>L'utilisation de l'API JTA est très verbeuse. De plus, chaque méthode peut jeter plusieurs exceptions et il n'est pas toujours facile de savoir comment les traiter.
 			En général, il est plus simple d'opter pour une approche déclarative (basée par exemple sur les EJB).</p>
 		</section>
+	</article>
+	
+	<article class="exercice note">
+		<h2>Exercice à rendre&nbsp;: Intégration de JPA</h2>
+		<dl>
+			<dt>Objectif</dt>
+			<dd>
+				<p>Faire évoluer l'application d'adhesion en remplaçant le code JDBC par JPA.</p>
+				<p>En intégrant un EJB stateless, nous avons maintenant la possiblité de demander par injection un <code>EntityManager</code>.
+				Il faut donc configurer une DataSource JTA, ajouter le fichier <code>persistence.xml</code> et remplacer le code JDBC par du code JPA.
+				</p>
+				<aside class="info">
+					<p>Nous n'avons pas vu dans ce cours tout ce qui nécessaire pour remplacer le code existant. Pour récupérer la liste des adhésions, nous
+					avons besoin de faire une requête remontant une liste d'objets. Nous verrons cela au chapitre suivant. Pour l'instant, nous pouvons conserver le code
+					JDBC pour cette partie.</p>				
+				</aside>
+			</dd>
 
+			<dt>Mise en place du projet</dt>
+			<dd>Vous pouvez repartir de votre projet ou utiliser la correction fournie pour l'ajout des EJB dans l'application Web de gestion des adhesions.
+			</dd>
+
+			<dt>Intégration du projet dans Eclipse</dt>
+			<dd>L'intégration du projet dans Eclipse suit la même procédure que celle vue lors de <a href="03_introduction_maven.html#maven_eclipse_import">l'introduction à Maven</a></dd>
+		</dl>
+	</article>
+	
+	<article>
 		<section>
 			<h2>Amélioration de code</h2>
 			

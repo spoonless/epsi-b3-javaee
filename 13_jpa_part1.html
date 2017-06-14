@@ -205,22 +205,22 @@ public class Individu {
   private Long id;
 
   @Basic
-  @Column(length = 30, nullable=false)
+  @Column(length=30, nullable=false)
   private String nom;
 
   @Basic
-  @Column(length = 30, nullable=false)
+  @Column(length=30, nullable=false)
   private String prenom;
 
-  @Column(length = 3, nullable=false)
+  @Column(length=3, nullable=false)
   private Integer age;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(updatable = false)
+  @Column(updatable=false)
   private Calendar dateAdhesion;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(insertable = false)
+  @Column(insertable=false)
   private Calendar dateModification;
 
   @Lob

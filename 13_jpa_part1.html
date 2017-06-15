@@ -116,7 +116,7 @@ public class Individu {
 						<td>Définit l'attribut qui sert de clé primaire dans la table. Il est recommandé au départ d'utiliser
 						un type primitif, un wrapper de type primitif ou une <code>String</code> pour représenter un id.
 						Pour les clés composites, la mise en &oelig;uvre est plus compliquée. Afin de ne pas se compliquer inutilement
-						la tâche, il vaut mieux prévoir une clé technique simple pour chaque entité.</td>
+						la tâche, il vaut mieux prévoir une clé simple pour chaque entité.</td>
 					</tr>
 					<tr>
 						<td><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Basic.html"><code>@Basic</code></a></td>
@@ -131,7 +131,7 @@ public class Individu {
 					</tr>
 					<tr>
 						<td><a href="http://docs.oracle.com/javaee/7/api/javax/persistence/Transient.html"><code>@Transient</code></a></td>
-						<td>Indique qu'un attribut <strong>ne doit pas</strong> être persisté. Cet attribut ne sera donc jamais pris
+						<td>Indique qu'un attribut <strong>ne doit pas</strong> être persistant. Cet attribut ne sera donc jamais pris
 						en compte lors de l'exécution des requêtes vers la base de données.</td>
 					</tr>
 					<tr>
@@ -205,22 +205,22 @@ public class Individu {
   private Long id;
 
   @Basic
-  @Column(length = 30, nullable=false)
+  @Column(length=30, nullable=false)
   private String nom;
 
   @Basic
-  @Column(length = 30, nullable=false)
+  @Column(length=30, nullable=false)
   private String prenom;
 
-  @Column(length = 3, nullable=false)
+  @Column(length=3, nullable=false)
   private Integer age;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(updatable = false)
+  @Column(updatable=false)
   private Calendar dateAdhesion;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(insertable = false)
+  @Column(insertable=false)
   private Calendar dateModification;
 
   @Lob

@@ -749,13 +749,41 @@ public class Individu {
 	<article class="exercice note">
 		<h2>Exercice à rendre&nbsp;: Intégration de JPA (partie 2)</h2>
 		<dl>
-			<dt>Objectif</dt>
+			<dt>Objectifs</dt>
 			<dd>
-				<p>Reprendre l'exercice précédent en faisant complètement disparaître le code JDBC. On utilisera pour cela les requêtes JPQL.</p>
+				<ul>
+					<li>Continuer l'exercice précédent en faisant complètement disparaître le code JDBC. On utilisera pour cela les requêtes JPQL.</li>
+					<li>De plus, on souhaite permettre d'éditer une adhésion afin d'ajouter une liste d'adresses (rue, code postal et ville).</li>
+				</ul>
+				<p>Le schéma de la base de données est défini comme suit&nbsp;:</p>
+<pre><code class="sql">
+CREATE TABLE IF NOT EXISTS Adherent (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  email varchar(200) NOT NULL,
+  motDePasse varchar(200) NOT NULL,
+  dateAdhesion date NOT NULL,
+  PRIMARY KEY (id)
+) engine=innodb;
+
+CREATE TABLE IF NOT EXISTS Adresse (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  rue varchar(200) NOT NULL,
+  codePostal varchar(20) NOT NULL,
+  ville varchar(200),
+  adhesionId int(11) NOT NULL,
+  CONSTRAINT FOREIGN KEY (adhesionId) REFERENCES Adherent(id),
+  PRIMARY KEY (id)
+) engine=innodb;
+
+</code></pre>
+				<p>Utilisez JPA et la gestion des relations entre les entités afin de lister les adresses d'une adhésion et de fournir
+				une formulaire HTML pour ajouter une nouvelle adresse.</p>
 			</dd>
 
 			<dt>Mise en place du projet</dt>
-			<dd>Vous pouvez repartir de votre projet ou utiliser la correction fournie pour la première partie concernant l'intégration de JPA dans le projet.
+			<dd>Vous pouvez repartir de votre projet ou télécharger le <a href="assets/templates/adhesion-webapp.zip">projet de l'application Web d'adhesion</a>.
+			Le projet en téléchargement contient un début d'implémentation avec notamment un écran d'édition d'une adhésion qu'il vous faut compléter en ajoutant
+			la liste des adresses et le formulaire d'ajout d'une adresse. 
 			</dd>
 
 			<dt>Intégration du projet dans Eclipse</dt>
@@ -763,6 +791,28 @@ public class Individu {
 		</dl>
 	</article>
 
+
+	<article class="exercice note">
+		<h2>Exercice bonus à rendre</h2>
+		<aside class="warn">
+			<p>Cet exercice est à rendre pour les personnes n'ayant pas réalisé l'exercice du <a href="11_jaxrs.html">chapitre sur JAX-RS</a>.</p>
+		</aside>
+		<dl>
+			<dt>Objectifs</dt>
+			<dd>Ajoutez les fonctionnalités suivantes à l'application d'adhésion&nbsp;:
+			<ul>
+				<li>L'utilisateur doit pouvoir supprimer une adhésion depuis la liste des adhésions (même si cette adhésion a déjà des adresses associées).</li>
+				<li>L'utilisateur doit pouvoir exporter la liste des adhésions au format CSV. Vous pouvez utiliser une bibliothèque tierce telle que
+				<a href="http://commons.apache.org/proper/commons-csv/">Apache Commons CSV</a> en l'ajoutant comme dépendance Maven à votre projet.</li>
+				<li>L'utilisateur doit pouvoir effectuer une recherche d'une adhésion à partir de l'email. Le formulaire de recherche sera présent
+				sur la page affichant la liste des adhésions.</li>
+			</ul>
+			<p>Les implémentations doivent être conformes au modèle MVC et utiliser les différents composants Java EE (Servlet, JSP, EJB, Entity Bean).</p>
+			</dd>
+			<dt>Mise en place du projet</dt>
+			<dd>Vous devez reprendre le projet utilisé pour l'exercice précédent et y implémenter ces nouvelles fonctionnalités.</dd>
+		</dl>
+	</article>
 
 	<footer class="license">
 		<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/fr/88x31.png" /></a><br />Cette œuvre est mise à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/fr/">Licence Creative Commons Attribution -  Partage dans les Mêmes Conditions 3.0 France</a>.

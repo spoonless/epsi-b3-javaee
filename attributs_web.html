@@ -1,0 +1,346 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Les attributs d’une application Web &#8212; documentation Java EE 1.0</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Web listeners et filtres" href="web_listeners_filters.html" />
+    <link rel="prev" title="Le conteneur Web" href="conteneur_web.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="les-attributs-d-une-application-web">
+<h1>Les attributs d’une application Web<a class="headerlink" href="#les-attributs-d-une-application-web" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Il est souvent utile de partager de l’information dans un conteneur Web
+entre plusieurs composants. L’information partagée est appelée <strong>un
+attribut</strong>. Il est défini par sa portée&nbsp;:</p>
+<dl class="docutils">
+<dt>Portée de requête (<strong>request scope</strong>)</dt>
+<dd>L’attribut est disponible pour les servlets qui participent au
+traitement de la requête cliente. Nous verrons bientôt qu’une même
+requête peut être prise en charge par une chaîne de plusieurs
+servlets.</dd>
+<dt>Portée de session (<strong>session scope</strong>)</dt>
+<dd>L’attribut est disponible pour toutes les requêtes émises par un
+même client. L’ensemble de ces attributs est appelé une session
+utilisateur.</dd>
+<dt>Portée de l’application (<strong>application scope</strong>)</dt>
+<dd>L’attribut est disponible à tout moment à l’ensemble des servlets de
+l’application Web.</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Un attribut est une notion très vague&nbsp;: il s’agit simplement d’une
+instance d’une classe Java (implémentant si possible l’interface
+<a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html">java.io.Serializable</a>).</p>
+</div>
+<p>Le développeur d’application va pouvoir stocker les attributs dont il a
+besoin dans différents objets fournis par le conteneur (suivant la
+portée qu’il désire donner à un attribut). La gestion des attributs se
+fait toujours avec des méthodes aux signatures similaires&nbsp;:</p>
+<dl class="docutils">
+<dt><strong>void XXXX.setAttribute(String nom, Object valeur)</strong></dt>
+<dd>Pour positionner un attribut</dd>
+<dt><strong>Object XXXX.getAttribute(String nom)</strong></dt>
+<dd>Pour récupérer un attribut que l’on a préalablement positionné</dd>
+<dt><strong>java.util.Enumeration&lt;String&gt; XXXX.getAttributeNames()</strong></dt>
+<dd>Pour connaître la liste des noms des attributs disponibles</dd>
+<dt><strong>void XXXX.removeAttribute(String nom)</strong></dt>
+<dd>Pour supprimer un attribut</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Dans la liste ci-dessus XXXX représente l’objet du conteneur
+stockant les attributs.</p>
+</div>
+<div class="admonition-attributs-et-concurrence admonition">
+<p class="first admonition-title">Attributs et concurrence</p>
+<p class="last">Nous avons vu au chapitre précédent que la programmation de servlets
+implique de prendre en considération les problèmes de programmation
+concurrente (une servlet peut traiter N requêtes simultanément). Ainsi
+les attributs de portée session et application sont aussi
+potentiellement accessibles par du code traitant des requêtes
+simultanées. Il faut donc protéger les modifications concurrentes sur
+ces attributs.</p>
+</div>
+<div class="section" id="attribut-de-portee-requete">
+<h2>Attribut de portée requête<a class="headerlink" href="#attribut-de-portee-requete" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les attributs de portée requête sont directement accessibles depuis une
+instance de _HttpServletRequest_.</p>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span>
+                                          <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="o">();</span>
+    <span class="n">user</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">));</span>
+    <span class="n">user</span><span class="o">.</span><span class="na">setAddress</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">&quot;address&quot;</span><span class="o">));</span>
+    <span class="c1">// on stocke l&#39;utilisateur comme attribut de requête</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">,</span> <span class="n">user</span><span class="o">);</span>
+
+    <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>On peut ensuite récupérer l’attribut à n’importe quelle étape du
+traitement de la requête</p>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">cast</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">));</span>
+</pre></div>
+</div>
+<p>Les cas d’usage d’un attribut de portée requête sont limités pour le
+traitement d’une requête par une seule servlet. Ce type d’attribut
+devient beaucoup plus utile dès que plusieurs composants Web sont
+utilisés pour traiter une requête. Nous y reviendrons à plusieurs
+reprises lorsque nous parlerons des JSP, du modèle MVC et de JSF.</p>
+</div>
+<div class="section" id="attribut-de-portee-session">
+<h2>Attribut de portée session<a class="headerlink" href="#attribut-de-portee-session" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les attributs de portée session sont disponibles pour toutes les
+requêtes émises par un même client. Cela signifie que l’application Web
+mémorise des données relatives au client constituant ainsi une session
+utilisateur. Le conteneur représente cette session grâce à une instance
+de la classe <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html">HttpSession</a> disponible depuis une instance de HttpServletRequest
+grâce à la méthode <code class="docutils literal"><span class="pre">getSession()</span></code>.</p>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span>
+                                          <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="o">();</span>
+    <span class="n">user</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">));</span>
+    <span class="n">user</span><span class="o">.</span><span class="na">setAddress</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">&quot;address&quot;</span><span class="o">));</span>
+    <span class="c1">// on stocke l&#39;utilisateur comme attribut de session</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">,</span> <span class="n">user</span><span class="o">);</span>
+
+    <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>On peut ensuite récupérer l’attribut lors du traitement de n’importe
+quelle requête reçue de ce client.</p>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">cast</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">));</span>
+</pre></div>
+</div>
+<div class="section" id="session-http-comment-cela-marche-t-il">
+<h3>Session HTTP : comment cela marche-t-il ?<a class="headerlink" href="#session-http-comment-cela-marche-t-il" title="Lien permanent vers ce titre">¶</a></h3>
+<p>HTTP est un protocole non connecté et sans état (stateless). Cela
+signifie que la notion de session n’est tout simplement pas
+implémentable avec seulement HTTP&nbsp;!</p>
+<p>Pour parvenir à créer une notion de session, le conteneur Web associe à
+une instance de HttpSession un identifiant (le sessionId). Ce sessionId
+est envoyé au client sous la forme d’un cookie nommé JSESSIONID. Le
+client renvoie ensuite ce cookie dans l’en-tête de chaque requête
+envoyée au serveur. Ce dernier retrouve la bonne instance de HttpSession
+à partir du sessionId et peut l’associer à la requête entrante.</p>
+<p>Les limites de la session HTTP
+La relative simplicité d’une session HTTP a conduit beaucoup de
+développeurs à en user (et en abuser). Cependant, ses avantages peuvent
+très vite être contre-balancés par ses inconvénients.</p>
+<p>Il est très difficile pour le conteneur Web de déterminer quand une
+session doit être supprimée du serveur. En effet, un utilisateur d’un
+site Web peut très facilement se comporter de façon inattendue. Il peut,
+par exemple, fermer son navigateur Web ou quitter une page comme bon lui
+semble sans que le serveur n’en soit informé. Le conteneur considère
+donc qu’une session est invalidée et peut être détruite s’il ne reçoit
+plus de requête avec le sessionId pendant un certain laps de temps
+(généralement configuré à 30 minutes par défaut dans les serveurs
+d’application). Cela signifie qu’un développeur ne peut jamais être sûr
+à 100% qu’une session est disponible avec les attributs qu’il espère y
+trouver. L’utilisation de session peut donc très rapidement favoriser
+l’apparition de bugs.</p>
+<p>Le rattachement d’un client à une session n’est finalement basé que sur
+l’échange d’un cookie entre un client et un serveur. Un utilisateur mal
+intentioné peut intercepter une requête HTTP d’un client, extraire le
+cookie et émettre au serveur sa propre requête avec le cookie volé.
+C’est ce qu’on appelle un vol de session. L’utilisation de session peut
+donc très rapidement entraîner des failles de sécurité.</p>
+<p>Pour ces raisons (et d’autres encore), il est raisonnable de limiter au
+maximum l’emploi de la session Web. D’ailleurs, le fait que HTTP soit un
+protocole sans état n’est ni un hasard ni un oubli mais bien une
+contrainte voulue par ses auteurs pour garantir la robustesse du Web. Ce
+sont les développeurs Web qui ont introduit plus tard la notion de
+session afin de faciliter la réalisation de certaines fonctionnalités
+pour leurs applications.</p>
+</div>
+</div>
+<div class="section" id="les-attributs-de-portee-application">
+<h2>Les attributs de portée application<a class="headerlink" href="#les-attributs-de-portee-application" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les attributs de portée application sont stockés dans une instance d’un
+objet <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a>.
+Le <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a> représente le contexte d’exécution de l’ensemble
+des servlets, c’est-à-dire le contexte d’exécution de l’application Web.
+L’instance de <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a> est accessible depuis n’importe quelle
+servlet de l’application grâce à la méthode <code class="docutils literal"><span class="pre">getServletContext()</span></code>.</p>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
+    <span class="c1">// on stocke la date de création de la servlet</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">().</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&quot;creationDate&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Date</span><span class="o">());</span>
+<span class="o">}</span>
+
+<span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span>
+                  <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="c1">// on récupère la date de création de la servlet</span>
+    <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Date</span> <span class="n">creation</span> <span class="o">=</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Date</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">cast</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">()</span>
+                                                            <span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&quot;creationDate&quot;</span><span class="o">));</span>
+<span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Les attributs de portée application sont généralement des données de
+configuration de l’application créées au lancement ou bien des données
+mises en cache pour améliorer les performances.</p>
+</div>
+<div class="section" id="exercices">
+<h2>Exercices<a class="headerlink" href="#exercices" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="topic">
+<p class="topic-title first">Implémenter un formulaire en plusieurs étapes avec session</p>
+<dl class="docutils">
+<dt><strong>Objectif</strong></dt>
+<dd><p class="first">Réaliser une application qui permet à un utilisateur de s’inscrire
+en donnant des informations personnelles.</p>
+<p>La saisie d’information doit se faire en plusieurs étapes&nbsp;:</p>
+<ol class="arabic simple">
+<li>Une première page Web demande à l’utilisateur de saisir son nom
+et son prénom. Puis l’utilisateur clique sur le bouton «&nbsp;suivant&nbsp;».</li>
+<li>Une nouvelle page demande à l’utilisateur de saisir son adresse
+dans un seul champ texte. Puis l’utilisateur clique sur le bouton
+«&nbsp;valider&nbsp;».</li>
+<li>Finalement une page récapitulative s’affiche avec toutes les
+informations de l’utilisateur (nom, prénom et adresse).</li>
+</ol>
+<p class="last">Pour réaliser cette inscription en plusieurs étapes, vous utiliserez
+le mécanisme de session Web pour conserver temporairement les
+données saisies par l’utilisateur.</p>
+</dd>
+<dt><strong>Modèle Maven du projet à télécharger</strong></dt>
+<dd><a class="reference download internal" href="_downloads/webapp-template.zip" download=""><code class="xref download docutils literal"><span class="pre">webapp-template.zip</span></code></a></dd>
+<dt><strong>Mise en place du projet</strong></dt>
+<dd>Éditer le fichier pom.xml du template et modifier la balise
+artifactId pour spécifier le nom de votre projet. Modifier ensuite
+la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
+<dt><strong>Intégration du projet dans Eclipse</strong></dt>
+<dd>L’intégration du projet dans Eclipse suit la même procédure que
+celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a>.</dd>
+</dl>
+</div>
+<div class="topic">
+<p class="topic-title first">Implémenter un formulaire en plusieurs étapes sans session</p>
+<dl class="docutils">
+<dt><strong>Objectif</strong></dt>
+<dd>Reprenez l’exercice précédent mais cette fois-ci, implémentez le
+même formulaire de saisie en plusieurs étapes <strong>sans</strong> utiliser la
+session Web. L’objectif est donc d’implémenter une application sans
+état.</dd>
+<dt><strong>Modèle Maven du projet à télécharger</strong></dt>
+<dd><a class="reference download internal" href="_downloads/webapp-template.zip" download=""><code class="xref download docutils literal"><span class="pre">webapp-template.zip</span></code></a></dd>
+<dt><strong>Mise en place du projet</strong></dt>
+<dd>Éditer le fichier pom.xml du template et modifier la balise
+artifactId pour spécifier le nom de votre projet. Modifier ensuite
+la section &lt;developers&gt; pour indiquer vos nom et email.</dd>
+<dt><strong>Intégration du projet dans Eclipse</strong></dt>
+<dd>L’intégration du projet dans Eclipse suit la même procédure que
+celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a>.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Java EE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="environnement_developpement.html">L’environnement de développement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maven.html">Introduction à Maven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="servlet.html">Les Servlets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conteneur_web.html">Le conteneur Web</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Les attributs d’une application Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#attribut-de-portee-requete">Attribut de portée requête</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#attribut-de-portee-session">Attribut de portée session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#les-attributs-de-portee-application">Les attributs de portée application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercices">Exercices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="web_listeners_filters.html">Web listeners et filtres</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://docs.oracle.com/javaee/7/api/">API Java EE</a></li>
+    
+    <li class="toctree-l1"><a href="http://docs.oracle.com/javase/8/docs/">Documentation Java</a></li>
+    
+    <li class="toctree-l1"><a href="http://docs.oracle.com/javase/8/docs/api/index.html?overview-summary.html">API Java</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;
+<a ref="author" href="mailto:dagaydevel@free.fr">David Gayerie</a>
+<a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/fr/80x15.png" /></a>
+.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

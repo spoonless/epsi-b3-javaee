@@ -1,0 +1,264 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>RequestDispatcher et MVC &#8212; documentation Java EE 1.0</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Web listeners et filtres" href="web_listeners_filters.html" />
+    <link rel="prev" title="JSP : Java Server Pages" href="jsp.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="requestdispatcher-et-mvc">
+<h1>RequestDispatcher et MVC<a class="headerlink" href="#requestdispatcher-et-mvc" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Le <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html">request dispatcher</a>
+est un objet fourni par le conteneur Web. Il permet d’inclure ou de
+déléguer des traitements lors de la prise en charge d’une requête HTTP.
+Nous allons voir dans un premier temps comment cet objet peut être
+utilisé. Dans un second temps, nous verrons ce que l’utilisation d’un
+request dispatcher apporte dans la conception d’architecture Web en
+prenant comme exemple le modèle MVC.</p>
+<div class="section" id="le-request-dispatcher">
+<h2>Le request dispatcher<a class="headerlink" href="#le-request-dispatcher" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Nous avons vu précédemment qu’il existe une classe <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a>
+permettant notamment de stocker les attributs de portée application. Le
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a> représente le contexte d’une application Web et est
+accessible depuis une servlet grâce à la méthode <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/GenericServlet.html#getServletContext--">getServletContext()</a>.</p>
+<p>Une instance de <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a> permet également de récupérer une
+instance de <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html">RequestDispatcher</a> grâce aux méthodes&nbsp;:</p>
+<dl class="docutils">
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html#getRequestDispatcher-java.lang.String-">getResquestDispatcher(String path)</a></dt>
+<dd><p class="first">Permet de récupérer une instance de RequestDispatcher pour
+transferer le traitement à la ressource dont le chemin d’URL est
+passé en paramètre</p>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="n">RequestDispatcher</span> <span class="n">dispatcher</span> <span class="o">=</span> <span class="n">getServletContext</span><span class="o">().</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">&quot;/un/chemin&quot;</span><span class="o">);</span>
+</pre></div>
+</div>
+<p class="last">Selon la documentation, le chemin passé en paramètre <strong>DOIT</strong>
+commencer par /. Cependant, le chemin est interprété relativement au
+contexte racine de l’application.</p>
+</dd>
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html#getNamedDispatcher-java.lang.String-">getNamedDispatcher(String name)</a></dt>
+<dd><p class="first">Permet de récupérer une instance de RequestDispatcher pour
+transférer le traitement à la servlet dont le nom est passé en
+paramètre</p>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="n">RequestDispatcher</span> <span class="n">dispatcher</span> <span class="o">=</span> <span class="n">getServletContext</span><span class="o">().</span><span class="na">getNamedDispatcher</span><span class="o">(</span><span class="s">&quot;maServlet&quot;</span><span class="o">);</span>
+</pre></div>
+</div>
+<p class="last">Une servlet peut être nommée dans le fichier web.xml grâce à la
+balise &lt;servlet-name&gt; ou avec l’annotation <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebServlet.html">&#64;WebServlet</a>
+grâce à l’attribut name de l’annotation.</p>
+</dd>
+</dl>
+<p>Une fois que nous disposons d’une instance d’un RequestDispatcher nous
+pouvons appeler une de ses deux méthodes disponibles&nbsp;:</p>
+<dl class="docutils">
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html#include-javax.servlet.ServletRequest-javax.servlet.ServletResponse-">void RequestDispatcher.include(ServletRequest request, ServletResponse response)</a></dt>
+<dd>Inclut le contenu de la ressource dans le résultat final renvoyé au
+client. Si le request dispatcher pointe sur un fichier HTML,
+l’ensemble du fichier sera inséré dans la réponse. Si le request
+dispatcher pointe sur une servlet, cette dernière est exécutée et sa
+sortie est insérée dans la réponse.</dd>
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html#forward-javax.servlet.ServletRequest-javax.servlet.ServletResponse-">void RequestDispatcher.forward(ServletRequest request, ServletResponse response)</a></dt>
+<dd>Délègue le traitement de la requête à une nouvelle ressource. La
+différence avec la méthode <code class="docutils literal"><span class="pre">include</span></code> est que la servlet qui
+appelle <code class="docutils literal"><span class="pre">forward</span></code> ne doit pas avoir produit de contenu dans la
+réponse.</dd>
+</dl>
+<p>Avec le request dispatcher, on voit apparaître la possibilité de créer
+une chaîne de traitement pour une requête. Par exemple, une servlet peut
+être utilisée pour valider les paramètres transmis par la requête et
+effectuer un traitement propre à l’application. Puis, <em>via</em> un
+RequestDispatcher, elle peut déléguer à une autre servlet le soin de
+générer la réponse en utilisant la méthode <code class="docutils literal"><span class="pre">forward</span></code>. C’est dans ce
+modèle de traitement que les attributs de requête vus dans le chapitre
+<a class="reference internal" href="attributs_web.html#attributs-web"><span class="std std-ref">Les attributs d’une application Web</span></a> vont être utiles. Chaque
+servlet impliquée dans le traitement de la requête exploite et produit
+des données qu’elle peut récupérer ou stocker comme attribut dans la
+requête.</p>
+</div>
+<div class="section" id="le-modele-mvc">
+<h2>Le modèle MVC<a class="headerlink" href="#le-modele-mvc" title="Lien permanent vers ce titre">¶</a></h2>
+<p>L’utilisation d’un <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html">RequestDispatcher</a> pour segmenter le traitement d’une
+requête HTTP a permis très tôt aux développeurs d’application Web en
+Java d’imaginer un modèle d’architecture. Ce modèle est basé sur un
+modèle de conception déjà utilisé pour le développement d’application
+graphique : le <a class="reference external" href="https://fr.wikipedia.org/wiki/Mod%C3%A8le-vue-contr%C3%B4leur">MVC</a> (modèle-vue-contrôleur).</p>
+<p>Le MVC découpe le traitement applicatif selon trois catégories&nbsp;:</p>
+<dl class="docutils">
+<dt><strong>Le modèle</strong></dt>
+<dd>Il contient les données applicatives ainsi que les logiques de
+traitement propres à l’application.</dd>
+<dt><strong>La vue</strong></dt>
+<dd>Elle gère la représentation graphique des données et l’interface
+utilisateur</dd>
+<dt><strong>Le contrôleur</strong></dt>
+<dd>Il est sollicité par les interactions de l’utilisateur ou les
+modifications des données. Il assure la cohérence entre le modèle et
+la vue.</dd>
+</dl>
+<p>Pour une application Web Java</p>
+<ul class="simple">
+<li>le modèle peut être un simple objet Java qui encapsule la logique de
+l’application</li>
+<li>la vue peut être une page HTML ou une Java Server Pages (JSP)</li>
+<li>le contrôleur est une servlet chargée de valider les paramètres de la
+requête avant de les transmettre au modèle pour le traitement. Une
+fois ce traitement terminé, la servlet transmet le résultat à la vue
+grâce au RequestDispatcher.</li>
+</ul>
+</div>
+<div class="section" id="exercice">
+<h2>Exercice<a class="headerlink" href="#exercice" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="topic">
+<p class="topic-title first">Formulaire MVC</p>
+<dl class="docutils">
+<dt><strong>Objectif</strong></dt>
+<dd><p class="first">Développer une page MVC pour la saisie d’un formulaire d’adhésion en
+ligne. Le formulaire doit permettre de saisir les informations
+suivantes : email et mot de passe. Un champ permet de saisir à
+nouveau le mot de passe afin de s’assurer que l’utilisateur n’a pas
+fait d’erreur de saisie. De plus, l’utilisateur doit pouvoir cocher
+la case «&nbsp;J’ai lu et approuvé les conditions générales de ce site&nbsp;».</p>
+<p>Au moment de la soumission du formulaire, le serveur doit effectuer
+les vérifications suivantes&nbsp;:</p>
+<ol class="arabic simple">
+<li>Le champ email doit être rempli et contenir une adresse mail
+valide</li>
+<li>Le champ mot de passe contient au moins 8 caractères et il
+correspond à celui saisi une seconde fois</li>
+<li>La case «&nbsp;J’ai lu et approuvé les conditions générales de ce site&nbsp;»
+est bien cochée</li>
+</ol>
+<p>Si une vérification échoue, le formulaire doit être réaffiché avec
+un message d’erreur indiquant clairement ce qui n’est pas correct.
+De plus, le formulaire doit se réafficher en renseignant les données
+saisies précédemment <strong>sauf</strong> le mot de passe.</p>
+<p>Pour cet exercice, n’utiliserez <strong>aucun</strong> contrôle de champ côté
+client.</p>
+<p>Lorsque tous les champs sont saisis correctement, une page de
+confirmation d’adhésion doit être affichée avec la mention&nbsp;:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>Votre inscription a bien été prise en compte le &lt;date&gt; à &lt;heure&gt; pour l&#39;adresse mail &lt;email&gt;.
+</pre></div>
+</div>
+<p class="last">Pour réaliser cette application, vous utiliserez une architecture
+MVC en utilisant notamment des JSP pour réaliser les vues. À vous de
+concevoir la ou les classes Java qui représenteront le modèle.</p>
+</dd>
+<dt><strong>Modèle Maven du projet à télécharger</strong></dt>
+<dd><a class="reference download internal" href="_downloads/webapp-template.zip" download=""><code class="xref download docutils literal"><span class="pre">webapp-template.zip</span></code></a></dd>
+<dt><strong>Mise en place du projet</strong></dt>
+<dd>Éditer le fichier pom.xml du template et modifier la balise
+artifactId pour spécifier le nom de votre projet.</dd>
+<dt><strong>Intégration du projet dans Eclipse</strong></dt>
+<dd>L’intégration du projet dans Eclipse suit la même procédure que
+celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a>.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Java EE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="environnement_developpement.html">L’environnement de développement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maven.html">Introduction à Maven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="servlet.html">Les Servlets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conteneur_web.html">Le conteneur Web</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attributs_web.html">Les attributs d’une application Web</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jsp.html">JSP : Java Server Pages</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">RequestDispatcher et MVC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#le-request-dispatcher">Le request dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#le-modele-mvc">Le modèle MVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="web_listeners_filters.html">Web listeners et filtres</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://docs.oracle.com/javaee/7/api/">API Java EE</a></li>
+    
+    <li class="toctree-l1"><a href="http://docs.oracle.com/javase/8/docs/">Documentation Java</a></li>
+    
+    <li class="toctree-l1"><a href="http://docs.oracle.com/javase/8/docs/api/index.html?overview-summary.html">API Java</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;
+<a ref="author" href="mailto:dagaydevel@free.fr">David Gayerie</a>
+<a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/fr/80x15.png" /></a>
+.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

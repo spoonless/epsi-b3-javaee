@@ -1,0 +1,982 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>JSP : Java Server Pages &#8212; documentation Java EE 1.0</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="RequestDispatcher et MVC" href="request_dispatcher.html" />
+    <link rel="prev" title="Les attributs d’une application Web" href="attributs_web.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="jsp-java-server-pages">
+<h1>JSP : Java Server Pages<a class="headerlink" href="#jsp-java-server-pages" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Nous avons vu que les servlets permettent facilement d’exécuter du code
+Java pour traiter une requête HTTP. Cependant, l’API servlet n’est pas
+très pratique pour générer une réponse orientée texte (telle qu’une page
+HTML). Les Java Server Pages (JSP) ont été la première solution
+introduite pour offrir une alternative plus simple pour l’écriture de
+patron (template) de réponse.</p>
+<div class="section" id="developper-des-jsp-avec-wildfly">
+<h2>Développer des JSP avec Wildfly<a class="headerlink" href="#developper-des-jsp-avec-wildfly" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Wildfly est un serveur livré avec une configuration par défaut conçue pour
+un environnement de production.</p>
+<p>Pour le développement de JSP, nous allons voir qu’il est plus
+intéressant de configurer le serveur de test afin qu’il prenne en compte
+nos modifications dans les JSP à la volée sans qu’il soit nécessaire de
+redéployer l’application. Pour des raisons de performance, la prise en
+compte à chaud des modifications n’est pas le comportement par défaut de
+Wildfly.</p>
+<p>Pour activer ce comportement, il va falloir modifier la configuration du
+serveur. Pour cela, allez dans le répertoire d’installation de Wildfly et
+ouvrez le fichier <code class="file docutils literal"><span class="pre">standalone/configuration/standalone.xml</span></code>.
+Aux alentours de la ligne 468 du fichier, vous
+allez trouver la déclaration suivante&nbsp;:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;servlet-container</span> <span class="na">name=</span><span class="s">&quot;default&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;jsp-config/&gt;</span>
+    <span class="nt">&lt;websockets/&gt;</span>
+<span class="nt">&lt;/servlet-container&gt;</span>
+</pre></div>
+</div>
+<p>Faites une sauvegarde de ce fichier et remplacez cette configuration par
+celle-ci&nbsp;:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;servlet-container</span> <span class="na">name=</span><span class="s">&quot;default&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;jsp-config</span> <span class="na">development=</span><span class="s">&quot;true&quot;</span> <span class="na">check-interval=</span><span class="s">&quot;1&quot;</span> <span class="na">modification-test-interval=</span><span class="s">&quot;1&quot;</span> <span class="na">recompile-on-fail=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;websockets/&gt;</span>
+<span class="nt">&lt;/servlet-container&gt;</span>
+</pre></div>
+</div>
+<p>Attention, si vous faites une mauvaise manipulation, votre serveur peut
+ne plus démarrer correctement.</p>
+</div>
+<div class="section" id="exercice">
+<h2>Exercice<a class="headerlink" href="#exercice" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="topic">
+<p class="topic-title first">Une première JSP</p>
+<dl class="docutils">
+<dt><strong>Objectif</strong></dt>
+<dd><p class="first">Créer et afficher dans un navigateur une JSP. À la racine de
+l’application Web (répertoire src/main/webapp dans le projet Maven),
+créer un fichier <strong>index.jsp</strong> avec le contenu suivant&nbsp;:</p>
+<div class="last highlight-html"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Java EE<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Notre première JSP.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>Modèle Maven du projet à télécharger</strong></dt>
+<dd><a class="reference download internal" href="_downloads/webapp-template.zip" download=""><code class="xref download docutils literal"><span class="pre">webapp-template.zip</span></code></a></dd>
+<dt><strong>Mise en place du projet</strong></dt>
+<dd>Éditer le fichier pom.xml du template et modifier la balise
+artifactId pour spécifier le nom de votre projet.</dd>
+<dt><strong>Intégration du projet dans Eclipse</strong></dt>
+<dd>L’intégration du projet dans Eclipse suit la même procédure que
+celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a></dd>
+</dl>
+</div>
+<p>Si on s’en tient à l’exercice précédent, une page JSP ressemble
+exactement à une page statique (comme une page HTML)&nbsp;: il n’en est
+rien&nbsp;! En fait le serveur transforme automatiquement une page JSP en une
+servlet équivalente à&nbsp;:</p>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.PrintWriter</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.servlet.ServletException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServlet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
+
+<span class="cm">/*</span>
+<span class="cm">* En réalité la servlet créée à partir d&#39;une page JSP</span>
+<span class="cm">* est plus complexe que le code ci-dessous.</span>
+<span class="cm">*/</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">index</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span>
+                 <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">&quot;text/html&quot;</span><span class="o">);</span>
+    <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&quot;&lt;!DOCTYPE html&gt;\n&quot;</span><span class="o">);</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&quot;&lt;html&gt;\n&quot;</span><span class="o">);</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&quot;  &lt;head&gt;\n&quot;</span><span class="o">);</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&quot;    &lt;title&gt;Java EE&lt;/title&gt;\n&quot;</span><span class="o">);</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&quot;  &lt;/head&gt;\n&quot;</span><span class="o">);</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&quot;  &lt;body&gt;\n&quot;</span><span class="o">);</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&quot;    &lt;p&gt;Notre première JSP.&lt;/p&gt;\n&quot;</span><span class="o">);</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&quot;  &lt;/body&gt;\n&quot;</span><span class="o">);</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&quot;&lt;/html&gt;\n&quot;</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Tous les accès HTTP à la JSP ne retournent pas directement la page que
+nous avons écrite mais exécutent la servlet qui a été générée par le
+serveur.</p>
+<p>L’extension <strong>.jsp</strong> d’un fichier suffit au serveur pour identifier une
+JSP.
+Nous allons voir maintenant comment nous pouvons ajouter du contenu
+dynamique dans une JSP.</p>
+<p>La spécification JSP a considérablement changé depuis son origine. Cela
+signifie qu’il existe différentes façons de dynamiser une page JSP.</p>
+<p>Dans la première version de la technologie JSP, il était proposé
+d’insérer du code Java grâce aux balises <strong>scriptlets</strong>. Ce procédé est
+totalement déprécié et, même si on en trouve de nombreux exemples sur le
+Web, nous n’utiliserons absolument pas cette technique dans la suite de
+ce chapitre.</p>
+</div>
+<div class="section" id="el-expression-language">
+<h2>EL : Expression Language<a class="headerlink" href="#el-expression-language" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Java EE intègre l’expression language (EL). L’EL est directement
+utilisable dans une JSP. Il s’agit d’un langage permettant de manipuler
+des expressions avec une syntaxe simplifiée. L’EL <strong>n’est pas</strong> un
+langage de programmation. Il se limite à l’évaluation d’expression qui
+retourne une valeur (booléenne, numérique, chaîne de caractères,
+objet,…).</p>
+<p>Une expression en EL est facilement reconnaissable car elle est
+délimitée par <code class="docutils literal"><span class="pre">${</span> <span class="pre">}</span></code>.</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>${myObject}               : l&#39;attribut portant le nom &quot;myObject&quot;
+${myObject.myProperty}    : équivalent à myObject.getMyProperty()
+${myObject[&quot;myProperty&quot;]} : équivalent à myObject.getMyProperty()
+${myList[0]}              : pour accéder au premier élément d&#39;une liste
+${myMap[&quot;key&quot;]}           : pour accéder à la valeur associée à la clé &quot;key&quot; d&#39;une map
+</pre></div>
+</div>
+<p>Dans l’expression&nbsp;:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>${myObject.myProperty}
+</pre></div>
+</div>
+<p>myProperty correspond à une propriété JavaBeans de l’attribut myObject.
+Cela signifie que cet objet doit posséder une méthode getMyProperty()
+permettant d’accéder en lecture à la propriété.</p>
+</div>
+<div class="section" id="les-operateurs-dans-l-expression-language">
+<h2>Les opérateurs dans l’expression language<a class="headerlink" href="#les-operateurs-dans-l-expression-language" title="Lien permanent vers ce titre">¶</a></h2>
+<p>L’EL dispose également de différents opérateurs. Certains opérateurs
+peuvent s’écrire indifféremment avec un symbole ou une abréviation&nbsp;:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="18%" />
+<col width="65%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>+</td>
+<td>&#160;</td>
+<td>Addition (attention + ne
+peut pas être utilisé
+comme opérateur de
+concaténation de chaîne
+de caractères comme en
+Java)</td>
+</tr>
+<tr class="row-even"><td>-</td>
+<td>&#160;</td>
+<td>Soustraction</td>
+</tr>
+<tr class="row-odd"><td>*</td>
+<td>&#160;</td>
+<td>Multiplication</td>
+</tr>
+<tr class="row-even"><td>/</td>
+<td>div</td>
+<td>Division</td>
+</tr>
+<tr class="row-odd"><td>%</td>
+<td>mod</td>
+<td>Modulo</td>
+</tr>
+<tr class="row-even"><td>==</td>
+<td>eq</td>
+<td>Égalité</td>
+</tr>
+<tr class="row-odd"><td>!=</td>
+<td>ne</td>
+<td>Inégalité</td>
+</tr>
+<tr class="row-even"><td>&lt;</td>
+<td>lt</td>
+<td>Inférieur à</td>
+</tr>
+<tr class="row-odd"><td>&gt;</td>
+<td>gt</td>
+<td>Supérieur à</td>
+</tr>
+<tr class="row-even"><td>&lt;=</td>
+<td>le</td>
+<td>Inférieur ou égal à</td>
+</tr>
+<tr class="row-odd"><td>&gt;=</td>
+<td>ge</td>
+<td>Supérieur ou égal à</td>
+</tr>
+<tr class="row-even"><td>&amp;&amp;</td>
+<td>and</td>
+<td>Et logique</td>
+</tr>
+<tr class="row-odd"><td>||</td>
+<td>or</td>
+<td>Ou logique</td>
+</tr>
+<tr class="row-even"><td>!</td>
+<td>not</td>
+<td>Négation</td>
+</tr>
+<tr class="row-odd"><td>empty</td>
+<td>&#160;</td>
+<td>vraie si l’expression à
+droite est nulle, une
+chaîne vide, un tableau
+vide ou une map vide.</td>
+</tr>
+</tbody>
+</table>
+<p>De plus, il est possible d’utiliser les parenthèses et l’opérateur
+logique ternaire : <strong>condition ? si vrai : si faux</strong></p>
+<p>Exemple d’expressions</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>${2 + 5}
+${(2 + 5) &lt; 10} équivalent à ${(2 + 5) lt 10}
+${empty maliste ? &quot;liste vide&quot; : maliste[0]}
+${not empty maliste ? maliste[0] : &quot;liste vide&quot;}
+</pre></div>
+</div>
+</div>
+<div class="section" id="les-objets-implicites-dans-une-jsp">
+<h2>Les objets implicites dans une JSP<a class="headerlink" href="#les-objets-implicites-dans-une-jsp" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Dans une JSP, il existe une liste pré-définie d’objets qui sont
+directement accessibles dans en EL&nbsp;:</p>
+<dl class="docutils">
+<dt><strong>pageScope</strong></dt>
+<dd>Map permettant d’accéder aux différents attributs de portée (scope)
+<strong>page</strong>. Les attributs de portée page correspondent aux attributs
+déclarés dans la page.</dd>
+<dt><strong>requestScope</strong></dt>
+<dd>Map permettant d’accéder aux différents attributs de portée (scope)
+<strong>request</strong>.</dd>
+<dt><strong>sessionScope</strong></dt>
+<dd>Map permettant d’accéder aux différents attributs de portée (scope)
+<strong>session</strong>.</dd>
+<dt><strong>applicationScope</strong></dt>
+<dd>Map permettant d’accéder aux différents attributs de portée (scope)
+<strong>application</strong>.</dd>
+<dt><strong>param</strong></dt>
+<dd>Map permettant d’accéder aux paramètres de la requête HTTP.</dd>
+<dt><strong>paramValues</strong></dt>
+<dd>Map permettant d’accéder aux paramètres de la requête HTTP sous
+forme de tableau. Pratique si un paramètre est transmis plusieurs
+fois dans une requête.</dd>
+<dt><strong>header</strong></dt>
+<dd>Map permettant d’accéder aux valeurs des en-têtes HTTP de la
+requête.</dd>
+<dt><strong>headerValues</strong></dt>
+<dd>Map permettant d’accéder aux valeurs du Header HTTP de la requête
+sous forme de tableau. Pratique si un en-tête est transmis plusieurs
+fois dans une requête.</dd>
+<dt><strong>cookie</strong></dt>
+<dd>Map permettant d’accéder aux Cookies transmis dans la requête HTTP.</dd>
+<dt><strong>initParam</strong></dt>
+<dd>Map permettant d’accéder aux paramètres d’initialisation (déclarées
+dans le <code class="file docutils literal"><span class="pre">web.xml</span></code>).</dd>
+<dt><strong>pageContext</strong></dt>
+<dd>L’objet <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/jsp/PageContext.html">PageContext</a>
+de la page JSP. On trouve notamment dans cet objet les attributs
+request et response (respectivement de type <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html">HttpServletRequest</a> et
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html">HttpServletResponse</a>).</dd>
+</dl>
+<p>On peut, par exemple, afficher dynamiquement des informations liées à la
+requête dans une JSP&nbsp;:</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;ISO-8859-1&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Test JSP<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Bienvenue sur <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>${header[&quot;Host&quot;]}<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span> !<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Vous accédez actuellement à la page <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>${pageContext.request.requestURI}<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Votre navigateur Web est : <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>${header[&quot;user-agent&quot;]}<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>${empty param ? &quot;Vous n&#39;avez pas envoyé de paramètre au serveur&quot;
+                        : &quot;Vous avez envoyé des paramètres au serveur&quot;}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>${empty cookie ? &quot;Vous n&#39;avez pas envoyé de cookie au serveur&quot;
+                        : &quot;Vous avez envoyé des cookies au serveur&quot;}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="la-resolution-de-portee-des-attributs-dans-une-jsp">
+<h2>La résolution de portée des attributs dans une JSP<a class="headerlink" href="#la-resolution-de-portee-des-attributs-dans-une-jsp" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Nous avons vu qu’il existe dans une JSP les objets implicites :
+pageScope, requestScope, sessionScope et applicationScope. Ces objets
+permettent d’accéder aux attributs de leur portée respective. Par
+exemple&nbsp;:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>${sessionScope[&quot;utilisateur&quot;].nom}
+</pre></div>
+</div>
+<p>Il est également possible de référencer directement l’attribut
+utilisateur dans une page JSP&nbsp;:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>${utilisateur.nom}
+</pre></div>
+</div>
+<p>Dans ce cas, l’attribut utilisateur est recherché successivement dans
+les portées <strong>page, requête, session (si elle existe) et enfin
+application</strong>. Le premier attribut trouvé portant ce nom est utilisé.</p>
+<p>La recherche d’un attribut dans les différentes portées est réalisée par
+la méthode <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/jsp/JspContext.html#findAttribute-java.lang.String-">JspContext.findAttribute(String name)</a></p>
+<div class="section" id="expression-language-et-gestion-des-exceptions">
+<h3>Expression Language et gestion des exceptions<a class="headerlink" href="#expression-language-et-gestion-des-exceptions" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Un apport majeur de l’EL par rapport à du code Java, est la façon dont
+sont traités les références nulles et les dépassements d’index dans les
+tableaux. Si une référence d’un attribut ou d’une propriété est nulle,
+l’expression n’échouera pas, elle retournera simplement vide.</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>${unAttribut.unePropriete.uneAutrePropriete}
+</pre></div>
+</div>
+<p>L’expression ci-dessus est évaluée à vide si unAttribut est nul ou
+unePropriete est nulle ou uneAutrePropriete est nulle. Cela rend le code
+plus robuste et ne nécessite pas de vérifier un à un les éléments d’une
+expression.</p>
+<p>Pour les tableaux, accéder à un index qui dépasse la borne supérieure
+est également évalué à vide.</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>${paramValues[&quot;unParametre&quot;][1000]}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="les-directives-de-jsp">
+<h2>Les directives de JSP<a class="headerlink" href="#les-directives-de-jsp" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Il est possible d’utiliser les directives <code class="docutils literal"><span class="pre">page</span></code>, <code class="docutils literal"><span class="pre">include</span></code> et
+<code class="docutils literal"><span class="pre">taglib</span></code>.</p>
+<div class="section" id="la-directive-page">
+<h3>La directive page<a class="headerlink" href="#la-directive-page" title="Lien permanent vers ce titre">¶</a></h3>
+<p>La directive <code class="docutils literal"><span class="pre">page</span></code> permet de donner des informations sur le contexte
+d’exécution de la JSP. Il est recommandé de placer cette directive sur
+la première ligne de la JSP.</p>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
+</pre></div>
+</div>
+<p>Cette directive accepte entre autres les attributs&nbsp;:</p>
+<dl class="docutils">
+<dt>contentType</dt>
+<dd>Le type MIME du contenu généré par la JSP. La valeur par défaut est
+«&nbsp;text/html&nbsp;».</dd>
+<dt>pageEncoding</dt>
+<dd>L’encodage de la page, la valeur par défaut est «&nbsp;ISO-8859-1&nbsp;».
+<strong>Attention</strong>, le fait de préciser l’encodage dans le header HTML
+n’est pas suffisant pour une JSP. En effet, le header HTML est
+interprété par la client mais pas par la JSP. L’attribut
+<code class="docutils literal"><span class="pre">pageEncoding</span></code> de la directive page est donc là pour informer le
+conteneur Web de l’encodage à utiliser réellement pour envoyer la
+réponse au client.</dd>
+<dt>errorPage</dt>
+<dd>Contient un lien vers une page JSP à utiliser si une exception se
+produit lors du traitement de cette JSP. Dans ce cas, c’est le
+traitement de la page JSP d’erreur qui sera retourné au client.</dd>
+<dt>isErrorPage</dt>
+<dd><p class="first">Indique si la JSP est une JSP d’erreur. Dans ce cas, <code class="docutils literal"><span class="pre">errorData</span></code>
+est disponible dans le <code class="docutils literal"><span class="pre">pageContext</span></code>. <code class="docutils literal"><span class="pre">errorData</span></code> est de type
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/jsp/ErrorData.html">javax.servlet.jsp.ErrorData</a>.</p>
+<div class="admonition-exemple-d-une-jsp-d-erreur last admonition">
+<p class="first admonition-title">Exemple d’une JSP d’erreur</p>
+<div class="last highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">isErrorPage</span><span class="o">=</span><span class="s">&quot;true&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        Une erreur est survenue : ${pageContext.errorData.throwable.message}
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="la-directive-include">
+<h3>La directive include<a class="headerlink" href="#la-directive-include" title="Lien permanent vers ce titre">¶</a></h3>
+<p>La directive <code class="docutils literal"><span class="pre">include</span></code> permet d’insérer le contenu d’une page (fichier
+statique ou une autre JSP) au moment de la compilation de la JSP (i.e.
+la conversion de la JSP en servlet).</p>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">include</span> <span class="n">file</span><span class="o">=</span><span class="s">&quot;fragment.html&quot;</span> <span class="k">%&gt;</span>
+</pre></div>
+</div>
+<p>L’inclusion se fait à l’endroit où la directive est placée.</p>
+<p>Pour la directive <code class="docutils literal"><span class="pre">taglib</span></code>, nous y reviendrons ultérieurement.</p>
+</div>
+</div>
+<div class="section" id="les-balises-d-action-jsp">
+<h2>Les balises d’action JSP<a class="headerlink" href="#les-balises-d-action-jsp" title="Lien permanent vers ce titre">¶</a></h2>
+<p>JSP définit un ensemble de balises (action tags) pour réaliser des
+actions simples. Ces balises commencent toutes par <code class="docutils literal"><span class="pre">jsp:</span></code></p>
+<dl class="docutils">
+<dt><strong>&lt;jsp:useBean/&gt;</strong></dt>
+<dd><p class="first">Permet de référencer ou de créer un objet Java.</p>
+<p>Pour référencer un objet (un java bean), on utilise les attributs
+suivants</p>
+<ul class="simple">
+<li>id : donne le nom de l’attribut dans la page qui référencera
+l’objet</li>
+<li>beanName : donne le nom de l’attribut qui contient l’objet</li>
+<li>scope : donne la portée dans laquelle se situe l’attribut (page,
+request, session, application)</li>
+<li>type : le type Java complet (avec le nom de package) de l’objet</li>
+</ul>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Récupération d’un utilisateur en session</span><a class="headerlink" href="#id1" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
+<span class="c">&lt;!-- cet exemple ne fonctionne que s&#39;il existe un bean utilisateur en session --&gt;</span>
+<span class="k">&lt;jsp:useBean id=&quot;u&quot; beanName=&quot;utilisateur&quot; scope=&quot;session&quot; type=&quot;fr.compagnie.appli.Utilisateur&quot;/&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        ${u.nom}
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Avertissement</p>
+<p class="last">L’attribut DOIT exister pour pouvoir être récupéré
+avec <code class="docutils literal"><span class="pre">&lt;jsp:useBean&gt;</span></code>. Sinon l’exécution de la JSP provoque une
+exception.</p>
+</div>
+<p>L’utilité de <code class="docutils literal"><span class="pre">&lt;jsp:useBean&gt;</span></code> pour référencer un attribut est
+limité. Depuis l’introduction de l’EL, il est possible d’accéder
+facilement aux attributs avec des expressions de la forme
+<code class="docutils literal"><span class="pre">${nomAttribut}</span></code>.</p>
+<p>Pour créer un objet, on utilise les attributs suivants</p>
+<ul class="simple">
+<li>id : donne le nom de l’attribut qui référencera l’objet</li>
+<li>scope : donne la portée dans laquelle l’attribut sera stocké
+(page, request, session, application)</li>
+<li>class : le type Java complet (avec le nom de package) de l’objet</li>
+</ul>
+<div class="literal-block-wrapper last docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Création d’un objet java.util.Date</span><a class="headerlink" href="#id2" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="k">&lt;jsp:useBean id=&quot;now&quot; scope=&quot;page&quot; class=&quot;java.util.Date&quot;/&gt;</span>
+        ${now}
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+</dd>
+<dt><strong>&lt;jsp:setProperty/&gt;</strong></dt>
+<dd><p class="first">Permet de positionner les propriétés d’un objet à partir d’une
+valeur (attribut <code class="docutils literal"><span class="pre">value</span></code> de la balise) ou d’un paramètre de la
+requête (attribut <code class="docutils literal"><span class="pre">param</span></code> de la balise).</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Création d’un objet et positionnement des propriétés</span><a class="headerlink" href="#id3" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="k">&lt;jsp:useBean id=&quot;now&quot; scope=&quot;page&quot; class=&quot;java.util.Date&quot;/&gt;</span>
+        <span class="k">&lt;jsp:useBean id=&quot;u&quot; scope=&quot;session&quot; class=&quot;fr.compagnie.appli.Utilisateur&quot;/&gt;</span>
+        <span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;nom&quot; param=&quot;nom&quot;/&gt;</span>
+        <span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;age&quot; param=&quot;age&quot;/&gt;</span>
+        <span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;dateCreation&quot; value=&quot;${now}&quot;/&gt;</span>
+
+        ${u.nom} ${u.age} ${u.dateCreation}
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>Il existe une forme abrégée permettant de remplir automatiquement
+les propriétés d’un bean Java avec les paramètres de la requête
+entrante&nbsp;:</p>
+<div class="last highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;jsp:setProperty name=&quot;nomDuBean&quot; property=&quot;*&quot;/&gt;</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>&lt;jsp:getProperty&gt;</strong></dt>
+<dd><p class="first">Affiche dans la page le contenu d’une propriété d’un attribut.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Affichage des propriétés</span><a class="headerlink" href="#id4" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="k">&lt;jsp:useBean id=&quot;u&quot; scope=&quot;page&quot; class=&quot;fr.compagnie.appli.Utilisateur&quot;/&gt;</span>
+        <span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;nom&quot; param=&quot;nom&quot;/&gt;</span>
+        <span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;age&quot; param=&quot;age&quot;/&gt;</span>
+
+        <span class="k">&lt;jsp:getProperty name=&quot;u&quot; property=&quot;nom&quot;/&gt;</span>
+        <span class="k">&lt;jsp:getProperty name=&quot;u&quot; property=&quot;age&quot;/&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>On obtient le même résultat en utilisant une EL, on préfèrera donc
+cette dernière qui est une forme plus courte et plus expressive&nbsp;:</p>
+<div class="last highlight-text"><div class="highlight"><pre><span></span>${u.nom}
+${u.age}
+</pre></div>
+</div>
+</dd>
+<dt><strong>&lt;jsp:include/&gt;</strong></dt>
+<dd><p class="first">Permet d’inclure dynamiquement une page (statique ou une autre JSP).
+À la différence de la directive <code class="docutils literal"><span class="pre">&lt;%&#64;include&nbsp;%&gt;</span></code>, la balise action
+<code class="docutils literal"><span class="pre">&lt;jsp:include&gt;</span></code> est interprétée à chaque exécution de la JSP. Cela
+signifie que l’adresse de la page à inclure peut être calculée
+dynamiquement grâce à une EL. Cette balise est similaire à un appel
+à <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html#include-javax.servlet.ServletRequest-javax.servlet.ServletResponse-">RequestDispatcher.include</a>.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Inclusion d’une page en fonction d’un paramètre</span><a class="headerlink" href="#id5" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="k">&lt;jsp:useBean id=&quot;u&quot; scope=&quot;page&quot; class=&quot;fr.compagnie.appli.Utilisateur&quot;/&gt;</span>
+        <span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;nom&quot; param=&quot;nom&quot;/&gt;</span>
+        <span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;age&quot; param=&quot;age&quot;/&gt;</span>
+
+        <span class="k">&lt;jsp:include page=&quot;${u.age lt 18 ? &#39;mineur.jsp&#39; : &#39;majeur.jsp&#39;}&quot; /&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>Il est possible de passer des paramètres à la page incluse grâce à
+la balise action <code class="docutils literal"><span class="pre">&lt;jsp:param/&gt;</span></code></p>
+<div class="last highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;jsp:include page=&quot;maPage.jsp&quot;&gt;</span>
+    <span class="nt">&lt;jsp:param</span> <span class="na">name=</span><span class="s">&quot;param1&quot;</span> <span class="na">value=</span><span class="s">&quot;valeur1&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;jsp:param</span> <span class="na">name=</span><span class="s">&quot;param2&quot;</span> <span class="na">value=</span><span class="s">&quot;valeur2&quot;</span> <span class="nt">/&gt;</span>
+<span class="k">&lt;/jsp:include&gt;</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>&lt;jsp:forward/&gt;</strong></dt>
+<dd><p class="first">Permet de déléguer le traitement de la requête à une autre ressource
+de l’application. Cette balise est similaire à un appel à
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html#forward-javax.servlet.ServletRequest-javax.servlet.ServletResponse-">RequestDispatcher.forward</a>.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Un simple forward vers une autre page en fonction d’un paramètre</span><a class="headerlink" href="#id6" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;jsp:useBean id=&quot;u&quot; scope=&quot;page&quot; class=&quot;fr.compagnie.appli.Utilisateur&quot;/&gt;</span>
+<span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;nom&quot; param=&quot;nom&quot;/&gt;</span>
+<span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;age&quot; param=&quot;age&quot;/&gt;</span>
+<span class="k">&lt;jsp:forward page=&quot;${u.age lt 18 ? &#39;mineur.jsp&#39; : &#39;majeur.jsp&#39;}&quot; /&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>Il est possible de passer des paramètres à la page grâce à la balise
+action <code class="docutils literal"><span class="pre">&lt;jsp:param/&gt;</span></code> :</p>
+<div class="last highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;jsp:forward page=&quot;maPage.jsp&quot;&gt;</span>
+    <span class="nt">&lt;jsp:param</span> <span class="na">name=</span><span class="s">&quot;param1&quot;</span> <span class="na">value=</span><span class="s">&quot;valeur1&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;jsp:param</span> <span class="na">name=</span><span class="s">&quot;param2&quot;</span> <span class="na">value=</span><span class="s">&quot;valeur2&quot;</span> <span class="nt">/&gt;</span>
+<span class="k">&lt;/jsp:forward&gt;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="les-taglibs-et-la-jstl">
+<h2>Les Taglibs et la JSTL<a class="headerlink" href="#les-taglibs-et-la-jstl" title="Lien permanent vers ce titre">¶</a></h2>
+<p>En plus des balises d’action, l’utilisation des JSP peut être enrichie
+grâce à l’inclusion de bibliothèques de balises : les Tag Libraries
+(taglib en abbrégé).</p>
+<p>Le développement de telles bibliothèques dépasse le cadre de ce cours.
+Par contre nous allons voir comment utiliser la bibliothèque standard
+fournie par le conteneur Web : <strong>Java Standard Tag Library (JSTL)</strong>.</p>
+<p>Pour inclure une bibliothèque de balises dans une JSP, on utilise la
+directive <code class="docutils literal"><span class="pre">taglib</span></code>&nbsp;:</p>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;c&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> <span class="k">%&gt;</span>
+</pre></div>
+</div>
+<p>L’attribut <code class="docutils literal"><span class="pre">uri</span></code> désigne le nom de la bibliothèque. Cette URI ne
+pointe pas nécessairement sur une adresse Internet. Il s’agit simplement
+d’un nom unique permettant au conteneur Web d’identifier
+l’implémentation de la bibliothèque. L’attribut <code class="docutils literal"><span class="pre">prefix</span></code> désigne un
+identifiant quelconque qui devra être placé devant chaque balise de la
+bibliothèque afin de l’identifier sans ambiguïté. Ce mécanisme suit le
+même principe que les espaces de nom XML.</p>
+<p>La JSTL est découpée en cinq bibliothèques, chacune devant être incluse
+par une directive <code class="docutils literal"><span class="pre">taglib</span></code>.</p>
+<p>La documentation de la JSTL est consultable sur
+<a class="reference external" href="https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/">https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/</a></p>
+<div class="section" id="jstl-core">
+<h3>JSTL core<a class="headerlink" href="#jstl-core" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Documentation : <a class="reference external" href="https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/c/tld-summary.html">https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/c/tld-summary.html</a></p>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;c&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> <span class="k">%&gt;</span>
+</pre></div>
+</div>
+<p>Cette bibliothèque contient des balises pour la gestion des
+conditions et des boucles (<code class="docutils literal"><span class="pre">c:if</span></code>, <code class="docutils literal"><span class="pre">c:forEach</span></code>) et d’autres balises
+permettant une programmation simplifiée dans les JSP.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Gestion des conditions</span><a class="headerlink" href="#id7" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
+<span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;c&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> <span class="k">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="c">&lt;!-- c:if n&#39;autorise pas le else --&gt;</span>
+        <span class="nt">&lt;c:if</span> <span class="na">test=</span><span class="s">&quot;${param[&#39;age&#39;] lt 18}&quot;</span><span class="nt">&gt;</span>
+            Vous êtes mineur !
+        <span class="nt">&lt;/c:if&gt;</span>
+        <span class="nt">&lt;c:if</span> <span class="na">test=</span><span class="s">&quot;${param[&#39;age&#39;] ge 18}&quot;</span><span class="nt">&gt;</span>
+            Vous êtes majeur !
+        <span class="nt">&lt;/c:if&gt;</span>
+
+        <span class="c">&lt;!-- c:choose permet de spécifier autant de c:when que l&#39;on souhaite --&gt;</span>
+        <span class="nt">&lt;c:choose&gt;</span>
+            <span class="nt">&lt;c:when</span> <span class="na">test=</span><span class="s">&quot;${param[&#39;age&#39;] lt 18}&quot;</span><span class="nt">&gt;</span>
+                Vous êtes mineur !
+            <span class="nt">&lt;/c:when&gt;</span>
+            <span class="nt">&lt;c:otherwise&gt;</span>
+                Vous êtes majeur !
+            <span class="nt">&lt;/c:otherwise&gt;</span>
+        <span class="nt">&lt;/c:choose&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>À noter que la bibliothèque core propose également une balise
+<code class="docutils literal"><span class="pre">out</span></code> qui permet de réaliser un échappement des caractères
+réservés en HTML. Les caractères comme &lt; et &gt; seront automatiquement
+transformés en &amp;lt; et &amp;gt;&nbsp;:</p>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="nt">&lt;c:out</span> <span class="na">value=</span><span class="s">&quot;&lt;div&gt;Quel est le résultat de ce tag ?&lt;/div&gt;&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>Il est également possible de générer des URL absolues grâce à la
+balise <code class="docutils literal"><span class="pre">url</span></code>. Cette balise se charge de reconstruire l’URL à
+partir du contexte racine de l’application. Par exemple, pour le
+code JSP suivant&nbsp;:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>&lt;a href=&quot;&lt;c:url value=&quot;/page_suivante.jsp&quot;/&gt;&quot;&gt;Lien&lt;/a&gt;
+</pre></div>
+</div>
+<p>Si l’application est déployée dans le contexte racine <strong>monappli</strong>,
+alors le code HTML généré par la JSP sera&nbsp;:</p>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/monappli/page_suivante.jsp&quot;</span><span class="nt">&gt;</span>Lien<span class="nt">&lt;/a&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="jstl-formater">
+<h3>JSTL formater<a class="headerlink" href="#jstl-formater" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Documentation : <a class="reference external" href="https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/fmt/tld-summary.html">https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/fmt/tld-summary.html</a></p>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;fmt&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/fmt&quot;</span> <span class="k">%&gt;</span>
+</pre></div>
+</div>
+<p>Cette bibliothèque fournit des balises pour formater les données
+(date, nombre, …) mais également pour assurer une
+internationalisation de l’application (gestion de la langue en
+fonction des préférences du client).</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">Mise en forme d’un nombre</span><a class="headerlink" href="#id8" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
+<span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;fmt&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/fmt&quot;</span> <span class="k">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;fmt:formatNumber</span> <span class="na">value=</span><span class="s">&quot;${1024 * 1024}&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="jstl-functions">
+<h3>JSTL functions<a class="headerlink" href="#jstl-functions" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Documentation : <a class="reference external" href="https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/fn/tld-summary.html">https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/fn/tld-summary.html</a></p>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;fn&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/functions&quot;</span> <span class="k">%&gt;</span>
+</pre></div>
+</div>
+<p>Cette bibliothèque n’introduit pas de nouvelle balise mais des
+fonctions utilisables avec l’expression language. Ces fonctions
+servent principalement à manipuler les chaînes de caractères ou à
+connaître la taille d’un tableau (<code class="docutils literal"><span class="pre">fn:length</span></code>)</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">Utilisation de diverses fonctions</span><a class="headerlink" href="#id9" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
+<span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;c&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> <span class="k">%&gt;</span>
+<span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;fn&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/functions&quot;</span> <span class="k">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;c:set</span> <span class="na">var=</span><span class="s">&quot;nom&quot;</span> <span class="na">value=</span><span class="s">&quot;${param[&#39;nom&#39;]}&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:choose&gt;</span>
+            <span class="nt">&lt;c:when</span> <span class="na">test=</span><span class="s">&quot;${fn:length(param) eq 0}&quot;</span><span class="nt">&gt;</span>
+                Vous n&#39;avez envoyé aucun paramètre au serveur !
+            <span class="nt">&lt;/c:when&gt;</span>
+            <span class="nt">&lt;c:when</span> <span class="na">test=</span><span class="s">&quot;${empty nom}&quot;</span><span class="nt">&gt;</span>
+                Vous n&#39;avez pas envoyé votre nom au serveur !
+            <span class="nt">&lt;/c:when&gt;</span>
+            <span class="nt">&lt;c:when</span> <span class="na">test=</span><span class="s">&quot;${fn:startsWith(fn:toLowerCase(nom), &#39;david&#39;)}&quot;</span><span class="nt">&gt;</span>
+                Tiens ! Vous aussi, vous vous appelez David.
+            <span class="nt">&lt;/c:when&gt;</span>
+            <span class="nt">&lt;c:otherwise&gt;</span>
+                Bonjour ${nom} !
+            <span class="nt">&lt;/c:otherwise&gt;</span>
+        <span class="nt">&lt;/c:choose&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="jstl-sql">
+<h3>JSTL SQL<a class="headerlink" href="#jstl-sql" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Documentation : <a class="reference external" href="https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/sql/tld-summary.html">https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/sql/tld-summary.html</a></p>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;sql&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/sql&quot;</span> <span class="k">%&gt;</span>
+</pre></div>
+</div>
+<p>Comme son nom l’indique, cette bibliothèque permet d’exécuter des
+requêtes SQL dans les JSP. Nous verrons par la suite que son
+utilisation reste très limitée car dans une architecture Java EE,
+les accès aux bases de données sont généralement gérés par des
+composants dédiés.</p>
+</div>
+<div class="section" id="jstl-xml">
+<h3>JSTL XML<a class="headerlink" href="#jstl-xml" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Documentation : <a class="reference external" href="https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/x/tld-summary.html">https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/x/tld-summary.html</a></p>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;x&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/xml&quot;</span> <span class="k">%&gt;</span>
+</pre></div>
+</div>
+<p>Cette bibliothèque permet de lire et de manipuler des documents XML
+directement dans les JSP.</p>
+<p>Analyse d’un document XML</p>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
+<span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;x&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/xml&quot;</span> <span class="k">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="c">&lt;!-- on peut aussi charger un document XML externe grâce à l&#39;attribut doc --&gt;</span>
+        <span class="nt">&lt;x:parse</span> <span class="na">var=</span><span class="s">&quot;u&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;utilisateur&gt;</span>
+                <span class="nt">&lt;nom&gt;</span>jean<span class="nt">&lt;/nom&gt;</span>
+                <span class="nt">&lt;age&gt;</span>21<span class="nt">&lt;/age&gt;</span>
+            <span class="nt">&lt;/utilisateur&gt;</span>
+        <span class="nt">&lt;/x:parse&gt;</span>
+
+        <span class="nt">&lt;x:forEach</span> <span class="na">var=</span><span class="s">&quot;e&quot;</span> <span class="na">select=</span><span class="s">&quot;$u/utilisateur/*&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;x:out</span> <span class="na">select=</span><span class="s">&quot;name($e)&quot;</span><span class="nt">/&gt;</span> : <span class="nt">&lt;x:out</span> <span class="na">select=</span><span class="s">&quot;$e&quot;</span><span class="nt">/&gt;&lt;br&gt;</span>
+        <span class="nt">&lt;/x:forEach&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="exercices">
+<h2>Exercices<a class="headerlink" href="#exercices" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="topic">
+<p class="topic-title first">JSP de temps</p>
+<dl class="docutils">
+<dt><strong>Objectif</strong></dt>
+<dd>Écrire une JSP (sans code Java) qui donne la date et l’heure du
+serveur. La date et l’heure doivent être mises en forme de la façon
+suivante : 20 février 2018&nbsp;12:01:24</dd>
+<dt><strong>Modèle Maven du projet à télécharger</strong></dt>
+<dd><a class="reference download internal" href="_downloads/webapp-template.zip" download=""><code class="xref download docutils literal"><span class="pre">webapp-template.zip</span></code></a></dd>
+<dt><strong>Mise en place du projet</strong></dt>
+<dd>Éditer le fichier pom.xml du template et modifier la balise
+artifactId pour spécifier le nom de votre projet.</dd>
+<dt><strong>Intégration du projet dans Eclipse</strong></dt>
+<dd>L’intégration du projet dans Eclipse suit la même procédure que
+celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a></dd>
+</dl>
+</div>
+<div class="topic">
+<p class="topic-title first">Affichage des paramètres dans une JSP</p>
+<dl class="docutils">
+<dt><strong>Objectif</strong></dt>
+<dd><p class="first">Écrire une JSP (sans code Java) qui génère un tableau HTML contenant
+tous les paramètres HTTP reçus. La JSP doit gérer correctement le
+fait qu’un même paramètre peut être transmis plusieurs fois. Dans ce
+cas, les différentes valeurs seront séparées par une virgule. La JSP
+doit gérer correctement le fait qu’un paramètre peut contenir du
+code HTML. Dans ce cas, le code HTML doit être échappé pour
+s’afficher sous la forme d’un texte.</p>
+<p>Si on envoie les paramètres suivants</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>?language=java&amp;version=1.6&amp;version=1.7&amp;version=1.8&amp;motto=&lt;strong&gt;compile once, run anywhere&lt;/strong&gt;
+</pre></div>
+</div>
+<p>Le résultat doit être&nbsp;:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>motto</td>
+<td>&lt;strong&gt;compile once, run anywhere&lt;/strong&gt;</td>
+</tr>
+<tr class="row-even"><td>language</td>
+<td>java</td>
+</tr>
+<tr class="row-odd"><td>version</td>
+<td>1.6, 1.7, 1.8</td>
+</tr>
+</tbody>
+</table>
+<p class="last">L’ordre des lignes dans le tableau HTML est indifférent, cela n’a
+pas d’importance pour l’exercice.</p>
+</dd>
+<dt><strong>Modèle Maven du projet à télécharger</strong></dt>
+<dd><a class="reference download internal" href="_downloads/webapp-template.zip" download=""><code class="xref download docutils literal"><span class="pre">webapp-template.zip</span></code></a></dd>
+<dt><strong>Mise en place du projet</strong></dt>
+<dd>Éditer le fichier pom.xml du template et modifier la balise
+artifactId pour spécifier le nom de votre projet.</dd>
+<dt><strong>Intégration du projet dans Eclipse</strong></dt>
+<dd>L’intégration du projet dans Eclipse suit la même procédure que
+celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a></dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Java EE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="environnement_developpement.html">L’environnement de développement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maven.html">Introduction à Maven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="servlet.html">Les Servlets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conteneur_web.html">Le conteneur Web</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attributs_web.html">Les attributs d’une application Web</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">JSP : Java Server Pages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#developper-des-jsp-avec-wildfly">Développer des JSP avec Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercice">Exercice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#el-expression-language">EL : Expression Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#les-operateurs-dans-l-expression-language">Les opérateurs dans l’expression language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#les-objets-implicites-dans-une-jsp">Les objets implicites dans une JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#la-resolution-de-portee-des-attributs-dans-une-jsp">La résolution de portée des attributs dans une JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#les-directives-de-jsp">Les directives de JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#les-balises-d-action-jsp">Les balises d’action JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#les-taglibs-et-la-jstl">Les Taglibs et la JSTL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercices">Exercices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="request_dispatcher.html">RequestDispatcher et MVC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web_listeners_filters.html">Web listeners et filtres</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://docs.oracle.com/javaee/7/api/">API Java EE</a></li>
+    
+    <li class="toctree-l1"><a href="http://docs.oracle.com/javase/8/docs/">Documentation Java</a></li>
+    
+    <li class="toctree-l1"><a href="http://docs.oracle.com/javase/8/docs/api/index.html?overview-summary.html">API Java</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;
+<a ref="author" href="mailto:dagaydevel@free.fr">David Gayerie</a>
+<a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/fr/80x15.png" /></a>
+.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

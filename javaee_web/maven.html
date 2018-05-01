@@ -1,0 +1,715 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fr" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fr" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction à Maven &mdash; Documentation Java EE pour le Web 1.0</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Les Servlets" href="servlet.html" />
+    <link rel="prev" title="Une première application" href="premiere_application.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Java EE pour le Web
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Java EE pour le Web</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="environnement_developpement.html">L’environnement de développement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#telechargement-des-outils">Téléchargement des outils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#installation-des-outils">Installation des outils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-wildfly-dans-eclipse">Intégration de Wildfly dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#acces-a-la-console-d-administration-du-serveur">Accès à la console d’administration du serveur</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#qu-est-ce-qu-une-application-java-ee">Qu’est-ce qu’une application Java EE ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#creation-d-un-projet-dans-eclipse">Création d’un projet dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#deploiement-depuis-eclipse-et-test-de-l-application">Déploiement depuis Eclipse et test de l’application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="premiere_application.html#le-contexte-racine-de-deploiement-root-context">Le contexte racine de déploiement (root context)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#packaging-de-l-application">Packaging de l’application</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction à Maven</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pourquoi-utiliser-maven">Pourquoi utiliser Maven ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#caracteristiques-principales-de-maven">Caractéristiques principales de Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-de-maven">Installation de Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#un-premier-projet-avec-maven">Un premier projet avec Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#le-fichier-pom-xml">Le fichier pom.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#import-du-projet-maven-dans-eclipse">Import du projet Maven dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-de-l-application-dans-wildfly">Test de l’application dans Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gerer-le-projet-avec-maven">Gérer le projet avec Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#execution-de-maven-dans-eclipse">Exécution de Maven dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="servlet.html">Les Servlets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#structure-d-une-servlet-http">Structure d’une servlet HTTP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#configuration-du-deploiement-d-une-servlet">Configuration du déploiement d’une servlet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="servlet.html#chemin-absolu-d-url-dans-une-application-web">Chemin absolu d’URL dans une application Web</a></li>
+<li class="toctree-l3"><a class="reference internal" href="servlet.html#motif-d-url-d-une-servlet">Motif d’URL d’une Servlet</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#utilisation-du-fichier-de-deploiement-web-xml">Utilisation du fichier de déploiement web.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="conteneur_web.html">Le conteneur Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#cycle-de-vie-des-servlets">Cycle de vie des servlets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#exercice">Exercice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#servlet-et-programmation-concurrente">Servlet et programmation concurrente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#id1">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="attributs_web.html">Les attributs d’une application Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#attribut-de-portee-requete">Attribut de portée requête</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#attribut-de-portee-session">Attribut de portée session</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="attributs_web.html#session-http-comment-cela-marche-t-il">Session HTTP : comment cela marche-t-il ?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#les-attributs-de-portee-application">Les attributs de portée application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#exercices">Exercices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jsp.html">JSP : Java Server Pages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#developper-des-jsp-avec-wildfly">Développer des JSP avec Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#exercice">Exercice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#el-expression-language">EL : Expression Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-operateurs-dans-l-expression-language">Les opérateurs dans l’expression language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-objets-implicites-dans-une-jsp">Les objets implicites dans une JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#la-resolution-de-portee-des-attributs-dans-une-jsp">La résolution de portée des attributs dans une JSP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#expression-language-et-gestion-des-exceptions">Expression Language et gestion des exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-directives-de-jsp">Les directives de JSP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#la-directive-page">La directive page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#la-directive-include">La directive include</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-balises-d-action-jsp">Les balises d’action JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-taglibs-et-la-jstl">Les Taglibs et la JSTL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-core">JSTL core</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-formater">JSTL formater</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-functions">JSTL functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-sql">JSTL SQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-xml">JSTL XML</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#exercices">Exercices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="request_dispatcher.html">RequestDispatcher et MVC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="web_listeners_filters.html">Web listeners et filtres</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#les-listeners-web">Les listeners Web</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#declaration-des-listeners-web">Déclaration des listeners Web</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#exemple-d-utilisation-d-un-listener">Exemple d’utilisation d’un listener</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#les-filtres-de-servlet">Les filtres de Servlet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#declaration-des-filtres">Déclaration des filtres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#implementation-d-un-filtre">Implémentation d’un filtre</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#cas-d-utilisation-de-filtres">Cas d’utilisation de filtres</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#gestion-de-l-utf-8">Gestion de l’UTF-8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#generation-de-log">Génération de log</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jsf.html">Java Server Faces (JSF)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#creer-un-projet-avec-jsf">Créer un projet avec JSF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-vue-facelets">La vue : facelets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#activer-le-support-de-jsf-dans-eclipse">Activer le support de JSF dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#une-introduction-a-cdi">Une introduction à CDI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#declarer-un-objet-avec-cdi">Déclarer un objet avec CDI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-fichier-de-deploiement-beans-xml">Le fichier de déploiement beans.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-modele">Le modèle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-controleur">Le contrôleur</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-navigation">La navigation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-de-formulaire">La validation de formulaire</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#les-requetes-ajax">Les requêtes Ajax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#pour-aller-plus-loin">Pour aller plus loin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jaxrs.html">Les API Web avec JAX-RS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-notion-de-ressource">La notion de ressource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#configurer-une-application-web-pour-jax-rs">Configurer une application Web pour JAX-RS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-des-ressources-avec-jax-rs">Implémenter des ressources avec JAX-RS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#les-annotations-de-methodes">Les annotations de méthodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#parametre-dans-le-chemin-d-uri">Paramètre dans le chemin d’URI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#data-binding">Data binding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Java EE pour le Web</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Introduction à Maven</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="servlet.html" class="btn btn-neutral float-right" title="Les Servlets" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="premiere_application.html" class="btn btn-neutral" title="Une première application" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction-a-maven">
+<h1>Introduction à Maven<a class="headerlink" href="#introduction-a-maven" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Avant d’aborder le développement d’application Java EE, nous allons
+introduire un outil supplémentaire : <a class="reference external" href="http://maven.apache.org">Maven</a>.</p>
+<p>Maven est un outil open source de la communauté Apache entièrement écrit
+en Java. Il permet d’automatiser la gestion et la construction d’un
+projet Java&nbsp;: ce que l’on appelle communément <em>un outil de build</em>.</p>
+<p>Maven se présente comme un exécutable en ligne de commande mais il est
+également intégré nativement dans les IDE les plus courants dans le
+monde Java&nbsp;: Eclipse, Intellij IDEA, NetBeans.</p>
+<div class="section" id="pourquoi-utiliser-maven">
+<h2>Pourquoi utiliser Maven ?<a class="headerlink" href="#pourquoi-utiliser-maven" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Nous avons vu qu’il est possible de créer et d’exécuter des projets Java
+EE directement dans Eclipse. Alors pourquoi utiliser Maven ? Si un IDE
+peut suffire pour gérer des projets simples, cette solution s’avère
+rapidement limitée&nbsp;:</p>
+<ul class="simple">
+<li>Comment partager mon projet avec d’autres développeurs quand ils
+n’ont pas exactement la même configuration de poste que la mienne et
+qu’ils n’utilisent pas le même IDE que moi ?</li>
+<li>Comment compiler et tester mon projet en dehors d’un IDE (par exemple
+dans un processus d’intégration continue) ?</li>
+<li>Comment automatiser certaines tâches répétitives et limiter ainsi les
+erreurs ou les oublis ?</li>
+</ul>
+<p>Pour résoudre tous ces problèmes (et d’autres encore), le plus simple
+est d’utiliser un outil tel que Maven.</p>
+</div>
+<div class="section" id="caracteristiques-principales-de-maven">
+<h2>Caractéristiques principales de Maven<a class="headerlink" href="#caracteristiques-principales-de-maven" title="Lien permanent vers ce titre">¶</a></h2>
+<p>L’outil de construction de projet le plus célèbre est sans aucun doute
+<strong>make</strong>. Make permet de définir des tâches avec des commandes associées
+et des dépendances entre ces tâches.</p>
+<p>Maven part d’une approche très différente&nbsp;: il découpe le <a class="reference external" href="https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html">cycle de
+construction</a>
+du projet en phases pré-définies et le développeur peut paramétrer ou
+ajouter des tâches à effectuer automatiquement pour chacune des phases.
+Les principales phases dans Maven sont&nbsp;:</p>
+<ol class="arabic simple">
+<li>compile : compilation du code source du projet</li>
+<li>test : compilation du code source des tests et exécution des tests</li>
+<li>package : construction du livrable (pour une application Web, il
+s’agit de l’archive WAR)</li>
+</ol>
+<p>Maven ajoute la possibilité de gérer automatiquement les dépendances
+logicielles. Pour développer des applications Java EE, nous allons avoir
+besoin de bibliothèques externes (les fichiers .jar en Java). Plutôt que
+d’aller les télécharger une à une depuis le Web et de les ajouter dans
+Eclipse, nous allons signaler à Maven l’identifiant des dépendances dont
+nous aurons besoin et il va se charger pour nous de les télécharger
+depuis un référentiel centralisé (<a class="reference external" href="http://mvnrepository.com">Maven central
+repository</a>), de les stocker dans un cache
+sur la machine et de les associer à notre projet.</p>
+<p>Enfin les concepteurs de Maven ont adopté une approche normative afin de
+garantir une homogénéité entre les projets. Ainsi un projet Maven se
+conforme à une organisation assez stricte des répertoires et des
+fichiers.</p>
+<p>Il existe d’autres outils de construction de projet en Java.
+<a class="reference external" href="http://ant.apache.org/">Ant</a>, également promu par la communauté
+Apache, a été (et reste) beaucoup utilisé. Ant suit un principe très
+proche de Make. <a class="reference external" href="https://gradle.org/">Gradle</a> est un autre outil de
+construction bien connu des développeurs Android.</p>
+</div>
+<div class="section" id="installation-de-maven">
+<h2>Installation de Maven<a class="headerlink" href="#installation-de-maven" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Maven est nativement intégré dans Eclipse. Il est tout de même utile de
+disposer de cet outil en ligne de commande (notamment pout mettre en
+place un processus d’intégration continue).</p>
+<p>Maven se présente sous la forme d’une archive à télcharger à
+<a class="reference external" href="http://maven.apache.org">http://maven.apache.org</a>.</p>
+<p>Une fois téléchargé, vous pouvez extraire ou vous voulez et ajouter le
+répertoire <code class="file docutils literal notranslate"><span class="pre">apache-maven-3.5.2/bin</span></code> dans votre chemin d’exécution.</p>
+<p>Si vous utilisez une machine GNU/Linux, vous trouverez certainement
+maven dans les dépôts logiciel. Pour une distribution de type Debian,
+vous pouvez utiliser la commande&nbsp;:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt install maven
+</pre></div>
+</div>
+</div>
+<div class="section" id="un-premier-projet-avec-maven">
+<h2>Un premier projet avec Maven<a class="headerlink" href="#un-premier-projet-avec-maven" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Un projet Maven possède toujours un fichier <strong>pom.xml</strong> à la racine du
+projet. Ce fichier XML est le descripteur du projet et contient toutes
+les informations nécessaires à Maven pour gérer le cycle de vie du
+projet.</p>
+<p>Le nom du fichier pom.xml vient de POM (Project Object Model).</p>
+<p>Téléchargez et décompressez maintenant l’archive <a class="reference download internal" href="../_downloads/hello-webapp.zip" download=""><code class="xref download docutils literal notranslate"><span class="pre">samples/hello-webapp.zip</span></code></a>.</p>
+<p>Cette archive contient le projet Maven minimal pour une application Web qui va nous servir
+d’exemple.</p>
+<p>Maven impose une arborescence minimale des fichiers afin de garantir une
+homogénéité entre tous les projets.</p>
+<p><img alt="Arborescence d'un projet Maven" src="../_images/maven_project_content.png" /></p>
+<dl class="docutils">
+<dt><strong>pom.xml</strong></dt>
+<dd>A la racine du projet, on trouve le fichier pom.xml, le descripteur
+du projet pour Maven.</dd>
+<dt><strong>src/main</strong></dt>
+<dd>Ce répertoire contient les fichiers de l’application. On trouve au
+moins le sous répertoire <strong>java</strong> contenant les sources Java. Le
+sous répertoire <strong>resources</strong> accueille les fichiers qui ne sont pas
+des sources Java mais qui doivent être présents avec les fichiers
+compilés dans l’application finale (il s’agit souvent de fichiers de
+configuration). Enfin pour une application Web, le sous répertoire
+<strong>webapp</strong> correspond à la racine du site Web. On retrouve à
+l’intérieur le répertoire WEB-INF et le fichier WEB-INF/web.xml.</dd>
+<dt><strong>src/test</strong></dt>
+<dd>Ce répertoire contient les fichiers utilisés pour tester
+l’application. On trouve le sous répertoire <strong>Java</strong> contenant les
+sources Java des tests unitaires. Le sous répertoire <strong>resources</strong>
+accueille les fichiers qui ne sont pas des sources Java mais qui
+sont nécessaires à l’exécution des tests (il s’agit souvent de
+fichiers de configuration pour les tests).</dd>
+</dl>
+<p>Il existe un dernier répertoire à connaître, le répertoire <strong>target</strong>.
+Ce répertoire n’est pas présent dans l’arborescence du projet
+hello-webapp. Il s’agit du répertoire de travail de Maven. Ce répertoire
+est créé automatiquement par Maven pour stocker tous les fichiers de
+travail. On y trouve les classes compilées, les fichiers sources générés
+automatiquement, le livrable final, les rapports d’exécution des
+tests…</p>
+</div>
+<div class="section" id="le-fichier-pom-xml">
+<h2>Le fichier pom.xml<a class="headerlink" href="#le-fichier-pom-xml" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> est le descripteur de projet pour Maven. Il s’agit
+d’un fichier XML présent à la racine du projet qui est lu par Maven pour
+lui fournir les informations du projet.</p>
+<p>Le contenu du fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> du projet hello-webapp est le suivant&nbsp;:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;project</span>
+    <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
+  <span class="c">&lt;!--</span>
+<span class="c">    La version du format du fichier pom.</span>
+<span class="c">    Actuellement la dernière version est la 4.0.0.</span>
+<span class="c">  --&gt;</span>
+  <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+  <span class="c">&lt;!--</span>
+<span class="c">    Le group ID de l&#39;application. Le group ID</span>
+<span class="c">    s&#39;apparente à un package Java mais pour un projet. Il évite</span>
+<span class="c">    une colision de nom dans le cas de deux projets ayant le même nom</span>
+<span class="c">    puiqu&#39;ils peuvent avoir des group ID différents.</span>
+<span class="c">    Ainsi si deux projets s&#39;appelle hello et qu&#39;ils ont des group ID</span>
+<span class="c">    différents, ils sont considérés comme étant des projets différents.</span>
+<span class="c">  --&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>fr.epsi.b3<span class="nt">&lt;/groupId&gt;</span>
+
+  <span class="c">&lt;!--</span>
+<span class="c">    Le nom du projet</span>
+<span class="c">  --&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>hello<span class="nt">&lt;/artifactId&gt;</span>
+
+  <span class="c">&lt;!--</span>
+<span class="c">    La version de notre projet. Maven gère le versionnage</span>
+<span class="c">    afin de permettre le suivi des évolutions d&#39;un projet.</span>
+<span class="c">    Ici, le suffixe &quot;-SNAPSHOT&quot; indique à Maven que le projet</span>
+<span class="c">    est en cours de développement pour cette version.</span>
+<span class="c">  --&gt;</span>
+  <span class="nt">&lt;version&gt;</span>0.0.1-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+
+  <span class="c">&lt;!--</span>
+<span class="c">    Le type de packaging, c&#39;est-à-dire le type de projet.</span>
+<span class="c">    Ici, on indique à Maven que le projet doit être packagé</span>
+<span class="c">    sous la forme d&#39;un WAR. Donc pour Maven, il s&#39;agit d&#39;une</span>
+<span class="c">    application Web.</span>
+<span class="c">  --&gt;</span>
+  <span class="nt">&lt;packaging&gt;</span>war<span class="nt">&lt;/packaging&gt;</span>
+
+  <span class="c">&lt;!--</span>
+<span class="c">    Les propriétés de notre projet. On peut définir des propriétés</span>
+<span class="c">    spécifiques au projet ou des propriétés standard à Maven pour</span>
+<span class="c">    paramétrer la construction du projet.</span>
+<span class="c">  --&gt;</span>
+  <span class="nt">&lt;properties&gt;</span>
+    <span class="c">&lt;!--</span>
+<span class="c">      Propriété standard définissant la version minimale de Java supportée</span>
+<span class="c">      par les fichiers sources (ici 1.8 pour Java 8).</span>
+<span class="c">    --&gt;</span>
+    <span class="nt">&lt;maven.compiler.source&gt;</span>1.8<span class="nt">&lt;/maven.compiler.source&gt;</span>
+
+    <span class="c">&lt;!--</span>
+<span class="c">      Propriété standard définissant la version Java des fichiers compilés</span>
+<span class="c">      du projet (ici 1.8 pour Java 8).</span>
+<span class="c">    --&gt;</span>
+    <span class="nt">&lt;maven.compiler.target&gt;</span>1.8<span class="nt">&lt;/maven.compiler.target&gt;</span>
+
+    <span class="c">&lt;!--</span>
+<span class="c">      Le format d&#39;encodage des fichiers source du projet. Attention, l&#39;encodage</span>
+<span class="c">      par défaut n&#39;est pas le même sous Windows et sous les systèmes *NIX.</span>
+<span class="c">      Il est donc plus sage de toujours positionner cette propriété dans le fichier pom.xml.</span>
+<span class="c">    --&gt;</span>
+    <span class="nt">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span class="nt">&lt;/project.build.sourceEncoding&gt;</span>
+  <span class="nt">&lt;/properties&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</pre></div>
+</div>
+<p>Ce fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> donne les informations minimales à Maven&nbsp;:</p>
+<ul class="simple">
+<li>Le projet s’appelle <em>fr.epsi.b3</em>:hello</li>
+<li>La version actuelle est la 0.0.1 et il s’agit d’une version de
+travail</li>
+<li>Le projet est une application Web Java EE (war)</li>
+<li>Le projet est écrit en Java 8 et les sources sont encodées en UTF-8</li>
+</ul>
+<p>La documentation complète du format du fichier pom.xml est disponible à
+cette <a class="reference external" href="https://maven.apache.org/pom.html">adresse</a>.</p>
+</div>
+<div class="section" id="import-du-projet-maven-dans-eclipse">
+<span id="maven-eclipse-import"></span><h2>Import du projet Maven dans Eclipse<a class="headerlink" href="#import-du-projet-maven-dans-eclipse" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Eclipse intègre nativement Maven et permet donc de développer des
+projets basés sur Maven.</p>
+<p>Pour intégrer le projet hello dans votre espace de travail Eclipse,
+choisissez le menu <span class="guilabel">File &gt; Import…</span> puis sélectionnez dans la section
+<span class="guilabel">Select an import source</span> le type <span class="guilabel">Maven &gt; Existing Maven Projects</span>.</p>
+<p><img alt="Import dans projet Maven dans Eclipse 1" src="../_images/eclipse_import_maven_project.png" /></p>
+<p>Cliquez sur <span class="guilabel">Next</span>. Dans l’écran <span class="guilabel">Import Maven Projects</span>, cliquez sur
+<span class="guilabel">Browse…</span> pour sélectionner le répertoire contenant le fichier pom.xml
+de votre projet. Ensuite, cliquez sur <span class="guilabel">Finish</span>.</p>
+<p><img alt="Import dans projet Maven dans Eclipse 2" src="../_images/eclipse_import_maven_project2.png" /></p>
+<p>Le projet Maven est maintenant intégré dans Eclipse.</p>
+</div>
+<div class="section" id="test-de-l-application-dans-wildfly">
+<h2>Test de l’application dans Wildfly<a class="headerlink" href="#test-de-l-application-dans-wildfly" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Comme pour le chapitre précédent, ajouter le fichier <strong>hello.html</strong> dans
+votre projet dans le répertoire <strong>src/main/webapp</strong>&nbsp;:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Hello Java EE<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;p&gt;</span>Hello Java EE<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+<p>Ajoutez l’application hello dans votre serveur Wildfly et démarrez le
+serveur.</p>
+<p>Vérifiez que l’application est déployée en tentant d’accéder depuis
+votre navigateur Web à l’adresse :
+<a class="reference external" href="http://localhost:8080/hello-0.0.1-SNAPSHOT/hello.html">http://localhost:8080/hello-0.0.1-SNAPSHOT/hello.html</a></p>
+<p>Avec un projet Maven, le contexte racine de déploiement (le chemin d’URL
+à partir duquel l’application est accessible) est déterminé différemment
+que pour un projet Web Eclipse. Le contexte racine correspondra au nom
+du projet spécifié par la balise &lt;artifactId&gt; dans le fichier pom.xml suivi
+de <strong>-</strong> et du contenu de la balise &lt;version&gt;. Le nom du contexte de déploiement
+provient du nom de l’archive War créée par Maven.</p>
+<p>Il est possible de spécifier le nom de l’archive War et donc le contexte de déploiement
+de l’application en ajoutant à la fin du fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> :</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;build&gt;</span>
+    <span class="nt">&lt;finalName&gt;</span>lenomdelarchive<span class="nt">&lt;/finalName&gt;</span>
+<span class="nt">&lt;/build&gt;</span>
+</pre></div>
+</div>
+<p>Avec Maven, il est possible d’utiliser des variables. Par exemple, il est possible
+de forcer le nom de l’archive (et donc du contexte de déploiement) comme étant
+identique à l’artefact ID :</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;build&gt;</span>
+    <span class="nt">&lt;finalName&gt;</span>${artifactId}<span class="nt">&lt;/finalName&gt;</span>
+<span class="nt">&lt;/build&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="gerer-le-projet-avec-maven">
+<h2>Gérer le projet avec Maven<a class="headerlink" href="#gerer-le-projet-avec-maven" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Vous pouvez utiliser la ligne de commande <code class="docutils literal notranslate"><span class="pre">mvn</span></code> depuis le répertoire
+contenant le fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> pour réaliser les opérations sur un
+projet. Maven crée un répertoire de travail nommé <code class="file docutils literal notranslate"><span class="pre">target</span></code> dans lequel
+il stocke les fichiers produits (y compris le fichier war)</p>
+<p>nettoyer le répertoire de travail <code class="file docutils literal notranslate"><span class="pre">target</span></code></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mvn clean
+</pre></div>
+</div>
+<p>compiler les sources</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mvn compile
+</pre></div>
+</div>
+<p>compiler les sources, les tests unitaires et exécuter les tests
+unitaires</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mvn <span class="nb">test</span>
+</pre></div>
+</div>
+<p>compiler les sources, les tests unitaires, exécuter les tests unitaires
+et créer le fichier war</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mvn package
+</pre></div>
+</div>
+</div>
+<div class="section" id="execution-de-maven-dans-eclipse">
+<h2>Exécution de Maven dans Eclipse<a class="headerlink" href="#execution-de-maven-dans-eclipse" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Même si vous n’avez pas installé Maven, vous exécutez la version
+embarquée dans Eclipse. Faites un clic droit sur le nom du projet et
+sélectionnez <span class="guilabel">Run As… &gt; Maven build…</span>. Dans la fenêtre
+<span class="guilabel">Edit Configuration</span>, saisissez la cible Maven (goal) que vous voulez exécuter
+(Cf. ci-dessous) et cliquez sur <span class="guilabel">Run</span>.</p>
+<p><img alt="Exécution de Maven dans Eclipse" src="../_images/eclipse_run_maven.png" /></p>
+<p>Après l’exécution de la cible «&nbsp;package&nbsp;», Maven aura créé le fichier WAR
+de l’application dans le répertoire de travail <code class="file docutils literal notranslate"><span class="pre">target</span></code>.</p>
+</div>
+<div class="section" id="exercice">
+<h2>Exercice<a class="headerlink" href="#exercice" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="topic">
+<p class="topic-title first">ajout du plugin Wildfly dans le fichier pom.xml</p>
+<dl class="docutils">
+<dt><strong>Objectif</strong></dt>
+<dd>Exécuter un serveur Wildfly directement à partir de Maven</dd>
+</dl>
+<p>Il est possible de déclarer des plugins dans un fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> de
+son projet. Il existe de très nombreux plugins disponibles depuis des
+dépôts Maven. Cela signifie que la déclaration d’un plugin permet de
+déclencher automatiquement son téléchargement, son installation et son
+exécution.</p>
+<p>Lorsqu’on crée un projet pour une application Web, il peut être
+intéressant de pouvoir l’exécuter depuis Maven, c’est-à-dire de lancer
+un serveur d’application Java EE et de déployer l’application dans ce
+serveur.</p>
+<p>Pour Wildfly, on peut utiliser le <a class="reference external" href="https://docs.jboss.org/wildfly/plugins/maven/latest/">wildfly-maven-plugin</a>.
+Reprenez le <a class="reference download internal" href="../_downloads/hello-webapp.zip" download=""><code class="xref download docutils literal notranslate"><span class="pre">projet</span> <span class="pre">Maven</span> <span class="pre">d'exemple</span></code></a> que vous venez
+d’importer dans Eclipse et éditez le fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code>. À la suite de
+la section &lt;properties&gt;, ajoutez la déclaration suivante&nbsp;:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;build&gt;</span>
+    <span class="nt">&lt;plugins&gt;</span>
+        <span class="nt">&lt;plugin&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.wildfly.plugins<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>wildfly-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>1.2.1.Final<span class="nt">&lt;/version&gt;</span>
+            <span class="nt">&lt;configuration&gt;</span>
+                <span class="nt">&lt;version&gt;</span>11.0.0.Final<span class="nt">&lt;/version&gt;</span>
+            <span class="nt">&lt;/configuration&gt;</span>
+        <span class="nt">&lt;/plugin&gt;</span>
+    <span class="nt">&lt;/plugins&gt;</span>
+<span class="nt">&lt;/build&gt;</span>
+</pre></div>
+</div>
+<p>Ouvrez ensuite un terminal et allez dans le répertoire de votre projet.
+Tapez la commande&nbsp;:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mvn package wildfly:run
+</pre></div>
+</div>
+<p><em>package</em> indique à Maven qu’il doit construire le projet, exécuter
+les tests unitaires et créer la package (dans notre cas un fichier war).
+Puis <em>wildfly:run</em> appelle directement le <a class="reference external" href="https://docs.jboss.org/wildfly/plugins/maven/latest/">wildfly-maven-plugin</a> et lui
+demande de lancer le serveur en déployant le fichier war créé.</p>
+<p>Le plugin <a class="reference external" href="https://docs.jboss.org/wildfly/plugins/maven/latest/">wildfly-maven-plugin</a> déploie l’application dans le contexte
+racine [artifact-id]-[version]. Pour le projet de test, le contexte de
+déploiement sera donc <strong>hello-0.0.1-SNAPSHOT</strong></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="servlet.html" class="btn btn-neutral float-right" title="Les Servlets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="premiere_application.html" class="btn btn-neutral" title="Une première application" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright David Gayerie - david.gayerie.epsi@mailoo.org - CC-BY-SA.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'fr',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enable();
+          
+      });
+  </script> 
+
+</body>
+</html>

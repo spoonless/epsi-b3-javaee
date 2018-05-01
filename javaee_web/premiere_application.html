@@ -1,0 +1,515 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fr" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fr" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Une première application &mdash; Documentation Java EE pour le Web 1.0</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Introduction à Maven" href="maven.html" />
+    <link rel="prev" title="L’environnement de développement" href="environnement_developpement.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Java EE pour le Web
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Java EE pour le Web</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="environnement_developpement.html">L’environnement de développement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#telechargement-des-outils">Téléchargement des outils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#installation-des-outils">Installation des outils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-wildfly-dans-eclipse">Intégration de Wildfly dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#acces-a-la-console-d-administration-du-serveur">Accès à la console d’administration du serveur</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Une première application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#qu-est-ce-qu-une-application-java-ee">Qu’est-ce qu’une application Java EE ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creation-d-un-projet-dans-eclipse">Création d’un projet dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deploiement-depuis-eclipse-et-test-de-l-application">Déploiement depuis Eclipse et test de l’application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#le-contexte-racine-de-deploiement-root-context">Le contexte racine de déploiement (root context)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#packaging-de-l-application">Packaging de l’application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="maven.html">Introduction à Maven</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#pourquoi-utiliser-maven">Pourquoi utiliser Maven ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#caracteristiques-principales-de-maven">Caractéristiques principales de Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#installation-de-maven">Installation de Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#un-premier-projet-avec-maven">Un premier projet avec Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#le-fichier-pom-xml">Le fichier pom.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#import-du-projet-maven-dans-eclipse">Import du projet Maven dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#test-de-l-application-dans-wildfly">Test de l’application dans Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#gerer-le-projet-avec-maven">Gérer le projet avec Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#execution-de-maven-dans-eclipse">Exécution de Maven dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="servlet.html">Les Servlets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#structure-d-une-servlet-http">Structure d’une servlet HTTP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#configuration-du-deploiement-d-une-servlet">Configuration du déploiement d’une servlet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="servlet.html#chemin-absolu-d-url-dans-une-application-web">Chemin absolu d’URL dans une application Web</a></li>
+<li class="toctree-l3"><a class="reference internal" href="servlet.html#motif-d-url-d-une-servlet">Motif d’URL d’une Servlet</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#utilisation-du-fichier-de-deploiement-web-xml">Utilisation du fichier de déploiement web.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="conteneur_web.html">Le conteneur Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#cycle-de-vie-des-servlets">Cycle de vie des servlets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#exercice">Exercice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#servlet-et-programmation-concurrente">Servlet et programmation concurrente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#id1">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="attributs_web.html">Les attributs d’une application Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#attribut-de-portee-requete">Attribut de portée requête</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#attribut-de-portee-session">Attribut de portée session</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="attributs_web.html#session-http-comment-cela-marche-t-il">Session HTTP : comment cela marche-t-il ?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#les-attributs-de-portee-application">Les attributs de portée application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#exercices">Exercices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jsp.html">JSP : Java Server Pages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#developper-des-jsp-avec-wildfly">Développer des JSP avec Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#exercice">Exercice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#el-expression-language">EL : Expression Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-operateurs-dans-l-expression-language">Les opérateurs dans l’expression language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-objets-implicites-dans-une-jsp">Les objets implicites dans une JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#la-resolution-de-portee-des-attributs-dans-une-jsp">La résolution de portée des attributs dans une JSP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#expression-language-et-gestion-des-exceptions">Expression Language et gestion des exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-directives-de-jsp">Les directives de JSP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#la-directive-page">La directive page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#la-directive-include">La directive include</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-balises-d-action-jsp">Les balises d’action JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-taglibs-et-la-jstl">Les Taglibs et la JSTL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-core">JSTL core</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-formater">JSTL formater</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-functions">JSTL functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-sql">JSTL SQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-xml">JSTL XML</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#exercices">Exercices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="request_dispatcher.html">RequestDispatcher et MVC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="web_listeners_filters.html">Web listeners et filtres</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#les-listeners-web">Les listeners Web</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#declaration-des-listeners-web">Déclaration des listeners Web</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#exemple-d-utilisation-d-un-listener">Exemple d’utilisation d’un listener</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#les-filtres-de-servlet">Les filtres de Servlet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#declaration-des-filtres">Déclaration des filtres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#implementation-d-un-filtre">Implémentation d’un filtre</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#cas-d-utilisation-de-filtres">Cas d’utilisation de filtres</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#gestion-de-l-utf-8">Gestion de l’UTF-8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#generation-de-log">Génération de log</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jsf.html">Java Server Faces (JSF)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#creer-un-projet-avec-jsf">Créer un projet avec JSF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-vue-facelets">La vue : facelets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#activer-le-support-de-jsf-dans-eclipse">Activer le support de JSF dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#une-introduction-a-cdi">Une introduction à CDI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#declarer-un-objet-avec-cdi">Déclarer un objet avec CDI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-fichier-de-deploiement-beans-xml">Le fichier de déploiement beans.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-modele">Le modèle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-controleur">Le contrôleur</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-navigation">La navigation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-de-formulaire">La validation de formulaire</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#les-requetes-ajax">Les requêtes Ajax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#pour-aller-plus-loin">Pour aller plus loin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jaxrs.html">Les API Web avec JAX-RS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-notion-de-ressource">La notion de ressource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#configurer-une-application-web-pour-jax-rs">Configurer une application Web pour JAX-RS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-des-ressources-avec-jax-rs">Implémenter des ressources avec JAX-RS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#les-annotations-de-methodes">Les annotations de méthodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#parametre-dans-le-chemin-d-uri">Paramètre dans le chemin d’URI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#data-binding">Data binding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Java EE pour le Web</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Une première application</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="maven.html" class="btn btn-neutral float-right" title="Introduction à Maven" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="environnement_developpement.html" class="btn btn-neutral" title="L’environnement de développement" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="une-premiere-application">
+<h1>Une première application<a class="headerlink" href="#une-premiere-application" title="Lien permanent vers ce titre">¶</a></h1>
+<p>L’objectif de ce chapitre est de développer une première application
+Web Java EE sous la forme d’un site avec une page HTML.</p>
+<div class="section" id="qu-est-ce-qu-une-application-java-ee">
+<h2>Qu’est-ce qu’une application Java EE ?<a class="headerlink" href="#qu-est-ce-qu-une-application-java-ee" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Une application Web Java contient trois types de contenu :</p>
+<ul class="simple">
+<li><strong>Les fichiers publics</strong> : images, pages HTML, fichiers JavaScript.
+Il s’agit des fichiers qui sont téléchargés tels quels sur le
+navigateur client.</li>
+<li><strong>Les ressources dynamiques</strong> : il s’agit du code Java (mais pas
+uniquement) qui est exécuté par le serveur en vue de produire un
+contenu à renvoyer au client.</li>
+<li><strong>Les fichiers privés</strong> : il s’agit la plupart du temps de fichiers
+de configuration qui sont exploités par le serveur ou les ressources
+dynamiques et que l’on ne souhaite pas rendre directement accessibles
+sur le Web</li>
+</ul>
+<p>Une application Web Java n’est pas directement exécutable, elle doit
+être <strong>déployée</strong> dans un serveur d’application. Le serveur va prendre
+en charge la réception des requêtes clientes et exécuter le code de
+l’application en conséquence.</p>
+</div>
+<div class="section" id="creation-d-un-projet-dans-eclipse">
+<h2>Création d’un projet dans Eclipse<a class="headerlink" href="#creation-d-un-projet-dans-eclipse" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Dans Eclipse, sélectionnez <span class="guilabel">File &gt; New &gt; Dynamic Web Project</span>.</p>
+<p><img alt="Création d'une application Web dynamique dans Eclipse 1" src="../_images/eclipse_new_dynamic_web_project1.png" /></p>
+<p>Saisissez le nom du projet et <strong>vérifiez que le champ Target Runtime
+est bien positionné sur le serveur que vous avez créé</strong>. Cela indique à
+Eclipse que votre application Web dépend des bibliothèques Java fournies
+par Wildfly.</p>
+<p>Cliquez sur <span class="guilabel">Next</span>.</p>
+<p><img alt="Création d'une application Web dynamique dans Eclipse 2" src="../_images/eclipse_new_dynamic_web_project2.png" /></p>
+<p>Eclipse vous propose les répertoires de votre projet qui contiendront
+les sources Java. Nous n’en aurons pas besoin pour l’instant. Laissez
+les valeurs par défaut et cliquez sur «&nbsp;Next&nbsp;».</p>
+<p><img alt="Création d'une application Web dynamique dans Eclipse 3" src="../_images/eclipse_new_dynamic_web_project3.png" /></p>
+<p>Pour la dernière étape, cliquez sur la case <span class="guilabel">Generate web.xml
+deployment descriptor</span> puis cliquez sur <span class="guilabel">Finish</span>.</p>
+</div>
+<div class="section" id="deploiement-depuis-eclipse-et-test-de-l-application">
+<h2>Déploiement depuis Eclipse et test de l’application<a class="headerlink" href="#deploiement-depuis-eclipse-et-test-de-l-application" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Vous disposez maintenant d’un projet dans Eclipse. Ce projet contient un
+répertoire <code class="file docutils literal notranslate"><span class="pre">WebContent</span></code> : il s’agit du répertoire racine pour le
+contenu des fichiers statiques de l’application.</p>
+<p>Ajoutez un fichier HTML dans le répertoire <code class="file docutils literal notranslate"><span class="pre">WebContent</span></code> (clic droit
+sur le répertoire puis <span class="guilabel">New &gt; HTML file</span>).</p>
+<p>Vous pouvez par exemple créer le fichier <code class="file docutils literal notranslate"><span class="pre">hello.html</span></code> avec le contenu
+suivant :</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Hello Java EE<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Hello Java EE<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Il ne vous reste plus qu’à déployer votre application dans Wildfly. Pour
+cela, faites un clic droit sur le nom de votre serveur dans la vue
+<em>Servers</em> et choisissez le menu <span class="guilabel">Add and Remove…</span>. Vous allez
+pouvoir choisir les applications que vous souhaitez ajouter ou supprimer
+de votre serveur.</p>
+<p><img alt="Ajout d'une application Web dans Wildfly" src="../_images/eclipse_add_into_server.png" /></p>
+<p>Si cela, n’est pas déjà fait, il vous reste encore à démarrer votre
+serveur.</p>
+<p>Votre application est maintenant déployée et vous pouvez accéder au
+fichier depuis votre navigateur Web à l’adresse :
+<a class="reference external" href="http://localhost:8080/monappli/hello.html">http://localhost:8080/monappli/hello.html</a></p>
+<div class="section" id="le-contexte-racine-de-deploiement-root-context">
+<h3>Le contexte racine de déploiement (root context)<a class="headerlink" href="#le-contexte-racine-de-deploiement-root-context" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Un serveur d’application peut abriter plusieurs applications. Au moment
+du déploiement, on indique au serveur le <strong>contexte racine de
+déploiement</strong> de l’application. Il s’agit du chemin dans l’URL à partir
+duquel le serveur identifie l’application à laquelle un client souhaite
+accéder.</p>
+<p>Lorsque vous développez sous Eclipse, le contexte racine par défaut est
+tout simplement le nom du projet. Ainsi dans votre serveur de test,
+l’URL de base à partir de laquelle vous accédez à votre application est
+: <strong>http://localhost:8080/[nom du projet]</strong></p>
+</div>
+</div>
+<div class="section" id="packaging-de-l-application">
+<h2>Packaging de l’application<a class="headerlink" href="#packaging-de-l-application" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Imaginons que votre application est maintenant terminée et que vous
+souhaitez la distribuer ou la livrer pour une mise en production.</p>
+<p>Une application Web Java EE possède un format de distribution
+particulier : le format <strong>WAR</strong> (pour Web ARchive).</p>
+<p>Vous allez maintenant générer un fichier WAR à partir d’Eclipse. Pour
+cela, faites un clic droit sur votre projet puis <span class="guilabel">Export &gt; WAR file</span>.
+Sélectionnez une destination pour la sauvegarde du fichier et cliquez
+sur <span class="guilabel">Finish</span>.</p>
+<p><strong>Félicitation, vous venez de développer et de créer un format livrable
+pour votre première application Java EE !</strong></p>
+<p>Regardons maintenant plus en détail ce que contient ce fichier WAR. Un
+fichier WAR est en fait une archive ZIP. Il est donc très facile de
+regarder son contenu :</p>
+<p><img alt="Contenu du fichier WAR de l'application Web" src="../_images/war_content.png" /></p>
+<p>Nous retrouvons le fichier hello.html qui a été ajouté à l’application.
+Mais nous découvrons surtout l’arborescence standardisée d’un fichier
+WAR :</p>
+<dl class="docutils">
+<dt>META-INF</dt>
+<dd>Ce répertoire contient les meta-informations décrivant le livrable.
+Il contient en général au moins le fichier MANIFEST.MF qui donne des
+informations générales : nom du package, auteur, date de création…
+Ce répertoire est optionnel.</dd>
+<dt>WEB-INF</dt>
+<dd>Ce répertoire correspond à la section privée de l’application. Il
+contient le code de l’application ainsi que les fichiers de
+configuration. <strong>Le contenu de ce répertoire n’est pas accessible
+depuis l’extérieur</strong>. Faites le test en tentant de visualiser le
+fichier web.xml à l’adresse
+<a class="reference external" href="http://localhost:8080/monappli/WEB-INF/web.xml">http://localhost:8080/monappli/WEB-INF/web.xml</a>. Vous obtenez un code
+erreur 404 (NOT FOUND). Le fichier est bien présent mais le serveur
+refuse de répondre à cette adresse !</dd>
+<dt>WEB-INF/web.xml</dt>
+<dd><strong>LE fichier de déploiement</strong> de l’application Web ! Il fournit des
+informations au serveur d’application au moment du démarrage de
+l’application. L’application que nous avons développé était
+tellement simple que nous n’avons pas eu à nous en préoccuper pour
+l’instant.</dd>
+<dt>WEB-INF/classes</dt>
+<dd>Ce répertoire accueille les fichiers Java compilés (les fichiers
+.class). Comme nous n’avons pas écrit de code pour notre
+application, ce répertoire est vide.</dd>
+<dt>WEB-INF/lib</dt>
+<dd>Ce répertoire accueille les bibliothèques Java (les fichiers .jar)
+externes qui sont nécessaires à l’application. Nous verrons que le
+serveur d’application fournit déjà de nombreuses bibliothèques qu’il
+ne faut <strong>SURTOUT</strong> pas incorporer au livrable. Pour toutes les
+autres, c’est dans ce répertoire qu’elles doivent être placées.</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>web.xml obligatoire ou pas ?</p>
+<p class="last">Depuis Java EE 6, le fichier de déploiement web.xml n’est plus
+obligatoire. Cependant, certains outils de développement considèrent
+encore l’absence de ce fichier comme une erreur. Il est donc préférable
+de toujours l’ajouter. Voilà pourquoi, il vous a été demandé de cocher
+la case «&nbsp;Generate web.xml deployment descriptor&nbsp;» au moment de la
+création du projet.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="maven.html" class="btn btn-neutral float-right" title="Introduction à Maven" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="environnement_developpement.html" class="btn btn-neutral" title="L’environnement de développement" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright David Gayerie - david.gayerie.epsi@mailoo.org - CC-BY-SA.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'fr',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enable();
+          
+      });
+  </script> 
+
+</body>
+</html>

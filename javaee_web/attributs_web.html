@@ -1,0 +1,595 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fr" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fr" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Les attributs d’une application Web &mdash; Documentation Java EE pour le Web 1.0</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="JSP : Java Server Pages" href="jsp.html" />
+    <link rel="prev" title="Le conteneur Web" href="conteneur_web.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Java EE pour le Web
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Java EE pour le Web</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="environnement_developpement.html">L’environnement de développement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#telechargement-des-outils">Téléchargement des outils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#installation-des-outils">Installation des outils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-wildfly-dans-eclipse">Intégration de Wildfly dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#acces-a-la-console-d-administration-du-serveur">Accès à la console d’administration du serveur</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#qu-est-ce-qu-une-application-java-ee">Qu’est-ce qu’une application Java EE ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#creation-d-un-projet-dans-eclipse">Création d’un projet dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#deploiement-depuis-eclipse-et-test-de-l-application">Déploiement depuis Eclipse et test de l’application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="premiere_application.html#le-contexte-racine-de-deploiement-root-context">Le contexte racine de déploiement (root context)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#packaging-de-l-application">Packaging de l’application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="maven.html">Introduction à Maven</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#pourquoi-utiliser-maven">Pourquoi utiliser Maven ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#caracteristiques-principales-de-maven">Caractéristiques principales de Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#installation-de-maven">Installation de Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#un-premier-projet-avec-maven">Un premier projet avec Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#le-fichier-pom-xml">Le fichier pom.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#import-du-projet-maven-dans-eclipse">Import du projet Maven dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#test-de-l-application-dans-wildfly">Test de l’application dans Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#gerer-le-projet-avec-maven">Gérer le projet avec Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#execution-de-maven-dans-eclipse">Exécution de Maven dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="servlet.html">Les Servlets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#structure-d-une-servlet-http">Structure d’une servlet HTTP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#configuration-du-deploiement-d-une-servlet">Configuration du déploiement d’une servlet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="servlet.html#chemin-absolu-d-url-dans-une-application-web">Chemin absolu d’URL dans une application Web</a></li>
+<li class="toctree-l3"><a class="reference internal" href="servlet.html#motif-d-url-d-une-servlet">Motif d’URL d’une Servlet</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#utilisation-du-fichier-de-deploiement-web-xml">Utilisation du fichier de déploiement web.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="conteneur_web.html">Le conteneur Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#cycle-de-vie-des-servlets">Cycle de vie des servlets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#exercice">Exercice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#servlet-et-programmation-concurrente">Servlet et programmation concurrente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#id1">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Les attributs d’une application Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#attribut-de-portee-requete">Attribut de portée requête</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#attribut-de-portee-session">Attribut de portée session</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#session-http-comment-cela-marche-t-il">Session HTTP : comment cela marche-t-il ?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#les-attributs-de-portee-application">Les attributs de portée application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercices">Exercices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jsp.html">JSP : Java Server Pages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#developper-des-jsp-avec-wildfly">Développer des JSP avec Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#exercice">Exercice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#el-expression-language">EL : Expression Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-operateurs-dans-l-expression-language">Les opérateurs dans l’expression language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-objets-implicites-dans-une-jsp">Les objets implicites dans une JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#la-resolution-de-portee-des-attributs-dans-une-jsp">La résolution de portée des attributs dans une JSP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#expression-language-et-gestion-des-exceptions">Expression Language et gestion des exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-directives-de-jsp">Les directives de JSP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#la-directive-page">La directive page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#la-directive-include">La directive include</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-balises-d-action-jsp">Les balises d’action JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-taglibs-et-la-jstl">Les Taglibs et la JSTL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-core">JSTL core</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-formater">JSTL formater</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-functions">JSTL functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-sql">JSTL SQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-xml">JSTL XML</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#exercices">Exercices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="request_dispatcher.html">RequestDispatcher et MVC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="web_listeners_filters.html">Web listeners et filtres</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#les-listeners-web">Les listeners Web</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#declaration-des-listeners-web">Déclaration des listeners Web</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#exemple-d-utilisation-d-un-listener">Exemple d’utilisation d’un listener</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#les-filtres-de-servlet">Les filtres de Servlet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#declaration-des-filtres">Déclaration des filtres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#implementation-d-un-filtre">Implémentation d’un filtre</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#cas-d-utilisation-de-filtres">Cas d’utilisation de filtres</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#gestion-de-l-utf-8">Gestion de l’UTF-8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#generation-de-log">Génération de log</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jsf.html">Java Server Faces (JSF)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#creer-un-projet-avec-jsf">Créer un projet avec JSF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-vue-facelets">La vue : facelets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#activer-le-support-de-jsf-dans-eclipse">Activer le support de JSF dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#une-introduction-a-cdi">Une introduction à CDI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#declarer-un-objet-avec-cdi">Déclarer un objet avec CDI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-fichier-de-deploiement-beans-xml">Le fichier de déploiement beans.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-modele">Le modèle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-controleur">Le contrôleur</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-navigation">La navigation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-de-formulaire">La validation de formulaire</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#les-requetes-ajax">Les requêtes Ajax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#pour-aller-plus-loin">Pour aller plus loin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jaxrs.html">Les API Web avec JAX-RS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-notion-de-ressource">La notion de ressource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#configurer-une-application-web-pour-jax-rs">Configurer une application Web pour JAX-RS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-des-ressources-avec-jax-rs">Implémenter des ressources avec JAX-RS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#les-annotations-de-methodes">Les annotations de méthodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#parametre-dans-le-chemin-d-uri">Paramètre dans le chemin d’URI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#data-binding">Data binding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Java EE pour le Web</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Les attributs d’une application Web</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="jsp.html" class="btn btn-neutral float-right" title="JSP : Java Server Pages" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="conteneur_web.html" class="btn btn-neutral" title="Le conteneur Web" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="les-attributs-d-une-application-web">
+<span id="attributs-web"></span><h1>Les attributs d’une application Web<a class="headerlink" href="#les-attributs-d-une-application-web" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Il est souvent utile de partager de l’information dans un conteneur Web
+entre plusieurs composants. L’information partagée est appelée <strong>un
+attribut</strong>. Il est défini par sa portée&nbsp;:</p>
+<dl class="docutils">
+<dt>Portée de requête (<strong>request scope</strong>)</dt>
+<dd>L’attribut est disponible pour les servlets qui participent au
+traitement de la requête cliente. Nous verrons bientôt qu’une même
+requête peut être prise en charge par une chaîne de plusieurs
+servlets.</dd>
+<dt>Portée de session (<strong>session scope</strong>)</dt>
+<dd>L’attribut est disponible pour toutes les requêtes émises par un
+même client. L’ensemble de ces attributs est appelé une session
+utilisateur.</dd>
+<dt>Portée de l’application (<strong>application scope</strong>)</dt>
+<dd>L’attribut est disponible à tout moment à l’ensemble des servlets de
+l’application Web.</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Un attribut est une notion très vague&nbsp;: il s’agit simplement d’une
+instance d’une classe Java (implémentant si possible l’interface
+<a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html">java.io.Serializable</a>).</p>
+</div>
+<p>Le développeur d’application va pouvoir stocker les attributs dont il a
+besoin dans différents objets fournis par le conteneur (suivant la
+portée qu’il désire donner à un attribut). La gestion des attributs se
+fait toujours avec des méthodes aux signatures similaires&nbsp;:</p>
+<dl class="docutils">
+<dt><strong>void XXXX.setAttribute(String nom, Object valeur)</strong></dt>
+<dd>Pour positionner un attribut</dd>
+<dt><strong>Object XXXX.getAttribute(String nom)</strong></dt>
+<dd>Pour récupérer un attribut que l’on a préalablement positionné</dd>
+<dt><strong>java.util.Enumeration&lt;String&gt; XXXX.getAttributeNames()</strong></dt>
+<dd>Pour connaître la liste des noms des attributs disponibles</dd>
+<dt><strong>void XXXX.removeAttribute(String nom)</strong></dt>
+<dd>Pour supprimer un attribut</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Dans la liste ci-dessus XXXX représente l’objet du conteneur
+stockant les attributs.</p>
+</div>
+<div class="admonition-attributs-et-concurrence admonition">
+<p class="first admonition-title">Attributs et concurrence</p>
+<p class="last">Nous avons vu au chapitre précédent que la programmation de servlets
+implique de prendre en considération les problèmes de programmation
+concurrente (une servlet peut traiter N requêtes simultanément). Ainsi
+les attributs de portée session et application sont aussi
+potentiellement accessibles par du code traitant des requêtes
+simultanées. Il faut donc protéger les modifications concurrentes sur
+ces attributs.</p>
+</div>
+<div class="section" id="attribut-de-portee-requete">
+<h2>Attribut de portée requête<a class="headerlink" href="#attribut-de-portee-requete" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les attributs de portée requête sont directement accessibles depuis une
+instance de _HttpServletRequest_.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span>
+                                          <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="o">();</span>
+    <span class="n">user</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">));</span>
+    <span class="n">user</span><span class="o">.</span><span class="na">setAddress</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">&quot;address&quot;</span><span class="o">));</span>
+    <span class="c1">// on stocke l&#39;utilisateur comme attribut de requête</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">,</span> <span class="n">user</span><span class="o">);</span>
+
+    <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>On peut ensuite récupérer l’attribut à n’importe quelle étape du
+traitement de la requête</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">cast</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">));</span>
+</pre></div>
+</div>
+<p>Les cas d’usage d’un attribut de portée requête sont limités pour le
+traitement d’une requête par une seule servlet. Ce type d’attribut
+devient beaucoup plus utile dès que plusieurs composants Web sont
+utilisés pour traiter une requête. Nous y reviendrons à plusieurs
+reprises lorsque nous parlerons des JSP, du modèle MVC et de JSF.</p>
+</div>
+<div class="section" id="attribut-de-portee-session">
+<h2>Attribut de portée session<a class="headerlink" href="#attribut-de-portee-session" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les attributs de portée session sont disponibles pour toutes les
+requêtes émises par un même client. Cela signifie que l’application Web
+mémorise des données relatives au client constituant ainsi une session
+utilisateur. Le conteneur représente cette session grâce à une instance
+de la classe <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html">HttpSession</a> disponible depuis une instance de HttpServletRequest
+grâce à la méthode <code class="docutils literal notranslate"><span class="pre">getSession()</span></code>.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span>
+                                          <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="o">();</span>
+    <span class="n">user</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">));</span>
+    <span class="n">user</span><span class="o">.</span><span class="na">setAddress</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">&quot;address&quot;</span><span class="o">));</span>
+    <span class="c1">// on stocke l&#39;utilisateur comme attribut de session</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">,</span> <span class="n">user</span><span class="o">);</span>
+
+    <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>On peut ensuite récupérer l’attribut lors du traitement de n’importe
+quelle requête reçue de ce client.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">cast</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">));</span>
+</pre></div>
+</div>
+<div class="section" id="session-http-comment-cela-marche-t-il">
+<h3>Session HTTP : comment cela marche-t-il ?<a class="headerlink" href="#session-http-comment-cela-marche-t-il" title="Lien permanent vers ce titre">¶</a></h3>
+<p>HTTP est un protocole non connecté et sans état (stateless). Cela
+signifie que la notion de session n’est tout simplement pas
+implémentable avec seulement HTTP&nbsp;!</p>
+<p>Pour parvenir à créer une notion de session, le conteneur Web associe à
+une instance de HttpSession un identifiant (le sessionId). Ce sessionId
+est envoyé au client sous la forme d’un cookie nommé JSESSIONID. Le
+client renvoie ensuite ce cookie dans l’en-tête de chaque requête
+envoyée au serveur. Ce dernier retrouve la bonne instance de HttpSession
+à partir du sessionId et peut l’associer à la requête entrante.</p>
+<p>Les limites de la session HTTP
+La relative simplicité d’une session HTTP a conduit beaucoup de
+développeurs à en user (et en abuser). Cependant, ses avantages peuvent
+très vite être contre-balancés par ses inconvénients.</p>
+<p>Il est très difficile pour le conteneur Web de déterminer quand une
+session doit être supprimée du serveur. En effet, un utilisateur d’un
+site Web peut très facilement se comporter de façon inattendue. Il peut,
+par exemple, fermer son navigateur Web ou quitter une page comme bon lui
+semble sans que le serveur n’en soit informé. Le conteneur considère
+donc qu’une session est invalidée et peut être détruite s’il ne reçoit
+plus de requête avec le sessionId pendant un certain laps de temps
+(généralement configuré à 30 minutes par défaut dans les serveurs
+d’application). Cela signifie qu’un développeur ne peut jamais être sûr
+à 100% qu’une session est disponible avec les attributs qu’il espère y
+trouver. L’utilisation de session peut donc très rapidement favoriser
+l’apparition de bugs.</p>
+<p>Le rattachement d’un client à une session n’est finalement basé que sur
+l’échange d’un cookie entre un client et un serveur. Un utilisateur mal
+intentioné peut intercepter une requête HTTP d’un client, extraire le
+cookie et émettre au serveur sa propre requête avec le cookie volé.
+C’est ce qu’on appelle un vol de session. L’utilisation de session peut
+donc très rapidement entraîner des failles de sécurité.</p>
+<p>Pour ces raisons (et d’autres encore), il est raisonnable de limiter au
+maximum l’emploi de la session Web. D’ailleurs, le fait que HTTP soit un
+protocole sans état n’est ni un hasard ni un oubli mais bien une
+contrainte voulue par ses auteurs pour garantir la robustesse du Web. Ce
+sont les développeurs Web qui ont introduit plus tard la notion de
+session afin de faciliter la réalisation de certaines fonctionnalités
+pour leurs applications.</p>
+</div>
+</div>
+<div class="section" id="les-attributs-de-portee-application">
+<h2>Les attributs de portée application<a class="headerlink" href="#les-attributs-de-portee-application" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les attributs de portée application sont stockés dans une instance d’un
+objet <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a>.
+Le <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a> représente le contexte d’exécution de l’ensemble
+des servlets, c’est-à-dire le contexte d’exécution de l’application Web.
+L’instance de <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a> est accessible depuis n’importe quelle
+servlet de l’application grâce à la méthode <code class="docutils literal notranslate"><span class="pre">getServletContext()</span></code>.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
+    <span class="c1">// on stocke la date de création de la servlet</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">().</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&quot;creationDate&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Date</span><span class="o">());</span>
+<span class="o">}</span>
+
+<span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span>
+                  <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="c1">// on récupère la date de création de la servlet</span>
+    <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Date</span> <span class="n">creation</span> <span class="o">=</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Date</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">cast</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">()</span>
+                                                            <span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&quot;creationDate&quot;</span><span class="o">));</span>
+<span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Les attributs de portée application sont généralement des données de
+configuration de l’application créées au lancement ou bien des données
+mises en cache pour améliorer les performances.</p>
+</div>
+<div class="section" id="exercices">
+<h2>Exercices<a class="headerlink" href="#exercices" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="hint admonition">
+<p class="first admonition-title">Implémenter un formulaire en plusieurs étapes avec session</p>
+<dl class="last docutils">
+<dt><strong>Objectif</strong></dt>
+<dd><p class="first">Réaliser une application qui permet à un utilisateur de s’inscrire
+en donnant des informations personnelles.</p>
+<p>La saisie d’information doit se faire en plusieurs étapes&nbsp;:</p>
+<ol class="arabic simple">
+<li>Une première page Web demande à l’utilisateur de saisir son nom
+et son prénom. Puis l’utilisateur clique sur le bouton «&nbsp;suivant&nbsp;».</li>
+<li>Une nouvelle page demande à l’utilisateur de saisir son adresse
+dans un seul champ texte. Puis l’utilisateur clique sur le bouton
+«&nbsp;valider&nbsp;».</li>
+<li>Finalement une page récapitulative s’affiche avec toutes les
+informations de l’utilisateur (nom, prénom et adresse).</li>
+</ol>
+<p class="last">Pour réaliser cette inscription en plusieurs étapes, vous utiliserez
+le mécanisme de session Web pour conserver temporairement les
+données saisies par l’utilisateur.</p>
+</dd>
+<dt><strong>Modèle Maven du projet à télécharger</strong></dt>
+<dd><a class="reference download internal" href="../_downloads/webapp-template.zip" download=""><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></dd>
+<dt><strong>Mise en place du projet</strong></dt>
+<dd>Éditer le fichier pom.xml du template et modifier la balise
+artifactId pour spécifier le nom de votre projet.</dd>
+<dt><strong>Intégration du projet dans Eclipse</strong></dt>
+<dd>L’intégration du projet dans Eclipse suit la même procédure que
+celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a>.</dd>
+</dl>
+</div>
+<div class="hint admonition">
+<p class="first admonition-title">Implémenter un formulaire en plusieurs étapes sans session</p>
+<dl class="last docutils">
+<dt><strong>Objectif</strong></dt>
+<dd>Reprenez l’exercice précédent mais cette fois-ci, implémentez le
+même formulaire de saisie en plusieurs étapes <strong>sans</strong> utiliser la
+session Web. L’objectif est donc d’implémenter une application sans
+état.</dd>
+<dt><strong>Modèle Maven du projet à télécharger</strong></dt>
+<dd><a class="reference download internal" href="../_downloads/webapp-template.zip" download=""><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></dd>
+<dt><strong>Mise en place du projet</strong></dt>
+<dd>Éditer le fichier pom.xml du template et modifier la balise
+artifactId pour spécifier le nom de votre projet.</dd>
+<dt><strong>Intégration du projet dans Eclipse</strong></dt>
+<dd>L’intégration du projet dans Eclipse suit la même procédure que
+celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a>.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="jsp.html" class="btn btn-neutral float-right" title="JSP : Java Server Pages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="conteneur_web.html" class="btn btn-neutral" title="Le conteneur Web" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright David Gayerie - david.gayerie.epsi@mailoo.org - CC-BY-SA.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'fr',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enable();
+          
+      });
+  </script> 
+
+</body>
+</html>

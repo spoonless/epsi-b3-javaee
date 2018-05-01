@@ -1,45 +1,296 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Le conteneur Web &#8212; documentation Java EE 1.0</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  false,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/translations.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Recherche" href="search.html" />
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fr" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fr" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Le conteneur Web &mdash; Documentation Java EE pour le Web 1.0</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
     <link rel="next" title="Les attributs d’une application Web" href="attributs_web.html" />
-    <link rel="prev" title="Les Servlets" href="servlet.html" />
+    <link rel="prev" title="Les Servlets" href="servlet.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  <div class="wy-grid-for-nav">
 
-  </head>
-  <body>
-  
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
+          
+            <a href="../index.html" class="icon icon-home"> Java EE pour le Web
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Java EE pour le Web</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="environnement_developpement.html">L’environnement de développement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#telechargement-des-outils">Téléchargement des outils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#installation-des-outils">Installation des outils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-wildfly-dans-eclipse">Intégration de Wildfly dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#acces-a-la-console-d-administration-du-serveur">Accès à la console d’administration du serveur</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#qu-est-ce-qu-une-application-java-ee">Qu’est-ce qu’une application Java EE ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#creation-d-un-projet-dans-eclipse">Création d’un projet dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#deploiement-depuis-eclipse-et-test-de-l-application">Déploiement depuis Eclipse et test de l’application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="premiere_application.html#le-contexte-racine-de-deploiement-root-context">Le contexte racine de déploiement (root context)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#packaging-de-l-application">Packaging de l’application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="maven.html">Introduction à Maven</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#pourquoi-utiliser-maven">Pourquoi utiliser Maven ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#caracteristiques-principales-de-maven">Caractéristiques principales de Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#installation-de-maven">Installation de Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#un-premier-projet-avec-maven">Un premier projet avec Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#le-fichier-pom-xml">Le fichier pom.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#import-du-projet-maven-dans-eclipse">Import du projet Maven dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#test-de-l-application-dans-wildfly">Test de l’application dans Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#gerer-le-projet-avec-maven">Gérer le projet avec Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#execution-de-maven-dans-eclipse">Exécution de Maven dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="servlet.html">Les Servlets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#structure-d-une-servlet-http">Structure d’une servlet HTTP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#configuration-du-deploiement-d-une-servlet">Configuration du déploiement d’une servlet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="servlet.html#chemin-absolu-d-url-dans-une-application-web">Chemin absolu d’URL dans une application Web</a></li>
+<li class="toctree-l3"><a class="reference internal" href="servlet.html#motif-d-url-d-une-servlet">Motif d’URL d’une Servlet</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#utilisation-du-fichier-de-deploiement-web-xml">Utilisation du fichier de déploiement web.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Le conteneur Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cycle-de-vie-des-servlets">Cycle de vie des servlets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercice">Exercice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#servlet-et-programmation-concurrente">Servlet et programmation concurrente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="attributs_web.html">Les attributs d’une application Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#attribut-de-portee-requete">Attribut de portée requête</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#attribut-de-portee-session">Attribut de portée session</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="attributs_web.html#session-http-comment-cela-marche-t-il">Session HTTP : comment cela marche-t-il ?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#les-attributs-de-portee-application">Les attributs de portée application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#exercices">Exercices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jsp.html">JSP : Java Server Pages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#developper-des-jsp-avec-wildfly">Développer des JSP avec Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#exercice">Exercice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#el-expression-language">EL : Expression Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-operateurs-dans-l-expression-language">Les opérateurs dans l’expression language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-objets-implicites-dans-une-jsp">Les objets implicites dans une JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#la-resolution-de-portee-des-attributs-dans-une-jsp">La résolution de portée des attributs dans une JSP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#expression-language-et-gestion-des-exceptions">Expression Language et gestion des exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-directives-de-jsp">Les directives de JSP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#la-directive-page">La directive page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#la-directive-include">La directive include</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-balises-d-action-jsp">Les balises d’action JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-taglibs-et-la-jstl">Les Taglibs et la JSTL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-core">JSTL core</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-formater">JSTL formater</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-functions">JSTL functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-sql">JSTL SQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-xml">JSTL XML</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#exercices">Exercices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="request_dispatcher.html">RequestDispatcher et MVC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="web_listeners_filters.html">Web listeners et filtres</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#les-listeners-web">Les listeners Web</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#declaration-des-listeners-web">Déclaration des listeners Web</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#exemple-d-utilisation-d-un-listener">Exemple d’utilisation d’un listener</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#les-filtres-de-servlet">Les filtres de Servlet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#declaration-des-filtres">Déclaration des filtres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#implementation-d-un-filtre">Implémentation d’un filtre</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#cas-d-utilisation-de-filtres">Cas d’utilisation de filtres</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#gestion-de-l-utf-8">Gestion de l’UTF-8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#generation-de-log">Génération de log</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jsf.html">Java Server Faces (JSF)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#creer-un-projet-avec-jsf">Créer un projet avec JSF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-vue-facelets">La vue : facelets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#activer-le-support-de-jsf-dans-eclipse">Activer le support de JSF dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#une-introduction-a-cdi">Une introduction à CDI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#declarer-un-objet-avec-cdi">Déclarer un objet avec CDI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-fichier-de-deploiement-beans-xml">Le fichier de déploiement beans.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-modele">Le modèle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-controleur">Le contrôleur</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-navigation">La navigation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-de-formulaire">La validation de formulaire</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#les-requetes-ajax">Les requêtes Ajax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#pour-aller-plus-loin">Pour aller plus loin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jaxrs.html">Les API Web avec JAX-RS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-notion-de-ressource">La notion de ressource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#configurer-une-application-web-pour-jax-rs">Configurer une application Web pour JAX-RS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-des-ressources-avec-jax-rs">Implémenter des ressources avec JAX-RS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#les-annotations-de-methodes">Les annotations de méthodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#parametre-dans-le-chemin-d-uri">Paramètre dans le chemin d’URI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#data-binding">Data binding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Java EE pour le Web</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Le conteneur Web</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="attributs_web.html" class="btn btn-neutral float-right" title="Les attributs d’une application Web" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="servlet.html" class="btn btn-neutral" title="Les Servlets" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="le-conteneur-web">
 <h1>Le conteneur Web<a class="headerlink" href="#le-conteneur-web" title="Lien permanent vers ce titre">¶</a></h1>
@@ -48,7 +299,7 @@ Web qui permettent de répondre à des requêtes utilisateurs. Ces servlets
 sont packagées dans une application Web qui est elle-même déployée dans
 un serveur d’application Java EE. Cependant, nous n’avons pas eu à
 écrire de lignes de code telles que :</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="n">MaServlet</span> <span class="n">servlet</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MaServlet</span><span class="o">();</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">MaServlet</span> <span class="n">servlet</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MaServlet</span><span class="o">();</span>
 </pre></div>
 </div>
 <p>C’est-à-dire que nous n’avons pas eu à instancier nos servlets et
@@ -68,7 +319,7 @@ développer une application Web.</p>
 l’initialisation et la destruction. À chacune de ces étapes, une
 instance de servlet est informée par un appel à une méthode déclarée
 dans l’interface <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/Servlet.html">Servlet</a> et qui peut être surchargée pour chaque servlet.</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">(</span><span class="n">ServletConfig</span> <span class="n">config</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">(</span><span class="n">ServletConfig</span> <span class="n">config</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
   <span class="c1">// appelée au moment de l&#39;initialisation de la servlet</span>
 <span class="o">}</span>
 
@@ -86,13 +337,13 @@ sans paramètre</strong>.</p>
 <p>En Java, une classe qui ne déclare pas de constructeur dispose néanmoins
 d’un constructeur par défaut. Il s’agit d’un constructeur sans
 paramètre. Ainsi&nbsp;:</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MaClasse</span> <span class="o">{</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MaClasse</span> <span class="o">{</span>
 
 <span class="o">}</span>
 </pre></div>
 </div>
 <p>est équivalent à&nbsp;:</p>
-<div class="last highlight-java"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MaClasse</span> <span class="o">{</span>
+<div class="last highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MaClasse</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="nf">MaClasse</span><span class="o">()</span> <span class="o">{</span>
         <span class="kd">super</span><span class="o">();</span>
     <span class="o">}</span>
@@ -100,33 +351,33 @@ paramètre. Ainsi&nbsp;:</p>
 </pre></div>
 </div>
 </div>
-<p>Lors de l’appel à la méthode <code class="docutils literal"><span class="pre">init(ServletConfig)</span></code>, le conteneur passe
+<p>Lors de l’appel à la méthode <code class="docutils literal notranslate"><span class="pre">init(ServletConfig)</span></code>, le conteneur passe
 en paramètre une instance de <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletConfig.html">ServletConfig</a>
 qui permet, entre-autres, à la servlet de récupérer des paramètres
-d’initialisation. Notez que la méthode <code class="docutils literal"><span class="pre">init(ServletConfig)</span></code> autorise
-l’implémentation à jeter une <code class="docutils literal"><span class="pre">ServletException</span></code>. Si cela se produit,
+d’initialisation. Notez que la méthode <code class="docutils literal notranslate"><span class="pre">init(ServletConfig)</span></code> autorise
+l’implémentation à jeter une <code class="docutils literal notranslate"><span class="pre">ServletException</span></code>. Si cela se produit,
 le conteneur considère que la servlet n’a pas pu s’initialiser
 correctement et elle ne sera pas déployée dans le conteneur : elle ne
 sera donc pas accessible !</p>
 <p>Dans une servlet, il est préférable de surcharger la méthode :</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
 <span class="o">}</span>
 </pre></div>
 </div>
 <p>Cette méthode est définie dans la classe parente de <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServlet.html">HttpServlet</a> et
-si on désire accéder à l’objet <code class="docutils literal"><span class="pre">ServletConfig</span></code>, il est possible de le
-faire avec la méthode <code class="docutils literal"><span class="pre">getServletConfig()</span></code>.</p>
+si on désire accéder à l’objet <code class="docutils literal notranslate"><span class="pre">ServletConfig</span></code>, il est possible de le
+faire avec la méthode <code class="docutils literal notranslate"><span class="pre">getServletConfig()</span></code>.</p>
 </div>
 <div class="section" id="exercice">
 <h2>Exercice<a class="headerlink" href="#exercice" title="Lien permanent vers ce titre">¶</a></h2>
-<div class="topic">
-<p class="topic-title first">Comprendre le cycle de vie d’une servlet</p>
+<div class="hint admonition">
+<p class="first admonition-title">Comprendre le cycle de vie d’une servlet</p>
 <dl class="docutils">
 <dt><strong>Objectif</strong></dt>
 <dd>Déployer une servlet qui trace les différentes étapes de son cycle
 de vie.</dd>
 <dt><strong>Modèle Maven du projet à télécharger</strong></dt>
-<dd><a class="reference download internal" href="_downloads/webapp-template.zip" download=""><code class="xref download docutils literal"><span class="pre">webapp-template.zip</span></code></a></dd>
+<dd><a class="reference download internal" href="../_downloads/webapp-template.zip" download=""><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></dd>
 <dt><strong>Mise en place du projet</strong></dt>
 <dd>Éditer le fichier pom.xml du template et modifier la balise
 artifactId pour spécifier le nom de votre projet.</dd>
@@ -136,7 +387,7 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
 </dl>
 <p>Pour cet exercice, vous allez déployer une servlet de log dont voici le
 code source&nbsp;:</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">javax.servlet.ServletException</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.servlet.annotation.WebServlet</span><span class="o">;</span>
@@ -182,11 +433,11 @@ serveur en cours d’exécution)</li>
 <p>N’hésitez pas à tester plusieurs combinaisons possibles de ces actions.</p>
 <p>Que pouvez-vous en déduire concernant la façon dont un conteneur Web
 gère la création, l’initialisation et la suppression d’une servlet&nbsp;?</p>
-<dl class="docutils">
+<dl class="last docutils">
 <dt><strong>Variation</strong></dt>
-<dd><p class="first">Si maintenant vous modifiez l’annotation <code class="docutils literal"><span class="pre">&#64;WebServlet</span></code> de la façon
+<dd><p class="first">Si maintenant vous modifiez l’annotation <code class="docutils literal notranslate"><span class="pre">&#64;WebServlet</span></code> de la façon
 suivante&nbsp;:</p>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="nd">@WebServlet</span><span class="o">(</span><span class="n">urlPatterns</span> <span class="o">=</span> <span class="s">&quot;/log&quot;</span><span class="o">,</span> <span class="n">loadOnStartup</span> <span class="o">=</span> <span class="mi">0</span><span class="o">)</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@WebServlet</span><span class="o">(</span><span class="n">urlPatterns</span> <span class="o">=</span> <span class="s">&quot;/log&quot;</span><span class="o">,</span> <span class="n">loadOnStartup</span> <span class="o">=</span> <span class="mi">0</span><span class="o">)</span>
 </pre></div>
 </div>
 <p class="last">Refaites l’exercice en essayant de constater si cela produit un
@@ -202,8 +453,8 @@ conteneur Web ne crée qu’une seule instance de chaque servlet. En fait,
 le conteneur est libre d’adopter la stratégie qui lui paraît la
 meilleure. Nous avons également constater que nous pouvons changer le
 moment où le conteneur instanciera une servlet grâce à l’attribut
-<code class="docutils literal"><span class="pre">loadOnStartup</span></code> (cette option est disponible également dans le fichier
-de déploiement web.xml avec la balise <code class="docutils literal"><span class="pre">&lt;load-on-startup&gt;</span></code>).</p>
+<code class="docutils literal notranslate"><span class="pre">loadOnStartup</span></code> (cette option est disponible également dans le fichier
+de déploiement web.xml avec la balise <code class="docutils literal notranslate"><span class="pre">&lt;load-on-startup&gt;</span></code>).</p>
 <p>En tant que développeur de servlet, il faut donc <strong>toujours</strong> garder à
 l’esprit qu’une même instance de servlet sera utilisée pour servir
 plusieurs requêtes HTTP, y compris des requêtes simultanées. Cela
@@ -221,8 +472,8 @@ récurrente dans le développement d’application Java EE.</p>
 </div>
 <div class="section" id="id1">
 <h2>Exercice<a class="headerlink" href="#id1" title="Lien permanent vers ce titre">¶</a></h2>
-<div class="topic">
-<p class="topic-title first">Servlet et programmation concurrente</p>
+<div class="hint admonition">
+<p class="first admonition-title">Servlet et programmation concurrente</p>
 <dl class="docutils">
 <dt><strong>Objectif</strong></dt>
 <dd>Comprendre les risques de bug dans un contexte d’exécution
@@ -234,7 +485,7 @@ ne sont pas thread-safe). Cherchez d’où provient le problème et quelles
 solutions proposeriez-vous pour le corriger.</p>
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-text">Cas 1 : la servlet de calcul</span><a class="headerlink" href="#id2" title="Lien permanent vers ce code">¶</a></div>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">javax.servlet.ServletException</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServlet</span><span class="o">;</span>
@@ -263,7 +514,7 @@ solutions proposeriez-vous pour le corriger.</p>
 </div>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-text">Cas 2 : la servlet de temps</span><a class="headerlink" href="#id3" title="Lien permanent vers ce code">¶</a></div>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.text.DateFormat</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.util.Date</span><span class="o">;</span>
 
@@ -288,9 +539,9 @@ solutions proposeriez-vous pour le corriger.</p>
 </pre></div>
 </div>
 </div>
-<div class="literal-block-wrapper docutils container" id="id4">
+<div class="literal-block-wrapper last docutils container" id="id4">
 <div class="code-block-caption"><span class="caption-text">Cas 3 : la servlet d’inscription d’un utilisateur</span><a class="headerlink" href="#id4" title="Lien permanent vers ce code">¶</a></div>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">javax.servlet.ServletException</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServlet</span><span class="o">;</span>
@@ -340,75 +591,73 @@ solutions proposeriez-vous pour le corriger.</p>
 </div>
 
 
+           </div>
+           
           </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">Java EE</a></h1>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="environnement_developpement.html">L’environnement de développement</a></li>
-<li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a></li>
-<li class="toctree-l1"><a class="reference internal" href="maven.html">Introduction à Maven</a></li>
-<li class="toctree-l1"><a class="reference internal" href="servlet.html">Les Servlets</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Le conteneur Web</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#cycle-de-vie-des-servlets">Cycle de vie des servlets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#exercice">Exercice</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#servlet-et-programmation-concurrente">Servlet et programmation concurrente</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">Exercice</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="attributs_web.html">Les attributs d’une application Web</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jsp.html">JSP : Java Server Pages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="request_dispatcher.html">RequestDispatcher et MVC</a></li>
-<li class="toctree-l1"><a class="reference internal" href="web_listeners_filters.html">Web listeners et filtres</a></li>
-</ul>
-
-
-<hr />
-<ul>
-    
-    <li class="toctree-l1"><a href="http://docs.oracle.com/javase/8/docs/api/index.html?overview-summary.html">API Java</a></li>
-    
-    <li class="toctree-l1"><a href="https://docs.oracle.com/javaee/7/api/">API Java EE</a></li>
-    
-    <li class="toctree-l1"><a href="http://docs.oracle.com/javase/8/docs/">Documentation Java</a></li>
-    
-</ul>
-
-<div id="searchbox" style="display: none" role="search">
-  <h3>Recherche rapide</h3>
-    <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;
-<a ref="author" href="mailto:dagaydevel@free.fr">David Gayerie</a>
-<a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/fr/80x15.png" /></a>
-.
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="attributs_web.html" class="btn btn-neutral float-right" title="Les attributs d’une application Web" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="servlet.html" class="btn btn-neutral" title="Les Servlets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
+  
 
-    
+  <hr/>
 
-    
-  </body>
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright David Gayerie - david.gayerie.epsi@mailoo.org - CC-BY-SA.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'fr',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enable();
+          
+      });
+  </script> 
+
+</body>
 </html>

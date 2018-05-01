@@ -1,0 +1,544 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fr" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fr" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>L’environnement de développement &mdash; Documentation Java EE pour le Web 1.0</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Une première application" href="premiere_application.html" />
+    <link rel="prev" title="Sommaire" href="../index.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Java EE pour le Web
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Java EE pour le Web</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">L’environnement de développement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#telechargement-des-outils">Téléchargement des outils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-des-outils">Installation des outils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#integration-de-wildfly-dans-eclipse">Intégration de Wildfly dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acces-a-la-console-d-administration-du-serveur">Accès à la console d’administration du serveur</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#qu-est-ce-qu-une-application-java-ee">Qu’est-ce qu’une application Java EE ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#creation-d-un-projet-dans-eclipse">Création d’un projet dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#deploiement-depuis-eclipse-et-test-de-l-application">Déploiement depuis Eclipse et test de l’application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="premiere_application.html#le-contexte-racine-de-deploiement-root-context">Le contexte racine de déploiement (root context)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#packaging-de-l-application">Packaging de l’application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="maven.html">Introduction à Maven</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#pourquoi-utiliser-maven">Pourquoi utiliser Maven ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#caracteristiques-principales-de-maven">Caractéristiques principales de Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#installation-de-maven">Installation de Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#un-premier-projet-avec-maven">Un premier projet avec Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#le-fichier-pom-xml">Le fichier pom.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#import-du-projet-maven-dans-eclipse">Import du projet Maven dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#test-de-l-application-dans-wildfly">Test de l’application dans Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#gerer-le-projet-avec-maven">Gérer le projet avec Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#execution-de-maven-dans-eclipse">Exécution de Maven dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="servlet.html">Les Servlets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#structure-d-une-servlet-http">Structure d’une servlet HTTP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#configuration-du-deploiement-d-une-servlet">Configuration du déploiement d’une servlet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="servlet.html#chemin-absolu-d-url-dans-une-application-web">Chemin absolu d’URL dans une application Web</a></li>
+<li class="toctree-l3"><a class="reference internal" href="servlet.html#motif-d-url-d-une-servlet">Motif d’URL d’une Servlet</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#utilisation-du-fichier-de-deploiement-web-xml">Utilisation du fichier de déploiement web.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="conteneur_web.html">Le conteneur Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#cycle-de-vie-des-servlets">Cycle de vie des servlets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#exercice">Exercice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#servlet-et-programmation-concurrente">Servlet et programmation concurrente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#id1">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="attributs_web.html">Les attributs d’une application Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#attribut-de-portee-requete">Attribut de portée requête</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#attribut-de-portee-session">Attribut de portée session</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="attributs_web.html#session-http-comment-cela-marche-t-il">Session HTTP : comment cela marche-t-il ?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#les-attributs-de-portee-application">Les attributs de portée application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#exercices">Exercices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jsp.html">JSP : Java Server Pages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#developper-des-jsp-avec-wildfly">Développer des JSP avec Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#exercice">Exercice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#el-expression-language">EL : Expression Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-operateurs-dans-l-expression-language">Les opérateurs dans l’expression language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-objets-implicites-dans-une-jsp">Les objets implicites dans une JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#la-resolution-de-portee-des-attributs-dans-une-jsp">La résolution de portée des attributs dans une JSP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#expression-language-et-gestion-des-exceptions">Expression Language et gestion des exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-directives-de-jsp">Les directives de JSP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#la-directive-page">La directive page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#la-directive-include">La directive include</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-balises-d-action-jsp">Les balises d’action JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-taglibs-et-la-jstl">Les Taglibs et la JSTL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-core">JSTL core</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-formater">JSTL formater</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-functions">JSTL functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-sql">JSTL SQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-xml">JSTL XML</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#exercices">Exercices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="request_dispatcher.html">RequestDispatcher et MVC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="web_listeners_filters.html">Web listeners et filtres</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#les-listeners-web">Les listeners Web</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#declaration-des-listeners-web">Déclaration des listeners Web</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#exemple-d-utilisation-d-un-listener">Exemple d’utilisation d’un listener</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#les-filtres-de-servlet">Les filtres de Servlet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#declaration-des-filtres">Déclaration des filtres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#implementation-d-un-filtre">Implémentation d’un filtre</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#cas-d-utilisation-de-filtres">Cas d’utilisation de filtres</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#gestion-de-l-utf-8">Gestion de l’UTF-8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#generation-de-log">Génération de log</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jsf.html">Java Server Faces (JSF)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#creer-un-projet-avec-jsf">Créer un projet avec JSF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-vue-facelets">La vue : facelets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#activer-le-support-de-jsf-dans-eclipse">Activer le support de JSF dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#une-introduction-a-cdi">Une introduction à CDI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#declarer-un-objet-avec-cdi">Déclarer un objet avec CDI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-fichier-de-deploiement-beans-xml">Le fichier de déploiement beans.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-modele">Le modèle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-controleur">Le contrôleur</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-navigation">La navigation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-de-formulaire">La validation de formulaire</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#les-requetes-ajax">Les requêtes Ajax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsf.html#pour-aller-plus-loin">Pour aller plus loin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jaxrs.html">Les API Web avec JAX-RS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-notion-de-ressource">La notion de ressource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#configurer-une-application-web-pour-jax-rs">Configurer une application Web pour JAX-RS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-des-ressources-avec-jax-rs">Implémenter des ressources avec JAX-RS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#les-annotations-de-methodes">Les annotations de méthodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#parametre-dans-le-chemin-d-uri">Paramètre dans le chemin d’URI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#data-binding">Data binding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Java EE pour le Web</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>L’environnement de développement</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="premiere_application.html" class="btn btn-neutral float-right" title="Une première application" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="Sommaire" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="l-environnement-de-developpement">
+<h1>L’environnement de développement<a class="headerlink" href="#l-environnement-de-developpement" title="Lien permanent vers ce titre">¶</a></h1>
+<p>L’objectif de ce chapitre est <strong>la mise en place de
+l’environnement de développement</strong> pour réaliser les développements
+d’applications Java EE.</p>
+<p>Pour cela, vous aurez au moins besoin :</p>
+<ul class="simple">
+<li>du kit Java de développement</li>
+<li>d’un environnement de développement : par exemple Eclipse</li>
+<li>d’un serveur d’application Java EE</li>
+</ul>
+<div class="section" id="telechargement-des-outils">
+<h2>Téléchargement des outils<a class="headerlink" href="#telechargement-des-outils" title="Lien permanent vers ce titre">¶</a></h2>
+<p>La liste des outils requis est :</p>
+<dl class="docutils">
+<dt><strong>Java 8 JDK</strong></dt>
+<dd><div class="first last line-block">
+<div class="line">Le kit de développement Java 8</div>
+<div class="line"><a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a></div>
+</div>
+</dd>
+</dl>
+<div class="admonition-jre-ou-jdk admonition">
+<p class="first admonition-title">JRE ou JDK ?</p>
+<p class="last">Il existe deux distributions de Java par Oracle : JRE (Java Runtime
+Edition) et le JDK (Java development kit). Le JRE permet uniquement
+l’exécution des programmes Java. Le JDK fournit en plus un
+compilateur et des outils utiles aux développeurs. Il est donc
+nécessaire d’installer le JDK pour développer des applications en
+Java mais également pour exécuter le serveur TomEE.</p>
+</div>
+<dl class="docutils">
+<dt><strong>Eclipse IDE for Java EE Web Developpers</strong></dt>
+<dd><div class="first line-block">
+<div class="line">L’environnement de développement</div>
+<div class="line"><a class="reference external" href="http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/oxygen2">http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/oxygen2</a></div>
+</div>
+<p class="last">Il existe plusieurs distributions d’Eclipse. Il est impératif
+d’installer <strong>la version pour le développement Java EE</strong>. Si vous
+avez déjà installé Eclipse, vérifiez dans le menu «&nbsp;Help &gt; About
+Eclipse&nbsp;» que votre version est bien «&nbsp;Eclipse Java EE IDE for Web
+Developers&nbsp;».</p>
+</dd>
+<dt><strong>Wildfly</strong></dt>
+<dd><div class="first line-block">
+<div class="line">Le serveur d’application Java EE Wildfly (anciennement JBoss Application Server)</div>
+<div class="line">Windows : <a class="reference external" href="http://download.jboss.org/wildfly/11.0.0.Final/wildfly-11.0.0.Final.zip">http://download.jboss.org/wildfly/11.0.0.Final/wildfly-11.0.0.Final.zip</a></div>
+<div class="line">MacOS et Linux : <a class="reference external" href="http://download.jboss.org/wildfly/11.0.0.Final/wildfly-11.0.0.Final.tar.gz">http://download.jboss.org/wildfly/11.0.0.Final/wildfly-11.0.0.Final.tar.gz</a></div>
+</div>
+<p class="last">Nous verrons bientôt que les applications Java EE ne sont pas des
+programmes indépendants (standalone). Les applications Java EE sont
+déployées et exécutées dans ce que l’on appelle un serveur
+d’application qui fournit l’environnement d’exécution nécessaire.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="installation-des-outils">
+<h2>Installation des outils<a class="headerlink" href="#installation-des-outils" title="Lien permanent vers ce titre">¶</a></h2>
+<p>L’installation du JDK dépend de votre plate-forme : il est distribué
+sous la forme d’un installeur pour Windows et MacOS, et sous la forme
+d’un package ou d’une archive sous Linux.</p>
+<p>Eclipse et Wildfly sont distribués sous la forme d’une archive (tar.gz
+pour Linux et MacOS et zip pour Windows) que vous pouvez décompresser où
+vous le souhaitez.</p>
+</div>
+<div class="section" id="configuration-de-java-dans-eclipse">
+<h2>Configuration de Java dans Eclipse<a class="headerlink" href="#configuration-de-java-dans-eclipse" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Après avoir lancé Eclipse, il va falloir vérifier la version de Java
+utilisée par l’IDE et la modifier si nécessaire.</p>
+<p>Pour vérifier les versions de Java disponibles dans Eclipse, ouvrez les
+préférences utilisateur : menu <span class="guilabel">Window &gt; Preferences</span>. Dans la zone de
+filtre en haut à gauche, saisissez <em>jre</em> (pour Java Runtime Environment)
+et sélectionnez dans l’arbre <span class="guilabel">Installed JREs</span> comme ci-dessous&nbsp;:</p>
+<p><img alt="JRE installés dans Eclipse" src="../_images/eclipse_installed_jre.png" /></p>
+<p>Vérifiez que le JDK que vous avez installé se trouve bien dans la liste
+des JRE détectés par Eclipse. De plus le JDK doit être coché pour
+indiquer à Eclipse qu’il s’agit de l’environnement d’exécution à
+utiliser par défaut pour tous les projets.</p>
+<p><strong>Si vous ne trouvez pas le JDK installé dans la liste</strong>, utilisez le
+bouton <span class="guilabel">Add…</span> pour l’ajouter manuellement&nbsp;:</p>
+<ol class="arabic simple">
+<li>Pour le choix du type de JRE, choisissez <span class="guilabel">Standard VM</span> et cliquez sur
+<span class="guilabel">Next</span></li>
+<li>Dans la boîte de dialogue <span class="guilabel">Add JRE</span>, cliquez sur le bouton
+<span class="guilabel">Directory…</span> pour sélectionner le répertoire d’installation du JDK</li>
+<li>Eclipse s’occupe ensuite de remplir les champs nécessaires et vous
+n’avez plus qu’à cliquer sur <span class="guilabel">Finish</span></li>
+</ol>
+<p><img alt="Définition d'une JRE dans Eclipse" src="../_images/eclipse_jre_definition.png" /></p>
+<p>N’oubliez pas de cocher la ligne de votre JDK dans l’écran
+<span class="guilabel">Installed JREs</span> pour qu’il devienne l’environnement d’exécution par défaut.</p>
+</div>
+<div class="section" id="integration-de-wildfly-dans-eclipse">
+<h2>Intégration de Wildfly dans Eclipse<a class="headerlink" href="#integration-de-wildfly-dans-eclipse" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Wildfly est un serveur complet qui peut être exécuté de manière autonome
+(comme un serveur de production par exemple). Cependant, pour simplifier
+les tâches de développement, nous allons l’intégrer dans Eclipse afin de
+pouvoir le démarrer et l’arrêter directement depuis l’IDE.</p>
+<p>Dans Eclipse Java EE, il existe une vue pour créer et gérer les
+serveurs. Pour ajouter cette vue, il faut passer par le menu <span class="guilabel">Window &gt;
+Show View &gt; Servers</span>.</p>
+<p>Vous avez maintenant la vue «&nbsp;Servers&nbsp;» ajoutée à votre perspective de
+développement. Faites un click droit dans cette vue pour sélectionner
+<span class="guilabel">New &gt; Server</span>.</p>
+<p>Lors de la première utilisation, il va falloir installer les outils JBoss.
+Pour cela, dans la boîte de dialogue <span class="guilabel">Define a New Server</span>,
+sélectionnez <strong>Red Hat JBoss Middleware &gt; JBoss AS, Wildfly &amp; EAP Server Tools</strong>.
+comme type de serveur.</p>
+<p><img alt="Liste des types de serveur dans Eclipse" src="../_images/eclipse_server_types_list.png" /></p>
+<p>Cliquez ensuite sur <span class="guilabel">Next</span> et patientez le temps pour Eclipse de
+télécharger les dépendances nécessaires. Il vous faudra également valider la
+license Red Hat. Attention il faut attendre un peu avant que l’installation soit
+effective et il vous faudra redémarrer Eclipse.</p>
+<p>Vous pouvez maintenant créer un serveur Wildfly en sélectionnant
+<span class="guilabel">JBoss Community &gt; Wildfly 11</span>.</p>
+<p><img alt="Ajout d'un serveur dans Eclipse" src="../_images/eclipse_new_server.png" /></p>
+<p>Cliquez ensuite sur <span class="guilabel">Next</span>.
+Dans la boîte de dialogue <span class="guilabel">Create a new Server Adapter</span>, laissez les
+valeurs par défaut et cliquez sur <span class="guilabel">Next</span>.
+Dans la boîte de dialogue <span class="guilabel">JBoss Runtime</span>, il vous faut indiquer
+l’emplacement du serveur sur votre disque. Pour cela, cliquez sur
+<span class="guilabel">Browse…</span> pour sélectionner le répertoire d’installation
+de Wildfly sur votre disque.</p>
+<p><img alt="Configuration d'un serveur dans Eclipse" src="../_images/eclipse_new_server2.png" /></p>
+<p>Cliquez ensuite sur <span class="guilabel">Finish</span>.</p>
+<p>Vous disposez maintenant d’un serveur dans votre vue <em>Servers</em>. Il ne
+vous reste plus qu’à le démarrer en faisant un click droit sur son nom
+et en sélectionnant <span class="guilabel">Start</span>.</p>
+<p><img alt="Lancement du serveur Wildfly dans Eclipse" src="../_images/eclipse_start_server.png" /></p>
+<p>Si tout se passe bien, à la fin du lancement, vous pourrez accéder à
+votre serveur à l’adresse <a class="reference external" href="http://localhost:8080">http://localhost:8080</a>. Vous devez voir
+s’afficher la page d’accueil du serveur.</p>
+</div>
+<div class="section" id="acces-a-la-console-d-administration-du-serveur">
+<h2>Accès à la console d’administration du serveur<a class="headerlink" href="#acces-a-la-console-d-administration-du-serveur" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le serveur Wildfly fournit une interface Web de configuration qui peut être utile.
+Par défaut, elle est accessible à l’adresse <a class="reference external" href="http://localhost:9990">http://localhost:9990</a>. Pour pouvoir
+y accéder, il va falloir activer un compte administrateur depuis votre machine.
+Pour cela, il faut utiliser les outils en ligne de commande de Wildfly qui
+sont disponible dans <code class="file docutils literal notranslate"><span class="pre">$WILDFLY_HOME/bin</span></code>. Sous Windows, lancez le script
+<code class="file docutils literal notranslate"><span class="pre">add-user.bat</span></code> et pour les autres systèmes d’exploitation <code class="file docutils literal notranslate"><span class="pre">add-user.sh</span></code>.
+Puis répondez aux questions pour créer une utilisation admin :</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>What type of user do you wish to add?
+ a) Management User (mgmt-users.properties)
+ b) Application User (application-users.properties)
+(a): a
+
+Enter the details of the new user to add.
+Using realm &#39;ManagementRealm&#39; as discovered from the existing property files.
+Username : admin
+User &#39;admin&#39; already exists and is enabled, would you like to...
+ a) Update the existing user password and roles
+ b) Disable the existing user
+ c) Type a new username
+(a): a
+Password recommendations are listed below. To modify these restrictions edit the add-user.properties configuration file.
+ - The password should be different from the username
+ - The password should not be one of the following restricted values {root, admin, administrator}
+ - The password should contain at least 8 characters, 1 alphabetic character(s), 1 digit(s), 1 non-alphanumeric symbol(s)
+Password :
+WFLYDM0098: The password should be different from the username
+Are you sure you want to use the password entered yes/no? yes
+Re-enter Password :
+What groups do you want this user to belong to? (Please enter a comma separated list, or leave blank for none)[  ]:
+Updated user &#39;admin&#39; to file &#39;/home/david/bin/wildfly-11.0.0.Final/standalone/configuration/mgmt-users.properties&#39;
+Updated user &#39;admin&#39; to file &#39;/home/david/bin/wildfly-11.0.0.Final/domain/configuration/mgmt-users.properties&#39;
+Updated user &#39;admin&#39; with groups  to file &#39;/home/david/bin/wildfly-11.0.0.Final/standalone/configuration/mgmt-groups.properties&#39;
+Updated user &#39;admin&#39; with groups  to file &#39;/home/david/bin/wildfly-11.0.0.Final/domain/configuration/mgmt-groups.properties&#39;
+Is this new user going to be used for one AS process to connect to another AS process?
+e.g. for a slave host controller connecting to the master or for a Remoting connection for server to server EJB calls.
+yes/no? yes
+</pre></div>
+</div>
+<p>Une fois le compte administrateur activé, rendez-vous à l’adresse <a class="reference external" href="http://localhost:9990">http://localhost:9990</a>
+et saisissez le login / mot de passe pour accéder à la console d’administration.</p>
+<p><img alt="Console d'administration de Wildly" src="../_images/wildfly_admin_console.png" /></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="premiere_application.html" class="btn btn-neutral float-right" title="Une première application" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="Sommaire" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright David Gayerie - david.gayerie.epsi@mailoo.org - CC-BY-SA.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'fr',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enable();
+          
+      });
+  </script> 
+
+</body>
+</html>

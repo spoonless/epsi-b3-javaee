@@ -218,7 +218,9 @@
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#data-binding">Data binding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#exercice">Exercice</a></li>
 </ul>
 </li>
 </ul>
@@ -318,7 +320,7 @@ développer une application Web.</p>
 <p>Le conteneur Web gère le cycle de vie des servlets : la création,
 l’initialisation et la destruction. À chacune de ces étapes, une
 instance de servlet est informée par un appel à une méthode déclarée
-dans l’interface <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/Servlet.html">Servlet</a> et qui peut être surchargée pour chaque servlet.</p>
+dans l’interface <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/Servlet.html">Servlet</a> et qui peut être redéfinie pour chaque servlet.</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">(</span><span class="n">ServletConfig</span> <span class="n">config</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
   <span class="c1">// appelée au moment de l&#39;initialisation de la servlet</span>
 <span class="o">}</span>
@@ -359,7 +361,7 @@ l’implémentation à jeter une <code class="docutils literal notranslate"><spa
 le conteneur considère que la servlet n’a pas pu s’initialiser
 correctement et elle ne sera pas déployée dans le conteneur : elle ne
 sera donc pas accessible !</p>
-<p>Dans une servlet, il est préférable de surcharger la méthode :</p>
+<p>Dans une servlet, il est préférable de redéfinir la méthode :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
 <span class="o">}</span>
 </pre></div>

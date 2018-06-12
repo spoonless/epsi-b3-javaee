@@ -217,7 +217,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#data-binding">Data binding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#generer-une-reponse">Générer une réponse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#gerer-des-exceptions">Gérer des exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#implementer-un-client-http">Implémenter un client HTTP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercice">Exercice</a></li>
 </ul>
 </li>
 </ul>
@@ -368,12 +370,12 @@ Dans le fichier <code class="file docutils literal notranslate"><span class="pre
 <span class="nt">&lt;/servlet-mapping&gt;</span>
 </pre></div>
 </div>
-<p>Dans l’exemple ci-dessus, cela signifie que les requêtes à partir
+<p>Dans l’exemple ci-dessus, cela signifie que les requêtes à partir de
 <strong>http://[hôte]/[contexte racine]/api/</strong> seront gérées par JAX-RS.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>Il est également possible d’activer JAX-RS dans une application Web en
-fournissant dans cette application une classe qui étant la classe abstraite
+fournissant dans cette application une classe qui étend la classe abstraite
 <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/core/Application.html">Application</a>. On utilise alors l’annotation <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/ApplicationPath.html">&#64;ApplicationPath</a> pour donner
 le motif d’URI géré par JAX-RS :</p>
 <div class="last highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3.adhesion.api</span><span class="o">;</span>
@@ -981,6 +983,11 @@ XML.</dd>
 classe, indique que cette propriété ne doit pas apparaître dans le
 document XML.</dd>
 </dl>
+<div class="admonition warning">
+<p class="first admonition-title">Avertissement</p>
+<p class="last">Les annotations JAXB doivent être positionnées sur les <em>getters</em> et non
+pas sur les attributs.</p>
+</div>
 <p>Si nous reprenons l’exemple de la classe <code class="docutils literal notranslate"><span class="pre">Person</span></code>, nous pouvons
 ajouter les annotations JAXB&nbsp;:</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
@@ -1248,7 +1255,9 @@ brut correspondant au message de l’exception.</p>
 dans l’exemple précédent. Cette annotation est utilisée dans JAX-RS pour
 signaler des classes utilitaires qui permettent d’étendre le
 comportement par défaut de JAX-RS.</p>
-<p>La validation avec <em>Bean Validation</em></p>
+</div>
+<div class="section" id="la-validation-avec-bean-validation">
+<h2>La validation avec Bean Validation<a class="headerlink" href="#la-validation-avec-bean-validation" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Le serveur d’application fournit un service nommé <a class="reference external" href="http://beanvalidation.org/">Bean Validation</a> (JSR303).
 Bean Validation permet d’exprimer les contraintes de validité d’un objet ou des
 paramètres d’une méthode de ressource avec des annotations. JAX-RS
@@ -1381,6 +1390,51 @@ pour créer une instance de la classe
     <span class="c1">// ...</span>
   <span class="o">}</span>
 <span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="exercice">
+<h2>Exercice<a class="headerlink" href="#exercice" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="hint admonition">
+<p class="first admonition-title">API Web de gestion des inscriptions</p>
+<dl class="docutils">
+<dt><strong>Objectifs</strong></dt>
+<dd>Réaliser une API Web avec JAX-RS qui permet de créer (méthode POST),
+de consulter (méthode GET) et de supprimer (méthode DELETE) une inscription.</dd>
+</dl>
+<p>Pour cet exercice, utilisez le projet d’inscription qui a servi d’exemple
+pour illustrer le modèle MVC. Le projet est <a class="reference download internal" href="../_downloads/mvc.zip" download=""><code class="xref download docutils literal notranslate"><span class="pre">téléchargeable</span> <span class="pre">ici</span></code></a>.</p>
+<p>Ce projet ne réalise pas totalement une inscription puisqu’il ne réalise
+pas de connexion à une base de données. Pour simplifier l’implémentation,
+vous pouvez stocker l’inscription créée dans la classe <em>InscriptionService</em>
+fournie dans le projet.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Comme une inscription contient un mot de passe, il serait intéressant
+de ne pas transmettre le mot de passe lorsque l’on consulte l’inscription.</p>
+</div>
+<p>Pour tester votre application, utilisez l’API cliente de JAX-RS en écrivant
+une simple application Java avec une méthode <strong>main</strong>. Pour cela,
+vous devez rajouter dans le fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> du projet une dépendance
+vers <strong>RESTeasy client</strong> :</p>
+<div class="last highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.jboss.resteasy<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>resteasy-client<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>3.0.24.Final<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="c">&lt;!-- Pour le support des représentations au format JSONs --&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.jboss.resteasy<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>resteasy-jackson-provider<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>3.0.24.Final<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="c">&lt;!-- Pour le support des représentations au format XML --&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.jboss.resteasy<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>resteasy-jaxb-provider<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>3.0.24.Final<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 </div>
 </div>

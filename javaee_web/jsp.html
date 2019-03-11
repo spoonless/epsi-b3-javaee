@@ -24,9 +24,9 @@
 
   
 
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Recherche" href="../search.html" />
     <link rel="next" title="RequestDispatcher et MVC" href="request_dispatcher.html" />
@@ -56,18 +56,11 @@
           </a>
 
           
-            
-            
-              <div class="version">
-                1.0
-              </div>
-            
-          
 
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Recherche dans les pages" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -90,7 +83,6 @@
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#installation-des-outils">Installation des outils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-wildfly-dans-eclipse">Intégration de Wildfly dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#acces-a-la-console-d-administration-du-serveur">Accès à la console d’administration du serveur</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a><ul>
@@ -219,6 +211,7 @@
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#injection-des-dependances">Injection des dépendances</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#exercice">Exercice</a></li>
 </ul>
@@ -262,11 +255,13 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html">Accueil</a> &raquo;</li>
         
       <li>JSP : Java Server Pages</li>
     
@@ -282,10 +277,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="request_dispatcher.html" class="btn btn-neutral float-right" title="RequestDispatcher et MVC" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="request_dispatcher.html" class="btn btn-neutral float-right" title="RequestDispatcher et MVC" accesskey="n">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="attributs_web.html" class="btn btn-neutral" title="Les attributs d’une application Web" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="attributs_web.html" class="btn btn-neutral" title="Les attributs d’une application Web" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
   </div>
   
@@ -315,7 +310,7 @@ Wildfly.</p>
 <p>Pour activer ce comportement, il va falloir modifier la configuration du
 serveur. Pour cela, allez dans le répertoire d’installation de Wildfly et
 ouvrez le fichier <code class="file docutils literal notranslate"><span class="pre">standalone/configuration/standalone.xml</span></code>.
-Aux alentours de la ligne 468 du fichier, vous
+Aux alentours de la ligne 474 du fichier, vous
 allez trouver la déclaration suivante&nbsp;:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;servlet-container</span> <span class="na">name=</span><span class="s">&quot;default&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;jsp-config/&gt;</span>
@@ -356,7 +351,7 @@ créer un fichier <strong>index.jsp</strong> avec le contenu suivant&nbsp;:</p>
 </div>
 </dd>
 <dt><strong>Modèle Maven du projet à télécharger</strong></dt>
-<dd><a class="reference download internal" href="../_downloads/webapp-template.zip" download=""><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></dd>
+<dd><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></dd>
 <dt><strong>Mise en place du projet</strong></dt>
 <dd>Éditer le fichier pom.xml du template et modifier la balise
 artifactId pour spécifier le nom de votre projet.</dd>
@@ -1096,9 +1091,9 @@ directement dans les JSP.</p>
 <dt><strong>Objectif</strong></dt>
 <dd>Écrire une JSP (sans code Java) qui donne la date et l’heure du
 serveur. La date et l’heure doivent être mises en forme de la façon
-suivante : 13 juin 2018&nbsp;12:01:24</dd>
+suivante : 11 mars 2019&nbsp;12:01:24</dd>
 <dt><strong>Modèle Maven du projet à télécharger</strong></dt>
-<dd><a class="reference download internal" href="../_downloads/webapp-template.zip" download=""><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></dd>
+<dd><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></dd>
 <dt><strong>Mise en place du projet</strong></dt>
 <dd>Éditer le fichier pom.xml du template et modifier la balise
 artifactId pour spécifier le nom de votre projet.</dd>
@@ -1144,7 +1139,7 @@ s’afficher sous la forme d’un texte.</p>
 pas d’importance pour l’exercice.</p>
 </dd>
 <dt><strong>Modèle Maven du projet à télécharger</strong></dt>
-<dd><a class="reference download internal" href="../_downloads/webapp-template.zip" download=""><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></dd>
+<dd><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></dd>
 <dt><strong>Mise en place du projet</strong></dt>
 <dd>Éditer le fichier pom.xml du template et modifier la balise
 artifactId pour spécifier le nom de votre projet.</dd>
@@ -1164,10 +1159,10 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="request_dispatcher.html" class="btn btn-neutral float-right" title="RequestDispatcher et MVC" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="request_dispatcher.html" class="btn btn-neutral float-right" title="RequestDispatcher et MVC" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="attributs_web.html" class="btn btn-neutral" title="Les attributs d’une application Web" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="attributs_web.html" class="btn btn-neutral" title="Les attributs d’une application Web" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
     </div>
   
@@ -1176,10 +1171,12 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright David Gayerie - david.gayerie.epsi@mailoo.org - CC-BY-SA.
+        &copy; Copyright David Gayerie - david.gayerie@epsi.fr - CC-BY-SA
 
     </p>
-  </div> 
+  </div>
+    <div><a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip"><code class="download docutils literal notranslate"><span class="pre">Télécharger ce cours</pre></code></a></div>
+
 
 </footer>
 
@@ -1194,34 +1191,23 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0',
-            LANGUAGE:'fr',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enable();
-          
+          SphinxRtdTheme.Navigation.enable(false);
       });
   </script> 
 

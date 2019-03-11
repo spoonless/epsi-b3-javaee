@@ -24,9 +24,9 @@
 
   
 
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Recherche" href="../search.html" />
     <link rel="next" title="Les Servlets" href="servlet.html" />
@@ -56,18 +56,11 @@
           </a>
 
           
-            
-            
-              <div class="version">
-                1.0
-              </div>
-            
-          
 
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Recherche dans les pages" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -90,7 +83,6 @@
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#installation-des-outils">Installation des outils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-wildfly-dans-eclipse">Intégration de Wildfly dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#acces-a-la-console-d-administration-du-serveur">Accès à la console d’administration du serveur</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a><ul>
@@ -219,6 +211,7 @@
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#injection-des-dependances">Injection des dépendances</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#exercice">Exercice</a></li>
 </ul>
@@ -262,11 +255,13 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html">Accueil</a> &raquo;</li>
         
       <li>Introduction à Maven</li>
     
@@ -282,10 +277,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="servlet.html" class="btn btn-neutral float-right" title="Les Servlets" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="servlet.html" class="btn btn-neutral float-right" title="Les Servlets" accesskey="n">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="premiere_application.html" class="btn btn-neutral" title="Une première application" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="premiere_application.html" class="btn btn-neutral" title="Une première application" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
   </div>
   
@@ -344,7 +339,7 @@ besoin de bibliothèques externes (les fichiers .jar en Java). Plutôt que
 d’aller les télécharger une à une depuis le Web et de les ajouter dans
 Eclipse, nous allons signaler à Maven l’identifiant des dépendances dont
 nous aurons besoin et il va se charger pour nous de les télécharger
-depuis un référentiel centralisé (<a class="reference external" href="http://mvnrepository.com">Maven central
+depuis un référentiel centralisé (<a class="reference external" href="https://mvnrepository.com">Maven central
 repository</a>), de les stocker dans un cache
 sur la machine et de les associer à notre projet.</p>
 <p>Enfin les concepteurs de Maven ont adopté une approche normative afin de
@@ -380,7 +375,7 @@ projet. Ce fichier XML est le descripteur du projet et contient toutes
 les informations nécessaires à Maven pour gérer le cycle de vie du
 projet.</p>
 <p>Le nom du fichier pom.xml vient de POM (Project Object Model).</p>
-<p>Téléchargez et décompressez maintenant l’archive <a class="reference download internal" href="../_downloads/hello-webapp.zip" download=""><code class="xref download docutils literal notranslate"><span class="pre">samples/hello-webapp.zip</span></code></a>.</p>
+<p>Téléchargez et décompressez maintenant l’archive <a class="reference download internal" download="" href="../_downloads/4f1a3e0483d80b2135ac195980d0c909/hello-webapp.zip"><code class="xref download docutils literal notranslate"><span class="pre">samples/hello-webapp.zip</span></code></a>.</p>
 <p>Cette archive contient le projet Maven minimal pour une application Web qui va nous servir
 d’exemple.</p>
 <p>Maven impose une arborescence minimale des fichiers afin de garantir une
@@ -491,7 +486,7 @@ lui fournir les informations du projet.</p>
 </div>
 <p>Ce fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> donne les informations minimales à Maven&nbsp;:</p>
 <ul class="simple">
-<li>Le projet s’appelle <em>fr.epsi.b3</em>:hello</li>
+<li>Le projet s’appelle fr.epsi.b3:hello</li>
 <li>La version actuelle est la 0.0.1 et il s’agit d’une version de
 travail</li>
 <li>Le projet est une application Web Java EE (war)</li>
@@ -611,7 +606,7 @@ intéressant de pouvoir l’exécuter depuis Maven, c’est-à-dire de lancer
 un serveur d’application Java EE et de déployer l’application dans ce
 serveur.</p>
 <p>Pour Wildfly, on peut utiliser le <a class="reference external" href="https://docs.jboss.org/wildfly/plugins/maven/latest/">wildfly-maven-plugin</a>.
-Reprenez le <a class="reference download internal" href="../_downloads/hello-webapp.zip" download=""><code class="xref download docutils literal notranslate"><span class="pre">projet</span> <span class="pre">Maven</span> <span class="pre">d'exemple</span></code></a> que vous venez
+Reprenez le <a class="reference download internal" download="" href="../_downloads/4f1a3e0483d80b2135ac195980d0c909/hello-webapp.zip"><code class="xref download docutils literal notranslate"><span class="pre">projet</span> <span class="pre">Maven</span> <span class="pre">d'exemple</span></code></a> que vous venez
 d’importer dans Eclipse et éditez le fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code>. À la suite de
 la section &lt;properties&gt;, ajoutez la déclaration suivante&nbsp;:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;build&gt;</span>
@@ -619,9 +614,9 @@ la section &lt;properties&gt;, ajoutez la déclaration suivante&nbsp;:</p>
         <span class="nt">&lt;plugin&gt;</span>
             <span class="nt">&lt;groupId&gt;</span>org.wildfly.plugins<span class="nt">&lt;/groupId&gt;</span>
             <span class="nt">&lt;artifactId&gt;</span>wildfly-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
-            <span class="nt">&lt;version&gt;</span>1.2.1.Final<span class="nt">&lt;/version&gt;</span>
+            <span class="nt">&lt;version&gt;</span>1.2.2.Final<span class="nt">&lt;/version&gt;</span>
             <span class="nt">&lt;configuration&gt;</span>
-                <span class="nt">&lt;version&gt;</span>11.0.0.Final<span class="nt">&lt;/version&gt;</span>
+                <span class="nt">&lt;version&gt;</span>13.0.0.Final<span class="nt">&lt;/version&gt;</span>
             <span class="nt">&lt;/configuration&gt;</span>
         <span class="nt">&lt;/plugin&gt;</span>
     <span class="nt">&lt;/plugins&gt;</span>
@@ -652,10 +647,10 @@ déploiement sera donc <strong>hello-0.0.1-SNAPSHOT</strong></p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="servlet.html" class="btn btn-neutral float-right" title="Les Servlets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="servlet.html" class="btn btn-neutral float-right" title="Les Servlets" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="premiere_application.html" class="btn btn-neutral" title="Une première application" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="premiere_application.html" class="btn btn-neutral" title="Une première application" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
     </div>
   
@@ -664,10 +659,12 @@ déploiement sera donc <strong>hello-0.0.1-SNAPSHOT</strong></p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright David Gayerie - david.gayerie.epsi@mailoo.org - CC-BY-SA.
+        &copy; Copyright David Gayerie - david.gayerie@epsi.fr - CC-BY-SA
 
     </p>
-  </div> 
+  </div>
+    <div><a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip"><code class="download docutils literal notranslate"><span class="pre">Télécharger ce cours</pre></code></a></div>
+
 
 </footer>
 
@@ -682,34 +679,23 @@ déploiement sera donc <strong>hello-0.0.1-SNAPSHOT</strong></p>
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0',
-            LANGUAGE:'fr',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enable();
-          
+          SphinxRtdTheme.Navigation.enable(false);
       });
   </script> 
 

@@ -24,9 +24,9 @@
 
   
 
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Recherche" href="../search.html" />
     <link rel="prev" title="Java Server Faces (JSF)" href="jsf.html" /> 
@@ -55,18 +55,11 @@
           </a>
 
           
-            
-            
-              <div class="version">
-                1.0
-              </div>
-            
-          
 
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Recherche dans les pages" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -89,7 +82,6 @@
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#installation-des-outils">Installation des outils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-wildfly-dans-eclipse">Intégration de Wildfly dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#acces-a-la-console-d-administration-du-serveur">Accès à la console d’administration du serveur</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a><ul>
@@ -218,6 +210,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#generer-une-reponse">Générer une réponse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#gerer-des-exceptions">Gérer des exceptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#injection-des-dependances">Injection des dépendances</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#implementer-un-client-http">Implémenter un client HTTP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#exercice">Exercice</a></li>
 </ul>
@@ -261,11 +254,13 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html">Accueil</a> &raquo;</li>
         
       <li>Les API Web avec JAX-RS</li>
     
@@ -282,7 +277,7 @@
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
       
-        <a href="jsf.html" class="btn btn-neutral" title="Java Server Faces (JSF)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="jsf.html" class="btn btn-neutral" title="Java Server Faces (JSF)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
   </div>
   
@@ -293,7 +288,7 @@
             
   <div class="section" id="les-api-web-avec-jax-rs">
 <h1>Les API Web avec JAX-RS<a class="headerlink" href="#les-api-web-avec-jax-rs" title="Lien permanent vers ce titre">¶</a></h1>
-<p><a class="reference external" href="https://jax-rs-spec.java.net/">JAX-RS</a> est l’API conçue pour
+<p><a class="reference external" href="https://github.com/jax-rs">JAX-RS</a> est l’API conçue pour
 implémenter des API Web (aussi appelées Web Services RESTful). Les API
 Web exploitent les possibilités du protocole HTTP pour permettre à des
 systèmes d’information de communiquer et de s’échanger des services.
@@ -305,9 +300,9 @@ Web plus traditionnelles.</p>
 <p>JAX-RS 2.x est défini par la <a class="reference external" href="https://jcp.org/en/jsr/detail?id=339">JSR
 339</a>. Comme pour tous les
 services et toutes API Java EE, il existe plusieurs implémentations de
-cette spécification&nbsp;: <a class="reference external" href="https://jersey.java.net/">Jersey</a>
+cette spécification&nbsp;: <a class="reference external" href="https://jersey.github.io/">Jersey</a>
 (l’implémentation de référence),
-<a class="reference external" href="http://resteasy.jboss.org/">RestEasy</a> (intégré dans le serveur Wildfly), <a class="reference external" href="https://cxf.apache.org/docs/jax-rs.html">Apache
+<a class="reference external" href="https://resteasy.github.io/">RestEasy</a> (intégré dans le serveur Wildfly), <a class="reference external" href="https://cxf.apache.org/docs/jax-rs.html">Apache
 CXF</a>.</p>
 <div class="section" id="la-notion-de-ressource">
 <h2>La notion de ressource<a class="headerlink" href="#la-notion-de-ressource" title="Lien permanent vers ce titre">¶</a></h2>
@@ -318,17 +313,17 @@ DELETE, OPTIONS… Un client HTTP positionne dans sa requête une méthode
 pour indiquer le type d’opération que le serveur doit effectuer sur la
 ressource.</p>
 <dl class="docutils">
-<dt><a class="reference external" href="http://tools.ietf.org/html/rfc7231#section-4.3.1">GET</a></dt>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.1">GET</a></dt>
 <dd>Demande au serveur une représentation de la ressource cible.</dd>
-<dt><a class="reference external" href="http://tools.ietf.org/html/rfc7231#section-4.3.2">HEAD</a></dt>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.2">HEAD</a></dt>
 <dd>Comme un GET sauf que la réponse ne contient jamais de corps. Cette
 méthode est utile pour obtenir les informations des en-têtes HTTP et
 valider une requête sans envoyer ni recevoir de corps de message.</dd>
-<dt><a class="reference external" href="http://tools.ietf.org/html/rfc7231#section-4.3.4">PUT</a></dt>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.4">PUT</a></dt>
 <dd>Crée ou met à jour l’état d’une ressource identifiée par l’URI.</dd>
-<dt><a class="reference external" href="http://tools.ietf.org/html/rfc7231#section-4.3.5">DELETE</a></dt>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.5">DELETE</a></dt>
 <dd>Détruit l’association de l’URI avec l’état de la ressource.</dd>
-<dt><a class="reference external" href="http://tools.ietf.org/html/rfc7231#section-4.3.3">POST</a></dt>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.3">POST</a></dt>
 <dd><p class="first">La sémantique de la méthode POST est probablement la plus compliquée
 à saisir car cette méthode est utilisable dans différentes
 situations.</p>
@@ -341,19 +336,19 @@ représentant une collection.</li>
 <li>Le client souhaite modifier partiellement une ressource.</li>
 </ul>
 </dd>
-<dt><a class="reference external" href="http://tools.ietf.org/html/rfc7231#section-4.3.7">OPTIONS</a></dt>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.7">OPTIONS</a></dt>
 <dd>Permet d’obtenir les options de communication (par exemple : les
 méthodes autorisées pour l’URI). Le serveur doit retourner ces
 informations dans les en-têtes de réponse. Ainsi l’en-tête de
 réponse
-<a class="reference external" href="http://tools.ietf.org/html/rfc7231#section-7.4.1">Allow</a>
+<a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-7.4.1">Allow</a>
 liste les méthodes HTTP autorisées pour cette URI.</dd>
-<dt><a class="reference external" href="http://tools.ietf.org/html/rfc7231#section-4.3.8">TRACE</a></dt>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.8">TRACE</a></dt>
 <dd>Permet de simuler un écho de la requête. Cette méthode n’est pas
 utilisée pour la réalisation d’API Web car elle est surtout utile
 pour tester la configuration du réseau et obtenir des informations
 des proxies.</dd>
-<dt><a class="reference external" href="http://tools.ietf.org/html/rfc7231#section-4.3.6">CONNECT</a></dt>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.6">CONNECT</a></dt>
 <dd>Établit un tunnel à travers un proxy. Cette méthode n’est pas
 utilisée pour la réalisation d’API Web.</dd>
 </dl>
@@ -403,9 +398,9 @@ la marche à suivre.</p>
 <h2>Implémenter des ressources avec JAX-RS<a class="headerlink" href="#implementer-des-ressources-avec-jax-rs" title="Lien permanent vers ce titre">¶</a></h2>
 <p>JAX-RS permet d’implémenter des ressources sous la forme de composants
 Java EE. Une classe représentant une ressource est identifiée grâce à
-l’annotation <a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/Path.html">&#64;Path</a>.</p>
+l’annotation <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/Path.html">&#64;Path</a>.</p>
 <dl class="docutils">
-<dt><a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/Path.html">&#64;Path</a></dt>
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/Path.html">&#64;Path</a></dt>
 <dd><p class="first">L’annotation <code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.Path</span></code> indique le chemin d’URI qui
 identifie la ressource. Cette annotation est utilisable sur une
 classe et sur les méthodes. Utilisée sur une classe, cette
@@ -652,13 +647,13 @@ le spécifier avec une expression régulière&nbsp;:</p>
 <p>Par défaut, JAX-RS utilise comme expression régulière pour un
 paramètre de chemin <code class="docutils literal notranslate"><span class="pre">[^/]+?</span></code></p>
 <dl class="docutils">
-<dt><a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/Consumes.html">&#64;Consumes</a> / <a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/Produces.html">&#64;Produces</a></dt>
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/Consumes.html">&#64;Consumes</a> / <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/Produces.html">&#64;Produces</a></dt>
 <dd><p class="first">Lorsqu’un client soumet une requête pour transmettre des
 informations au serveur (comme des données de formulaire) et quand
 un serveur retourne du contenu à un client, il est nécessaire de
 préciser le type de contenu. On utilise pour cela l’en-tête HTTP
 <code class="docutils literal notranslate"><span class="pre">Content-type</span></code> avec comme valeur le type
-<a class="reference external" href="http://fr.wikipedia.org/wiki/Type_MIME">MIME</a>.</p>
+<a class="reference external" href="https://fr.wikipedia.org/wiki/Type_MIME">MIME</a>.</p>
 <p>Une liste (non exhaustive) des types MIME les plus courants est&nbsp;:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -694,9 +689,9 @@ préciser le type de contenu. On utilise pour cela l’en-tête HTTP
 </table>
 <p>La classe et/ou les méthodes d’une Ressource JAX-RS peuvent utiliser
 les annotations
-<a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/Consumes.html">&#64;Consumes</a>
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/Consumes.html">&#64;Consumes</a>
 et
-<a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/Produces.html">&#64;Produces</a>
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/Produces.html">&#64;Produces</a>
 pour indiquer respectivement le type de contenu attendu dans la
 requête et le type de contenu de la réponse.</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
@@ -763,7 +758,7 @@ requête et le type de contenu de la réponse.</p>
 </pre></div>
 </div>
 </dd>
-<dt><a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/QueryParam.html">&#64;QueryParam</a></dt>
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/QueryParam.html">&#64;QueryParam</a></dt>
 <dd><p class="first">Comme pour les paramètres de chemin, il est possible de récupérer la
 valeur des paramètres de la requête comme arguments des méthodes de
 la ressource JAX-RS grâce à l’annotation
@@ -776,7 +771,7 @@ la ressource JAX-RS grâce à l’annotation
 </pre></div>
 </div>
 </dd>
-<dt><a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/FormParam.html">&#64;FormParam</a></dt>
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/FormParam.html">&#64;FormParam</a></dt>
 <dd><p class="first">Les données transmises <em>via</em> un formulaire HTML peuvent être
 récupérées comme arguments des méthodes de la ressource JAX-RS grâce
 à l’annotation <code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.FormParam</span></code>. Pour le cas d’une requête
@@ -798,7 +793,7 @@ l’annotation <code class="docutils literal notranslate"><span class="pre">&#64
 l’annotation <code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.CookieParam</span></code></li>
 </ul>
 </dd>
-<dt><a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/core/Context.html">&#64;Context</a></dt>
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/core/Context.html">&#64;Context</a></dt>
 <dd><p class="first">Si vous avez besoin d’obtenir des informations sur le contexte
 d’exécution de la requête, vous pouvez utilisez l’annotation
 <code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.core.Context</span></code> pour obtenir une instance d’une
@@ -843,7 +838,7 @@ une instance de <code class="docutils literal notranslate"><span class="pre">jav
 <p>Lorsqu’une méthode d’une ressource retourne une instance d’un objet
 Java, JAX-RS va tenter de créer une réponse au format souhaité en
 fonction de l’annotation
-<a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/Produces.html">&#64;Produces</a>.
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/Produces.html">&#64;Produces</a>.
 Il existe un ensemble de règles par défaut permettant de passer d’un
 objet Java à un document XML ou JSON. On appelle l’ensemble de ces règle
 le <strong>data binding</strong>.</p>
@@ -958,19 +953,19 @@ en paramètre un document JSON transformé en une instance Java.</p>
 </div>
 <p>Il est également possible de passer d’une instance Java à un document
 XML ou d’un document XML à une instance Java. Pour cela, JAX-RS utilise
-<a class="reference external" href="https://jaxb.java.net/tutorial/">JAXB</a> (Java Architecture for XML
+<a class="reference external" href="https://github.com/javaee/jaxb-v2">JAXB</a> (Java Architecture for XML
 Binding) qui intégré au langage Java. JAXB utilise des annotations pour
 fournir des indications sur la façon dont une classe Java peut être
 associée à un document XML.</p>
 <p>Les principales annotations JAXB sont&nbsp;:</p>
 <dl class="docutils">
-<dt><a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/xml/bind/annotation/XmlRootElement.html">&#64;XmlRootElement</a></dt>
+<dt><a class="reference external" href="https://docs.oracle.com/javase/10/docs/api/javax/xml/bind/annotation/XmlRootElement.html">&#64;XmlRootElement</a></dt>
 <dd>Une annotation est utilisable sur une classe Java pour indiquer
 quelle peut être utilisée pour représenter la racine d’un document
 XML. On peut utiliser l’attribut <code class="docutils literal notranslate"><span class="pre">name</span></code> de l’annotation pour
 préciser le nom de l’élément racine du document XML et l’attribut
 <code class="docutils literal notranslate"><span class="pre">namespace</span></code> pour en préciser l’espace de nom.</dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/xml/bind/annotation/XmlElement.html">&#64;XmlElement</a></dt>
+<dt><a class="reference external" href="https://docs.oracle.com/javase/10/docs/api/javax/xml/bind/annotation/XmlElement.html">&#64;XmlElement</a></dt>
 <dd>Une annotation est utilisable sur les accesseurs (getters) des
 propriétés d’une classe. On peut utiliser l’attribut <code class="docutils literal notranslate"><span class="pre">name</span></code> de
 l’annotation pour préciser le nom de l’élément racine du document
@@ -978,7 +973,7 @@ XML et l’attribut <code class="docutils literal notranslate"><span class="pre"
 Cette annotation est optionnelle. Par défaut JAXB considère qu’une
 propriété produit un élément XML du même nom et sans espace de nom
 XML.</dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/xml/bind/annotation/XmlTransient.html">&#64;XmlTransient</a></dt>
+<dt><a class="reference external" href="https://docs.oracle.com/javase/10/docs/api/javax/xml/bind/annotation/XmlTransient.html">&#64;XmlTransient</a></dt>
 <dd>Cette annotation, ajoutée sur les accesseurs d’une propriété d’une
 classe, indique que cette propriété ne doit pas apparaître dans le
 document XML.</dd>
@@ -1140,7 +1135,7 @@ Java en laissant à JAX-RS le soin de créer la réponse HTTP. C’est
 notamment le cas si l’on souhaite retourner un code statut HTTP
 différent de 200 ou ajouter des en-têtes HTTP dans la réponse. Pour
 cela, il faut retourner une instance de la classe
-<a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/core/Response.html">javax.rs.core.Response</a>.
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/core/Response.html">javax.rs.core.Response</a>.
 Cette classe suit le <em>design pattern builder</em> et offre un ensemble de
 méthodes utilitaires pour construire la réponse. Au final, il suffit
 d’appeler la méthode <code class="docutils literal notranslate"><span class="pre">build()</span></code> et retourner le résultat.</p>
@@ -1201,22 +1196,22 @@ d’appeler la méthode <code class="docutils literal notranslate"><span class="
 JAX-RS la transforme en erreur HTTP 500. Si l’on souhaite retourner un
 statut d’erreur différent, il est bien évidemment possible d’utiliser la
 classe
-<a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/core/Response.html">javax.rs.core.Response</a>,
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/core/Response.html">javax.rs.core.Response</a>,
 mais il est plus intéressant de fournir les indications nécessaires à
 JAX-RS pour modifier son comportement selon le type d’exception lancé
 par la méthode de la ressource.</p>
 <p>Il est possible de lancer une exception de type
-<a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/WebApplicationException.html">WebApplicationException</a>
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/WebApplicationException.html">WebApplicationException</a>
 ou une exception en héritant. JAX-RS fournit déjà des exceptions
 spécialisées pour les codes de statut les plus courants&nbsp;:
-<a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/NotFoundException.html">NotFoundException</a>,
-<a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/BadRequestException.html">BadRequestException</a>,
-<a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/ServerErrorException.html">ServerErrorException</a>…
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/NotFoundException.html">NotFoundException</a>,
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/BadRequestException.html">BadRequestException</a>,
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/ServerErrorException.html">ServerErrorException</a>…
 et même la possibilité de traiter les redirections avec l’exception
-<a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/RedirectionException.html">RedirectionException</a>.</p>
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/RedirectionException.html">RedirectionException</a>.</p>
 <p>Il est également possible de déclarer une classe implémentant
 l’interface
-<a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/ext/ExceptionMapper.html">ExceptionMapper</a>.
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/ext/ExceptionMapper.html">ExceptionMapper</a>.
 Un <code class="docutils literal notranslate"><span class="pre">ExceptionMapper</span></code> est déclaré pour un type d’exception et ses
 exceptions filles.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
@@ -1251,14 +1246,14 @@ un appel de la méthode <code class="docutils literal notranslate"><span class="
 générera une réponse de type 400 (Bad Request) avec un message en texte
 brut correspondant au message de l’exception.</p>
 <p>Notez l’utilisation de l’annotation
-<a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/ws/rs/ext/Provider.html">&#64;Provider</a>
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/ext/Provider.html">&#64;Provider</a>
 dans l’exemple précédent. Cette annotation est utilisée dans JAX-RS pour
 signaler des classes utilitaires qui permettent d’étendre le
 comportement par défaut de JAX-RS.</p>
 </div>
 <div class="section" id="la-validation-avec-bean-validation">
 <h2>La validation avec Bean Validation<a class="headerlink" href="#la-validation-avec-bean-validation" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Le serveur d’application fournit un service nommé <a class="reference external" href="http://beanvalidation.org/">Bean Validation</a> (JSR303).
+<p>Le serveur d’application fournit un service nommé <a class="reference external" href="https://beanvalidation.org/">Bean Validation</a> (JSR303).
 Bean Validation permet d’exprimer les contraintes de validité d’un objet ou des
 paramètres d’une méthode de ressource avec des annotations. JAX-RS
 utilise les informations de ces annotations pour valider les requêtes
@@ -1362,7 +1357,58 @@ HTTP.</p>
 </div>
 <p>La documentation des annotations de Bean Validation est disponible dans
 la documentation de l’API Java EE&nbsp;:
-<a class="reference external" href="http://docs.oracle.com/javaee/7/api/javax/validation/constraints/package-summary.html">http://docs.oracle.com/javaee/7/api/javax/validation/constraints/package-summary.html</a></p>
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/validation/constraints/package-summary.html">https://docs.oracle.com/javaee/7/api/javax/validation/constraints/package-summary.html</a></p>
+</div>
+<div class="section" id="injection-des-dependances">
+<h2>Injection des dépendances<a class="headerlink" href="#injection-des-dependances" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Comme les Servlets, les ressources racines (celles identifiées par
+l’annotation
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/Path.html">&#64;Path</a>
+sur la classe) sont des composants Java EE. À ce titre, elles supportent
+l’injection de dépendance avec, par exemple, l’annotation
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/annotation/Resource.html">&#64;Resource</a>.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Exemple d’injection d’une <code class="docutils literal notranslate"><span class="pre">DataSource</span></code></span><a class="headerlink" href="#id6" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.ResultSet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.SQLException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Statement</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.sql.DataSource</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ws.rs.GET</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ws.rs.NotFoundException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ws.rs.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ws.rs.PathParam</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ws.rs.Produces</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ws.rs.core.MediaType</span><span class="o">;</span>
+
+<span class="nd">@Path</span><span class="o">(</span><span class="s">&quot;/person&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonResource</span> <span class="o">{</span>
+
+  <span class="nd">@Resource</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;person&quot;</span><span class="o">)</span>
+  <span class="kd">private</span> <span class="n">DataSource</span> <span class="n">dataSource</span><span class="o">;</span>
+
+  <span class="nd">@GET</span>
+  <span class="nd">@Path</span><span class="o">(</span><span class="s">&quot;/{id}&quot;</span><span class="o">)</span>
+  <span class="nd">@Produces</span><span class="o">({</span><span class="n">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON</span><span class="o">,</span> <span class="n">MediaType</span><span class="o">.</span><span class="na">APPLICATION_XML</span><span class="o">})</span>
+  <span class="kd">public</span> <span class="n">Person</span> <span class="nf">get</span><span class="o">(</span><span class="nd">@PathParam</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">)</span> <span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+    <span class="k">try</span><span class="o">(</span><span class="n">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="n">dataSource</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+      <span class="n">Statement</span> <span class="n">stmt</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+      <span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="n">stmt</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">(</span><span class="s">&quot;select name, age from Person where id=&quot;</span> <span class="o">+</span> <span class="n">id</span><span class="o">))</span> <span class="o">{</span>
+
+      <span class="k">if</span> <span class="o">(!</span> <span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">NotFoundException</span><span class="o">();</span>
+      <span class="o">}</span>
+      <span class="k">return</span> <span class="k">new</span> <span class="n">Person</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">),</span> <span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">&quot;age&quot;</span><span class="o">));</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="implementer-un-client-http">
 <h2>Implémenter un client HTTP<a class="headerlink" href="#implementer-un-client-http" title="Lien permanent vers ce titre">¶</a></h2>
@@ -1404,7 +1450,7 @@ pour créer une instance de la classe
 de consulter (méthode GET) et de supprimer (méthode DELETE) une inscription.</dd>
 </dl>
 <p>Pour cet exercice, utilisez le projet d’inscription qui a servi d’exemple
-pour illustrer le modèle MVC. Le projet est <a class="reference download internal" href="../_downloads/mvc.zip" download=""><code class="xref download docutils literal notranslate"><span class="pre">téléchargeable</span> <span class="pre">ici</span></code></a>.</p>
+pour illustrer le modèle MVC. Le projet est <a class="reference download internal" download="" href="../_downloads/ac53411b421de29af59429c5c4077c15/mvc.zip"><code class="xref download docutils literal notranslate"><span class="pre">téléchargeable</span> <span class="pre">ici</span></code></a>.</p>
 <p>Ce projet ne réalise pas totalement une inscription puisqu’il ne réalise
 pas de connexion à une base de données. Pour simplifier l’implémentation,
 vous pouvez stocker l’inscription créée dans la classe <em>InscriptionService</em>
@@ -1450,7 +1496,7 @@ vers <strong>RESTeasy client</strong> :</p>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="jsf.html" class="btn btn-neutral" title="Java Server Faces (JSF)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="jsf.html" class="btn btn-neutral" title="Java Server Faces (JSF)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
     </div>
   
@@ -1459,10 +1505,12 @@ vers <strong>RESTeasy client</strong> :</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright David Gayerie - david.gayerie.epsi@mailoo.org - CC-BY-SA.
+        &copy; Copyright David Gayerie - david.gayerie@epsi.fr - CC-BY-SA
 
     </p>
-  </div> 
+  </div>
+    <div><a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip"><code class="download docutils literal notranslate"><span class="pre">Télécharger ce cours</pre></code></a></div>
+
 
 </footer>
 
@@ -1477,34 +1525,23 @@ vers <strong>RESTeasy client</strong> :</p>
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0',
-            LANGUAGE:'fr',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enable();
-          
+          SphinxRtdTheme.Navigation.enable(false);
       });
   </script> 
 

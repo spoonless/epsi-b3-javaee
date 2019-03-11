@@ -24,9 +24,9 @@
 
   
 
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Recherche" href="../search.html" />
     <link rel="next" title="Les API Web avec JAX-RS" href="jaxrs.html" />
@@ -56,18 +56,11 @@
           </a>
 
           
-            
-            
-              <div class="version">
-                1.0
-              </div>
-            
-          
 
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Recherche dans les pages" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -90,7 +83,6 @@
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#installation-des-outils">Installation des outils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-wildfly-dans-eclipse">Intégration de Wildfly dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#acces-a-la-console-d-administration-du-serveur">Accès à la console d’administration du serveur</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a><ul>
@@ -219,6 +211,7 @@
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#injection-des-dependances">Injection des dépendances</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxrs.html#exercice">Exercice</a></li>
 </ul>
@@ -262,11 +255,13 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html">Accueil</a> &raquo;</li>
         
       <li>Java Server Faces (JSF)</li>
     
@@ -282,10 +277,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="jaxrs.html" class="btn btn-neutral float-right" title="Les API Web avec JAX-RS" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="jaxrs.html" class="btn btn-neutral float-right" title="Les API Web avec JAX-RS" accesskey="n">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="web_listeners_filters.html" class="btn btn-neutral" title="Web listeners et filtres" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="web_listeners_filters.html" class="btn btn-neutral" title="Web listeners et filtres" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
   </div>
   
@@ -681,7 +676,7 @@ continuité de service du point de vue du client. Sans aller trop loin
 dans les implications de la passivation/activation, il suffit de savoir
 que les classes annotées avec <code class="docutils literal notranslate"><span class="pre">&#64;SessionScoped</span></code> doivent implémenter
 l’interface marqueur
-<a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html">java.io.Serializable</a>.</p>
+<a class="reference external" href="https://docs.oracle.com/javase/10/docs/api/java/io/Serializable.html">java.io.Serializable</a>.</p>
 <div class="literal-block-wrapper last docutils container" id="id10">
 <div class="code-block-caption"><span class="caption-text">Une déclaration de portée session</span><a class="headerlink" href="#id10" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
@@ -1079,7 +1074,7 @@ l’utilisateur.</p>
 <div class="section" id="la-validation-avec-bean-validation">
 <h2>La validation avec Bean Validation<a class="headerlink" href="#la-validation-avec-bean-validation" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Le serveur d’application fournit un autre service nommé
-<a class="reference external" href="http://beanvalidation.org/">Bean Validation</a> (JSR303). Bean Validation
+<a class="reference external" href="https://beanvalidation.org/">Bean Validation</a> (JSR303). Bean Validation
 permet d’exprimer les contraintes de validité d’un objet avec des
 annotations. JSF est capable d’interagir avec Bean Validation pour la
 validation de formulaire. Ainsi, plutôt que de déclarer la validation
@@ -1133,7 +1128,7 @@ différentes.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Vous pouvez télécharger un projet Maven de démonstration d’utilisation
-d’Ajax dans JSF&nbsp;: <a class="reference download internal" href="../_downloads/jsf-demoajax.zip" download=""><code class="xref download docutils literal notranslate"><span class="pre">jsf-demoajax.zip</span></code></a></p>
+d’Ajax dans JSF&nbsp;: <a class="reference download internal" download="" href="../_downloads/19c5d7e2cb2e66d075e03d5f787ef485/jsf-demoajax.zip"><code class="xref download docutils literal notranslate"><span class="pre">jsf-demoajax.zip</span></code></a></p>
 </div>
 <p>Une requête Ajax est une requête asynchrone qui est exécutée par le
 navigateur. Lorsque le serveur renvoie la réponse au navigateur, ce
@@ -1250,10 +1245,10 @@ bibliothèques tierces comme la très impressionnante
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="jaxrs.html" class="btn btn-neutral float-right" title="Les API Web avec JAX-RS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="jaxrs.html" class="btn btn-neutral float-right" title="Les API Web avec JAX-RS" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="web_listeners_filters.html" class="btn btn-neutral" title="Web listeners et filtres" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="web_listeners_filters.html" class="btn btn-neutral" title="Web listeners et filtres" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
     </div>
   
@@ -1262,10 +1257,12 @@ bibliothèques tierces comme la très impressionnante
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright David Gayerie - david.gayerie.epsi@mailoo.org - CC-BY-SA.
+        &copy; Copyright David Gayerie - david.gayerie@epsi.fr - CC-BY-SA
 
     </p>
-  </div> 
+  </div>
+    <div><a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip"><code class="download docutils literal notranslate"><span class="pre">Télécharger ce cours</pre></code></a></div>
+
 
 </footer>
 
@@ -1280,34 +1277,23 @@ bibliothèques tierces comme la très impressionnante
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0',
-            LANGUAGE:'fr',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enable();
-          
+          SphinxRtdTheme.Navigation.enable(false);
       });
   </script> 
 

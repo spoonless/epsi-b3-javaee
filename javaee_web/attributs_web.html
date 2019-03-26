@@ -362,7 +362,7 @@ instance de _HttpServletRequest_.</p>
 </div>
 <p>On peut ensuite récupérer l’attribut à n’importe quelle étape du
 traitement de la requête</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">cast</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">));</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="o">(</span><span class="n">User</span><span class="o">)</span> <span class="n">req</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">);</span>
 </pre></div>
 </div>
 <p>Les cas d’usage d’un attribut de portée requête sont limités pour le
@@ -394,7 +394,7 @@ grâce à la méthode <code class="docutils literal notranslate"><span class="pr
 </div>
 <p>On peut ensuite récupérer l’attribut lors du traitement de n’importe
 quelle requête reçue de ce client.</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">cast</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">));</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="o">(</span><span class="n">User</span><span class="o">)</span> <span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">);</span>
 </pre></div>
 </div>
 <div class="section" id="session-http-comment-cela-marche-t-il">
@@ -456,8 +456,8 @@ servlet de l’application grâce à la méthode <code class="docutils literal n
 <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span>
                   <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
     <span class="c1">// on récupère la date de création de la servlet</span>
-    <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Date</span> <span class="n">creation</span> <span class="o">=</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Date</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">cast</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">()</span>
-                                                            <span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&quot;creationDate&quot;</span><span class="o">));</span>
+    <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Date</span> <span class="n">creation</span> <span class="o">=</span> <span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Date</span><span class="o">)</span> <span class="k">this</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">()</span>
+                                                   <span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&quot;creationDate&quot;</span><span class="o">);</span>
 <span class="c1">// ...</span>
 <span class="o">}</span>
 </pre></div>

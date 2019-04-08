@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Les Servlets &mdash; Documentation Java EE pour le Web 1.0</title>
+  <title>Les Servlets &mdash; Documentation Java EE pour le Web </title>
   
 
   
@@ -17,13 +17,21 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
@@ -31,21 +39,16 @@
     <link rel="search" title="Recherche" href="../search.html" />
     <link rel="next" title="Le conteneur Web" href="conteneur_web.html" />
     <link rel="prev" title="Introduction à Maven" href="maven.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -315,8 +318,8 @@ fournit des méthodes doXXX (XXX représentant une méthode HTTP) qui
 seront appelées lorsque la servlet devra traiter une requête HTTP de la
 méthode correspondante.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Une requête HTTP est identifiée par une méthode. Les méthodes HTTP
+<p class="admonition-title">Note</p>
+<p>Une requête HTTP est identifiée par une méthode. Les méthodes HTTP
 standard sont : HEAD, OPTIONS, GET, POST, PUT, DELETE, PATCH. La méthode
 PATCH a été ajoutée tardivement et n’apparaît pas encore dans l’API
 servlet. Vous pouvez vous reporter à <a class="reference external" href="https://fr.wikipedia.org/wiki/Hypertext_Transfer_Protocol">l’article wikipedia sur
@@ -356,37 +359,37 @@ qui représentent respectivement la requête HTTP entrante et la réponse
 renvoyée par le serveur.</p>
 <p>Pour l’instant, les méthodes qui vont nous intéresser sur ces classes
 sont :</p>
-<dl class="docutils">
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#setCharacterEncoding-java.lang.String-">String HttpServletRequest.setCharacterEncoding(String)</a></dt>
-<dd>Spécifie le format d’encodage des paramètres de la requête. Par
+<dl class="simple">
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#setCharacterEncoding-java.lang.String-">String HttpServletRequest.setCharacterEncoding(String)</a></dt><dd><p>Spécifie le format d’encodage des paramètres de la requête. Par
 défaut, l’encodage utilisé est <a class="reference external" href="https://fr.wikipedia.org/wiki/ISO_8859-1">ISO
-8859-1</a> (Latin-1).</dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">String HttpServletRequest.getParameter(String)</a></dt>
-<dd>Retourne la valeur d’un paramètre d’une requête GET ou POST. La
+8859-1</a> (Latin-1).</p>
+</dd>
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">String HttpServletRequest.getParameter(String)</a></dt><dd><p>Retourne la valeur d’un paramètre d’une requête GET ou POST. La
 méthode attend le nom du paramètre et retourne sa valeur ou null si
-le paramètre n’existe pas.</dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">java.util.Map&lt;java.lang.String,java.lang.String[]&gt; HttpServletRequest.getParameterMap()</a></dt>
-<dd>Retourne une Map des paramètres d’une requête GET ou POST. La clé
+le paramètre n’existe pas.</p>
+</dd>
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">java.util.Map&lt;java.lang.String,java.lang.String[]&gt; HttpServletRequest.getParameterMap()</a></dt><dd><p>Retourne une Map des paramètres d’une requête GET ou POST. La clé
 dans la Map correspond au nom du paramètre. La valeur est un tableau
 de chaînes de caractères. En effet, un paramètre peut être présent
-plusieurs fois dans une requête.</dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#setContentType-java.lang.String-">void HttpServletResponse.setContentType(String)</a></dt>
-<dd>Positionne le type de contenu MIME de la réponse HTTP pour informer
-le client du format de la réponse. Par exemple : «&nbsp;text/html&nbsp;» pour
-une page HTML.</dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#setCharacterEncoding-java.lang.String-">void HttpServletResponse.setCharacterEncoding(String)</a></dt>
-<dd>Indique l’encodage caractère du flux de réponse. L’appel à
+plusieurs fois dans une requête.</p>
+</dd>
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#setContentType-java.lang.String-">void HttpServletResponse.setContentType(String)</a></dt><dd><p>Positionne le type de contenu MIME de la réponse HTTP pour informer
+le client du format de la réponse. Par exemple : « text/html » pour
+une page HTML.</p>
+</dd>
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#setCharacterEncoding-java.lang.String-">void HttpServletResponse.setCharacterEncoding(String)</a></dt><dd><p>Indique l’encodage caractère du flux de réponse. L’appel à
 HttpServletResponse.getWriter() tient compte de l’encodage
 positionné. Il faut donc appeler cette méthode avant
-HttpServletResponse.getWriter()</dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#getWriter--">java.io.PrintWriter HttpServletResponse.getWriter()</a></dt>
-<dd>Retourne un objet de type PrintWriter qui permet d’écrire la réponse
+HttpServletResponse.getWriter()</p>
+</dd>
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#getWriter--">java.io.PrintWriter HttpServletResponse.getWriter()</a></dt><dd><p>Retourne un objet de type PrintWriter qui permet d’écrire la réponse
 dans le flux de sortie. L’objet PrintWriter offre des méthodes write
-pour générer une réponse au format texte (comme une page HTML).</dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#getOutputStream--">javax.servlet.ServletOutputStream HttpServletResponse.getOutputStream()</a></dt>
-<dd>Retourne un objet représentant le flux de sortie en mode binaire.
+pour générer une réponse au format texte (comme une page HTML).</p>
+</dd>
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#getOutputStream--">javax.servlet.ServletOutputStream HttpServletResponse.getOutputStream()</a></dt><dd><p>Retourne un objet représentant le flux de sortie en mode binaire.
 Cette méthode est utile lorsque la réponse générée est au format
-binaire (comme une image par exemple).</dd>
+binaire (comme une image par exemple).</p>
+</dd>
 </dl>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
 
@@ -456,7 +459,7 @@ consiste à utiliser l’annotation <a class="reference external" href="https://
 </div>
 <p>Pour la servlet ci-dessus, l’annotation <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebServlet.html">&#64;WebServlet</a> précise le motif de
 l’URL (URL pattern) pour lequel la servlet devra être sollicitée (dans
-cet exemple «&nbsp;/hello&nbsp;»). Une fois l’application déployée dans un serveur
+cet exemple « /hello »). Une fois l’application déployée dans un serveur
 de test en local, une requête de la forme</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nl">https:</span><span class="c1">//localhost:8080/[nom de l&#39;application]/hello?name=David</span>
 </pre></div>
@@ -467,13 +470,13 @@ de test en local, une requête de la forme</p>
 </div>
 <div class="section" id="chemin-absolu-d-url-dans-une-application-web">
 <h3>Chemin absolu d’URL dans une application Web<a class="headerlink" href="#chemin-absolu-d-url-dans-une-application-web" title="Lien permanent vers ce titre">¶</a></h3>
-<p>Le motif d’URL dans l’exemple précédent est «&nbsp;/hello&nbsp;». Le / est
+<p>Le motif d’URL dans l’exemple précédent est « /hello ». Le / est
 obligatoire est dénote donc un chemin absolu. Néanmoins dans une
 servlet, un chemin absolu commence non pas à la racine du serveur mais à
 la racine de l’application.</p>
 <p>Ainsi pour une application déployée dans le contexte racine
-<strong>«&nbsp;/monappli&nbsp;»</strong>, une servlet dont le motif d’URL est <strong>«&nbsp;/hello&nbsp;»</strong> sera
-accessible par le chemin <strong>«&nbsp;/monappli/hello&nbsp;»</strong> et non pas «&nbsp;/hello&nbsp;».</p>
+<strong>« /monappli »</strong>, une servlet dont le motif d’URL est <strong>« /hello »</strong> sera
+accessible par le chemin <strong>« /monappli/hello »</strong> et non pas « /hello ».</p>
 <p>Cette astuce est très pratique car elle dispense les servlets de
 connaître le contexte racine d’une application. Cela peut néanmoins
 entraîner une certaine confusion chez les développeurs entre les URL qui
@@ -529,7 +532,7 @@ aujourd’hui très utilisé par les développeurs, particulièrement pour
 déclarer des servlets provenant de frameworks et de bibliothèques tiers.
 Pour déclarer une servlet dans une fichier <code class="file docutils literal notranslate"><span class="pre">web.xml</span></code>, il suffit d’associer
 un identifiant avec le nom de la classe de la servlet. Ensuite, on
-précise un ou des motifs d’URL pour cette servlet de la façon suivante&nbsp;:</p>
+précise un ou des motifs d’URL pour cette servlet de la façon suivante :</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;web-app</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
     <span class="na">xmlns=</span><span class="s">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span>
@@ -558,8 +561,8 @@ le répertoire <code class="file docutils literal notranslate"><span class="pre"
 on placera donc ce fichier dans le répertoire
 <code class="file docutils literal notranslate"><span class="pre">src/main/webapp/WEB-INF</span></code>.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Java EE est une plate-forme pour laquelle les développeurs
+<p class="admonition-title">Note</p>
+<p>Java EE est une plate-forme pour laquelle les développeurs
 d’applications implémentent des <strong>composants</strong> (Web, métier, …). Pour
 fournir les informations de déploiement de ces composants, nous verrons
 qu’il est toujours possible d’utiliser des annotations ou des
@@ -574,23 +577,21 @@ maintenir un fichier XML.</p>
 <div class="section" id="exercice">
 <h2>Exercice<a class="headerlink" href="#exercice" title="Lien permanent vers ce titre">¶</a></h2>
 <div class="hint admonition">
-<p class="first admonition-title">Traitement d’un formulaire</p>
-<dl class="last docutils">
-<dt><strong>Objectif</strong></dt>
-<dd><p class="first">Réaliser une application Web qui fournit une page d’accueil
+<p class="admonition-title">Traitement d’un formulaire</p>
+<dl>
+<dt><strong>Objectif</strong></dt><dd><p>Réaliser une application Web qui fournit une page d’accueil
 présentant un formulaire Web.</p>
 <p>Le formulaire permet de saisir un code produit
 et le libellé d’un produit. Lorsqu’utilisateur envoie les données au serveur,
 ce dernier répond par une page qui rappelle le nom du produit et qui
 affiche un code barre 2D correspondant à son code.</p>
-<p class="last">Pour la génération du code barre, vous utiliserez une servlet fournie par une
+<p>Pour la génération du code barre, vous utiliserez une servlet fournie par une
 bibliothèque tierce : <strong>barcode4j</strong>. Cette servlet génère des codes
 barres à la volée.</p>
 </dd>
-<dt><strong>Modèle Maven du projet à télécharger</strong></dt>
-<dd><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></dd>
-<dt><strong>Ajout de barcode4j dans le projet</strong></dt>
-<dd><p class="first">Maven va vous permettre de récupérer automatiquement les
+<dt><strong>Modèle Maven du projet à télécharger</strong></dt><dd><p><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></p>
+</dd>
+<dt><strong>Ajout de barcode4j dans le projet</strong></dt><dd><p>Maven va vous permettre de récupérer automatiquement les
 bibliothèques qui vont vous être utiles pour cet exercice. Ouvrez le
 fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> du projet et dans la balise <code class="docutils literal notranslate"><span class="pre">&lt;dependencies&gt;</span></code>,
 ajoutez les deux dépendences suivantes :</p>
@@ -609,7 +610,7 @@ ajoutez les deux dépendences suivantes :</p>
 <p>La sauvegarde du fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> dans votre IDE doit entraîner un
 téléchargement par Maven de ces dépendances et leur ajout dans la
 configuration du projet.</p>
-<p>La servlet fournie par barcode4j s’appelle&nbsp;:
+<p>La servlet fournie par barcode4j s’appelle :
 <code class="docutils literal notranslate"><span class="pre">org.krysalis.barcode4j.servlet.BarcodeServlet</span></code></p>
 <p>Une fois la servlet déclarée dans le fichier <code class="file docutils literal notranslate"><span class="pre">web.xml</span></code>,
 vous pouvez y accéder en passant des paramètres HTTP détaillés dans la
@@ -617,17 +618,17 @@ vous pouvez y accéder en passant des paramètres HTTP détaillés dans la
 <p>Un code barre 2D correspond au type <strong>datamatrix</strong> pour la servlet
 barcode4J. Autrement dit, il faut passer <code class="docutils literal notranslate"><span class="pre">type=datamatrix</span></code> comme
 paramètre à cette servlet.</p>
-<div class="last figure" id="id1">
+<div class="figure align-center" id="id1">
 <img alt="../_images/barcode4j-example.png" src="../_images/barcode4j-example.png" />
-<p class="caption"><span class="caption-text">Exemple de code barre 2D (datamatrix) généré par barcode4</span></p>
+<p class="caption"><span class="caption-text">Exemple de code barre 2D (datamatrix) généré par barcode4</span><a class="headerlink" href="#id1" title="Lien permanent vers cette image">¶</a></p>
 </div>
 </dd>
-<dt><strong>Mise en place du projet</strong></dt>
-<dd>Éditer le fichier pom.xml du template et modifier la balise
-artifactId pour spécifier le nom de votre projet.</dd>
-<dt><strong>Intégration du projet dans Eclipse</strong></dt>
-<dd>L’intégration du projet dans Eclipse suit la même procédure que
-celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a></dd>
+<dt><strong>Mise en place du projet</strong></dt><dd><p>Éditer le fichier pom.xml du template et modifier la balise
+artifactId pour spécifier le nom de votre projet.</p>
+</dd>
+<dt><strong>Intégration du projet dans Eclipse</strong></dt><dd><p>L’intégration du projet dans Eclipse suit la même procédure que
+celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a></p>
+</dd>
 </dl>
 </div>
 </div>
@@ -644,7 +645,7 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
         <a href="conteneur_web.html" class="btn btn-neutral float-right" title="Le conteneur Web" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="maven.html" class="btn btn-neutral" title="Introduction à Maven" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
+        <a href="maven.html" class="btn btn-neutral float-left" title="Introduction à Maven" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
     </div>
   
@@ -671,27 +672,16 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

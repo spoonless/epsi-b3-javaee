@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Java Server Faces (JSF) &mdash; Documentation Java EE pour le Web 1.0</title>
+  <title>Java Server Faces (JSF) &mdash; Documentation Java EE pour le Web </title>
   
 
   
@@ -17,13 +17,21 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
@@ -31,21 +39,16 @@
     <link rel="search" title="Recherche" href="../search.html" />
     <link rel="next" title="Les API Web avec JAX-RS" href="jaxrs.html" />
     <link rel="prev" title="Web listeners et filtres" href="web_listeners_filters.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -294,7 +297,7 @@
 <p>Java Server Faces (JSF) est défini par la <a class="reference external" href="https://jcp.org/en/jsr/detail?id=344">JSR 344</a>. Il s’agit d’un
 framework permettant de créer des applications Web complètes.</p>
 <p>Il existe de nombreux frameworks permettant de développer des
-applications Web en Java&nbsp;: JSF, Struts2, Spring MVC, Wicket, GWT, Play,
+applications Web en Java : JSF, Struts2, Spring MVC, Wicket, GWT, Play,
 Tapestry… Lorsqu’on développe une application Web en Java, il peut
 être difficile de savoir lequel choisir. Pour ce cours, nous nous
 contenterons d’une introduction à JSF qui a la particularité d’être le
@@ -303,8 +306,8 @@ dans le serveur d’application Wildfly.</p>
 <div class="section" id="creer-un-projet-avec-jsf">
 <h2>Créer un projet avec JSF<a class="headerlink" href="#creer-un-projet-avec-jsf" title="Lien permanent vers ce titre">¶</a></h2>
 <div class="admonition caution">
-<p class="first admonition-title">Prudence</p>
-<p class="last">Pour ce chapitre, nous allons voir l’utilisation de JSF
+<p class="admonition-title">Prudence</p>
+<p>Pour ce chapitre, nous allons voir l’utilisation de JSF
 2.2 dans un serveur d’application. La plupart des articles sur JSF
 disponibles sur le Web traitent soit de JSF 1.X soit de l’utilisation de
 JSF dans un conteneur de servlets (le plus souvent Tomcat). Même si les
@@ -313,7 +316,7 @@ pourrez trouver <strong>ne fonctionneront pas</strong> sans adaptation.</p>
 </div>
 <p>L’implémentation de JSF intégrée dans Wildfly est l’implémentation de référence
 nommée <em>Mojarra</em>. <em>Mojarra</em> fournit une Servlet qu’il faut déclarer dans le
-fichier <code class="file docutils literal notranslate"><span class="pre">web.xml</span></code> de son application&nbsp;:</p>
+fichier <code class="file docutils literal notranslate"><span class="pre">web.xml</span></code> de son application :</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text">Déclaration de la servlet JSF dans le web.xml</span><a class="headerlink" href="#id1" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;servlet&gt;</span>
@@ -332,7 +335,7 @@ fichier <code class="file docutils literal notranslate"><span class="pre">web.xm
 <p>JSF supporte une configuration de développement pour permettre un
 rechargement presque à chaud lorsque des modifications sont apportées à
 l’application. Pour l’activer, il faut rajouter <strong>au début du fichier
-web.xml</strong> un paramètre d’application&nbsp;:</p>
+web.xml</strong> un paramètre d’application :</p>
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-text">Activation du mode développement dans le web.xml</span><a class="headerlink" href="#id2" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;context-param&gt;</span>
@@ -345,7 +348,7 @@ web.xml</strong> un paramètre d’application&nbsp;:</p>
 <p>Comme tous les services Java EE, JSF dispose d’un fichier de déploiement
 au format XML. Ce fichier de déploiement s’appelle <code class="file docutils literal notranslate"><span class="pre">faces-config.xml</span></code>
 et doit être situé dans le répertoire <code class="file docutils literal notranslate"><span class="pre">WEB-INF</span></code>. Le contenu minimal de ce
-fichier est&nbsp;:</p>
+fichier est :</p>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-text">Le fichier de déploiement faces-config.xml</span><a class="headerlink" href="#id3" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
@@ -370,7 +373,7 @@ and Dependency Injection). Nous reviendrons plus tard sur l’utilité de
 ce service. CDI n’est pas activé par défaut pour une application Web.
 Pour l’activer, il suffit d’ajouter le fichier de déploiement de CDI
 pour l’application. Ce fichier doit s’appeler <code class="file docutils literal notranslate"><span class="pre">beans.xml</span></code> et être
-situé dans le répertoire <code class="file docutils literal notranslate"><span class="pre">WEB-INF</span></code>. Le contenu minimal de ce fichier est&nbsp;:</p>
+situé dans le répertoire <code class="file docutils literal notranslate"><span class="pre">WEB-INF</span></code>. Le contenu minimal de ce fichier est :</p>
 <div class="literal-block-wrapper docutils container" id="id4">
 <div class="code-block-caption"><span class="caption-text">Le fichier de déploiement beans.xml</span><a class="headerlink" href="#id4" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
@@ -390,7 +393,7 @@ situé dans le répertoire <code class="file docutils literal notranslate"><span
 déclaration de vue appelé <strong>facelet</strong>. Du point de vue du développeur,
 nous allons voir qu’il n’y a pas une très grande différence entre une
 JSP et une facelet. Par contre, il s’agit de deux technologies
-différentes&nbsp;: les balises supportées ne sont pas les mêmes et une
+différentes : les balises supportées ne sont pas les mêmes et une
 facelet n’est pas transformée en Servlet.</p>
 <p>Une facelet est un document XHTML 1.0 qui <strong>doit</strong> se conformer à la DTD
 XHTML-1.0-Transitional. Avec le succès de HTML5, des adaptations ont été
@@ -418,47 +421,47 @@ rechercher des balises spécifiques JSF. L’utilisation des balises de
 facelets se fait grâce aux espaces de nom XML (XML namespaces). Il
 existe six bibliothèques standards de balises JSF. Chacune dispose de
 son propre espace de nom XML.</p>
-<table border="1" class="docutils">
+<table class="docutils align-center">
 <colgroup>
-<col width="11%" />
-<col width="29%" />
-<col width="34%" />
-<col width="25%" />
+<col style="width: 11%" />
+<col style="width: 29%" />
+<col style="width: 34%" />
+<col style="width: 25%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Préfixe</th>
-<th class="head">XML namespace</th>
-<th class="head">Description</th>
-<th class="head">Exemples de balise</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Préfixe</p></th>
+<th class="head"><p>XML namespace</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Exemples de balise</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>h</td>
-<td><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
-jsf/html</td>
-<td>Contient les balises pour
+<tbody>
+<tr class="row-even"><td><p>h</p></td>
+<td><p><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
+jsf/html</p></td>
+<td><p>Contient les balises pour
 le rendu HTML des
 éléments pris en charge
-par JSF</td>
-<td>h:head h:body
-h:form h:inputText</td>
+par JSF</p></td>
+<td><p>h:head h:body
+h:form h:inputText</p></td>
 </tr>
-<tr class="row-odd"><td>f</td>
-<td><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
-jsf/core</td>
-<td>Contient les balises qui
+<tr class="row-odd"><td><p>f</p></td>
+<td><p><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
+jsf/core</p></td>
+<td><p>Contient les balises qui
 ne génèrent pas de rendu
 HTML mais assurent
 l’interaction avec le
 serveur et le formatage
-de données</td>
-<td>f:actionListener
-f:ajax</td>
+de données</p></td>
+<td><p>f:actionListener
+f:ajax</p></td>
 </tr>
-<tr class="row-even"><td>c</td>
-<td><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
-jsp/jstl/core</td>
-<td>Contient les balises de
+<tr class="row-even"><td><p>c</p></td>
+<td><p><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
+jsp/jstl/core</p></td>
+<td><p>Contient les balises de
 la bibliothèque JSTL core
 (Cf <a class="reference external" href="07_jsp.html#jstl">cours sur les
 JSP</a>
@@ -470,27 +473,27 @@ balise c:out par rapport
 à la version JSP. En JSF,
 on utilise
 <code class="docutils literal notranslate"><span class="pre">h:outputText</span></code> à la
-place.</td>
-<td>c:if c:forEach</td>
+place.</p></td>
+<td><p>c:if c:forEach</p></td>
 </tr>
-<tr class="row-odd"><td>fn</td>
-<td><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
-jsp/jstl/functions</td>
-<td>Contient les fonctions de
+<tr class="row-odd"><td><p>fn</p></td>
+<td><p><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
+jsp/jstl/functions</p></td>
+<td><p>Contient les fonctions de
 la bibliothèque JSTL
 functions (Cf <a class="reference external" href="07_jsp.html#jstl">cours sur
 les
 JSP</a>
 ).
 Cette bibliothèque ne
-contient pas de balise.</td>
-<td>fn:contains
-fn:join</td>
+contient pas de balise.</p></td>
+<td><p>fn:contains
+fn:join</p></td>
 </tr>
-<tr class="row-even"><td>ui</td>
-<td><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
-jsf/facelets</td>
-<td>Contient les balises
+<tr class="row-even"><td><p>ui</p></td>
+<td><p><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
+jsf/facelets</p></td>
+<td><p>Contient les balises
 permettant des
 compositions de vues. Il
 est possible de définir
@@ -498,18 +501,18 @@ un layout pour l’ensemble
 de l’application et
 d’appliquer
 automatiquement ce layout
-à chaque facelet.</td>
-<td>ui:component
-ui:composition</td>
+à chaque facelet.</p></td>
+<td><p>ui:component
+ui:composition</p></td>
 </tr>
-<tr class="row-odd"><td>cc</td>
-<td><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
-jsf/composite</td>
-<td>Permet de définir de
+<tr class="row-odd"><td><p>cc</p></td>
+<td><p><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
+jsf/composite</p></td>
+<td><p>Permet de définir de
 nouveaux composants
-graphiques.</td>
-<td>cc:interface
-cc:implementation</td>
+graphiques.</p></td>
+<td><p>cc:interface
+cc:implementation</p></td>
 </tr>
 </tbody>
 </table>
@@ -546,9 +549,9 @@ effet, la servlet JSF est configurée pour traiter les requêtes de type
 *.xhtml. Ainsi, le serveur ne renvoie jamais les fichiers XHTML bruts.
 Il délègue le traitement à la servlet JSF qui interprète la facelet.</p>
 <p>On retrouve beaucoup de similitudes entre facelets et JSP. Par exemple,
-voici une facelet affichant les paramètres de la requête HTTP&nbsp;:</p>
+voici une facelet affichant les paramètres de la requête HTTP :</p>
 <div class="literal-block-wrapper docutils container" id="id7">
-<div class="code-block-caption"><span class="caption-text">Exemple&nbsp;: Une facelet affichant les paramètres</span><a class="headerlink" href="#id7" title="Lien permanent vers ce code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">Exemple : Une facelet affichant les paramètres</span><a class="headerlink" href="#id7" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
 <span class="cp">&lt;!DOCTYPE html PUBLIC</span>
 <span class="cp">          &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
@@ -588,13 +591,13 @@ le service <strong>CDI</strong>.</p>
 <p>Eclipse supporte la complétion des balises JSF dans les fichiers de
 facelets. Si vous ne disposez pas de cette fonctionnalité par défaut, il
 vous faut peut-être activer manuellement le support de JSF pour votre
-projet&nbsp;:</p>
+projet :</p>
 <ul class="simple">
-<li>dans l’explorateur de projet, faites un clique droit sur le nom du
-projet et sélectionnez «&nbsp;Properties&nbsp;» (ou ALT+Entrée),</li>
-<li>dans l’arborescence des propriétés, sélectionnez «&nbsp;Project Facets&nbsp;» et,
-dans la liste des Facets, cochez «&nbsp;Java Server Faces&nbsp;»,</li>
-<li>cliquez sur «&nbsp;OK&nbsp;».</li>
+<li><p>dans l’explorateur de projet, faites un clique droit sur le nom du
+projet et sélectionnez « Properties » (ou ALT+Entrée),</p></li>
+<li><p>dans l’arborescence des propriétés, sélectionnez « Project Facets » et,
+dans la liste des Facets, cochez « Java Server Faces »,</p></li>
+<li><p>cliquez sur « OK ».</p></li>
 </ul>
 <p><a class="reference internal" href="../_images/eclipse_configure_jsf.png"><img alt="Configuration de JSF dans Eclipse" src="../_images/eclipse_configure_jsf.png" style="width: 90.0%;" /></a></p>
 </div>
@@ -609,7 +612,7 @@ géré par CDI.</p>
 </div>
 <div class="section" id="declarer-un-objet-avec-cdi">
 <h2>Déclarer un objet avec CDI<a class="headerlink" href="#declarer-un-objet-avec-cdi" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Nous verrons dans l’exemple ci-dessous une déclaration par annotations&nbsp;:</p>
+<p>Nous verrons dans l’exemple ci-dessous une déclaration par annotations :</p>
 <div class="literal-block-wrapper docutils container" id="id8">
 <div class="code-block-caption"><span class="caption-text">Une déclaration de portée requête</span><a class="headerlink" href="#id8" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
@@ -635,7 +638,7 @@ l’objet sera un attribut de portée requête. Sur le même principe, il
 existe les annotations <code class="docutils literal notranslate"><span class="pre">&#64;SessionScoped</span></code> et <code class="docutils literal notranslate"><span class="pre">&#64;ApplicationScoped</span></code>.</p>
 <p>Par défaut, le nom de l’instance sera le même que le nom de la classe
 commençant par une minuscule. Ainsi, une fois cette classe ajoutée dans
-le projet, il est possible de l’utiliser dans une facelet&nbsp;:</p>
+le projet, il est possible de l’utiliser dans une facelet :</p>
 <div class="literal-block-wrapper docutils container" id="id9">
 <div class="code-block-caption"><span class="caption-text">Utilisation dans une facelet d’un bean géré par CDI</span><a class="headerlink" href="#id9" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
@@ -658,12 +661,12 @@ le projet, il est possible de l’utiliser dans une facelet&nbsp;:</p>
 automatiquement créé avec dans la portée spécifiée par annotation (dans la
 portée requête pour l’exemple précédent).</p>
 <p>Il est également possible de spécifier soi-même le nom du bean dans
-l’annotation <code class="docutils literal notranslate"><span class="pre">&#64;Named</span></code>&nbsp;:</p>
+l’annotation <code class="docutils literal notranslate"><span class="pre">&#64;Named</span></code> :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Named</span><span class="o">(</span><span class="s">&quot;monControleurDePersonne&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>&#64;SessionScoped et la passivation</p>
 <p>Les classes Java portant l’annotation <code class="docutils literal notranslate"><span class="pre">&#64;SessionScoped</span></code> doivent
 supporter la passivation sinon vous obtiendrez une erreur à l’exécution.
@@ -677,7 +680,7 @@ dans les implications de la passivation/activation, il suffit de savoir
 que les classes annotées avec <code class="docutils literal notranslate"><span class="pre">&#64;SessionScoped</span></code> doivent implémenter
 l’interface marqueur
 <a class="reference external" href="https://docs.oracle.com/javase/10/docs/api/java/io/Serializable.html">java.io.Serializable</a>.</p>
-<div class="literal-block-wrapper last docutils container" id="id10">
+<div class="literal-block-wrapper docutils container" id="id10">
 <div class="code-block-caption"><span class="caption-text">Une déclaration de portée session</span><a class="headerlink" href="#id10" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
 
@@ -706,7 +709,7 @@ fonctionnalités avancées pour CDI mais il doit également être présent
 dans l’arborescence de l’application pour indiquer au serveur d’applications d’activer le
 service CDI pour cette application. Pour une application Web, le fichier
 <code class="file docutils literal notranslate"><span class="pre">beans.xml</span></code> doit se trouver dans le répertoire <code class="file docutils literal notranslate"><span class="pre">WEB-INF</span></code>. Sa structure
-minimale est&nbsp;:</p>
+minimale est :</p>
 <div class="literal-block-wrapper docutils container" id="id11">
 <div class="code-block-caption"><span class="caption-text">Contenu minimal du fichier de déploiement beans.xml</span><a class="headerlink" href="#id11" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
@@ -727,7 +730,7 @@ jouer le rôle du modèle. Le modèle peut être un objet géré par CDI ou
 rendu disponible par un objet géré par CDI (ce dernier jouant alors le
 rôle de contrôleur). Par exemple, une instance de la classe <code class="docutils literal notranslate"><span class="pre">Personne</span></code>
 peut être utilisée comme modèle dans un formulaire d’une facelet en y
-accédant <em>via</em> le bean CDI personneControleur vu précédemment&nbsp;:</p>
+accédant <em>via</em> le bean CDI personneControleur vu précédemment :</p>
 <div class="literal-block-wrapper docutils container" id="id12">
 <div class="code-block-caption"><span class="caption-text">Utilisation d’un bean CDI dans un formulaire</span><a class="headerlink" href="#id12" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
@@ -807,17 +810,17 @@ paramètres qui seront passés à la méthode côté serveur.</p>
 </pre></div>
 </div>
 </div>
-<p>Dans la facelet ci-dessus, l’action déclenchée par le bouton «&nbsp;chercher&nbsp;»
-est&nbsp;:</p>
+<p>Dans la facelet ci-dessus, l’action déclenchée par le bouton « chercher »
+est :</p>
 <div class="highlight-jsp notranslate"><div class="highlight"><pre><span></span>#{personneControleur.chercher()}
 </pre></div>
 </div>
 <p>Cela signifie que JSF va chercher un bean CDI portant le nom
-«&nbsp;personneControleur&nbsp;» et il va invoquer la méthode <code class="docutils literal notranslate"><span class="pre">chercher</span></code>. Au
+« personneControleur » et il va invoquer la méthode <code class="docutils literal notranslate"><span class="pre">chercher</span></code>. Au
 préalable, les attributs <code class="docutils literal notranslate"><span class="pre">nom</span></code> et <code class="docutils literal notranslate"><span class="pre">age</span></code> de la propriété
 <code class="docutils literal notranslate"><span class="pre">personneControleur.personne</span></code> auront été mis à jour avec les valeurs
 envoyées dans la requête.</p>
-<p>Ainsi un contrôleur valide pourrait être&nbsp;:</p>
+<p>Ainsi un contrôleur valide pourrait être :</p>
 <div class="literal-block-wrapper docutils container" id="id14">
 <div class="code-block-caption"><span class="caption-text">Un exemple de contrôleur</span><a class="headerlink" href="#id14" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
@@ -854,7 +857,7 @@ nous orienter les concepteurs de JSF.</p>
 <p>Une fonctionnalité importante des frameworks Web est la gestion de la
 navigation. Après avoir traité une requête, vers quelle vue, un
 contrôleur doit-il déléguer le traitement pour construire la
-représentation finale&nbsp;?</p>
+représentation finale ?</p>
 <p>Dans JSF, les vues sont les fichiers XHTML (les facelets). Les
 identifiants des facelets correspondent simplement au nom du fichier
 sans l’extension .xhtml. Une méthode de contrôleur indique la vue
@@ -987,7 +990,7 @@ vous reporter à ce
 validateur. Pour cela, il suffit de créer une classe qui implémente
 l’interface
 <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/faces/validator/Validator.html">javax.faces.validator.Validator</a>.
-Cette interface ne contient la déclaration que d’une seule méthode&nbsp;:</p>
+Cette interface ne contient la déclaration que d’une seule méthode :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">validate</span><span class="o">(</span><span class="n">FacesContext</span> <span class="n">context</span><span class="o">,</span> <span class="n">UIComponent</span> <span class="n">component</span><span class="o">,</span> <span class="n">Object</span> <span class="n">value</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ValidatorException</span>
 </pre></div>
 </div>
@@ -1079,7 +1082,7 @@ permet d’exprimer les contraintes de validité d’un objet avec des
 annotations. JSF est capable d’interagir avec Bean Validation pour la
 validation de formulaire. Ainsi, plutôt que de déclarer la validation
 dans une facelet comme dans la section précédente, il est possible
-d’ajouter des annotations directement sur le bean <code class="docutils literal notranslate"><span class="pre">Personne</span></code>&nbsp;:</p>
+d’ajouter des annotations directement sur le bean <code class="docutils literal notranslate"><span class="pre">Personne</span></code> :</p>
 <div class="literal-block-wrapper docutils container" id="id19">
 <div class="code-block-caption"><span class="caption-text">Utilisation de Bean Validation</span><a class="headerlink" href="#id19" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
@@ -1117,7 +1120,7 @@ d’ajouter des annotations directement sur le bean <code class="docutils litera
 </div>
 </div>
 <p>La documentation des annotations de Bean Validation est disponible dans
-la documentation de l’API Java EE&nbsp;:
+la documentation de l’API Java EE :
 <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/validation/constraints/package-summary.html">https://docs.oracle.com/javaee/7/api/javax/validation/constraints/package-summary.html</a></p>
 <p>Bean Validation est une bonne alternative aux balises JSF de validation
 si un bean doit être réutilisé comme modèle dans des facelets
@@ -1126,9 +1129,9 @@ différentes.</p>
 <div class="section" id="les-requetes-ajax">
 <h2>Les requêtes Ajax<a class="headerlink" href="#les-requetes-ajax" title="Lien permanent vers ce titre">¶</a></h2>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Vous pouvez télécharger un projet Maven de démonstration d’utilisation
-d’Ajax dans JSF&nbsp;: <a class="reference download internal" download="" href="../_downloads/19c5d7e2cb2e66d075e03d5f787ef485/jsf-demoajax.zip"><code class="xref download docutils literal notranslate"><span class="pre">jsf-demoajax.zip</span></code></a></p>
+<p class="admonition-title">Note</p>
+<p>Vous pouvez télécharger un projet Maven de démonstration d’utilisation
+d’Ajax dans JSF : <a class="reference download internal" download="" href="../_downloads/19c5d7e2cb2e66d075e03d5f787ef485/jsf-demoajax.zip"><code class="xref download docutils literal notranslate"><span class="pre">jsf-demoajax.zip</span></code></a></p>
 </div>
 <p>Une requête Ajax est une requête asynchrone qui est exécutée par le
 navigateur. Lorsque le serveur renvoie la réponse au navigateur, ce
@@ -1138,7 +1141,7 @@ en JavaScript.</p>
 code JavaScript. JSF injecte lui-même le code JavaScript nécessaire au
 moment du rendu de la facelet.</p>
 <p>Pour activer Ajax, il suffit, par exemple, de spécifier la balise
-<code class="docutils literal notranslate"><span class="pre">f:ajax</span></code> comme balise fille d’un <code class="docutils literal notranslate"><span class="pre">h:commandButton</span></code>&nbsp;:</p>
+<code class="docutils literal notranslate"><span class="pre">f:ajax</span></code> comme balise fille d’un <code class="docutils literal notranslate"><span class="pre">h:commandButton</span></code> :</p>
 <div class="literal-block-wrapper docutils container" id="id20">
 <div class="code-block-caption"><span class="caption-text">Un exemple d’ajout du support Ajax</span><a class="headerlink" href="#id20" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;h:commandButton</span> <span class="na">value=</span><span class="s">&quot;un bouton&quot;</span> <span class="na">action=</span><span class="s">&quot;#{monControleur.traiter()}&quot;</span><span class="nt">&gt;</span>
@@ -1150,22 +1153,22 @@ moment du rendu de la facelet.</p>
 <p>La déclaration ci-dessus suffit à générer automatiquement le code
 JavaScript dans la page XHTML pour que, lorsque l’utilisateur clique sur
 le bouton, une requête Ajax soit soumise au serveur. La balise
-<code class="docutils literal notranslate"><span class="pre">f:ajax</span></code> a deux attributs importants&nbsp;:</p>
+<code class="docutils literal notranslate"><span class="pre">f:ajax</span></code> a deux attributs importants :</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">execute</span></code> : liste les composants qui sont pris en compte par la
+<li><p><code class="docutils literal notranslate"><span class="pre">execute</span></code> : liste les composants qui sont pris en compte par la
 requête Ajax. Il est possible de lister les id des éléments d’un
 formulaire séparés par un espace. On peut aussi utiliser un des
-mots-clés suivants&nbsp;: <code class="docutils literal notranslate"><span class="pre">&#64;form</span></code> (tous les éléments du formulaire courant),
+mots-clés suivants : <code class="docutils literal notranslate"><span class="pre">&#64;form</span></code> (tous les éléments du formulaire courant),
 <code class="docutils literal notranslate"><span class="pre">&#64;this</span></code> (uniquement le composant qui contient la balise <code class="docutils literal notranslate"><span class="pre">f:ajax</span></code>),
 <code class="docutils literal notranslate"><span class="pre">&#64;all</span></code> (tous les composants graphiques JSF de la page), &#64;none (aucune
-composant n’est associé à la requête Ajax).</li>
-<li><code class="docutils literal notranslate"><span class="pre">render</span></code> : spécifie l’ID ou la liste des ID des composants
+composant n’est associé à la requête Ajax).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">render</span></code> : spécifie l’ID ou la liste des ID des composants
 graphiques JSF dans la facelet qui doivent être mis à jour lors de la
 réception de la réponse Ajax. Comme pour l’attribut précédent, il est
-possible d’utiliser les mots-clés <code class="docutils literal notranslate"><span class="pre">&#64;this</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;form</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;all</span></code> et <code class="docutils literal notranslate"><span class="pre">&#64;none</span></code></li>
+possible d’utiliser les mots-clés <code class="docutils literal notranslate"><span class="pre">&#64;this</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;form</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;all</span></code> et <code class="docutils literal notranslate"><span class="pre">&#64;none</span></code></p></li>
 </ul>
 <p>Pour le support d’Ajax, l’implémentation du contrôleur se fait souvent
-avec deux méthodes&nbsp;: une méthode pour permettre au contrôleur de
+avec deux méthodes : une méthode pour permettre au contrôleur de
 recevoir les données de la facelet et une méthode pour permettre à la
 facelet d’obtenir, en retour, les résultats qui permettront de mettre à
 jour une partie de la page.</p>
@@ -1173,7 +1176,7 @@ jour une partie de la page.</p>
 <code class="docutils literal notranslate"><span class="pre">h:commandButton</span></code> ne doit rien retourner (<code class="docutils literal notranslate"><span class="pre">void</span></code>) sinon JSF
 interprétera le résultat comme un ID de facelet et redirigera le
 navigateur vers une nouvelle page.</p>
-<p>Un exemple simple mais complet serait&nbsp;:</p>
+<p>Un exemple simple mais complet serait :</p>
 <div class="literal-block-wrapper docutils container" id="id21">
 <div class="code-block-caption"><span class="caption-text">Une facelet utilisant Ajax</span><a class="headerlink" href="#id21" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
@@ -1248,7 +1251,7 @@ bibliothèques tierces comme la très impressionnante
         <a href="jaxrs.html" class="btn btn-neutral float-right" title="Les API Web avec JAX-RS" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="web_listeners_filters.html" class="btn btn-neutral" title="Web listeners et filtres" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
+        <a href="web_listeners_filters.html" class="btn btn-neutral float-left" title="Web listeners et filtres" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
     </div>
   
@@ -1275,27 +1278,16 @@ bibliothèques tierces comme la très impressionnante
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Les attributs d’une application Web &mdash; Documentation Java EE pour le Web 1.0</title>
+  <title>Les attributs d’une application Web &mdash; Documentation Java EE pour le Web </title>
   
 
   
@@ -17,13 +17,21 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
@@ -31,21 +39,16 @@
     <link rel="search" title="Recherche" href="../search.html" />
     <link rel="next" title="JSP : Java Server Pages" href="jsp.html" />
     <link rel="prev" title="Le conteneur Web" href="conteneur_web.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -293,49 +296,49 @@
 <span id="attributs-web"></span><h1>Les attributs d’une application Web<a class="headerlink" href="#les-attributs-d-une-application-web" title="Lien permanent vers ce titre">¶</a></h1>
 <p>Il est souvent utile de partager de l’information dans un conteneur Web
 entre plusieurs composants. L’information partagée est appelée <strong>un
-attribut</strong>. Il est défini par sa portée&nbsp;:</p>
-<dl class="docutils">
-<dt>Portée de requête (<strong>request scope</strong>)</dt>
-<dd>L’attribut est disponible pour les servlets qui participent au
+attribut</strong>. Il est défini par sa portée :</p>
+<dl class="simple">
+<dt>Portée de requête (<strong>request scope</strong>)</dt><dd><p>L’attribut est disponible pour les servlets qui participent au
 traitement de la requête cliente. Nous verrons bientôt qu’une même
 requête peut être prise en charge par une chaîne de plusieurs
-servlets.</dd>
-<dt>Portée de session (<strong>session scope</strong>)</dt>
-<dd>L’attribut est disponible pour toutes les requêtes émises par un
+servlets.</p>
+</dd>
+<dt>Portée de session (<strong>session scope</strong>)</dt><dd><p>L’attribut est disponible pour toutes les requêtes émises par un
 même client. L’ensemble de ces attributs est appelé une session
-utilisateur.</dd>
-<dt>Portée de l’application (<strong>application scope</strong>)</dt>
-<dd>L’attribut est disponible à tout moment à l’ensemble des servlets de
-l’application Web.</dd>
+utilisateur.</p>
+</dd>
+<dt>Portée de l’application (<strong>application scope</strong>)</dt><dd><p>L’attribut est disponible à tout moment à l’ensemble des servlets de
+l’application Web.</p>
+</dd>
 </dl>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Un attribut est une notion très vague&nbsp;: il s’agit simplement d’une
+<p class="admonition-title">Note</p>
+<p>Un attribut est une notion très vague : il s’agit simplement d’une
 instance d’une classe Java (implémentant si possible l’interface
 <a class="reference external" href="https://docs.oracle.com/javase/10/docs/api/java/io/Serializable.html">java.io.Serializable</a>).</p>
 </div>
 <p>Le développeur d’application va pouvoir stocker les attributs dont il a
 besoin dans différents objets fournis par le conteneur (suivant la
 portée qu’il désire donner à un attribut). La gestion des attributs se
-fait toujours avec des méthodes aux signatures similaires&nbsp;:</p>
-<dl class="docutils">
-<dt><strong>void XXXX.setAttribute(String nom, Object valeur)</strong></dt>
-<dd>Pour positionner un attribut</dd>
-<dt><strong>Object XXXX.getAttribute(String nom)</strong></dt>
-<dd>Pour récupérer un attribut que l’on a préalablement positionné</dd>
-<dt><strong>java.util.Enumeration&lt;String&gt; XXXX.getAttributeNames()</strong></dt>
-<dd>Pour connaître la liste des noms des attributs disponibles</dd>
-<dt><strong>void XXXX.removeAttribute(String nom)</strong></dt>
-<dd>Pour supprimer un attribut</dd>
+fait toujours avec des méthodes aux signatures similaires :</p>
+<dl class="simple">
+<dt><strong>void XXXX.setAttribute(String nom, Object valeur)</strong></dt><dd><p>Pour positionner un attribut</p>
+</dd>
+<dt><strong>Object XXXX.getAttribute(String nom)</strong></dt><dd><p>Pour récupérer un attribut que l’on a préalablement positionné</p>
+</dd>
+<dt><strong>java.util.Enumeration&lt;String&gt; XXXX.getAttributeNames()</strong></dt><dd><p>Pour connaître la liste des noms des attributs disponibles</p>
+</dd>
+<dt><strong>void XXXX.removeAttribute(String nom)</strong></dt><dd><p>Pour supprimer un attribut</p>
+</dd>
 </dl>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Dans la liste ci-dessus XXXX représente l’objet du conteneur
+<p class="admonition-title">Note</p>
+<p>Dans la liste ci-dessus XXXX représente l’objet du conteneur
 stockant les attributs.</p>
 </div>
 <div class="admonition-attributs-et-concurrence admonition">
-<p class="first admonition-title">Attributs et concurrence</p>
-<p class="last">Nous avons vu au chapitre précédent que la programmation de servlets
+<p class="admonition-title">Attributs et concurrence</p>
+<p>Nous avons vu au chapitre précédent que la programmation de servlets
 implique de prendre en considération les problèmes de programmation
 concurrente (une servlet peut traiter N requêtes simultanément). Ainsi
 les attributs de portée session et application sont aussi
@@ -401,7 +404,7 @@ quelle requête reçue de ce client.</p>
 <h3>Session HTTP : comment cela marche-t-il ?<a class="headerlink" href="#session-http-comment-cela-marche-t-il" title="Lien permanent vers ce titre">¶</a></h3>
 <p>HTTP est un protocole non connecté et sans état (stateless). Cela
 signifie que la notion de session n’est tout simplement pas
-implémentable avec seulement HTTP&nbsp;!</p>
+implémentable avec seulement HTTP !</p>
 <p>Pour parvenir à créer une notion de session, le conteneur Web associe à
 une instance de HttpSession un identifiant (le sessionId). Ce sessionId
 est envoyé au client sous la forme d’un cookie nommé JSESSIONID. Le
@@ -469,51 +472,50 @@ mises en cache pour améliorer les performances.</p>
 <div class="section" id="exercices">
 <h2>Exercices<a class="headerlink" href="#exercices" title="Lien permanent vers ce titre">¶</a></h2>
 <div class="hint admonition">
-<p class="first admonition-title">Implémenter un formulaire en plusieurs étapes avec session</p>
-<dl class="last docutils">
-<dt><strong>Objectif</strong></dt>
-<dd><p class="first">Réaliser une application qui permet à un utilisateur de s’inscrire
+<p class="admonition-title">Implémenter un formulaire en plusieurs étapes avec session</p>
+<dl>
+<dt><strong>Objectif</strong></dt><dd><p>Réaliser une application qui permet à un utilisateur de s’inscrire
 en donnant des informations personnelles.</p>
-<p>La saisie d’information doit se faire en plusieurs étapes&nbsp;:</p>
+<p>La saisie d’information doit se faire en plusieurs étapes :</p>
 <ol class="arabic simple">
-<li>Une première page Web demande à l’utilisateur de saisir son nom
-et son prénom. Puis l’utilisateur clique sur le bouton «&nbsp;suivant&nbsp;».</li>
-<li>Une nouvelle page demande à l’utilisateur de saisir son adresse
+<li><p>Une première page Web demande à l’utilisateur de saisir son nom
+et son prénom. Puis l’utilisateur clique sur le bouton « suivant ».</p></li>
+<li><p>Une nouvelle page demande à l’utilisateur de saisir son adresse
 dans un seul champ texte. Puis l’utilisateur clique sur le bouton
-«&nbsp;valider&nbsp;».</li>
-<li>Finalement une page récapitulative s’affiche avec toutes les
-informations de l’utilisateur (nom, prénom et adresse).</li>
+« valider ».</p></li>
+<li><p>Finalement une page récapitulative s’affiche avec toutes les
+informations de l’utilisateur (nom, prénom et adresse).</p></li>
 </ol>
-<p class="last">Pour réaliser cette inscription en plusieurs étapes, vous utiliserez
+<p>Pour réaliser cette inscription en plusieurs étapes, vous utiliserez
 le mécanisme de session Web pour conserver temporairement les
 données saisies par l’utilisateur.</p>
 </dd>
-<dt><strong>Modèle Maven du projet à télécharger</strong></dt>
-<dd><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></dd>
-<dt><strong>Mise en place du projet</strong></dt>
-<dd>Éditer le fichier pom.xml du template et modifier la balise
-artifactId pour spécifier le nom de votre projet.</dd>
-<dt><strong>Intégration du projet dans Eclipse</strong></dt>
-<dd>L’intégration du projet dans Eclipse suit la même procédure que
-celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a>.</dd>
+<dt><strong>Modèle Maven du projet à télécharger</strong></dt><dd><p><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></p>
+</dd>
+<dt><strong>Mise en place du projet</strong></dt><dd><p>Éditer le fichier pom.xml du template et modifier la balise
+artifactId pour spécifier le nom de votre projet.</p>
+</dd>
+<dt><strong>Intégration du projet dans Eclipse</strong></dt><dd><p>L’intégration du projet dans Eclipse suit la même procédure que
+celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a>.</p>
+</dd>
 </dl>
 </div>
 <div class="hint admonition">
-<p class="first admonition-title">Implémenter un formulaire en plusieurs étapes sans session</p>
-<dl class="last docutils">
-<dt><strong>Objectif</strong></dt>
-<dd>Reprenez l’exercice précédent mais cette fois-ci, implémentez le
+<p class="admonition-title">Implémenter un formulaire en plusieurs étapes sans session</p>
+<dl class="simple">
+<dt><strong>Objectif</strong></dt><dd><p>Reprenez l’exercice précédent mais cette fois-ci, implémentez le
 même formulaire de saisie en plusieurs étapes <strong>sans</strong> utiliser la
 session Web. L’objectif est donc d’implémenter une application sans
-état.</dd>
-<dt><strong>Modèle Maven du projet à télécharger</strong></dt>
-<dd><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></dd>
-<dt><strong>Mise en place du projet</strong></dt>
-<dd>Éditer le fichier pom.xml du template et modifier la balise
-artifactId pour spécifier le nom de votre projet.</dd>
-<dt><strong>Intégration du projet dans Eclipse</strong></dt>
-<dd>L’intégration du projet dans Eclipse suit la même procédure que
-celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a>.</dd>
+état.</p>
+</dd>
+<dt><strong>Modèle Maven du projet à télécharger</strong></dt><dd><p><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></p>
+</dd>
+<dt><strong>Mise en place du projet</strong></dt><dd><p>Éditer le fichier pom.xml du template et modifier la balise
+artifactId pour spécifier le nom de votre projet.</p>
+</dd>
+<dt><strong>Intégration du projet dans Eclipse</strong></dt><dd><p>L’intégration du projet dans Eclipse suit la même procédure que
+celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a>.</p>
+</dd>
 </dl>
 </div>
 </div>
@@ -530,7 +532,7 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
         <a href="jsp.html" class="btn btn-neutral float-right" title="JSP : Java Server Pages" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="conteneur_web.html" class="btn btn-neutral" title="Le conteneur Web" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
+        <a href="conteneur_web.html" class="btn btn-neutral float-left" title="Le conteneur Web" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
     </div>
   
@@ -557,27 +559,16 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

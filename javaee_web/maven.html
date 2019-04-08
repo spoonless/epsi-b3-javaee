@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Introduction à Maven &mdash; Documentation Java EE pour le Web 1.0</title>
+  <title>Introduction à Maven &mdash; Documentation Java EE pour le Web </title>
   
 
   
@@ -17,13 +17,21 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
@@ -31,21 +39,16 @@
     <link rel="search" title="Recherche" href="../search.html" />
     <link rel="next" title="Les Servlets" href="servlet.html" />
     <link rel="prev" title="Une première application" href="premiere_application.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -295,24 +298,24 @@
 introduire un outil supplémentaire : <a class="reference external" href="http://maven.apache.org">Maven</a>.</p>
 <p>Maven est un outil open source de la communauté Apache entièrement écrit
 en Java. Il permet d’automatiser la gestion et la construction d’un
-projet Java&nbsp;: ce que l’on appelle communément <em>un outil de build</em>.</p>
+projet Java : ce que l’on appelle communément <em>un outil de build</em>.</p>
 <p>Maven se présente comme un exécutable en ligne de commande mais il est
 également intégré nativement dans les IDE les plus courants dans le
-monde Java&nbsp;: Eclipse, Intellij IDEA, NetBeans.</p>
+monde Java : Eclipse, Intellij IDEA, NetBeans.</p>
 <div class="section" id="pourquoi-utiliser-maven">
 <h2>Pourquoi utiliser Maven ?<a class="headerlink" href="#pourquoi-utiliser-maven" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Nous avons vu qu’il est possible de créer et d’exécuter des projets Java
 EE directement dans Eclipse. Alors pourquoi utiliser Maven ? Si un IDE
 peut suffire pour gérer des projets simples, cette solution s’avère
-rapidement limitée&nbsp;:</p>
+rapidement limitée :</p>
 <ul class="simple">
-<li>Comment partager mon projet avec d’autres développeurs quand ils
+<li><p>Comment partager mon projet avec d’autres développeurs quand ils
 n’ont pas exactement la même configuration de poste que la mienne et
-qu’ils n’utilisent pas le même IDE que moi ?</li>
-<li>Comment compiler et tester mon projet en dehors d’un IDE (par exemple
-dans un processus d’intégration continue) ?</li>
-<li>Comment automatiser certaines tâches répétitives et limiter ainsi les
-erreurs ou les oublis ?</li>
+qu’ils n’utilisent pas le même IDE que moi ?</p></li>
+<li><p>Comment compiler et tester mon projet en dehors d’un IDE (par exemple
+dans un processus d’intégration continue) ?</p></li>
+<li><p>Comment automatiser certaines tâches répétitives et limiter ainsi les
+erreurs ou les oublis ?</p></li>
 </ul>
 <p>Pour résoudre tous ces problèmes (et d’autres encore), le plus simple
 est d’utiliser un outil tel que Maven.</p>
@@ -322,16 +325,16 @@ est d’utiliser un outil tel que Maven.</p>
 <p>L’outil de construction de projet le plus célèbre est sans aucun doute
 <strong>make</strong>. Make permet de définir des tâches avec des commandes associées
 et des dépendances entre ces tâches.</p>
-<p>Maven part d’une approche très différente&nbsp;: il découpe le <a class="reference external" href="https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html">cycle de
+<p>Maven part d’une approche très différente : il découpe le <a class="reference external" href="https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html">cycle de
 construction</a>
 du projet en phases pré-définies et le développeur peut paramétrer ou
 ajouter des tâches à effectuer automatiquement pour chacune des phases.
-Les principales phases dans Maven sont&nbsp;:</p>
+Les principales phases dans Maven sont :</p>
 <ol class="arabic simple">
-<li>compile : compilation du code source du projet</li>
-<li>test : compilation du code source des tests et exécution des tests</li>
-<li>package : construction du livrable (pour une application Web, il
-s’agit de l’archive WAR)</li>
+<li><p>compile : compilation du code source du projet</p></li>
+<li><p>test : compilation du code source des tests et exécution des tests</p></li>
+<li><p>package : construction du livrable (pour une application Web, il
+s’agit de l’archive WAR)</p></li>
 </ol>
 <p>Maven ajoute la possibilité de gérer automatiquement les dépendances
 logicielles. Pour développer des applications Java EE, nous allons avoir
@@ -363,7 +366,7 @@ place un processus d’intégration continue).</p>
 répertoire <code class="file docutils literal notranslate"><span class="pre">apache-maven-3.5.2/bin</span></code> dans votre chemin d’exécution.</p>
 <p>Si vous utilisez une machine GNU/Linux, vous trouverez certainement
 maven dans les dépôts logiciel. Pour une distribution de type Debian,
-vous pouvez utiliser la commande&nbsp;:</p>
+vous pouvez utiliser la commande :</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt install maven
 </pre></div>
 </div>
@@ -381,26 +384,26 @@ d’exemple.</p>
 <p>Maven impose une arborescence minimale des fichiers afin de garantir une
 homogénéité entre tous les projets.</p>
 <p><img alt="Arborescence d'un projet Maven" src="../_images/maven_project_content.png" /></p>
-<dl class="docutils">
-<dt><strong>pom.xml</strong></dt>
-<dd>A la racine du projet, on trouve le fichier pom.xml, le descripteur
-du projet pour Maven.</dd>
-<dt><strong>src/main</strong></dt>
-<dd>Ce répertoire contient les fichiers de l’application. On trouve au
+<dl class="simple">
+<dt><strong>pom.xml</strong></dt><dd><p>A la racine du projet, on trouve le fichier pom.xml, le descripteur
+du projet pour Maven.</p>
+</dd>
+<dt><strong>src/main</strong></dt><dd><p>Ce répertoire contient les fichiers de l’application. On trouve au
 moins le sous répertoire <strong>java</strong> contenant les sources Java. Le
 sous répertoire <strong>resources</strong> accueille les fichiers qui ne sont pas
 des sources Java mais qui doivent être présents avec les fichiers
 compilés dans l’application finale (il s’agit souvent de fichiers de
 configuration). Enfin pour une application Web, le sous répertoire
 <strong>webapp</strong> correspond à la racine du site Web. On retrouve à
-l’intérieur le répertoire WEB-INF et le fichier WEB-INF/web.xml.</dd>
-<dt><strong>src/test</strong></dt>
-<dd>Ce répertoire contient les fichiers utilisés pour tester
+l’intérieur le répertoire WEB-INF et le fichier WEB-INF/web.xml.</p>
+</dd>
+<dt><strong>src/test</strong></dt><dd><p>Ce répertoire contient les fichiers utilisés pour tester
 l’application. On trouve le sous répertoire <strong>Java</strong> contenant les
 sources Java des tests unitaires. Le sous répertoire <strong>resources</strong>
 accueille les fichiers qui ne sont pas des sources Java mais qui
 sont nécessaires à l’exécution des tests (il s’agit souvent de
-fichiers de configuration pour les tests).</dd>
+fichiers de configuration pour les tests).</p>
+</dd>
 </dl>
 <p>Il existe un dernier répertoire à connaître, le répertoire <strong>target</strong>.
 Ce répertoire n’est pas présent dans l’arborescence du projet
@@ -415,7 +418,7 @@ tests…</p>
 <p>Le fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> est le descripteur de projet pour Maven. Il s’agit
 d’un fichier XML présent à la racine du projet qui est lu par Maven pour
 lui fournir les informations du projet.</p>
-<p>Le contenu du fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> du projet hello-webapp est le suivant&nbsp;:</p>
+<p>Le contenu du fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> du projet hello-webapp est le suivant :</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;project</span>
     <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
     <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
@@ -484,13 +487,13 @@ lui fournir les informations du projet.</p>
 <span class="nt">&lt;/project&gt;</span>
 </pre></div>
 </div>
-<p>Ce fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> donne les informations minimales à Maven&nbsp;:</p>
+<p>Ce fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> donne les informations minimales à Maven :</p>
 <ul class="simple">
-<li>Le projet s’appelle fr.epsi.b3:hello</li>
-<li>La version actuelle est la 0.0.1 et il s’agit d’une version de
-travail</li>
-<li>Le projet est une application Web Java EE (war)</li>
-<li>Le projet est écrit en Java 8 et les sources sont encodées en UTF-8</li>
+<li><p>Le projet s’appelle fr.epsi.b3:hello</p></li>
+<li><p>La version actuelle est la 0.0.1 et il s’agit d’une version de
+travail</p></li>
+<li><p>Le projet est une application Web Java EE (war)</p></li>
+<li><p>Le projet est écrit en Java 8 et les sources sont encodées en UTF-8</p></li>
 </ul>
 <p>La documentation complète du format du fichier pom.xml est disponible à
 cette <a class="reference external" href="https://maven.apache.org/pom.html">adresse</a>.</p>
@@ -512,7 +515,7 @@ de votre projet. Ensuite, cliquez sur <span class="guilabel">Finish</span>.</p>
 <div class="section" id="test-de-l-application-dans-wildfly">
 <h2>Test de l’application dans Wildfly<a class="headerlink" href="#test-de-l-application-dans-wildfly" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Comme pour le chapitre précédent, ajouter le fichier <strong>hello.html</strong> dans
-votre projet dans le répertoire <strong>src/main/webapp</strong>&nbsp;:</p>
+votre projet dans le répertoire <strong>src/main/webapp</strong> :</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
   <span class="nt">&lt;head&gt;</span>
@@ -585,16 +588,16 @@ sélectionnez <span class="guilabel">Run As… &gt; Maven build…</span>. Dans 
 <span class="guilabel">Edit Configuration</span>, saisissez la cible Maven (goal) que vous voulez exécuter
 (Cf. ci-dessous) et cliquez sur <span class="guilabel">Run</span>.</p>
 <p><img alt="Exécution de Maven dans Eclipse" src="../_images/eclipse_run_maven.png" /></p>
-<p>Après l’exécution de la cible «&nbsp;package&nbsp;», Maven aura créé le fichier WAR
+<p>Après l’exécution de la cible « package », Maven aura créé le fichier WAR
 de l’application dans le répertoire de travail <code class="file docutils literal notranslate"><span class="pre">target</span></code>.</p>
 </div>
 <div class="section" id="exercice">
 <h2>Exercice<a class="headerlink" href="#exercice" title="Lien permanent vers ce titre">¶</a></h2>
 <div class="topic">
 <p class="topic-title first">ajout du plugin Wildfly dans le fichier pom.xml</p>
-<dl class="docutils">
-<dt><strong>Objectif</strong></dt>
-<dd>Exécuter un serveur Wildfly directement à partir de Maven</dd>
+<dl class="simple">
+<dt><strong>Objectif</strong></dt><dd><p>Exécuter un serveur Wildfly directement à partir de Maven</p>
+</dd>
 </dl>
 <p>Il est possible de déclarer des plugins dans un fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> de
 son projet. Il existe de très nombreux plugins disponibles depuis des
@@ -608,7 +611,7 @@ serveur.</p>
 <p>Pour Wildfly, on peut utiliser le <a class="reference external" href="https://docs.jboss.org/wildfly/plugins/maven/latest/">wildfly-maven-plugin</a>.
 Reprenez le <a class="reference download internal" download="" href="../_downloads/4f1a3e0483d80b2135ac195980d0c909/hello-webapp.zip"><code class="xref download docutils literal notranslate"><span class="pre">projet</span> <span class="pre">Maven</span> <span class="pre">d'exemple</span></code></a> que vous venez
 d’importer dans Eclipse et éditez le fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code>. À la suite de
-la section &lt;properties&gt;, ajoutez la déclaration suivante&nbsp;:</p>
+la section &lt;properties&gt;, ajoutez la déclaration suivante :</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;build&gt;</span>
     <span class="nt">&lt;plugins&gt;</span>
         <span class="nt">&lt;plugin&gt;</span>
@@ -624,7 +627,7 @@ la section &lt;properties&gt;, ajoutez la déclaration suivante&nbsp;:</p>
 </pre></div>
 </div>
 <p>Ouvrez ensuite un terminal et allez dans le répertoire de votre projet.
-Tapez la commande&nbsp;:</p>
+Tapez la commande :</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mvn package wildfly:run
 </pre></div>
 </div>
@@ -650,7 +653,7 @@ déploiement sera donc <strong>hello-0.0.1-SNAPSHOT</strong></p>
         <a href="servlet.html" class="btn btn-neutral float-right" title="Les Servlets" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="premiere_application.html" class="btn btn-neutral" title="Une première application" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
+        <a href="premiere_application.html" class="btn btn-neutral float-left" title="Une première application" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
     </div>
   
@@ -677,27 +680,16 @@ déploiement sera donc <strong>hello-0.0.1-SNAPSHOT</strong></p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Les API Web avec JAX-RS &mdash; Documentation Java EE pour le Web 1.0</title>
+  <title>Les API Web avec JAX-RS &mdash; Documentation Java EE pour le Web </title>
   
 
   
@@ -17,34 +17,37 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Recherche" href="../search.html" />
     <link rel="prev" title="Java Server Faces (JSF)" href="jsf.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -297,10 +300,20 @@ applications basées sur HTTP. Ainsi, comme nous le verrons plus loin,
 son utilisation n’est pas réservée à l’implémentation de services mais
 il peut tout aussi bien être utilisé pour développer des applications
 Web plus traditionnelles.</p>
+<div class="admonition tip">
+<p class="admonition-title">Astuce</p>
+<p>Dans ce chapitre, nous allons créer des applications Web dont la fonction
+principale n’est pas de créer des pages HTML mais des documents analysables
+par une machine comme des documents JSON et XML. Les navigateurs Web ne
+sont donc pas forcément les outils les plus pratiques pour tester ces
+applications.</p>
+<p>Vous pouvez télécharger <a class="reference external" href="https://insomnia.rest/">insomnia.rest</a>. Cet outil permet de créer
+et d’envoyer des requêtes HTTP sans passer par un document HTML.</p>
+</div>
 <p>JAX-RS 2.x est défini par la <a class="reference external" href="https://jcp.org/en/jsr/detail?id=339">JSR
 339</a>. Comme pour tous les
 services et toutes API Java EE, il existe plusieurs implémentations de
-cette spécification&nbsp;: <a class="reference external" href="https://jersey.github.io/">Jersey</a>
+cette spécification : <a class="reference external" href="https://jersey.github.io/">Jersey</a>
 (l’implémentation de référence),
 <a class="reference external" href="https://resteasy.github.io/">RestEasy</a> (intégré dans le serveur Wildfly), <a class="reference external" href="https://cxf.apache.org/docs/jax-rs.html">Apache
 CXF</a>.</p>
@@ -308,49 +321,48 @@ CXF</a>.</p>
 <h2>La notion de ressource<a class="headerlink" href="#la-notion-de-ressource" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Dans le Web, ce qui est désigné par une URI est appelé une
 <strong>ressource</strong>. Une ressource offre une interface uniforme qui est
-définie dans HTTP par l’ensemble des méthodes&nbsp;: GET, HEAD, POST, PUT,
+définie dans HTTP par l’ensemble des méthodes : GET, HEAD, POST, PUT,
 DELETE, OPTIONS… Un client HTTP positionne dans sa requête une méthode
 pour indiquer le type d’opération que le serveur doit effectuer sur la
 ressource.</p>
-<dl class="docutils">
-<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.1">GET</a></dt>
-<dd>Demande au serveur une représentation de la ressource cible.</dd>
-<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.2">HEAD</a></dt>
-<dd>Comme un GET sauf que la réponse ne contient jamais de corps. Cette
+<dl class="simple">
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.1">GET</a></dt><dd><p>Demande au serveur une représentation de la ressource cible.</p>
+</dd>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.2">HEAD</a></dt><dd><p>Comme un GET sauf que la réponse ne contient jamais de corps. Cette
 méthode est utile pour obtenir les informations des en-têtes HTTP et
-valider une requête sans envoyer ni recevoir de corps de message.</dd>
-<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.4">PUT</a></dt>
-<dd>Crée ou met à jour l’état d’une ressource identifiée par l’URI.</dd>
-<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.5">DELETE</a></dt>
-<dd>Détruit l’association de l’URI avec l’état de la ressource.</dd>
-<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.3">POST</a></dt>
-<dd><p class="first">La sémantique de la méthode POST est probablement la plus compliquée
+valider une requête sans envoyer ni recevoir de corps de message.</p>
+</dd>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.4">PUT</a></dt><dd><p>Crée ou met à jour l’état d’une ressource identifiée par l’URI.</p>
+</dd>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.5">DELETE</a></dt><dd><p>Détruit l’association de l’URI avec l’état de la ressource.</p>
+</dd>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.3">POST</a></dt><dd><p>La sémantique de la méthode POST est probablement la plus compliquée
 à saisir car cette méthode est utilisable dans différentes
 situations.</p>
-<ul class="last simple">
-<li>Le client souhaite créer une ressource sur le serveur en laissant
-au serveur le choix de l’URI de la ressource.</li>
-<li>Le client souhaite ajouter une ressource à une ressource
-représentant une collection.</li>
-<li>Le client souhaite que le serveur effectue un traitement.</li>
-<li>Le client souhaite modifier partiellement une ressource.</li>
+<ul class="simple">
+<li><p>Le client souhaite créer une ressource sur le serveur en laissant
+au serveur le choix de l’URI de la ressource.</p></li>
+<li><p>Le client souhaite ajouter une ressource à une ressource
+représentant une collection.</p></li>
+<li><p>Le client souhaite que le serveur effectue un traitement.</p></li>
+<li><p>Le client souhaite modifier partiellement une ressource.</p></li>
 </ul>
 </dd>
-<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.7">OPTIONS</a></dt>
-<dd>Permet d’obtenir les options de communication (par exemple : les
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.7">OPTIONS</a></dt><dd><p>Permet d’obtenir les options de communication (par exemple : les
 méthodes autorisées pour l’URI). Le serveur doit retourner ces
 informations dans les en-têtes de réponse. Ainsi l’en-tête de
 réponse
 <a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-7.4.1">Allow</a>
-liste les méthodes HTTP autorisées pour cette URI.</dd>
-<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.8">TRACE</a></dt>
-<dd>Permet de simuler un écho de la requête. Cette méthode n’est pas
+liste les méthodes HTTP autorisées pour cette URI.</p>
+</dd>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.8">TRACE</a></dt><dd><p>Permet de simuler un écho de la requête. Cette méthode n’est pas
 utilisée pour la réalisation d’API Web car elle est surtout utile
 pour tester la configuration du réseau et obtenir des informations
-des proxies.</dd>
-<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.6">CONNECT</a></dt>
-<dd>Établit un tunnel à travers un proxy. Cette méthode n’est pas
-utilisée pour la réalisation d’API Web.</dd>
+des proxies.</p>
+</dd>
+<dt><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-4.3.6">CONNECT</a></dt><dd><p>Établit un tunnel à travers un proxy. Cette méthode n’est pas
+utilisée pour la réalisation d’API Web.</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="configurer-une-application-web-pour-jax-rs">
@@ -368,12 +380,12 @@ Dans le fichier <code class="file docutils literal notranslate"><span class="pre
 <p>Dans l’exemple ci-dessus, cela signifie que les requêtes à partir de
 <strong>http://[hôte]/[contexte racine]/api/</strong> seront gérées par JAX-RS.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>Il est également possible d’activer JAX-RS dans une application Web en
 fournissant dans cette application une classe qui étend la classe abstraite
 <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/core/Application.html">Application</a>. On utilise alors l’annotation <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/ApplicationPath.html">&#64;ApplicationPath</a> pour donner
 le motif d’URI géré par JAX-RS :</p>
-<div class="last highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3.adhesion.api</span><span class="o">;</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3.adhesion.api</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">javax.ws.rs.ApplicationPath</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.ws.rs.core.Application</span><span class="o">;</span>
@@ -386,8 +398,8 @@ le motif d’URI géré par JAX-RS :</p>
 </div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Il est aussi possible d’utiliser une implémentation de JAX-RS dans
+<p class="admonition-title">Note</p>
+<p>Il est aussi possible d’utiliser une implémentation de JAX-RS dans
 des conteneurs plus légers comme Tomcat ou Jetty sous la forme d’un
 framework tiers ajouté à son application Web. Vous devez alors vous
 reporter à la documentation de l’implémentation choisie pour connaître
@@ -399,9 +411,8 @@ la marche à suivre.</p>
 <p>JAX-RS permet d’implémenter des ressources sous la forme de composants
 Java EE. Une classe représentant une ressource est identifiée grâce à
 l’annotation <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/Path.html">&#64;Path</a>.</p>
-<dl class="docutils">
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/Path.html">&#64;Path</a></dt>
-<dd><p class="first">L’annotation <code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.Path</span></code> indique le chemin d’URI qui
+<dl>
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/Path.html">&#64;Path</a></dt><dd><p>L’annotation <code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.Path</span></code> indique le chemin d’URI qui
 identifie la ressource. Cette annotation est utilisable sur une
 classe et sur les méthodes. Utilisée sur une classe, cette
 annotation permet d’identifier la classe comme une ressource racine
@@ -415,7 +426,7 @@ qui devient dès lors un composant géré par le serveur d’application.</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Pour l’exemple ci-dessus, la ressource sera identifiée par l’URI&nbsp;:
+<p>Pour l’exemple ci-dessus, la ressource sera identifiée par l’URI :
 <strong>http://[hôte]/[contexte racine]/[mapping servlet]/user</strong></p>
 <p>Utilisée sur une méthode, cette annotation permet de spécifier une
 sous-chemin dans la ressource. Si cette méthode retourne une classe
@@ -437,9 +448,9 @@ utilisant des annotations JAX-RS, on parle alors de
 </pre></div>
 </div>
 <p>Pour l’exemple ci-dessus, l’instance de la classe <code class="docutils literal notranslate"><span class="pre">GeoLocation</span></code>
-retournée par la méthode est accessible par l’URI&nbsp;:
+retournée par la méthode est accessible par l’URI :
 <strong>http://[hôte]/[contexte racine]/[mapping servlet]/user/geo</strong></p>
-<p class="last">Dans l’exemple précédent, si la classe <code class="docutils literal notranslate"><span class="pre">GeoLocation</span></code> utilise
+<p>Dans l’exemple précédent, si la classe <code class="docutils literal notranslate"><span class="pre">GeoLocation</span></code> utilise
 elle-même des annotations JAX-RS alors on dit qu’il s’agit d’une
 sous-ressource. Il devient possible de créer des arborescences de
 ressources en Java basées sur le chemin de l’URI.</p>
@@ -448,14 +459,14 @@ ressources en Java basées sur le chemin de l’URI.</p>
 <div class="section" id="les-annotations-de-methodes">
 <h3>Les annotations de méthodes<a class="headerlink" href="#les-annotations-de-methodes" title="Lien permanent vers ce titre">¶</a></h3>
 <p>JAX-RS fournit une annotation pour presque toutes les méthodes
-HTTP&nbsp;:</p>
+HTTP :</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.GET</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.HEAD</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.POST</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.PUT</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.DELETE</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.OPTIONS</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.GET</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.HEAD</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.POST</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.PUT</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.DELETE</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.OPTIONS</span></code></p></li>
 </ul>
 <p>Elles permettent d’indiquer quelle méthode Java doit être appelée
 pour traiter la méthode de la requête HTTP entrante.</p>
@@ -515,7 +526,7 @@ ressource une clé primaire lui permettant d’effectuer une recherche
 en base de données.</p>
 <p>Avec JAX-RS, on déclare des paramètres de chemin entre accolades et
 on utilise l’annotation <code class="docutils literal notranslate"><span class="pre">javax.ws.rs.PathParam</span></code> pour récupérer
-leur valeur dans les paramètres des méthodes&nbsp;:</p>
+leur valeur dans les paramètres des méthodes :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">javax.ws.rs.DELETE</span><span class="o">;</span>
@@ -564,7 +575,7 @@ précédent, comme le paramètre <code class="docutils literal notranslate"><spa
 utilisateur est déclaré au niveau de la classe, on devrait pouvoir
 obtenir cet identifiant à la construction de l’instance. JAX-RS
 permet effectivement cette implémentation qui semble plus conforme à
-un modèle objet&nbsp;:</p>
+un modèle objet :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">javax.ws.rs.DELETE</span><span class="o">;</span>
@@ -620,7 +631,7 @@ requête (comme l’identifiant de l’utilisateur).</p>
 les types primitifs et les chaînes de caractères. Cela permet de
 garantir un premier contrôle de la validité de la donnée. Si la
 valeur attendue doit avoir un motif particulier, il est possible de
-le spécifier avec une expression régulière&nbsp;:</p>
+le spécifier avec une expression régulière :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">javax.ws.rs.GET</span><span class="o">;</span>
@@ -646,44 +657,43 @@ le spécifier avec une expression régulière&nbsp;:</p>
 </div>
 <p>Par défaut, JAX-RS utilise comme expression régulière pour un
 paramètre de chemin <code class="docutils literal notranslate"><span class="pre">[^/]+?</span></code></p>
-<dl class="docutils">
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/Consumes.html">&#64;Consumes</a> / <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/Produces.html">&#64;Produces</a></dt>
-<dd><p class="first">Lorsqu’un client soumet une requête pour transmettre des
+<dl>
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/Consumes.html">&#64;Consumes</a> / <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/Produces.html">&#64;Produces</a></dt><dd><p>Lorsqu’un client soumet une requête pour transmettre des
 informations au serveur (comme des données de formulaire) et quand
 un serveur retourne du contenu à un client, il est nécessaire de
 préciser le type de contenu. On utilise pour cela l’en-tête HTTP
 <code class="docutils literal notranslate"><span class="pre">Content-type</span></code> avec comme valeur le type
 <a class="reference external" href="https://fr.wikipedia.org/wiki/Type_MIME">MIME</a>.</p>
-<p>Une liste (non exhaustive) des types MIME les plus courants est&nbsp;:</p>
-<table border="1" class="docutils">
+<p>Une liste (non exhaustive) des types MIME les plus courants est :</p>
+<table class="docutils align-center">
 <colgroup>
-<col width="24%" />
-<col width="76%" />
+<col style="width: 24%" />
+<col style="width: 76%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>text/plain</td>
-<td>Un fichier texte</td>
+<tbody>
+<tr class="row-odd"><td><p>text/plain</p></td>
+<td><p>Un fichier texte</p></td>
 </tr>
-<tr class="row-even"><td>text/plain;charset=utf-8</td>
-<td>Un fichier texte encodé en UTF-8</td>
+<tr class="row-even"><td><p>text/plain;charset=utf-8</p></td>
+<td><p>Un fichier texte encodé en UTF-8</p></td>
 </tr>
-<tr class="row-odd"><td>text/html</td>
-<td>Un fichier HTML</td>
+<tr class="row-odd"><td><p>text/html</p></td>
+<td><p>Un fichier HTML</p></td>
 </tr>
-<tr class="row-even"><td>application/x-www-form-urlencoded</td>
-<td>Le format de données pour la soumission d’un formulaire HTML</td>
+<tr class="row-even"><td><p>application/x-www-form-urlencoded</p></td>
+<td><p>Le format de données pour la soumission d’un formulaire HTML</p></td>
 </tr>
-<tr class="row-odd"><td>text/xml ou application/xml</td>
-<td>Un fichier XML</td>
+<tr class="row-odd"><td><p>text/xml ou application/xml</p></td>
+<td><p>Un fichier XML</p></td>
 </tr>
-<tr class="row-even"><td>text/json ou application/json</td>
-<td>Un fichier JSON</td>
+<tr class="row-even"><td><p>text/json ou application/json</p></td>
+<td><p>Un fichier JSON</p></td>
 </tr>
-<tr class="row-odd"><td>image/jpeg</td>
-<td>Une image au format jpeg</td>
+<tr class="row-odd"><td><p>image/jpeg</p></td>
+<td><p>Une image au format jpeg</p></td>
 </tr>
-<tr class="row-even"><td>application/octet-stream</td>
-<td>Un flux d’octets sans type particulier. Il s’agit du format par défaut si l’en-tête <code class="docutils literal notranslate"><span class="pre">Content-type</span></code> est absent.</td>
+<tr class="row-even"><td><p>application/octet-stream</p></td>
+<td><p>Un flux d’octets sans type particulier. Il s’agit du format par défaut si l’en-tête <code class="docutils literal notranslate"><span class="pre">Content-type</span></code> est absent.</p></td>
 </tr>
 </tbody>
 </table>
@@ -748,22 +758,21 @@ requête et le type de contenu de la réponse.</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Plutôt que d’écrire&nbsp;:</p>
+<p>Plutôt que d’écrire :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Produces</span><span class="o">(</span><span class="s">&quot;application/json&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>Il est recommandé d’utiliser les constantes déclarées dans la classe
 <code class="docutils literal notranslate"><span class="pre">javax.ws.rs.core.MediaType</span></code></p>
-<div class="last highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Produces</span><span class="o">(</span><span class="n">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON</span><span class="o">)</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Produces</span><span class="o">(</span><span class="n">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON</span><span class="o">)</span>
 </pre></div>
 </div>
 </dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/QueryParam.html">&#64;QueryParam</a></dt>
-<dd><p class="first">Comme pour les paramètres de chemin, il est possible de récupérer la
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/QueryParam.html">&#64;QueryParam</a></dt><dd><p>Comme pour les paramètres de chemin, il est possible de récupérer la
 valeur des paramètres de la requête comme arguments des méthodes de
 la ressource JAX-RS grâce à l’annotation
 <code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.QueryParam</span></code>.</p>
-<div class="last highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@GET</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@GET</span>
 <span class="nd">@Produces</span><span class="o">({</span><span class="n">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON</span><span class="o">,</span> <span class="n">MediaType</span><span class="o">.</span><span class="na">APPLICATION_XML</span><span class="o">})</span>
 <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">search</span><span class="o">(</span><span class="nd">@QueryParam</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">)</span> <span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
   <span class="c1">// ...</span>
@@ -771,8 +780,7 @@ la ressource JAX-RS grâce à l’annotation
 </pre></div>
 </div>
 </dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/FormParam.html">&#64;FormParam</a></dt>
-<dd><p class="first">Les données transmises <em>via</em> un formulaire HTML peuvent être
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/FormParam.html">&#64;FormParam</a></dt><dd><p>Les données transmises <em>via</em> un formulaire HTML peuvent être
 récupérées comme arguments des méthodes de la ressource JAX-RS grâce
 à l’annotation <code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.FormParam</span></code>. Pour le cas d’une requête
 de formulaire, le contenu attendu est presque toujours de type
@@ -785,37 +793,36 @@ de formulaire, le contenu attendu est presque toujours de type
 </pre></div>
 </div>
 <p>Sur le même principe, il est également possible de récupérer
-d’autres informations d’une requête&nbsp;:</p>
-<ul class="last simple">
-<li>Pour récupérer la valeur d’un en-tête HTTP, il faut utiliser
-l’annotation <code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.HeaderParam</span></code></li>
-<li>Pour récupérer la valeur d’un Cookie HTTP, il faut utiliser
-l’annotation <code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.CookieParam</span></code></li>
+d’autres informations d’une requête :</p>
+<ul class="simple">
+<li><p>Pour récupérer la valeur d’un en-tête HTTP, il faut utiliser
+l’annotation <code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.HeaderParam</span></code></p></li>
+<li><p>Pour récupérer la valeur d’un Cookie HTTP, il faut utiliser
+l’annotation <code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.CookieParam</span></code></p></li>
 </ul>
 </dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/core/Context.html">&#64;Context</a></dt>
-<dd><p class="first">Si vous avez besoin d’obtenir des informations sur le contexte
+<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/core/Context.html">&#64;Context</a></dt><dd><p>Si vous avez besoin d’obtenir des informations sur le contexte
 d’exécution de la requête, vous pouvez utilisez l’annotation
 <code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.core.Context</span></code> pour obtenir une instance d’une
-classe particulière. Les classes supportées sont&nbsp;:</p>
+classe particulière. Les classes supportées sont :</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">javax.ws.rs.core.UriInfo</span></code>&nbsp;: Cette interface donne accès à
-l’URI de la requête.</li>
-<li><code class="docutils literal notranslate"><span class="pre">javax.ws.rs.core.Request</span></code>&nbsp;: Cette interface fournit des
+<li><p><code class="docutils literal notranslate"><span class="pre">javax.ws.rs.core.UriInfo</span></code> : Cette interface donne accès à
+l’URI de la requête.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">javax.ws.rs.core.Request</span></code> : Cette interface fournit des
 méthodes utilitaires pour le traitement conditionnel de la
-requête.</li>
-<li><code class="docutils literal notranslate"><span class="pre">javax.ws.rs.core.HttpHeaders</span></code>&nbsp;: Cette interface permet
-d’accéder à l’ensemble des en-têtes HTTP de la requête.</li>
-<li><code class="docutils literal notranslate"><span class="pre">javax.ws.rs.core.SecurityContext</span></code>&nbsp;: Cette interface permet
-d’accéder aux informations de sécurité et d’authentification.</li>
-<li><code class="docutils literal notranslate"><span class="pre">javax.servlet.http.HttpServletRequest</span></code>&nbsp;: La représentation de
-la requête avec l’API Servlet.</li>
-<li><code class="docutils literal notranslate"><span class="pre">javax.servlet.http.HttpServletResponse</span></code>&nbsp;: La représentation de
-la réponse avec l’API Servlet.</li>
-<li><code class="docutils literal notranslate"><span class="pre">javax.servlet.ServletContext</span></code>&nbsp;: Le contexte d’exécution des
-servlets.</li>
-<li><code class="docutils literal notranslate"><span class="pre">javax.servlet.ServletConfig</span></code>&nbsp;: La configuration de la servlet
-traitant la requête.</li>
+requête.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">javax.ws.rs.core.HttpHeaders</span></code> : Cette interface permet
+d’accéder à l’ensemble des en-têtes HTTP de la requête.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">javax.ws.rs.core.SecurityContext</span></code> : Cette interface permet
+d’accéder aux informations de sécurité et d’authentification.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">javax.servlet.http.HttpServletRequest</span></code> : La représentation de
+la requête avec l’API Servlet.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">javax.servlet.http.HttpServletResponse</span></code> : La représentation de
+la réponse avec l’API Servlet.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">javax.servlet.ServletContext</span></code> : Le contexte d’exécution des
+servlets.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">javax.servlet.ServletConfig</span></code> : La configuration de la servlet
+traitant la requête.</p></li>
 </ul>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@GET</span>
 <span class="nd">@Produces</span><span class="o">({</span><span class="n">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON</span><span class="o">,</span> <span class="n">MediaType</span><span class="o">.</span><span class="na">APPLICATION_XML</span><span class="o">})</span>
@@ -824,7 +831,7 @@ traitant la requête.</li>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p class="last">Pour des utilisations plus avancées, l’annotation
+<p>Pour des utilisations plus avancées, l’annotation
 <code class="docutils literal notranslate"><span class="pre">&#64;javax.ws.rs.core.Context</span></code> peut être utilisée pour injecter
 une instance de <code class="docutils literal notranslate"><span class="pre">javax.ws.rs.core.Application</span></code>, de
 <code class="docutils literal notranslate"><span class="pre">javax.ws.rs.ext.Providers</span></code> et de
@@ -844,7 +851,7 @@ objet Java à un document XML ou JSON. On appelle l’ensemble de ces règle
 le <strong>data binding</strong>.</p>
 <p>Si la réponse attentue est au format JSON alors JAX-RS va construire une
 réponse en se basant sur les accesseurs (les getters) de la classe.</p>
-<p>Si on souhaite retourner une instance de la classe suivante&nbsp;:</p>
+<p>Si on souhaite retourner une instance de la classe suivante :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
@@ -891,7 +898,7 @@ réponse en se basant sur les accesseurs (les getters) de la classe.</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Si on définit une ressource de la façon suivante&nbsp;:</p>
+<p>Si on définit une ressource de la façon suivante :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">javax.ws.rs.GET</span><span class="o">;</span>
@@ -914,7 +921,7 @@ réponse en se basant sur les accesseurs (les getters) de la classe.</p>
 </pre></div>
 </div>
 <p>Alors un appel HTTP à cette ressource génèrera un document JSON de la
-forme&nbsp;:</p>
+forme :</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;children&quot;</span><span class="p">:[</span>
   <span class="p">{</span><span class="nt">&quot;children&quot;</span><span class="p">:[</span>
     <span class="p">{</span><span class="nt">&quot;children&quot;</span><span class="p">:[],</span>
@@ -957,34 +964,34 @@ XML ou d’un document XML à une instance Java. Pour cela, JAX-RS utilise
 Binding) qui intégré au langage Java. JAXB utilise des annotations pour
 fournir des indications sur la façon dont une classe Java peut être
 associée à un document XML.</p>
-<p>Les principales annotations JAXB sont&nbsp;:</p>
-<dl class="docutils">
-<dt><a class="reference external" href="https://docs.oracle.com/javase/10/docs/api/javax/xml/bind/annotation/XmlRootElement.html">&#64;XmlRootElement</a></dt>
-<dd>Une annotation est utilisable sur une classe Java pour indiquer
+<p>Les principales annotations JAXB sont :</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://docs.oracle.com/javase/10/docs/api/javax/xml/bind/annotation/XmlRootElement.html">&#64;XmlRootElement</a></dt><dd><p>Une annotation est utilisable sur une classe Java pour indiquer
 quelle peut être utilisée pour représenter la racine d’un document
 XML. On peut utiliser l’attribut <code class="docutils literal notranslate"><span class="pre">name</span></code> de l’annotation pour
 préciser le nom de l’élément racine du document XML et l’attribut
-<code class="docutils literal notranslate"><span class="pre">namespace</span></code> pour en préciser l’espace de nom.</dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javase/10/docs/api/javax/xml/bind/annotation/XmlElement.html">&#64;XmlElement</a></dt>
-<dd>Une annotation est utilisable sur les accesseurs (getters) des
+<code class="docutils literal notranslate"><span class="pre">namespace</span></code> pour en préciser l’espace de nom.</p>
+</dd>
+<dt><a class="reference external" href="https://docs.oracle.com/javase/10/docs/api/javax/xml/bind/annotation/XmlElement.html">&#64;XmlElement</a></dt><dd><p>Une annotation est utilisable sur les accesseurs (getters) des
 propriétés d’une classe. On peut utiliser l’attribut <code class="docutils literal notranslate"><span class="pre">name</span></code> de
 l’annotation pour préciser le nom de l’élément racine du document
 XML et l’attribut <code class="docutils literal notranslate"><span class="pre">namespace</span></code> pour en préciser l’espace de nom.
 Cette annotation est optionnelle. Par défaut JAXB considère qu’une
 propriété produit un élément XML du même nom et sans espace de nom
-XML.</dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javase/10/docs/api/javax/xml/bind/annotation/XmlTransient.html">&#64;XmlTransient</a></dt>
-<dd>Cette annotation, ajoutée sur les accesseurs d’une propriété d’une
+XML.</p>
+</dd>
+<dt><a class="reference external" href="https://docs.oracle.com/javase/10/docs/api/javax/xml/bind/annotation/XmlTransient.html">&#64;XmlTransient</a></dt><dd><p>Cette annotation, ajoutée sur les accesseurs d’une propriété d’une
 classe, indique que cette propriété ne doit pas apparaître dans le
-document XML.</dd>
+document XML.</p>
+</dd>
 </dl>
 <div class="admonition warning">
-<p class="first admonition-title">Avertissement</p>
-<p class="last">Les annotations JAXB doivent être positionnées sur les <em>getters</em> et non
+<p class="admonition-title">Avertissement</p>
+<p>Les annotations JAXB doivent être positionnées sur les <em>getters</em> et non
 pas sur les attributs.</p>
 </div>
 <p>Si nous reprenons l’exemple de la classe <code class="docutils literal notranslate"><span class="pre">Person</span></code>, nous pouvons
-ajouter les annotations JAXB&nbsp;:</p>
+ajouter les annotations JAXB :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
@@ -1040,7 +1047,7 @@ ajouter les annotations JAXB&nbsp;:</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Si nous autorisons une ressource à produire du XML&nbsp;:</p>
+<p>Si nous autorisons une ressource à produire du XML :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">javax.ws.rs.GET</span><span class="o">;</span>
@@ -1063,7 +1070,7 @@ ajouter les annotations JAXB&nbsp;:</p>
 </pre></div>
 </div>
 <p>Alors un appel HTTP à cette ressource générera un document JSON de la
-forme&nbsp;:</p>
+forme :</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
 <span class="nt">&lt;person</span> <span class="na">xmlns=</span><span class="s">&quot;http://formation.fr/cours/javaee&quot;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;age&gt;</span>56<span class="nt">&lt;/age&gt;</span>
@@ -1203,7 +1210,7 @@ par la méthode de la ressource.</p>
 <p>Il est possible de lancer une exception de type
 <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/WebApplicationException.html">WebApplicationException</a>
 ou une exception en héritant. JAX-RS fournit déjà des exceptions
-spécialisées pour les codes de statut les plus courants&nbsp;:
+spécialisées pour les codes de statut les plus courants :
 <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/NotFoundException.html">NotFoundException</a>,
 <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/BadRequestException.html">BadRequestException</a>,
 <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/ws/rs/ServerErrorException.html">ServerErrorException</a>…
@@ -1356,7 +1363,7 @@ HTTP.</p>
 </div>
 </div>
 <p>La documentation des annotations de Bean Validation est disponible dans
-la documentation de l’API Java EE&nbsp;:
+la documentation de l’API Java EE :
 <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/validation/constraints/package-summary.html">https://docs.oracle.com/javaee/7/api/javax/validation/constraints/package-summary.html</a></p>
 </div>
 <div class="section" id="injection-des-dependances">
@@ -1443,11 +1450,11 @@ pour créer une instance de la classe
 <div class="section" id="exercice">
 <h2>Exercice<a class="headerlink" href="#exercice" title="Lien permanent vers ce titre">¶</a></h2>
 <div class="hint admonition">
-<p class="first admonition-title">API Web de gestion des inscriptions</p>
-<dl class="docutils">
-<dt><strong>Objectifs</strong></dt>
-<dd>Réaliser une API Web avec JAX-RS qui permet de créer (méthode POST),
-de consulter (méthode GET) et de supprimer (méthode DELETE) une inscription.</dd>
+<p class="admonition-title">API Web de gestion des inscriptions</p>
+<dl class="simple">
+<dt><strong>Objectifs</strong></dt><dd><p>Réaliser une API Web avec JAX-RS qui permet de créer (méthode POST),
+de consulter (méthode GET) et de supprimer (méthode DELETE) une inscription.</p>
+</dd>
 </dl>
 <p>Pour cet exercice, utilisez le projet d’inscription qui a servi d’exemple
 pour illustrer le modèle MVC. Le projet est <a class="reference download internal" download="" href="../_downloads/ac53411b421de29af59429c5c4077c15/mvc.zip"><code class="xref download docutils literal notranslate"><span class="pre">téléchargeable</span> <span class="pre">ici</span></code></a>.</p>
@@ -1456,15 +1463,15 @@ pas de connexion à une base de données. Pour simplifier l’implémentation,
 vous pouvez stocker l’inscription créée dans la classe <em>InscriptionService</em>
 fournie dans le projet.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Comme une inscription contient un mot de passe, il serait intéressant
+<p class="admonition-title">Note</p>
+<p>Comme une inscription contient un mot de passe, il serait intéressant
 de ne pas transmettre le mot de passe lorsque l’on consulte l’inscription.</p>
 </div>
 <p>Pour tester votre application, utilisez l’API cliente de JAX-RS en écrivant
 une simple application Java avec une méthode <strong>main</strong>. Pour cela,
 vous devez rajouter dans le fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> du projet une dépendance
 vers <strong>RESTeasy client</strong> :</p>
-<div class="last highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
     <span class="nt">&lt;groupId&gt;</span>org.jboss.resteasy<span class="nt">&lt;/groupId&gt;</span>
     <span class="nt">&lt;artifactId&gt;</span>resteasy-client<span class="nt">&lt;/artifactId&gt;</span>
     <span class="nt">&lt;version&gt;</span>3.0.24.Final<span class="nt">&lt;/version&gt;</span>
@@ -1496,7 +1503,7 @@ vers <strong>RESTeasy client</strong> :</p>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="jsf.html" class="btn btn-neutral" title="Java Server Faces (JSF)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
+        <a href="jsf.html" class="btn btn-neutral float-left" title="Java Server Faces (JSF)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
     </div>
   
@@ -1523,27 +1530,16 @@ vers <strong>RESTeasy client</strong> :</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

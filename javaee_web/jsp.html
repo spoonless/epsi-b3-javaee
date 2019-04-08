@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>JSP : Java Server Pages &mdash; Documentation Java EE pour le Web 1.0</title>
+  <title>JSP : Java Server Pages &mdash; Documentation Java EE pour le Web </title>
   
 
   
@@ -17,13 +17,21 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
@@ -31,21 +39,16 @@
     <link rel="search" title="Recherche" href="../search.html" />
     <link rel="next" title="RequestDispatcher et MVC" href="request_dispatcher.html" />
     <link rel="prev" title="Les attributs d’une application Web" href="attributs_web.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -311,7 +314,7 @@ Wildfly.</p>
 serveur. Pour cela, allez dans le répertoire d’installation de Wildfly et
 ouvrez le fichier <code class="file docutils literal notranslate"><span class="pre">standalone/configuration/standalone.xml</span></code>.
 Aux alentours de la ligne 474 du fichier, vous
-allez trouver la déclaration suivante&nbsp;:</p>
+allez trouver la déclaration suivante :</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;servlet-container</span> <span class="na">name=</span><span class="s">&quot;default&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;jsp-config/&gt;</span>
     <span class="nt">&lt;websockets/&gt;</span>
@@ -319,7 +322,7 @@ allez trouver la déclaration suivante&nbsp;:</p>
 </pre></div>
 </div>
 <p>Faites une sauvegarde de ce fichier et remplacez cette configuration par
-celle-ci&nbsp;:</p>
+celle-ci :</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;servlet-container</span> <span class="na">name=</span><span class="s">&quot;default&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;jsp-config</span> <span class="na">development=</span><span class="s">&quot;true&quot;</span> <span class="na">check-interval=</span><span class="s">&quot;1&quot;</span> <span class="na">modification-test-interval=</span><span class="s">&quot;1&quot;</span> <span class="na">recompile-on-fail=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
     <span class="nt">&lt;websockets/&gt;</span>
@@ -332,13 +335,12 @@ ne plus démarrer correctement.</p>
 <div class="section" id="exercice">
 <h2>Exercice<a class="headerlink" href="#exercice" title="Lien permanent vers ce titre">¶</a></h2>
 <div class="hint admonition">
-<p class="first admonition-title">Une première JSP</p>
-<dl class="last docutils">
-<dt><strong>Objectif</strong></dt>
-<dd><p class="first">Créer et afficher dans un navigateur une JSP. À la racine de
+<p class="admonition-title">Une première JSP</p>
+<dl>
+<dt><strong>Objectif</strong></dt><dd><p>Créer et afficher dans un navigateur une JSP. À la racine de
 l’application Web (répertoire src/main/webapp dans le projet Maven),
-créer un fichier <strong>index.jsp</strong> avec le contenu suivant&nbsp;:</p>
-<div class="last highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+créer un fichier <strong>index.jsp</strong> avec le contenu suivant :</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Java EE<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
@@ -350,20 +352,20 @@ créer un fichier <strong>index.jsp</strong> avec le contenu suivant&nbsp;:</p>
 </pre></div>
 </div>
 </dd>
-<dt><strong>Modèle Maven du projet à télécharger</strong></dt>
-<dd><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></dd>
-<dt><strong>Mise en place du projet</strong></dt>
-<dd>Éditer le fichier pom.xml du template et modifier la balise
-artifactId pour spécifier le nom de votre projet.</dd>
-<dt><strong>Intégration du projet dans Eclipse</strong></dt>
-<dd>L’intégration du projet dans Eclipse suit la même procédure que
-celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a></dd>
+<dt><strong>Modèle Maven du projet à télécharger</strong></dt><dd><p><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></p>
+</dd>
+<dt><strong>Mise en place du projet</strong></dt><dd><p>Éditer le fichier pom.xml du template et modifier la balise
+artifactId pour spécifier le nom de votre projet.</p>
+</dd>
+<dt><strong>Intégration du projet dans Eclipse</strong></dt><dd><p>L’intégration du projet dans Eclipse suit la même procédure que
+celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a></p>
+</dd>
 </dl>
 </div>
 <p>Si on s’en tient à l’exercice précédent, une page JSP ressemble
-exactement à une page statique (comme une page HTML)&nbsp;: il n’en est
-rien&nbsp;! En fait le serveur transforme automatiquement une page JSP en une
-servlet équivalente à&nbsp;:</p>
+exactement à une page statique (comme une page HTML) : il n’en est
+rien ! En fait le serveur transforme automatiquement une page JSP en une
+servlet équivalente à :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.io.PrintWriter</span><span class="o">;</span>
 
@@ -428,7 +430,7 @@ ${myList[0]}              : pour accéder au premier élément d&#39;une liste
 ${myMap[&quot;key&quot;]}           : pour accéder à la valeur associée à la clé &quot;key&quot; d&#39;une map
 </pre></div>
 </div>
-<p>Dans l’expression&nbsp;:</p>
+<p>Dans l’expression :</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>${myObject.myProperty}
 </pre></div>
 </div>
@@ -439,81 +441,81 @@ permettant d’accéder en lecture à la propriété.</p>
 <div class="section" id="les-operateurs-dans-l-expression-language">
 <h2>Les opérateurs dans l’expression language<a class="headerlink" href="#les-operateurs-dans-l-expression-language" title="Lien permanent vers ce titre">¶</a></h2>
 <p>L’EL dispose également de différents opérateurs. Certains opérateurs
-peuvent s’écrire indifféremment avec un symbole ou une abréviation&nbsp;:</p>
-<table border="1" class="docutils">
+peuvent s’écrire indifféremment avec un symbole ou une abréviation :</p>
+<table class="docutils align-center">
 <colgroup>
-<col width="18%" />
-<col width="18%" />
-<col width="65%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 65%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>+</td>
-<td>&#160;</td>
-<td>Addition (attention + ne
+<tbody>
+<tr class="row-odd"><td><p>+</p></td>
+<td></td>
+<td><p>Addition (attention + ne
 peut pas être utilisé
 comme opérateur de
 concaténation de chaîne
 de caractères comme en
-Java)</td>
+Java)</p></td>
 </tr>
-<tr class="row-even"><td>-</td>
-<td>&#160;</td>
-<td>Soustraction</td>
+<tr class="row-even"><td><p>-</p></td>
+<td></td>
+<td><p>Soustraction</p></td>
 </tr>
-<tr class="row-odd"><td>*</td>
-<td>&#160;</td>
-<td>Multiplication</td>
+<tr class="row-odd"><td><p>*</p></td>
+<td></td>
+<td><p>Multiplication</p></td>
 </tr>
-<tr class="row-even"><td>/</td>
-<td>div</td>
-<td>Division</td>
+<tr class="row-even"><td><p>/</p></td>
+<td><p>div</p></td>
+<td><p>Division</p></td>
 </tr>
-<tr class="row-odd"><td>%</td>
-<td>mod</td>
-<td>Modulo</td>
+<tr class="row-odd"><td><p>%</p></td>
+<td><p>mod</p></td>
+<td><p>Modulo</p></td>
 </tr>
-<tr class="row-even"><td>==</td>
-<td>eq</td>
-<td>Égalité</td>
+<tr class="row-even"><td><p>==</p></td>
+<td><p>eq</p></td>
+<td><p>Égalité</p></td>
 </tr>
-<tr class="row-odd"><td>!=</td>
-<td>ne</td>
-<td>Inégalité</td>
+<tr class="row-odd"><td><p>!=</p></td>
+<td><p>ne</p></td>
+<td><p>Inégalité</p></td>
 </tr>
-<tr class="row-even"><td>&lt;</td>
-<td>lt</td>
-<td>Inférieur à</td>
+<tr class="row-even"><td><p>&lt;</p></td>
+<td><p>lt</p></td>
+<td><p>Inférieur à</p></td>
 </tr>
-<tr class="row-odd"><td>&gt;</td>
-<td>gt</td>
-<td>Supérieur à</td>
+<tr class="row-odd"><td><p>&gt;</p></td>
+<td><p>gt</p></td>
+<td><p>Supérieur à</p></td>
 </tr>
-<tr class="row-even"><td>&lt;=</td>
-<td>le</td>
-<td>Inférieur ou égal à</td>
+<tr class="row-even"><td><p>&lt;=</p></td>
+<td><p>le</p></td>
+<td><p>Inférieur ou égal à</p></td>
 </tr>
-<tr class="row-odd"><td>&gt;=</td>
-<td>ge</td>
-<td>Supérieur ou égal à</td>
+<tr class="row-odd"><td><p>&gt;=</p></td>
+<td><p>ge</p></td>
+<td><p>Supérieur ou égal à</p></td>
 </tr>
-<tr class="row-even"><td>&amp;&amp;</td>
-<td>and</td>
-<td>Et logique</td>
+<tr class="row-even"><td><p>&amp;&amp;</p></td>
+<td><p>and</p></td>
+<td><p>Et logique</p></td>
 </tr>
-<tr class="row-odd"><td>||</td>
-<td>or</td>
-<td>Ou logique</td>
+<tr class="row-odd"><td><p>||</p></td>
+<td><p>or</p></td>
+<td><p>Ou logique</p></td>
 </tr>
-<tr class="row-even"><td>!</td>
-<td>not</td>
-<td>Négation</td>
+<tr class="row-even"><td><p>!</p></td>
+<td><p>not</p></td>
+<td><p>Négation</p></td>
 </tr>
-<tr class="row-odd"><td>empty</td>
-<td>&#160;</td>
-<td>vraie si l’expression à
+<tr class="row-odd"><td><p>empty</p></td>
+<td></td>
+<td><p>vraie si l’expression à
 droite est nulle, une
 chaîne vide, un tableau
-vide ou une map vide.</td>
+vide ou une map vide.</p></td>
 </tr>
 </tbody>
 </table>
@@ -530,47 +532,47 @@ ${not empty maliste ? maliste[0] : &quot;liste vide&quot;}
 <div class="section" id="les-objets-implicites-dans-une-jsp">
 <span id="jsp-objets-implicites"></span><h2>Les objets implicites dans une JSP<a class="headerlink" href="#les-objets-implicites-dans-une-jsp" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Dans une JSP, il existe une liste pré-définie d’objets qui sont
-directement accessibles dans en EL&nbsp;:</p>
-<dl class="docutils">
-<dt><strong>pageScope</strong></dt>
-<dd>Map permettant d’accéder aux différents attributs de portée (scope)
+directement accessibles dans en EL :</p>
+<dl class="simple">
+<dt><strong>pageScope</strong></dt><dd><p>Map permettant d’accéder aux différents attributs de portée (scope)
 <strong>page</strong>. Les attributs de portée page correspondent aux attributs
-déclarés dans la page.</dd>
-<dt><strong>requestScope</strong></dt>
-<dd>Map permettant d’accéder aux différents attributs de portée (scope)
-<strong>request</strong>.</dd>
-<dt><strong>sessionScope</strong></dt>
-<dd>Map permettant d’accéder aux différents attributs de portée (scope)
-<strong>session</strong>.</dd>
-<dt><strong>applicationScope</strong></dt>
-<dd>Map permettant d’accéder aux différents attributs de portée (scope)
-<strong>application</strong>.</dd>
-<dt><strong>param</strong></dt>
-<dd>Map permettant d’accéder aux paramètres de la requête HTTP.</dd>
-<dt><strong>paramValues</strong></dt>
-<dd>Map permettant d’accéder aux paramètres de la requête HTTP sous
+déclarés dans la page.</p>
+</dd>
+<dt><strong>requestScope</strong></dt><dd><p>Map permettant d’accéder aux différents attributs de portée (scope)
+<strong>request</strong>.</p>
+</dd>
+<dt><strong>sessionScope</strong></dt><dd><p>Map permettant d’accéder aux différents attributs de portée (scope)
+<strong>session</strong>.</p>
+</dd>
+<dt><strong>applicationScope</strong></dt><dd><p>Map permettant d’accéder aux différents attributs de portée (scope)
+<strong>application</strong>.</p>
+</dd>
+<dt><strong>param</strong></dt><dd><p>Map permettant d’accéder aux paramètres de la requête HTTP.</p>
+</dd>
+<dt><strong>paramValues</strong></dt><dd><p>Map permettant d’accéder aux paramètres de la requête HTTP sous
 forme de tableau. Pratique si un paramètre est transmis plusieurs
-fois dans une requête.</dd>
-<dt><strong>header</strong></dt>
-<dd>Map permettant d’accéder aux valeurs des en-têtes HTTP de la
-requête.</dd>
-<dt><strong>headerValues</strong></dt>
-<dd>Map permettant d’accéder aux valeurs du Header HTTP de la requête
+fois dans une requête.</p>
+</dd>
+<dt><strong>header</strong></dt><dd><p>Map permettant d’accéder aux valeurs des en-têtes HTTP de la
+requête.</p>
+</dd>
+<dt><strong>headerValues</strong></dt><dd><p>Map permettant d’accéder aux valeurs du Header HTTP de la requête
 sous forme de tableau. Pratique si un en-tête est transmis plusieurs
-fois dans une requête.</dd>
-<dt><strong>cookie</strong></dt>
-<dd>Map permettant d’accéder aux Cookies transmis dans la requête HTTP.</dd>
-<dt><strong>initParam</strong></dt>
-<dd>Map permettant d’accéder aux paramètres d’initialisation (déclarées
-dans le <code class="file docutils literal notranslate"><span class="pre">web.xml</span></code>).</dd>
-<dt><strong>pageContext</strong></dt>
-<dd>L’objet <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/jsp/PageContext.html">PageContext</a>
+fois dans une requête.</p>
+</dd>
+<dt><strong>cookie</strong></dt><dd><p>Map permettant d’accéder aux Cookies transmis dans la requête HTTP.</p>
+</dd>
+<dt><strong>initParam</strong></dt><dd><p>Map permettant d’accéder aux paramètres d’initialisation (déclarées
+dans le <code class="file docutils literal notranslate"><span class="pre">web.xml</span></code>).</p>
+</dd>
+<dt><strong>pageContext</strong></dt><dd><p>L’objet <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/jsp/PageContext.html">PageContext</a>
 de la page JSP. On trouve notamment dans cet objet les attributs
 request et response (respectivement de type <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html">HttpServletRequest</a> et
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html">HttpServletResponse</a>).</dd>
+<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html">HttpServletResponse</a>).</p>
+</dd>
 </dl>
 <p>On peut, par exemple, afficher dynamiquement des informations liées à la
-requête dans une JSP&nbsp;:</p>
+requête dans une JSP :</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -596,12 +598,12 @@ requête dans une JSP&nbsp;:</p>
 <p>Nous avons vu qu’il existe dans une JSP les objets implicites :
 pageScope, requestScope, sessionScope et applicationScope. Ces objets
 permettent d’accéder aux attributs de leur portée respective. Par
-exemple&nbsp;:</p>
+exemple :</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>${sessionScope[&quot;utilisateur&quot;].nom}
 </pre></div>
 </div>
 <p>Il est également possible de référencer directement l’attribut
-utilisateur dans une page JSP&nbsp;:</p>
+utilisateur dans une page JSP :</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>${utilisateur.nom}
 </pre></div>
 </div>
@@ -642,32 +644,31 @@ la première ligne de la JSP.</p>
 <div class="highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
 </pre></div>
 </div>
-<p>Cette directive accepte entre autres les attributs&nbsp;:</p>
-<dl class="docutils">
-<dt>contentType</dt>
-<dd>Le type MIME du contenu généré par la JSP. La valeur par défaut est
-«&nbsp;text/html&nbsp;».</dd>
-<dt>pageEncoding</dt>
-<dd>L’encodage de la page, la valeur par défaut est «&nbsp;ISO-8859-1&nbsp;».
+<p>Cette directive accepte entre autres les attributs :</p>
+<dl>
+<dt>contentType</dt><dd><p>Le type MIME du contenu généré par la JSP. La valeur par défaut est
+« text/html ».</p>
+</dd>
+<dt>pageEncoding</dt><dd><p>L’encodage de la page, la valeur par défaut est « ISO-8859-1 ».
 <strong>Attention</strong>, le fait de préciser l’encodage dans le header HTML
 n’est pas suffisant pour une JSP. En effet, le header HTML est
 interprété par la client mais pas par la JSP. L’attribut
 <code class="docutils literal notranslate"><span class="pre">pageEncoding</span></code> de la directive page est donc là pour informer le
 conteneur Web de l’encodage à utiliser réellement pour envoyer la
-réponse au client.</dd>
-<dt>session</dt>
-<dd>Valeur booléenne pour indiquer si la page JSP participe à une session HTTP.</dd>
-<dt>errorPage</dt>
-<dd>Contient un lien vers une page JSP à utiliser si une exception se
+réponse au client.</p>
+</dd>
+<dt>session</dt><dd><p>Valeur booléenne pour indiquer si la page JSP participe à une session HTTP.</p>
+</dd>
+<dt>errorPage</dt><dd><p>Contient un lien vers une page JSP à utiliser si une exception se
 produit lors du traitement de cette JSP. Dans ce cas, c’est le
-traitement de la page JSP d’erreur qui sera retourné au client.</dd>
-<dt>isErrorPage</dt>
-<dd><p class="first">Indique si la JSP est une JSP d’erreur. Dans ce cas, <code class="docutils literal notranslate"><span class="pre">errorData</span></code>
+traitement de la page JSP d’erreur qui sera retourné au client.</p>
+</dd>
+<dt>isErrorPage</dt><dd><p>Indique si la JSP est une JSP d’erreur. Dans ce cas, <code class="docutils literal notranslate"><span class="pre">errorData</span></code>
 est disponible dans le <code class="docutils literal notranslate"><span class="pre">pageContext</span></code>. <code class="docutils literal notranslate"><span class="pre">errorData</span></code> est de type
 <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/jsp/ErrorData.html">javax.servlet.jsp.ErrorData</a>.</p>
-<div class="admonition-exemple-d-une-jsp-d-erreur last admonition">
-<p class="first admonition-title">Exemple d’une JSP d’erreur</p>
-<div class="last highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">isErrorPage</span><span class="o">=</span><span class="s">&quot;true&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
+<div class="admonition-exemple-d-une-jsp-d-erreur admonition">
+<p class="admonition-title">Exemple d’une JSP d’erreur</p>
+<div class="highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">isErrorPage</span><span class="o">=</span><span class="s">&quot;true&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
 <span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
     <span class="nt">&lt;head&gt;</span>
@@ -699,18 +700,17 @@ la conversion de la JSP en servlet).</p>
 <h2>Les balises d’action JSP<a class="headerlink" href="#les-balises-d-action-jsp" title="Lien permanent vers ce titre">¶</a></h2>
 <p>JSP définit un ensemble de balises (action tags) pour réaliser des
 actions simples. Ces balises commencent toutes par <code class="docutils literal notranslate"><span class="pre">jsp:</span></code></p>
-<dl class="docutils">
-<dt><strong>&lt;jsp:useBean/&gt;</strong></dt>
-<dd><p class="first">Permet de référencer ou de créer un objet Java.</p>
+<dl>
+<dt><strong>&lt;jsp:useBean/&gt;</strong></dt><dd><p>Permet de référencer ou de créer un objet Java.</p>
 <p>Pour référencer un objet (un java bean), on utilise les attributs
 suivants</p>
 <ul class="simple">
-<li>id : donne le nom de l’attribut dans la page qui référencera
-l’objet</li>
-<li>beanName : donne le nom de l’attribut qui contient l’objet</li>
-<li>scope : donne la portée dans laquelle se situe l’attribut (page,
-request, session, application)</li>
-<li>type : le type Java complet (avec le nom de package) de l’objet</li>
+<li><p>id : donne le nom de l’attribut dans la page qui référencera
+l’objet</p></li>
+<li><p>beanName : donne le nom de l’attribut qui contient l’objet</p></li>
+<li><p>scope : donne la portée dans laquelle se situe l’attribut (page,
+request, session, application)</p></li>
+<li><p>type : le type Java complet (avec le nom de package) de l’objet</p></li>
 </ul>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text">Récupération d’un utilisateur en session</span><a class="headerlink" href="#id1" title="Lien permanent vers ce code">¶</a></div>
@@ -730,8 +730,8 @@ request, session, application)</li>
 </div>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Avertissement</p>
-<p class="last">L’attribut DOIT exister pour pouvoir être récupéré
+<p class="admonition-title">Avertissement</p>
+<p>L’attribut DOIT exister pour pouvoir être récupéré
 avec <code class="docutils literal notranslate"><span class="pre">&lt;jsp:useBean&gt;</span></code>. Sinon l’exécution de la JSP provoque une
 exception.</p>
 </div>
@@ -741,12 +741,12 @@ facilement aux attributs avec des expressions de la forme
 <code class="docutils literal notranslate"><span class="pre">${nomAttribut}</span></code>.</p>
 <p>Pour créer un objet, on utilise les attributs suivants</p>
 <ul class="simple">
-<li>id : donne le nom de l’attribut qui référencera l’objet</li>
-<li>scope : donne la portée dans laquelle l’attribut sera stocké
-(page, request, session, application)</li>
-<li>class : le type Java complet (avec le nom de package) de l’objet</li>
+<li><p>id : donne le nom de l’attribut qui référencera l’objet</p></li>
+<li><p>scope : donne la portée dans laquelle l’attribut sera stocké
+(page, request, session, application)</p></li>
+<li><p>class : le type Java complet (avec le nom de package) de l’objet</p></li>
 </ul>
-<div class="literal-block-wrapper last docutils container" id="id2">
+<div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-text">Création d’un objet java.util.Date</span><a class="headerlink" href="#id2" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
 <span class="cp">&lt;!DOCTYPE html&gt;</span>
@@ -763,8 +763,7 @@ facilement aux attributs avec des expressions de la forme
 </div>
 </div>
 </dd>
-<dt><strong>&lt;jsp:setProperty/&gt;</strong></dt>
-<dd><p class="first">Permet de positionner les propriétés d’un objet à partir d’une
+<dt><strong>&lt;jsp:setProperty/&gt;</strong></dt><dd><p>Permet de positionner les propriétés d’un objet à partir d’une
 valeur (attribut <code class="docutils literal notranslate"><span class="pre">value</span></code> de la balise) ou d’un paramètre de la
 requête (attribut <code class="docutils literal notranslate"><span class="pre">param</span></code> de la balise).</p>
 <div class="literal-block-wrapper docutils container" id="id3">
@@ -790,13 +789,12 @@ requête (attribut <code class="docutils literal notranslate"><span class="pre">
 </div>
 <p>Il existe une forme abrégée permettant de remplir automatiquement
 les propriétés d’un bean Java avec les paramètres de la requête
-entrante&nbsp;:</p>
-<div class="last highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="k">&lt;jsp:setProperty name=&quot;nomDuBean&quot; property=&quot;*&quot;/&gt;</span>
+entrante :</p>
+<div class="highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="k">&lt;jsp:setProperty name=&quot;nomDuBean&quot; property=&quot;*&quot;/&gt;</span>
 </pre></div>
 </div>
 </dd>
-<dt><strong>&lt;jsp:getProperty&gt;</strong></dt>
-<dd><p class="first">Affiche dans la page le contenu d’une propriété d’un attribut.</p>
+<dt><strong>&lt;jsp:getProperty&gt;</strong></dt><dd><p>Affiche dans la page le contenu d’une propriété d’un attribut.</p>
 <div class="literal-block-wrapper docutils container" id="id4">
 <div class="code-block-caption"><span class="caption-text">Affichage des propriétés</span><a class="headerlink" href="#id4" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
@@ -818,15 +816,14 @@ entrante&nbsp;:</p>
 </div>
 </div>
 <p>On obtient le même résultat en utilisant une EL, on préfèrera donc
-cette dernière qui est une forme plus courte et plus expressive&nbsp;:</p>
-<div class="last highlight-text notranslate"><div class="highlight"><pre><span></span>${u.nom}
+cette dernière qui est une forme plus courte et plus expressive :</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>${u.nom}
 ${u.age}
 </pre></div>
 </div>
 </dd>
-<dt><strong>&lt;jsp:include/&gt;</strong></dt>
-<dd><p class="first">Permet d’inclure dynamiquement une page (statique ou une autre JSP).
-À la différence de la directive <code class="docutils literal notranslate"><span class="pre">&lt;%&#64;include&nbsp;%&gt;</span></code>, la balise action
+<dt><strong>&lt;jsp:include/&gt;</strong></dt><dd><p>Permet d’inclure dynamiquement une page (statique ou une autre JSP).
+À la différence de la directive <code class="docutils literal notranslate"><span class="pre">&lt;%&#64;include</span><span class="pre">%&gt;</span></code>, la balise action
 <code class="docutils literal notranslate"><span class="pre">&lt;jsp:include&gt;</span></code> est interprétée à chaque exécution de la JSP. Cela
 signifie que l’adresse de la page à inclure peut être calculée
 dynamiquement grâce à une EL. Cette balise est similaire à un appel
@@ -852,15 +849,14 @@ dynamiquement grâce à une EL. Cette balise est similaire à un appel
 </div>
 <p>Il est possible de passer des paramètres à la page incluse grâce à
 la balise action <code class="docutils literal notranslate"><span class="pre">&lt;jsp:param/&gt;</span></code></p>
-<div class="last highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="k">&lt;jsp:include page=&quot;maPage.jsp&quot;&gt;</span>
+<div class="highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="k">&lt;jsp:include page=&quot;maPage.jsp&quot;&gt;</span>
     <span class="nt">&lt;jsp:param</span> <span class="na">name=</span><span class="s">&quot;param1&quot;</span> <span class="na">value=</span><span class="s">&quot;valeur1&quot;</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;jsp:param</span> <span class="na">name=</span><span class="s">&quot;param2&quot;</span> <span class="na">value=</span><span class="s">&quot;valeur2&quot;</span> <span class="nt">/&gt;</span>
 <span class="k">&lt;/jsp:include&gt;</span>
 </pre></div>
 </div>
 </dd>
-<dt><strong>&lt;jsp:forward/&gt;</strong></dt>
-<dd><p class="first">Permet de déléguer le traitement de la requête à une autre ressource
+<dt><strong>&lt;jsp:forward/&gt;</strong></dt><dd><p>Permet de déléguer le traitement de la requête à une autre ressource
 de l’application. Cette balise est similaire à un appel à
 <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html#forward-javax.servlet.ServletRequest-javax.servlet.ServletResponse-">RequestDispatcher.forward</a>.</p>
 <div class="literal-block-wrapper docutils container" id="id6">
@@ -874,7 +870,7 @@ de l’application. Cette balise est similaire à un appel à
 </div>
 <p>Il est possible de passer des paramètres à la page grâce à la balise
 action <code class="docutils literal notranslate"><span class="pre">&lt;jsp:param/&gt;</span></code> :</p>
-<div class="last highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="k">&lt;jsp:forward page=&quot;maPage.jsp&quot;&gt;</span>
+<div class="highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="k">&lt;jsp:forward page=&quot;maPage.jsp&quot;&gt;</span>
     <span class="nt">&lt;jsp:param</span> <span class="na">name=</span><span class="s">&quot;param1&quot;</span> <span class="na">value=</span><span class="s">&quot;valeur1&quot;</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;jsp:param</span> <span class="na">name=</span><span class="s">&quot;param2&quot;</span> <span class="na">value=</span><span class="s">&quot;valeur2&quot;</span> <span class="nt">/&gt;</span>
 <span class="k">&lt;/jsp:forward&gt;</span>
@@ -892,7 +888,7 @@ grâce à l’inclusion de bibliothèques de balises : les Tag Libraries
 Par contre nous allons voir comment utiliser la bibliothèque standard
 fournie par le conteneur Web : <strong>Java Standard Tag Library (JSTL)</strong>.</p>
 <p>Pour inclure une bibliothèque de balises dans une JSP, on utilise la
-directive <code class="docutils literal notranslate"><span class="pre">taglib</span></code>&nbsp;:</p>
+directive <code class="docutils literal notranslate"><span class="pre">taglib</span></code> :</p>
 <div class="highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;c&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> <span class="k">%&gt;</span>
 </pre></div>
 </div>
@@ -951,19 +947,19 @@ permettant une programmation simplifiée dans les JSP.</p>
 <p>À noter que la bibliothèque core propose également une balise
 <code class="docutils literal notranslate"><span class="pre">out</span></code> qui permet de réaliser un échappement des caractères
 réservés en HTML. Les caractères comme &lt; et &gt; seront automatiquement
-transformés en &amp;lt; et &amp;gt;&nbsp;:</p>
+transformés en &amp;lt; et &amp;gt; :</p>
 <div class="highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;c:out</span> <span class="na">value=</span><span class="s">&quot;&lt;div&gt;Quel est le résultat de ce tag ?&lt;/div&gt;&quot;</span><span class="nt">/&gt;</span>
 </pre></div>
 </div>
 <p>Il est également possible de générer des URL absolues grâce à la
 balise <code class="docutils literal notranslate"><span class="pre">url</span></code>. Cette balise se charge de reconstruire l’URL à
 partir du contexte racine de l’application. Par exemple, pour le
-code JSP suivant&nbsp;:</p>
+code JSP suivant :</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt;a href=&quot;&lt;c:url value=&quot;/page_suivante.jsp&quot;/&gt;&quot;&gt;Lien&lt;/a&gt;
 </pre></div>
 </div>
 <p>Si l’application est déployée dans le contexte racine <strong>monappli</strong>,
-alors le code HTML généré par la JSP sera&nbsp;:</p>
+alors le code HTML généré par la JSP sera :</p>
 <div class="highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/monappli/page_suivante.jsp&quot;</span><span class="nt">&gt;</span>Lien<span class="nt">&lt;/a&gt;</span>
 </pre></div>
 </div>
@@ -1086,27 +1082,26 @@ directement dans les JSP.</p>
 <div class="section" id="exercices">
 <h2>Exercices<a class="headerlink" href="#exercices" title="Lien permanent vers ce titre">¶</a></h2>
 <div class="hint admonition">
-<p class="first admonition-title">JSP de temps</p>
-<dl class="last docutils">
-<dt><strong>Objectif</strong></dt>
-<dd>Écrire une JSP (sans code Java) qui donne la date et l’heure du
+<p class="admonition-title">JSP de temps</p>
+<dl class="simple">
+<dt><strong>Objectif</strong></dt><dd><p>Écrire une JSP (sans code Java) qui donne la date et l’heure du
 serveur. La date et l’heure doivent être mises en forme de la façon
-suivante : 26 mars 2019&nbsp;12:01:24</dd>
-<dt><strong>Modèle Maven du projet à télécharger</strong></dt>
-<dd><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></dd>
-<dt><strong>Mise en place du projet</strong></dt>
-<dd>Éditer le fichier pom.xml du template et modifier la balise
-artifactId pour spécifier le nom de votre projet.</dd>
-<dt><strong>Intégration du projet dans Eclipse</strong></dt>
-<dd>L’intégration du projet dans Eclipse suit la même procédure que
-celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a></dd>
+suivante : 08 avril 2019 12:01:24</p>
+</dd>
+<dt><strong>Modèle Maven du projet à télécharger</strong></dt><dd><p><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></p>
+</dd>
+<dt><strong>Mise en place du projet</strong></dt><dd><p>Éditer le fichier pom.xml du template et modifier la balise
+artifactId pour spécifier le nom de votre projet.</p>
+</dd>
+<dt><strong>Intégration du projet dans Eclipse</strong></dt><dd><p>L’intégration du projet dans Eclipse suit la même procédure que
+celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a></p>
+</dd>
 </dl>
 </div>
 <div class="hint admonition">
-<p class="first admonition-title">Affichage des paramètres dans une JSP</p>
-<dl class="last docutils">
-<dt><strong>Objectif</strong></dt>
-<dd><p class="first">Écrire une JSP (sans code Java) qui génère un tableau HTML contenant
+<p class="admonition-title">Affichage des paramètres dans une JSP</p>
+<dl>
+<dt><strong>Objectif</strong></dt><dd><p>Écrire une JSP (sans code Java) qui génère un tableau HTML contenant
 tous les paramètres HTTP reçus. La JSP doit gérer correctement le
 fait qu’un même paramètre peut être transmis plusieurs fois. Dans ce
 cas, les différentes valeurs seront séparées par une virgule. La JSP
@@ -1117,35 +1112,35 @@ s’afficher sous la forme d’un texte.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>?language=java&amp;version=1.6&amp;version=1.7&amp;version=1.8&amp;motto=&lt;strong&gt;compile once, run anywhere&lt;/strong&gt;
 </pre></div>
 </div>
-<p>Le résultat doit être&nbsp;:</p>
-<table border="1" class="docutils">
+<p>Le résultat doit être :</p>
+<table class="docutils align-center">
 <colgroup>
-<col width="20%" />
-<col width="80%" />
+<col style="width: 20%" />
+<col style="width: 80%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>motto</td>
-<td>&lt;strong&gt;compile once, run anywhere&lt;/strong&gt;</td>
+<tbody>
+<tr class="row-odd"><td><p>motto</p></td>
+<td><p>&lt;strong&gt;compile once, run anywhere&lt;/strong&gt;</p></td>
 </tr>
-<tr class="row-even"><td>language</td>
-<td>java</td>
+<tr class="row-even"><td><p>language</p></td>
+<td><p>java</p></td>
 </tr>
-<tr class="row-odd"><td>version</td>
-<td>1.6, 1.7, 1.8</td>
+<tr class="row-odd"><td><p>version</p></td>
+<td><p>1.6, 1.7, 1.8</p></td>
 </tr>
 </tbody>
 </table>
-<p class="last">L’ordre des lignes dans le tableau HTML est indifférent, cela n’a
+<p>L’ordre des lignes dans le tableau HTML est indifférent, cela n’a
 pas d’importance pour l’exercice.</p>
 </dd>
-<dt><strong>Modèle Maven du projet à télécharger</strong></dt>
-<dd><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></dd>
-<dt><strong>Mise en place du projet</strong></dt>
-<dd>Éditer le fichier pom.xml du template et modifier la balise
-artifactId pour spécifier le nom de votre projet.</dd>
-<dt><strong>Intégration du projet dans Eclipse</strong></dt>
-<dd>L’intégration du projet dans Eclipse suit la même procédure que
-celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a></dd>
+<dt><strong>Modèle Maven du projet à télécharger</strong></dt><dd><p><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></p>
+</dd>
+<dt><strong>Mise en place du projet</strong></dt><dd><p>Éditer le fichier pom.xml du template et modifier la balise
+artifactId pour spécifier le nom de votre projet.</p>
+</dd>
+<dt><strong>Intégration du projet dans Eclipse</strong></dt><dd><p>L’intégration du projet dans Eclipse suit la même procédure que
+celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a></p>
+</dd>
 </dl>
 </div>
 </div>
@@ -1162,7 +1157,7 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
         <a href="request_dispatcher.html" class="btn btn-neutral float-right" title="RequestDispatcher et MVC" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="attributs_web.html" class="btn btn-neutral" title="Les attributs d’une application Web" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
+        <a href="attributs_web.html" class="btn btn-neutral float-left" title="Les attributs d’une application Web" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
     </div>
   
@@ -1189,27 +1184,16 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

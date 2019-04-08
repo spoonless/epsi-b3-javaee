@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Une première application &mdash; Documentation Java EE pour le Web 1.0</title>
+  <title>Une première application &mdash; Documentation Java EE pour le Web </title>
   
 
   
@@ -17,13 +17,21 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
@@ -31,21 +39,16 @@
     <link rel="search" title="Recherche" href="../search.html" />
     <link rel="next" title="Introduction à Maven" href="maven.html" />
     <link rel="prev" title="L’environnement de développement" href="environnement_developpement.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -297,16 +300,16 @@ Web Java EE sous la forme d’un site avec une page HTML.</p>
 <h2>Qu’est-ce qu’une application Java EE ?<a class="headerlink" href="#qu-est-ce-qu-une-application-java-ee" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Une application Web Java contient trois types de contenu :</p>
 <ul class="simple">
-<li><strong>Les fichiers publics</strong> : images, pages HTML, fichiers JavaScript.
+<li><p><strong>Les fichiers publics</strong> : images, pages HTML, fichiers JavaScript.
 Il s’agit des fichiers qui sont téléchargés tels quels sur le
-navigateur client.</li>
-<li><strong>Les ressources dynamiques</strong> : il s’agit du code Java (mais pas
+navigateur client.</p></li>
+<li><p><strong>Les ressources dynamiques</strong> : il s’agit du code Java (mais pas
 uniquement) qui est exécuté par le serveur en vue de produire un
-contenu à renvoyer au client.</li>
-<li><strong>Les fichiers privés</strong> : il s’agit la plupart du temps de fichiers
+contenu à renvoyer au client.</p></li>
+<li><p><strong>Les fichiers privés</strong> : il s’agit la plupart du temps de fichiers
 de configuration qui sont exploités par le serveur ou les ressources
 dynamiques et que l’on ne souhaite pas rendre directement accessibles
-sur le Web</li>
+sur le Web</p></li>
 </ul>
 <p>Une application Web Java n’est pas directement exécutable, elle doit
 être <strong>déployée</strong> dans un serveur d’application. Le serveur va prendre
@@ -325,7 +328,7 @@ par Wildfly.</p>
 <p><img alt="Création d'une application Web dynamique dans Eclipse 2" src="../_images/eclipse_new_dynamic_web_project2.png" /></p>
 <p>Eclipse vous propose les répertoires de votre projet qui contiendront
 les sources Java. Nous n’en aurons pas besoin pour l’instant. Laissez
-les valeurs par défaut et cliquez sur «&nbsp;Next&nbsp;».</p>
+les valeurs par défaut et cliquez sur « Next ».</p>
 <p><img alt="Création d'une application Web dynamique dans Eclipse 3" src="../_images/eclipse_new_dynamic_web_project3.png" /></p>
 <p>Pour la dernière étape, cliquez sur la case <span class="guilabel">Generate web.xml
 deployment descriptor</span> puis cliquez sur <span class="guilabel">Finish</span>.</p>
@@ -394,46 +397,46 @@ regarder son contenu :</p>
 <p>Nous retrouvons le fichier hello.html qui a été ajouté à l’application.
 Mais nous découvrons surtout l’arborescence standardisée d’un fichier
 WAR :</p>
-<dl class="docutils">
-<dt>META-INF</dt>
-<dd>Ce répertoire contient les meta-informations décrivant le livrable.
+<dl class="simple">
+<dt>META-INF</dt><dd><p>Ce répertoire contient les meta-informations décrivant le livrable.
 Il contient en général au moins le fichier MANIFEST.MF qui donne des
 informations générales : nom du package, auteur, date de création…
-Ce répertoire est optionnel.</dd>
-<dt>WEB-INF</dt>
-<dd>Ce répertoire correspond à la section privée de l’application. Il
+Ce répertoire est optionnel.</p>
+</dd>
+<dt>WEB-INF</dt><dd><p>Ce répertoire correspond à la section privée de l’application. Il
 contient le code de l’application ainsi que les fichiers de
 configuration. <strong>Le contenu de ce répertoire n’est pas accessible
 depuis l’extérieur</strong>. Faites le test en tentant de visualiser le
 fichier web.xml à l’adresse
 <a class="reference external" href="http://localhost:8080/monappli/WEB-INF/web.xml">http://localhost:8080/monappli/WEB-INF/web.xml</a>. Vous obtenez un code
 erreur 404 (NOT FOUND). Le fichier est bien présent mais le serveur
-refuse de répondre à cette adresse !</dd>
-<dt>WEB-INF/web.xml</dt>
-<dd><strong>LE fichier de déploiement</strong> de l’application Web ! Il fournit des
+refuse de répondre à cette adresse !</p>
+</dd>
+<dt>WEB-INF/web.xml</dt><dd><p><strong>LE fichier de déploiement</strong> de l’application Web ! Il fournit des
 informations au serveur d’application au moment du démarrage de
 l’application. L’application que nous avons développé était
 tellement simple que nous n’avons pas eu à nous en préoccuper pour
-l’instant.</dd>
-<dt>WEB-INF/classes</dt>
-<dd>Ce répertoire accueille les fichiers Java compilés (les fichiers
+l’instant.</p>
+</dd>
+<dt>WEB-INF/classes</dt><dd><p>Ce répertoire accueille les fichiers Java compilés (les fichiers
 .class). Comme nous n’avons pas écrit de code pour notre
-application, ce répertoire est vide.</dd>
-<dt>WEB-INF/lib</dt>
-<dd>Ce répertoire accueille les bibliothèques Java (les fichiers .jar)
+application, ce répertoire est vide.</p>
+</dd>
+<dt>WEB-INF/lib</dt><dd><p>Ce répertoire accueille les bibliothèques Java (les fichiers .jar)
 externes qui sont nécessaires à l’application. Nous verrons que le
 serveur d’application fournit déjà de nombreuses bibliothèques qu’il
 ne faut <strong>SURTOUT</strong> pas incorporer au livrable. Pour toutes les
-autres, c’est dans ce répertoire qu’elles doivent être placées.</dd>
+autres, c’est dans ce répertoire qu’elles doivent être placées.</p>
+</dd>
 </dl>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>web.xml obligatoire ou pas ?</p>
-<p class="last">Depuis Java EE 6, le fichier de déploiement web.xml n’est plus
+<p>Depuis Java EE 6, le fichier de déploiement web.xml n’est plus
 obligatoire. Cependant, certains outils de développement considèrent
 encore l’absence de ce fichier comme une erreur. Il est donc préférable
 de toujours l’ajouter. Voilà pourquoi, il vous a été demandé de cocher
-la case «&nbsp;Generate web.xml deployment descriptor&nbsp;» au moment de la
+la case « Generate web.xml deployment descriptor » au moment de la
 création du projet.</p>
 </div>
 </div>
@@ -450,7 +453,7 @@ création du projet.</p>
         <a href="maven.html" class="btn btn-neutral float-right" title="Introduction à Maven" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="environnement_developpement.html" class="btn btn-neutral" title="L’environnement de développement" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
+        <a href="environnement_developpement.html" class="btn btn-neutral float-left" title="L’environnement de développement" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
     </div>
   
@@ -477,27 +480,16 @@ création du projet.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

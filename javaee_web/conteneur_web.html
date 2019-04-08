@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Le conteneur Web &mdash; Documentation Java EE pour le Web 1.0</title>
+  <title>Le conteneur Web &mdash; Documentation Java EE pour le Web </title>
   
 
   
@@ -17,13 +17,21 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
@@ -31,21 +39,16 @@
     <link rel="search" title="Recherche" href="../search.html" />
     <link rel="next" title="Les attributs d’une application Web" href="attributs_web.html" />
     <link rel="prev" title="Les Servlets" href="servlet.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -330,17 +333,17 @@ constructeur. Cela a une conséquence importante pour l’implémentation
 d’une servlet : <strong>une servlet doit obligatoirement avoir un constructeur
 sans paramètre</strong>.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>En Java, une classe qui ne déclare pas de constructeur dispose néanmoins
 d’un constructeur par défaut. Il s’agit d’un constructeur sans
-paramètre. Ainsi&nbsp;:</p>
+paramètre. Ainsi :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MaClasse</span> <span class="o">{</span>
 
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>est équivalent à&nbsp;:</p>
-<div class="last highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MaClasse</span> <span class="o">{</span>
+<p>est équivalent à :</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MaClasse</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="nf">MaClasse</span><span class="o">()</span> <span class="o">{</span>
         <span class="kd">super</span><span class="o">();</span>
     <span class="o">}</span>
@@ -368,22 +371,22 @@ faire avec la méthode <code class="docutils literal notranslate"><span class="p
 <div class="section" id="exercice">
 <h2>Exercice<a class="headerlink" href="#exercice" title="Lien permanent vers ce titre">¶</a></h2>
 <div class="hint admonition">
-<p class="first admonition-title">Comprendre le cycle de vie d’une servlet</p>
-<dl class="docutils">
-<dt><strong>Objectif</strong></dt>
-<dd>Déployer une servlet qui trace les différentes étapes de son cycle
-de vie.</dd>
-<dt><strong>Modèle Maven du projet à télécharger</strong></dt>
-<dd><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></dd>
-<dt><strong>Mise en place du projet</strong></dt>
-<dd>Éditer le fichier pom.xml du template et modifier la balise
-artifactId pour spécifier le nom de votre projet.</dd>
-<dt><strong>Intégration du projet dans Eclipse</strong></dt>
-<dd>L’intégration du projet dans Eclipse suit la même procédure que
-celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a></dd>
+<p class="admonition-title">Comprendre le cycle de vie d’une servlet</p>
+<dl class="simple">
+<dt><strong>Objectif</strong></dt><dd><p>Déployer une servlet qui trace les différentes étapes de son cycle
+de vie.</p>
+</dd>
+<dt><strong>Modèle Maven du projet à télécharger</strong></dt><dd><p><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></p>
+</dd>
+<dt><strong>Mise en place du projet</strong></dt><dd><p>Éditer le fichier pom.xml du template et modifier la balise
+artifactId pour spécifier le nom de votre projet.</p>
+</dd>
+<dt><strong>Intégration du projet dans Eclipse</strong></dt><dd><p>L’intégration du projet dans Eclipse suit la même procédure que
+celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a></p>
+</dd>
 </dl>
 <p>Pour cet exercice, vous allez déployer une servlet de log dont voici le
-code source&nbsp;:</p>
+code source :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">javax.servlet.ServletException</span><span class="o">;</span>
@@ -419,25 +422,24 @@ code source&nbsp;:</p>
 </div>
 <p>Vérifier dans les logs du serveur (onglet Console sous Eclipse)
 l’apparition des messages de log produits par la servlet lorsque vous
-faites les opérations suivantes&nbsp;:</p>
+faites les opérations suivantes :</p>
 <ul class="simple">
-<li>Lancement du serveur d’application</li>
-<li>Sollicitation de la servlet avec une requête HTTP depuis un
-navigateur Web (une ou plusieurs fois)</li>
-<li>Arrêt du serveur d’application (ou suppression de l’application du
-serveur en cours d’exécution)</li>
+<li><p>Lancement du serveur d’application</p></li>
+<li><p>Sollicitation de la servlet avec une requête HTTP depuis un
+navigateur Web (une ou plusieurs fois)</p></li>
+<li><p>Arrêt du serveur d’application (ou suppression de l’application du
+serveur en cours d’exécution)</p></li>
 </ul>
 <p>N’hésitez pas à tester plusieurs combinaisons possibles de ces actions.</p>
 <p>Que pouvez-vous en déduire concernant la façon dont un conteneur Web
-gère la création, l’initialisation et la suppression d’une servlet&nbsp;?</p>
-<dl class="last docutils">
-<dt><strong>Variation</strong></dt>
-<dd><p class="first">Si maintenant vous modifiez l’annotation <code class="docutils literal notranslate"><span class="pre">&#64;WebServlet</span></code> de la façon
-suivante&nbsp;:</p>
+gère la création, l’initialisation et la suppression d’une servlet ?</p>
+<dl>
+<dt><strong>Variation</strong></dt><dd><p>Si maintenant vous modifiez l’annotation <code class="docutils literal notranslate"><span class="pre">&#64;WebServlet</span></code> de la façon
+suivante :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@WebServlet</span><span class="o">(</span><span class="n">urlPatterns</span> <span class="o">=</span> <span class="s">&quot;/log&quot;</span><span class="o">,</span> <span class="n">loadOnStartup</span> <span class="o">=</span> <span class="mi">0</span><span class="o">)</span>
 </pre></div>
 </div>
-<p class="last">Refaites l’exercice en essayant de constater si cela produit un
+<p>Refaites l’exercice en essayant de constater si cela produit un
 changement dans le cycle de vie de la servlet.</p>
 </dd>
 </dl>
@@ -470,11 +472,11 @@ récurrente dans le développement d’application Java EE.</p>
 <div class="section" id="id1">
 <h2>Exercice<a class="headerlink" href="#id1" title="Lien permanent vers ce titre">¶</a></h2>
 <div class="hint admonition">
-<p class="first admonition-title">Servlet et programmation concurrente</p>
-<dl class="docutils">
-<dt><strong>Objectif</strong></dt>
-<dd>Comprendre les risques de bug dans un contexte d’exécution
-concurrent.</dd>
+<p class="admonition-title">Servlet et programmation concurrente</p>
+<dl class="simple">
+<dt><strong>Objectif</strong></dt><dd><p>Comprendre les risques de bug dans un contexte d’exécution
+concurrent.</p>
+</dd>
 </dl>
 <p>Plusieurs implémentations de servlet sont proposées ci-dessous. Toutes
 posent un problème d’exécution dans un environnement concurrent (elles
@@ -536,7 +538,7 @@ solutions proposeriez-vous pour le corriger.</p>
 </pre></div>
 </div>
 </div>
-<div class="literal-block-wrapper last docutils container" id="id4">
+<div class="literal-block-wrapper docutils container" id="id4">
 <div class="code-block-caption"><span class="caption-text">Cas 3 : la servlet d’inscription d’un utilisateur</span><a class="headerlink" href="#id4" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
 
@@ -598,7 +600,7 @@ solutions proposeriez-vous pour le corriger.</p>
         <a href="attributs_web.html" class="btn btn-neutral float-right" title="Les attributs d’une application Web" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="servlet.html" class="btn btn-neutral" title="Les Servlets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
+        <a href="servlet.html" class="btn btn-neutral float-left" title="Les Servlets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
     </div>
   
@@ -625,27 +627,16 @@ solutions proposeriez-vous pour le corriger.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

@@ -37,8 +37,7 @@
   <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Recherche" href="../search.html" />
-    <link rel="next" title="Java Server Faces (JSF)" href="jsf.html" />
-    <link rel="prev" title="RequestDispatcher et MVC" href="request_dispatcher.html" /> 
+    <link rel="prev" title="MVC et RequestDispatcher" href="mvc_request_dispatcher.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,7 +84,7 @@
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#telechargement-des-outils">Téléchargement des outils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#installation-des-outils">Installation des outils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-wildfly-dans-eclipse">Intégration de Wildfly dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-tomcat-dans-eclipse">Intégration de Tomcat dans Eclipse</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a><ul>
@@ -105,10 +104,9 @@
 <li class="toctree-l2"><a class="reference internal" href="maven.html#un-premier-projet-avec-maven">Un premier projet avec Maven</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#le-fichier-pom-xml">Le fichier pom.xml</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#import-du-projet-maven-dans-eclipse">Import du projet Maven dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="maven.html#test-de-l-application-dans-wildfly">Test de l’application dans Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#test-de-l-application-dans-tomcat">Test de l’application dans Tomcat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#gerer-le-projet-avec-maven">Gérer le projet avec Maven</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#execution-de-maven-dans-eclipse">Exécution de Maven dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="maven.html#exercice">Exercice</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="servlet.html">Les Servlets</a><ul>
@@ -140,7 +138,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jsp.html">JSP : Java Server Pages</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jsp.html#developper-des-jsp-avec-wildfly">Développer des JSP avec Wildfly</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jsp.html#exercice">Exercice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jsp.html#el-expression-language">EL : Expression Language</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jsp.html#les-operateurs-dans-l-expression-language">Les opérateurs dans l’expression language</a></li>
@@ -166,10 +163,12 @@
 <li class="toctree-l2"><a class="reference internal" href="jsp.html#exercices">Exercices</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="request_dispatcher.html">RequestDispatcher et MVC</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
-<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#exercice">Exercice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvc_request_dispatcher.html">MVC et RequestDispatcher</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exemple-de-mvc-sans-validation">Exemple de MVC (sans validation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exemple-de-mvc-avec-validation">Exemple de MVC (avec validation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exercice">Exercice</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Web listeners et filtres</a><ul>
@@ -184,39 +183,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#generation-de-log">Génération de log</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="jsf.html">Java Server Faces (JSF)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#creer-un-projet-avec-jsf">Créer un projet avec JSF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-vue-facelets">La vue : facelets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#activer-le-support-de-jsf-dans-eclipse">Activer le support de JSF dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#une-introduction-a-cdi">Une introduction à CDI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#declarer-un-objet-avec-cdi">Déclarer un objet avec CDI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-fichier-de-deploiement-beans-xml">Le fichier de déploiement beans.xml</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-modele">Le modèle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-controleur">Le contrôleur</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-navigation">La navigation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-de-formulaire">La validation de formulaire</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#les-requetes-ajax">Les requêtes Ajax</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#pour-aller-plus-loin">Pour aller plus loin</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="jaxrs.html">Les API Web avec JAX-RS</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-notion-de-ressource">La notion de ressource</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#configurer-une-application-web-pour-jax-rs">Configurer une application Web pour JAX-RS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-des-ressources-avec-jax-rs">Implémenter des ressources avec JAX-RS</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#les-annotations-de-methodes">Les annotations de méthodes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#parametre-dans-le-chemin-d-uri">Paramètre dans le chemin d’URI</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#data-binding">Data binding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#injection-des-dependances">Injection des dépendances</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#exercice">Exercice</a></li>
 </ul>
 </li>
 </ul>
@@ -280,10 +246,8 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="jsf.html" class="btn btn-neutral float-right" title="Java Server Faces (JSF)" accesskey="n">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="request_dispatcher.html" class="btn btn-neutral" title="RequestDispatcher et MVC" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
+        <a href="mvc_request_dispatcher.html" class="btn btn-neutral" title="MVC et RequestDispatcher" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
   </div>
   
@@ -307,7 +271,7 @@ on l’appelle plus généralement <a class="reference external" href="https://f
 implémente une des interfaces définies dans l’API servlet.</p>
 <p>Le principe d’utilisation est le même pour tous les types de listeners
 Web. Si l’application souhaite être avertie d’un événement particulier
-survenant pour un <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a> (c’est-à-dire pour l’ensemble de
+survenant pour un <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html">ServletContext</a> (c’est-à-dire pour l’ensemble de
 l’application Web), une requête ou une session HTTP alors elle doit
 fournir une implémentation d’un listener. Une méthode de ce dernier sera
 appelée par le conteneur à chaque fois que l’événement concerné
@@ -315,66 +279,66 @@ surviendra lors de la vie de l’application.</p>
 <p>Les différents types de listeners sont représentés dans l’API Servlet
 par les <strong>interfaces</strong> Java suivantes :</p>
 <dl class="simple">
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html">javax.servlet.ServletContextListener</a></dt><dd><p>Permet d’écouter les changements d’état du <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a>. Le
+<dt><a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextListener.html">javax.servlet.ServletContextListener</a></dt><dd><p>Permet d’écouter les changements d’état du <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html">ServletContext</a>. Le
 conteneur Web avertit l’application de la création du
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a> grâce à la méthode <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html#contextInitialized-javax.servlet.ServletContextEvent-">contextInitialized</a>
-et de la destruction du <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a> grâce à la méthode
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html#contextDestroyed-javax.servlet.ServletContextEvent-">contextDestroyed</a>.
-Il est important de comprendre que le <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a> représente
-l’application Web. Donc un <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html">ServletContextListener</a> est un moyen
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html">ServletContext</a> grâce à la méthode <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextListener.html#contextInitialized-javax.servlet.ServletContextEvent-">contextInitialized</a>
+et de la destruction du <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html">ServletContext</a> grâce à la méthode
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextListener.html#contextDestroyed-javax.servlet.ServletContextEvent-">contextDestroyed</a>.
+Il est important de comprendre que le <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html">ServletContext</a> représente
+l’application Web. Donc un <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextListener.html">ServletContextListener</a> est un moyen
 de réaliser des traitements au moment du lancement de l’application
 Web et/ou au moment de son arrêt.</p>
 </dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html">javax.servlet.ServletContextAttributeListener</a></dt><dd><p>Permet d’écouter les changements d’état des attributs stockés dans
-le <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a> (les attributs de portée application). Le
+<dt><a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextAttributeListener.html">javax.servlet.ServletContextAttributeListener</a></dt><dd><p>Permet d’écouter les changements d’état des attributs stockés dans
+le <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html">ServletContext</a> (les attributs de portée application). Le
 conteneur avertit l’application de l’ajout d’un attribut (appel à la
-méthode <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html#attributeAdded-javax.servlet.ServletContextAttributeEvent-">ServletContextAttributeListener.attributeAdded</a>,
+méthode <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextAttributeListener.html#attributeAdded-javax.servlet.ServletContextAttributeEvent-">ServletContextAttributeListener.attributeAdded</a>,
 de la suppression d’un attribut (appel à la méthode
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html#attributeRemoved-javax.servlet.ServletContextAttributeEvent-">ServletContextAttributeListener.attributeRemoved</a>
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextAttributeListener.html#attributeRemoved-javax.servlet.ServletContextAttributeEvent-">ServletContextAttributeListener.attributeRemoved</a>
 et de la modification d’un attribut (appel à la méthode
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html#attributeReplaced-javax.servlet.ServletContextAttributeEvent-">ServletContextAttributeListener.attributeReplaced</a>.</p>
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextAttributeListener.html#attributeReplaced-javax.servlet.ServletContextAttributeEvent-">ServletContextAttributeListener.attributeReplaced</a>.</p>
 </dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html">javax.servlet.ServletRequestListener</a></dt><dd><p>Permet d’écouter l’entrée et/ou la sortie d’une requête de
+<dt><a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html">javax.servlet.ServletRequestListener</a></dt><dd><p>Permet d’écouter l’entrée et/ou la sortie d’une requête de
 l’environnement de l’application Web. Le conteneur avertit
 l’application de l’entrée d’une requête à traiter grâce à la méthode
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html#requestInitialized-javax.servlet.ServletRequestEvent-">requestInitialized</a>
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html#requestInitialized-javax.servlet.ServletRequestEvent-">requestInitialized</a>
 et de la sortie de la requête grâce à la méthode
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html#requestDestroyed-javax.servlet.ServletRequestEvent-">requestDestroyed</a>.</p>
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html#requestDestroyed-javax.servlet.ServletRequestEvent-">requestDestroyed</a>.</p>
 </dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html">javax.servlet.ServletRequestAttributeListener</a></dt><dd><p>Permet d’écouter les changements d’état des attributs stockés dans
-la <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html">HttpServletRequest</a> (les attributs de portée requête). Le
+<dt><a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestAttributeListener.html">javax.servlet.ServletRequestAttributeListener</a></dt><dd><p>Permet d’écouter les changements d’état des attributs stockés dans
+la <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html">HttpServletRequest</a> (les attributs de portée requête). Le
 conteneur avertit l’application de l’ajout d’un attribut (appel à la
 méthode
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html#attributeAdded-javax.servlet.ServletRequestAttributeEvent-">ServletRequestAttributeListener.attributeAdded</a>,
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestAttributeListener.html#attributeAdded-javax.servlet.ServletRequestAttributeEvent-">ServletRequestAttributeListener.attributeAdded</a>,
 de la suppression d’un attribut (appel à la méthode
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html#attributeRemoved-javax.servlet.ServletRequestAttributeEvent-">ServletRequestAttributeListener.attributeRemoved</a>
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestAttributeListener.html#attributeRemoved-javax.servlet.ServletRequestAttributeEvent-">ServletRequestAttributeListener.attributeRemoved</a>
 et de la modification d’un attribut (appel à la méthode
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html#attributeReplaced-javax.servlet.ServletRequestAttributeEvent-">ServletRequestAttributeListener.attributeReplaced</a>.</p>
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestAttributeListener.html#attributeReplaced-javax.servlet.ServletRequestAttributeEvent-">ServletRequestAttributeListener.attributeReplaced</a>.</p>
 </dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html">javax.servlet.http.HttpSessionListener</a></dt><dd><p>Permet d’écouter la création et la suppression d’une
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html">HttpSession</a>. Le conteneur avertit l’application de la création
+<dt><a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionListener.html">javax.servlet.http.HttpSessionListener</a></dt><dd><p>Permet d’écouter la création et la suppression d’une
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html">HttpSession</a>. Le conteneur avertit l’application de la création
 d’une session grâce à la méthode
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html#sessionCreated-javax.servlet.http.HttpSessionEvent-">sessionCreated</a>
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionListener.html#sessionCreated-javax.servlet.http.HttpSessionEvent-">sessionCreated</a>
 et de la suppression d’une session grâce à la méthode
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html#sessionDestroyed-javax.servlet.http.HttpSessionEvent-">sessionDestroyed</a>.
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionListener.html#sessionDestroyed-javax.servlet.http.HttpSessionEvent-">sessionDestroyed</a>.
 La suppression d’une session signifie que soit elle a été invalidée
 par l’application elle-même grâce à la méthode
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html#invalidate--">HttpSession.invalidate</a>
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html#invalidate--">HttpSession.invalidate</a>
 soit elle est arrivée à expiration et le conteneur a décidé de
 l’invalider.</p>
 </dd>
-<dt><a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html">javax.servlet.http.HttpSessionAttributeListener</a></dt><dd><p>Permet d’écouter les changements d’état des attributs stockés dans
-la <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html">HttpSession</a> (les attributs de portée session). Le conteneur
+<dt><a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionAttributeListener.html">javax.servlet.http.HttpSessionAttributeListener</a></dt><dd><p>Permet d’écouter les changements d’état des attributs stockés dans
+la <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html">HttpSession</a> (les attributs de portée session). Le conteneur
 avertit l’application de l’ajout d’un attribut (appel à la méthode
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html#attributeAdded-javax.servlet.http.HttpSessionBindingEvent-">HttpSessionAttributeListener.attributeAdded</a>,
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionAttributeListener.html#attributeAdded-javax.servlet.http.HttpSessionBindingEvent-">HttpSessionAttributeListener.attributeAdded</a>,
 de la suppression d’un attribut (appel à la méthode
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html#attributeRemoved-javax.servlet.http.HttpSessionBindingEvent-">HttpSessionAttributeListener.attributeRemoved</a>
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionAttributeListener.html#attributeRemoved-javax.servlet.http.HttpSessionBindingEvent-">HttpSessionAttributeListener.attributeRemoved</a>
 et de la modification d’un attribut (appel à la méthode
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html#attributeReplaced-javax.servlet.http.HttpSessionBindingEvent-">HttpSessionAttributeListener.attributeReplaced</a>.</p>
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionAttributeListener.html#attributeReplaced-javax.servlet.http.HttpSessionBindingEvent-">HttpSessionAttributeListener.attributeReplaced</a>.</p>
 </dd>
 </dl>
-<p>Il existe également deux autres listeners Web : Le <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionActivationListener.html">HttpSessionActivationListener</a>
-et le <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingListener.html">HttpSessionBindingListener</a>.
+<p>Il existe également deux autres listeners Web : Le <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionActivationListener.html">HttpSessionActivationListener</a>
+et le <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingListener.html">HttpSessionBindingListener</a>.
 Ils ne sont pas décrits ici car ils sont réservés à des usages plus
 avancés de l’API Servlet.</p>
 </div>
@@ -382,7 +346,7 @@ avancés de l’API Servlet.</p>
 <h2>Déclaration des listeners Web<a class="headerlink" href="#declaration-des-listeners-web" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Une classe implémentant une ou plusieurs interfaces la désignant comme
 un listener Web doit également être déclarée auprès du conteneur Web.
-Pour cela, il suffit d’ajouter l’annotation <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebListener.html">&#64;WebListener</a> à la classe :</p>
+Pour cela, il suffit d’ajouter l’annotation <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/annotation/WebListener.html">&#64;WebListener</a> à la classe :</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text">Exemple de ServletRequestListener</span><a class="headerlink" href="#id1" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
@@ -431,7 +395,7 @@ possible de déclarer un listener dans le fichier de déploiement
 </div>
 <div class="section" id="exemple-d-utilisation-d-un-listener">
 <h2>Exemple d’utilisation d’un listener<a class="headerlink" href="#exemple-d-utilisation-d-un-listener" title="Lien permanent vers ce titre">¶</a></h2>
-<p>L’exemple (simple) ci-dessous consiste en un <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html">ServletContextListener</a>
+<p>L’exemple (simple) ci-dessous consiste en un <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextListener.html">ServletContextListener</a>
 dont le rôle est de réaliser un log applicatif signalant respectivement
 le lancement et l’arrêt de l’application Web :</p>
 <p>Exemple de <code class="docutils literal notranslate"><span class="pre">ServletRequestListener</span></code></p>
@@ -461,11 +425,11 @@ le lancement et l’arrêt de l’application Web :</p>
 <p>Il est parfois intéressant d’effectuer des opérations avant et/ou après
 l’invocation de la servlet. Il s’agit souvent d’opérations communes à un
 ensemble de requêtes d’une application Web.</p>
-<p>Un filtre de Servlet est une classe implémentant l’interface <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html">Filter</a>.
+<p>Un filtre de Servlet est une classe implémentant l’interface <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Filter.html">Filter</a>.
 Un filtre a son propre cycle de vie. Une fois créé, le conteneur
-initialise le filtre en appelant sa méthode <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html#init-javax.servlet.FilterConfig-">Filter.init</a> et il signalera la
-destruction du filtre en appelant sa méthode <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html#destroy--">Filter.destroy</a>.
-L’opération de filtrage est réalisée grâce à la méthode <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html#doFilter-javax.servlet.ServletRequest-javax.servlet.ServletResponse-javax.servlet.FilterChain-">Filter.doFilter</a>.</p>
+initialise le filtre en appelant sa méthode <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Filter.html#init-javax.servlet.FilterConfig-">Filter.init</a> et il signalera la
+destruction du filtre en appelant sa méthode <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Filter.html#destroy--">Filter.destroy</a>.
+L’opération de filtrage est réalisée grâce à la méthode <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Filter.html#doFilter-javax.servlet.ServletRequest-javax.servlet.ServletResponse-javax.servlet.FilterChain-">Filter.doFilter</a>.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-text">Exemple d’implémentation d’un filtre Web</span><a class="headerlink" href="#id3" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
@@ -505,7 +469,7 @@ L’opération de filtrage est réalisée grâce à la méthode <a class="refere
 <div class="section" id="declaration-des-filtres">
 <h2>Déclaration des filtres<a class="headerlink" href="#declaration-des-filtres" title="Lien permanent vers ce titre">¶</a></h2>
 <p>La déclaration d’un filtre Web auprès du conteneur se fait soit par
-l’annotation <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebFilter.html">&#64;WebFilter</a> soit dans le fichier de déploiement <code class="file docutils literal notranslate"><span class="pre">web.xml</span></code>.</p>
+l’annotation <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/annotation/WebFilter.html">&#64;WebFilter</a> soit dans le fichier de déploiement <code class="file docutils literal notranslate"><span class="pre">web.xml</span></code>.</p>
 <p>Comme pour une Servlet, un filtre est associé à un ou plusieurs motifs
 d’URL (URL pattern) indiquant au conteneur pour quelles requêtes HTTP le
 filtre doit être appelé.</p>
@@ -583,7 +547,7 @@ d’utiliser un modèle d’URL.</p>
 </div>
 <div class="section" id="implementation-d-un-filtre">
 <h2>Implémentation d’un filtre<a class="headerlink" href="#implementation-d-un-filtre" title="Lien permanent vers ce titre">¶</a></h2>
-<p>L’opération de filtrage est réalisée par la méthode <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html#doFilter-javax.servlet.ServletRequest-javax.servlet.ServletResponse-javax.servlet.FilterChain-">Filter.doFilter</a>.</p>
+<p>L’opération de filtrage est réalisée par la méthode <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Filter.html#doFilter-javax.servlet.ServletRequest-javax.servlet.ServletResponse-javax.servlet.FilterChain-">Filter.doFilter</a>.</p>
 <div class="literal-block-wrapper docutils container" id="id6">
 <div class="code-block-caption"><span class="caption-text">Principe général d’implémentation d’un filtre</span><a class="headerlink" href="#id6" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
@@ -608,7 +572,7 @@ filtre suivant. Un fois le dernier filtre appelé, l’appel à
 soient indépendants les uns des autres. En effet, si plusieurs filtres
 sont appelés pour le traitement d’une requête, l’ordre dans lequel ces
 filtres seront appelés n’est pas prédictible s’ils ont été déclarés avec
-l’annotation <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebFilter.html">&#64;WebFilter</a>. En revanche, ils seront appelés dans
+l’annotation <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/annotation/WebFilter.html">&#64;WebFilter</a>. En revanche, ils seront appelés dans
 l’ordre des balises <code class="docutils literal notranslate"><span class="pre">filter-mapping</span></code> s’ils ont été déclarés à partir
 du fichier de déploiement <code class="file docutils literal notranslate"><span class="pre">web.xml</span></code></p>
 <div class="admonition note">
@@ -626,7 +590,7 @@ du fichier de déploiement <code class="file docutils literal notranslate"><span
 poste les données de tous ses formulaires HTML en UTF-8. Nous avons vu
 que par défaut, le conteneur Web utilise l’encodage ISO-8859-1
 (Latin-1). Il est donc nécessaire de positionner le bon encodage grâce à
-la méthode <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#setCharacterEncoding-java.lang.String-">ServletRequest.setCharacterEncoding(String)</a>.
+la méthode <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequest.html#setCharacterEncoding-java.lang.String-">ServletRequest.setCharacterEncoding(String)</a>.
 Cette opération répétitive est source d’oubli (et donc de bug). Il
 serait préférable de garantir que cette méthode soit systématiquement
 appelée avant chaque traitement de Servlet. Ce type de comportement peut
@@ -726,7 +690,7 @@ classe <code class="docutils literal notranslate"><span class="pre">Utf8RequestE
 paramètres de la requête ne soient accédés. Le filtre
 <code class="docutils literal notranslate"><span class="pre">Utf8RequestEncodingFilter</span></code> doit donc être placé <strong>avant</strong> le filtre
 <code class="docutils literal notranslate"><span class="pre">LogFilter</span></code>. Malheureusement, cela ne peut pas être garanti par
-l’utilisation de l’annotation <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebFilter.html">&#64;WebFilter</a>.</p>
+l’utilisation de l’annotation <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/annotation/WebFilter.html">&#64;WebFilter</a>.</p>
 </div>
 <p>On peut imaginer des traitements bien plus complexes grâce aux filtres :
 contrôle des droits d’accès (autorisation), optimisation d’image,
@@ -743,10 +707,8 @@ chiffrement des données…</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="jsf.html" class="btn btn-neutral float-right" title="Java Server Faces (JSF)" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="request_dispatcher.html" class="btn btn-neutral float-left" title="RequestDispatcher et MVC" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
+        <a href="mvc_request_dispatcher.html" class="btn btn-neutral float-left" title="MVC et RequestDispatcher" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
       
     </div>
   
@@ -755,11 +717,12 @@ chiffrement des données…</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright David Gayerie - david.gayerie@epsi.fr - CC-BY-SA
+        &copy; Copyright David Gayerie - david.gayerie@reseau-cd.net - CC-BY-SA
 
     </p>
   </div>
-    <div><a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip"><code class="download docutils literal notranslate"><span class="pre">Télécharger ce cours</pre></code></a></div>
+    <div>Téléchargez ce support au format <a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip">HTML</a>
+    </div>
 
 
 </footer>

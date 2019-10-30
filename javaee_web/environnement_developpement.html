@@ -85,7 +85,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#telechargement-des-outils">Téléchargement des outils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installation-des-outils">Installation des outils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#integration-de-wildfly-dans-eclipse">Intégration de Wildfly dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#integration-de-tomcat-dans-eclipse">Intégration de Tomcat dans Eclipse</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a><ul>
@@ -105,10 +105,9 @@
 <li class="toctree-l2"><a class="reference internal" href="maven.html#un-premier-projet-avec-maven">Un premier projet avec Maven</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#le-fichier-pom-xml">Le fichier pom.xml</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#import-du-projet-maven-dans-eclipse">Import du projet Maven dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="maven.html#test-de-l-application-dans-wildfly">Test de l’application dans Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#test-de-l-application-dans-tomcat">Test de l’application dans Tomcat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#gerer-le-projet-avec-maven">Gérer le projet avec Maven</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#execution-de-maven-dans-eclipse">Exécution de Maven dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="maven.html#exercice">Exercice</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="servlet.html">Les Servlets</a><ul>
@@ -140,7 +139,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jsp.html">JSP : Java Server Pages</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jsp.html#developper-des-jsp-avec-wildfly">Développer des JSP avec Wildfly</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jsp.html#exercice">Exercice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jsp.html#el-expression-language">EL : Expression Language</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jsp.html#les-operateurs-dans-l-expression-language">Les opérateurs dans l’expression language</a></li>
@@ -166,10 +164,12 @@
 <li class="toctree-l2"><a class="reference internal" href="jsp.html#exercices">Exercices</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="request_dispatcher.html">RequestDispatcher et MVC</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
-<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#exercice">Exercice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvc_request_dispatcher.html">MVC et RequestDispatcher</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exemple-de-mvc-sans-validation">Exemple de MVC (sans validation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exemple-de-mvc-avec-validation">Exemple de MVC (avec validation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exercice">Exercice</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="web_listeners_filters.html">Web listeners et filtres</a><ul>
@@ -184,39 +184,6 @@
 <li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#generation-de-log">Génération de log</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="jsf.html">Java Server Faces (JSF)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#creer-un-projet-avec-jsf">Créer un projet avec JSF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-vue-facelets">La vue : facelets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#activer-le-support-de-jsf-dans-eclipse">Activer le support de JSF dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#une-introduction-a-cdi">Une introduction à CDI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#declarer-un-objet-avec-cdi">Déclarer un objet avec CDI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-fichier-de-deploiement-beans-xml">Le fichier de déploiement beans.xml</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-modele">Le modèle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-controleur">Le contrôleur</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-navigation">La navigation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-de-formulaire">La validation de formulaire</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#les-requetes-ajax">Les requêtes Ajax</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#pour-aller-plus-loin">Pour aller plus loin</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="jaxrs.html">Les API Web avec JAX-RS</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-notion-de-ressource">La notion de ressource</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#configurer-une-application-web-pour-jax-rs">Configurer une application Web pour JAX-RS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-des-ressources-avec-jax-rs">Implémenter des ressources avec JAX-RS</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#les-annotations-de-methodes">Les annotations de méthodes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#parametre-dans-le-chemin-d-uri">Paramètre dans le chemin d’URI</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#data-binding">Data binding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#injection-des-dependances">Injection des dépendances</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#exercice">Exercice</a></li>
 </ul>
 </li>
 </ul>
@@ -296,20 +263,20 @@
 <h1>L’environnement de développement<a class="headerlink" href="#l-environnement-de-developpement" title="Lien permanent vers ce titre">¶</a></h1>
 <p>L’objectif de ce chapitre est <strong>la mise en place de
 l’environnement de développement</strong> pour réaliser les développements
-d’applications Java EE.</p>
+d’applications Java EE pour le Web.</p>
 <p>Pour cela, vous aurez au moins besoin :</p>
 <ul class="simple">
 <li><p>du kit Java de développement</p></li>
 <li><p>d’un environnement de développement : par exemple Eclipse</p></li>
-<li><p>d’un serveur d’application Java EE</p></li>
+<li><p>d’un conteneur de Servlet Java EE</p></li>
 </ul>
 <div class="section" id="telechargement-des-outils">
 <h2>Téléchargement des outils<a class="headerlink" href="#telechargement-des-outils" title="Lien permanent vers ce titre">¶</a></h2>
 <p>La liste des outils requis est :</p>
 <dl>
-<dt><strong>Java 10 JDK</strong></dt><dd><div class="line-block">
-<div class="line">Le kit de développement Java 10</div>
-<div class="line"><a class="reference external" href="https://www.oracle.com/technetwork/java/javase/downloads/jdk10-downloads-4416644.html">https://www.oracle.com/technetwork/java/javase/downloads/jdk10-downloads-4416644.html</a></div>
+<dt><strong>Java 11 JDK</strong></dt><dd><div class="line-block">
+<div class="line">Le kit de développement Java 11</div>
+<div class="line"><a class="reference external" href="https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html">https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html</a></div>
 </div>
 </dd>
 </dl>
@@ -325,23 +292,28 @@ Java mais également pour exécuter le serveur TomEE.</p>
 <dl>
 <dt><strong>Eclipse IDE for Enterprise Java Developers</strong></dt><dd><div class="line-block">
 <div class="line">L’environnement de développement</div>
-<div class="line"><a class="reference external" href="https://www.eclipse.org/downloads/packages/release/2018-12/r/eclipse-ide-enterprise-java-developers">https://www.eclipse.org/downloads/packages/release/2018-12/r/eclipse-ide-enterprise-java-developers</a></div>
+<div class="line"><a class="reference external" href="https://www.eclipse.org/downloads/packages/release/2019-09/r/eclipse-ide-enterprise-java-developers">https://www.eclipse.org/downloads/packages/release/2019-09/r/eclipse-ide-enterprise-java-developers</a></div>
 </div>
 <p>Il existe plusieurs distributions d’Eclipse. Il est impératif
 d’installer <strong>la version pour le développement Java EE</strong>. Si vous
 avez déjà installé Eclipse, vérifiez dans le menu « Help &gt; About
 Eclipse » que votre version est bien « Eclipse Java EE IDE for Web
-Developers ».</p>
+Developers » ou « Eclipse IDE for Enterprise Java Developers ».</p>
 </dd>
-<dt><strong>Wildfly</strong></dt><dd><div class="line-block">
-<div class="line">Le serveur d’application Java EE Wildfly (anciennement JBoss Application Server)</div>
-<div class="line">Windows : <a class="reference external" href="https://download.jboss.org/wildfly/14.0.1.Final/wildfly-14.0.1.Final.zip">https://download.jboss.org/wildfly/14.0.1.Final/wildfly-14.0.1.Final.zip</a></div>
-<div class="line">MacOS et Linux : <a class="reference external" href="https://download.jboss.org/wildfly/14.0.1.Final/wildfly-14.0.1.Final.tar.gz">https://download.jboss.org/wildfly/14.0.1.Final/wildfly-14.0.1.Final.tar.gz</a></div>
+<dt><strong>Tomcat</strong></dt><dd><div class="line-block">
+<div class="line">Le conteneur de servlet Tomcat</div>
+<div class="line"><a class="reference external" href="https://tomcat.apache.org/download-90.cgi">https://tomcat.apache.org/download-90.cgi</a></div>
 </div>
-<p>Nous verrons bientôt que les applications Java EE ne sont pas des
+<p>Pour Windows, téléchargez le fichier <strong>zip</strong> dans la section <strong>Core</strong>. Pour MacOS ou
+Linux, téléchargez le fichier <strong>tar.gz</strong> dans la section <strong>Core</strong>.</p>
+<p>Nous verrons bientôt que les applications Java pour le Web ne sont pas des
 programmes indépendants (standalone). Les applications Java EE sont
 déployées et exécutées dans ce que l’on appelle un serveur
-d’application qui fournit l’environnement d’exécution nécessaire.</p>
+d’application qui fournit l’environnement d’exécution nécessaire. Tomcat
+n’est pas à proprement parlé un serveur d’application car il n’offre qu’un
+nombre de services limités par rapport à un serveur d’application normal.
+Néanmoins, il est très souvent utilisé en production par les entreprise
+pour réaliser des application Web en Java.</p>
 </dd>
 </dl>
 </div>
@@ -350,7 +322,7 @@ d’application qui fournit l’environnement d’exécution nécessaire.</p>
 <p>L’installation du JDK dépend de votre plate-forme : il est distribué
 sous la forme d’un installeur pour Windows et MacOS, et sous la forme
 d’un package ou d’une archive sous Linux.</p>
-<p>Eclipse et Wildfly sont distribués sous la forme d’une archive (tar.gz
+<p>Eclipse et Tomcat sont distribués sous la forme d’une archive (tar.gz
 pour Linux et MacOS et zip pour Windows) que vous pouvez décompresser où
 vous le souhaitez.</p>
 </div>
@@ -380,9 +352,9 @@ pour l’ajouter manuellement :</p>
 qu’il devienne l’environnement d’exécution par défaut.</p>
 </div>
 </div>
-<div class="section" id="integration-de-wildfly-dans-eclipse">
-<h2>Intégration de Wildfly dans Eclipse<a class="headerlink" href="#integration-de-wildfly-dans-eclipse" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Wildfly est un serveur complet qui peut être exécuté de manière autonome
+<div class="section" id="integration-de-tomcat-dans-eclipse">
+<h2>Intégration de Tomcat dans Eclipse<a class="headerlink" href="#integration-de-tomcat-dans-eclipse" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Tomcat est un serveur Web qui peut être exécuté de manière autonome
 (comme un serveur de production par exemple). Cependant, pour simplifier
 les tâches de développement, nous allons l’intégrer dans Eclipse afin de
 pouvoir le démarrer et l’arrêter directement depuis l’IDE.</p>
@@ -392,34 +364,28 @@ Show View &gt; Servers</span>.</p>
 <p>Vous avez maintenant la vue « Servers » ajoutée à votre perspective de
 développement. Faites un click droit dans cette vue pour sélectionner
 <span class="guilabel">New &gt; Server</span>.</p>
-<p>Lors de la première utilisation, il va falloir installer les outils JBoss.
-Pour cela, dans la boîte de dialogue <span class="guilabel">Define a New Server</span>,
-sélectionnez <strong>Red Hat JBoss Middleware &gt; JBoss AS, Wildfly &amp; EAP Server Tools</strong>.
-comme type de serveur.</p>
-<p><img alt="Liste des types de serveur dans Eclipse" src="../_images/eclipse_server_types_list.png" /></p>
-<p>Cliquez ensuite sur <span class="guilabel">Next</span> et patientez le temps pour Eclipse de
-télécharger les dépendances nécessaires. Il vous faudra également valider la
-license Red Hat. Attention il faut attendre un peu avant que l’installation soit
-effective et il vous faudra redémarrer Eclipse.</p>
-<p>Vous pouvez maintenant créer un serveur Wildfly en sélectionnant
-<span class="guilabel">JBoss Community &gt; Wildfly 14</span>.</p>
+<p>Vous pouvez maintenant ajouter un serveur Tomcat 9 en sélectionnant
+<span class="guilabel">Apache &gt; Tomcat v9.0 Server</span>.</p>
 <p><img alt="Ajout d'un serveur dans Eclipse" src="../_images/eclipse_new_server.png" /></p>
 <p>Cliquez ensuite sur <span class="guilabel">Next</span>.
-Dans la boîte de dialogue <span class="guilabel">Create a new Server Adapter</span>, laissez les
-valeurs par défaut et cliquez sur <span class="guilabel">Next</span>.
-Dans la boîte de dialogue <span class="guilabel">JBoss Runtime</span>, il vous faut indiquer
+Dans la boîte de dialogue <span class="guilabel">Tomcat Server</span>, il vous faut indiquer
 l’emplacement du serveur sur votre disque. Pour cela, cliquez sur
 <span class="guilabel">Browse…</span> pour sélectionner le répertoire d’installation
-de Wildfly sur votre disque.</p>
+de Tomcat sur votre disque.</p>
 <p><img alt="Configuration d'un serveur dans Eclipse" src="../_images/eclipse_new_server2.png" /></p>
 <p>Cliquez ensuite sur <span class="guilabel">Finish</span>.</p>
 <p>Vous disposez maintenant d’un serveur dans votre vue <em>Servers</em>. Il ne
 vous reste plus qu’à le démarrer en faisant un click droit sur son nom
 et en sélectionnant <span class="guilabel">Start</span>.</p>
-<p><img alt="Lancement du serveur Wildfly dans Eclipse" src="../_images/eclipse_start_server.png" /></p>
+<p><img alt="Lancement du serveur dans Eclipse" src="../_images/eclipse_start_server.png" /></p>
 <p>Si tout se passe bien, à la fin du lancement, vous pourrez accéder à
 votre serveur à l’adresse <a class="reference external" href="http://localhost:8080">http://localhost:8080</a>. Vous devez voir
-s’afficher la page d’accueil du serveur.</p>
+s’afficher une page d’erreur avec le libellé :</p>
+<blockquote>
+<div><p>État HTTP 404 – Not Found</p>
+</div></blockquote>
+<p>En effet, le serveur ne contient encore aucune application Java Web à exécuter.
+Mais le serveur est néanmoins démarré.</p>
 </div>
 </div>
 
@@ -443,11 +409,12 @@ s’afficher la page d’accueil du serveur.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright David Gayerie - david.gayerie@epsi.fr - CC-BY-SA
+        &copy; Copyright David Gayerie - david.gayerie@reseau-cd.net - CC-BY-SA
 
     </p>
   </div>
-    <div><a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip"><code class="download docutils literal notranslate"><span class="pre">Télécharger ce cours</pre></code></a></div>
+    <div>Téléchargez ce support au format <a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip">HTML</a>
+    </div>
 
 
 </footer>

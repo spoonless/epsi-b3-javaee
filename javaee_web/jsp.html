@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Recherche" href="../search.html" />
-    <link rel="next" title="RequestDispatcher et MVC" href="request_dispatcher.html" />
+    <link rel="next" title="MVC et RequestDispatcher" href="mvc_request_dispatcher.html" />
     <link rel="prev" title="Les attributs d’une application Web" href="attributs_web.html" /> 
 </head>
 
@@ -85,7 +85,7 @@
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#telechargement-des-outils">Téléchargement des outils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#installation-des-outils">Installation des outils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-wildfly-dans-eclipse">Intégration de Wildfly dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-tomcat-dans-eclipse">Intégration de Tomcat dans Eclipse</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a><ul>
@@ -105,10 +105,9 @@
 <li class="toctree-l2"><a class="reference internal" href="maven.html#un-premier-projet-avec-maven">Un premier projet avec Maven</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#le-fichier-pom-xml">Le fichier pom.xml</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#import-du-projet-maven-dans-eclipse">Import du projet Maven dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="maven.html#test-de-l-application-dans-wildfly">Test de l’application dans Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#test-de-l-application-dans-tomcat">Test de l’application dans Tomcat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#gerer-le-projet-avec-maven">Gérer le projet avec Maven</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#execution-de-maven-dans-eclipse">Exécution de Maven dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="maven.html#exercice">Exercice</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="servlet.html">Les Servlets</a><ul>
@@ -140,7 +139,6 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">JSP : Java Server Pages</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#developper-des-jsp-avec-wildfly">Développer des JSP avec Wildfly</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#exercice">Exercice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#el-expression-language">EL : Expression Language</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#les-operateurs-dans-l-expression-language">Les opérateurs dans l’expression language</a></li>
@@ -166,10 +164,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#exercices">Exercices</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="request_dispatcher.html">RequestDispatcher et MVC</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
-<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#exercice">Exercice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvc_request_dispatcher.html">MVC et RequestDispatcher</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exemple-de-mvc-sans-validation">Exemple de MVC (sans validation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exemple-de-mvc-avec-validation">Exemple de MVC (avec validation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exercice">Exercice</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="web_listeners_filters.html">Web listeners et filtres</a><ul>
@@ -184,39 +184,6 @@
 <li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#generation-de-log">Génération de log</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="jsf.html">Java Server Faces (JSF)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#creer-un-projet-avec-jsf">Créer un projet avec JSF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-vue-facelets">La vue : facelets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#activer-le-support-de-jsf-dans-eclipse">Activer le support de JSF dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#une-introduction-a-cdi">Une introduction à CDI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#declarer-un-objet-avec-cdi">Déclarer un objet avec CDI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-fichier-de-deploiement-beans-xml">Le fichier de déploiement beans.xml</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-modele">Le modèle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-controleur">Le contrôleur</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-navigation">La navigation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-de-formulaire">La validation de formulaire</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#les-requetes-ajax">Les requêtes Ajax</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#pour-aller-plus-loin">Pour aller plus loin</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="jaxrs.html">Les API Web avec JAX-RS</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-notion-de-ressource">La notion de ressource</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#configurer-une-application-web-pour-jax-rs">Configurer une application Web pour JAX-RS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-des-ressources-avec-jax-rs">Implémenter des ressources avec JAX-RS</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#les-annotations-de-methodes">Les annotations de méthodes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#parametre-dans-le-chemin-d-uri">Paramètre dans le chemin d’URI</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#data-binding">Data binding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#injection-des-dependances">Injection des dépendances</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#exercice">Exercice</a></li>
 </ul>
 </li>
 </ul>
@@ -280,7 +247,7 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="request_dispatcher.html" class="btn btn-neutral float-right" title="RequestDispatcher et MVC" accesskey="n">Suivant <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="mvc_request_dispatcher.html" class="btn btn-neutral float-right" title="MVC et RequestDispatcher" accesskey="n">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="attributs_web.html" class="btn btn-neutral" title="Les attributs d’une application Web" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
@@ -300,41 +267,9 @@ très pratique pour générer une réponse orientée texte (telle qu’une page
 HTML). Les Java Server Pages (JSP) ont été la première solution
 introduite pour offrir une alternative plus simple pour l’écriture de
 patron (template) de réponse.</p>
-<div class="section" id="developper-des-jsp-avec-wildfly">
-<h2>Développer des JSP avec Wildfly<a class="headerlink" href="#developper-des-jsp-avec-wildfly" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Wildfly est un serveur livré avec une configuration par défaut conçue pour
-un environnement de production.</p>
-<p>Pour le développement de JSP, nous allons voir qu’il est plus
-intéressant de configurer le serveur de test afin qu’il prenne en compte
-nos modifications dans les JSP à la volée sans qu’il soit nécessaire de
-redéployer l’application. Pour des raisons de performance, la prise en
-compte à chaud des modifications n’est pas le comportement par défaut de
-Wildfly.</p>
-<p>Pour activer ce comportement, il va falloir modifier la configuration du
-serveur. Pour cela, allez dans le répertoire d’installation de Wildfly et
-ouvrez le fichier <code class="file docutils literal notranslate"><span class="pre">standalone/configuration/standalone.xml</span></code>.
-Aux alentours de la ligne 474 du fichier, vous
-allez trouver la déclaration suivante :</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;servlet-container</span> <span class="na">name=</span><span class="s">&quot;default&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;jsp-config/&gt;</span>
-    <span class="nt">&lt;websockets/&gt;</span>
-<span class="nt">&lt;/servlet-container&gt;</span>
-</pre></div>
-</div>
-<p>Faites une sauvegarde de ce fichier et remplacez cette configuration par
-celle-ci :</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;servlet-container</span> <span class="na">name=</span><span class="s">&quot;default&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;jsp-config</span> <span class="na">development=</span><span class="s">&quot;true&quot;</span> <span class="na">check-interval=</span><span class="s">&quot;1&quot;</span> <span class="na">modification-test-interval=</span><span class="s">&quot;1&quot;</span> <span class="na">recompile-on-fail=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;websockets/&gt;</span>
-<span class="nt">&lt;/servlet-container&gt;</span>
-</pre></div>
-</div>
-<p>Attention, si vous faites une mauvaise manipulation, votre serveur peut
-ne plus démarrer correctement.</p>
-</div>
 <div class="section" id="exercice">
 <h2>Exercice<a class="headerlink" href="#exercice" title="Lien permanent vers ce titre">¶</a></h2>
-<div class="hint admonition">
+<div class="exercice admonition">
 <p class="admonition-title">Une première JSP</p>
 <dl>
 <dt><strong>Objectif</strong></dt><dd><p>Créer et afficher dans un navigateur une JSP. À la racine de
@@ -565,10 +500,10 @@ fois dans une requête.</p>
 <dt><strong>initParam</strong></dt><dd><p>Map permettant d’accéder aux paramètres d’initialisation (déclarées
 dans le <code class="file docutils literal notranslate"><span class="pre">web.xml</span></code>).</p>
 </dd>
-<dt><strong>pageContext</strong></dt><dd><p>L’objet <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/jsp/PageContext.html">PageContext</a>
+<dt><strong>pageContext</strong></dt><dd><p>L’objet <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/jsp/PageContext.html">PageContext</a>
 de la page JSP. On trouve notamment dans cet objet les attributs
-request et response (respectivement de type <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html">HttpServletRequest</a> et
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html">HttpServletResponse</a>).</p>
+request et response (respectivement de type <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html">HttpServletRequest</a> et
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html">HttpServletResponse</a>).</p>
 </dd>
 </dl>
 <p>On peut, par exemple, afficher dynamiquement des informations liées à la
@@ -611,7 +546,7 @@ utilisateur dans une page JSP :</p>
 les portées <strong>page, requête, session (si elle existe) et enfin
 application</strong>. Le premier attribut trouvé portant ce nom est utilisé.</p>
 <p>La recherche d’un attribut dans les différentes portées est réalisée par
-la méthode <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/jsp/JspContext.html#findAttribute-java.lang.String-">JspContext.findAttribute(String name)</a></p>
+la méthode <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/jsp/JspContext.html#findAttribute-java.lang.String-">JspContext.findAttribute(String name)</a></p>
 <div class="section" id="expression-language-et-gestion-des-exceptions">
 <h3>Expression Language et gestion des exceptions<a class="headerlink" href="#expression-language-et-gestion-des-exceptions" title="Lien permanent vers ce titre">¶</a></h3>
 <p>Un apport majeur de l’EL par rapport à du code Java, est la façon dont
@@ -665,7 +600,7 @@ traitement de la page JSP d’erreur qui sera retourné au client.</p>
 </dd>
 <dt>isErrorPage</dt><dd><p>Indique si la JSP est une JSP d’erreur. Dans ce cas, <code class="docutils literal notranslate"><span class="pre">errorData</span></code>
 est disponible dans le <code class="docutils literal notranslate"><span class="pre">pageContext</span></code>. <code class="docutils literal notranslate"><span class="pre">errorData</span></code> est de type
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/jsp/ErrorData.html">javax.servlet.jsp.ErrorData</a>.</p>
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/jsp/ErrorData.html">javax.servlet.jsp.ErrorData</a>.</p>
 <div class="admonition-exemple-d-une-jsp-d-erreur admonition">
 <p class="admonition-title">Exemple d’une JSP d’erreur</p>
 <div class="highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">isErrorPage</span><span class="o">=</span><span class="s">&quot;true&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
@@ -827,7 +762,7 @@ ${u.age}
 <code class="docutils literal notranslate"><span class="pre">&lt;jsp:include&gt;</span></code> est interprétée à chaque exécution de la JSP. Cela
 signifie que l’adresse de la page à inclure peut être calculée
 dynamiquement grâce à une EL. Cette balise est similaire à un appel
-à <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html#include-javax.servlet.ServletRequest-javax.servlet.ServletResponse-">RequestDispatcher.include</a>.</p>
+à <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/RequestDispatcher.html#include-javax.servlet.ServletRequest-javax.servlet.ServletResponse-">RequestDispatcher.include</a>.</p>
 <div class="literal-block-wrapper docutils container" id="id5">
 <div class="code-block-caption"><span class="caption-text">Inclusion d’une page en fonction d’un paramètre</span><a class="headerlink" href="#id5" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
@@ -858,7 +793,7 @@ la balise action <code class="docutils literal notranslate"><span class="pre">&l
 </dd>
 <dt><strong>&lt;jsp:forward/&gt;</strong></dt><dd><p>Permet de déléguer le traitement de la requête à une autre ressource
 de l’application. Cette balise est similaire à un appel à
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html#forward-javax.servlet.ServletRequest-javax.servlet.ServletResponse-">RequestDispatcher.forward</a>.</p>
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/RequestDispatcher.html#forward-javax.servlet.ServletRequest-javax.servlet.ServletResponse-">RequestDispatcher.forward</a>.</p>
 <div class="literal-block-wrapper docutils container" id="id6">
 <div class="code-block-caption"><span class="caption-text">Un simple forward vers une autre page en fonction d’un paramètre</span><a class="headerlink" href="#id6" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="k">&lt;jsp:useBean id=&quot;u&quot; scope=&quot;page&quot; class=&quot;fr.compagnie.appli.Utilisateur&quot;/&gt;</span>
@@ -887,6 +822,19 @@ grâce à l’inclusion de bibliothèques de balises : les Tag Libraries
 <p>Le développement de telles bibliothèques dépasse le cadre de ce cours.
 Par contre nous allons voir comment utiliser la bibliothèque standard
 fournie par le conteneur Web : <strong>Java Standard Tag Library (JSTL)</strong>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Tomcat ne fournit pas la JSTL. Il faut donc que chaque application Web
+embarque sa propre implémentation. Pour un projet géré avec Maven, il suffit
+d’ajouter la dépendance suivante dans le fichier <code class="file docutils literal notranslate"><span class="pre">pom.xml</span></code> :</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>javax.servlet<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>jstl<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+</div>
+</div>
 <p>Pour inclure une bibliothèque de balises dans une JSP, on utilise la
 directive <code class="docutils literal notranslate"><span class="pre">taglib</span></code> :</p>
 <div class="highlight-jsp notranslate"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;c&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> <span class="k">%&gt;</span>
@@ -1081,12 +1029,12 @@ directement dans les JSP.</p>
 </div>
 <div class="section" id="exercices">
 <h2>Exercices<a class="headerlink" href="#exercices" title="Lien permanent vers ce titre">¶</a></h2>
-<div class="hint admonition">
+<div class="exercice admonition">
 <p class="admonition-title">JSP de temps</p>
 <dl class="simple">
 <dt><strong>Objectif</strong></dt><dd><p>Écrire une JSP (sans code Java) qui donne la date et l’heure du
 serveur. La date et l’heure doivent être mises en forme de la façon
-suivante : 08 avril 2019 12:01:24</p>
+suivante : 30 octobre 2019 12:01:24</p>
 </dd>
 <dt><strong>Modèle Maven du projet à télécharger</strong></dt><dd><p><a class="reference download internal" download="" href="../_downloads/02dd662271f20f114cd2aeb0b29a7918/webapp-template.zip"><code class="xref download docutils literal notranslate"><span class="pre">webapp-template.zip</span></code></a></p>
 </dd>
@@ -1098,7 +1046,7 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
 </dd>
 </dl>
 </div>
-<div class="hint admonition">
+<div class="exercice admonition">
 <p class="admonition-title">Affichage des paramètres dans une JSP</p>
 <dl>
 <dt><strong>Objectif</strong></dt><dd><p>Écrire une JSP (sans code Java) qui génère un tableau HTML contenant
@@ -1154,7 +1102,7 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="request_dispatcher.html" class="btn btn-neutral float-right" title="RequestDispatcher et MVC" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="mvc_request_dispatcher.html" class="btn btn-neutral float-right" title="MVC et RequestDispatcher" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="attributs_web.html" class="btn btn-neutral float-left" title="Les attributs d’une application Web" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
@@ -1166,11 +1114,12 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright David Gayerie - david.gayerie@epsi.fr - CC-BY-SA
+        &copy; Copyright David Gayerie - david.gayerie@reseau-cd.net - CC-BY-SA
 
     </p>
   </div>
-    <div><a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip"><code class="download docutils literal notranslate"><span class="pre">Télécharger ce cours</pre></code></a></div>
+    <div>Téléchargez ce support au format <a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip">HTML</a>
+    </div>
 
 
 </footer>

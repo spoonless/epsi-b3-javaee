@@ -85,7 +85,7 @@
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#telechargement-des-outils">Téléchargement des outils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#installation-des-outils">Installation des outils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-wildfly-dans-eclipse">Intégration de Wildfly dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-tomcat-dans-eclipse">Intégration de Tomcat dans Eclipse</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a><ul>
@@ -105,10 +105,9 @@
 <li class="toctree-l2"><a class="reference internal" href="maven.html#un-premier-projet-avec-maven">Un premier projet avec Maven</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#le-fichier-pom-xml">Le fichier pom.xml</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#import-du-projet-maven-dans-eclipse">Import du projet Maven dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="maven.html#test-de-l-application-dans-wildfly">Test de l’application dans Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#test-de-l-application-dans-tomcat">Test de l’application dans Tomcat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#gerer-le-projet-avec-maven">Gérer le projet avec Maven</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#execution-de-maven-dans-eclipse">Exécution de Maven dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="maven.html#exercice">Exercice</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="servlet.html">Les Servlets</a><ul>
@@ -140,7 +139,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jsp.html">JSP : Java Server Pages</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jsp.html#developper-des-jsp-avec-wildfly">Développer des JSP avec Wildfly</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jsp.html#exercice">Exercice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jsp.html#el-expression-language">EL : Expression Language</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jsp.html#les-operateurs-dans-l-expression-language">Les opérateurs dans l’expression language</a></li>
@@ -166,10 +164,12 @@
 <li class="toctree-l2"><a class="reference internal" href="jsp.html#exercices">Exercices</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="request_dispatcher.html">RequestDispatcher et MVC</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
-<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#exercice">Exercice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvc_request_dispatcher.html">MVC et RequestDispatcher</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exemple-de-mvc-sans-validation">Exemple de MVC (sans validation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exemple-de-mvc-avec-validation">Exemple de MVC (avec validation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exercice">Exercice</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="web_listeners_filters.html">Web listeners et filtres</a><ul>
@@ -184,39 +184,6 @@
 <li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#generation-de-log">Génération de log</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="jsf.html">Java Server Faces (JSF)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#creer-un-projet-avec-jsf">Créer un projet avec JSF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-vue-facelets">La vue : facelets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#activer-le-support-de-jsf-dans-eclipse">Activer le support de JSF dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#une-introduction-a-cdi">Une introduction à CDI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#declarer-un-objet-avec-cdi">Déclarer un objet avec CDI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-fichier-de-deploiement-beans-xml">Le fichier de déploiement beans.xml</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-modele">Le modèle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#le-controleur">Le contrôleur</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-navigation">La navigation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-de-formulaire">La validation de formulaire</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#les-requetes-ajax">Les requêtes Ajax</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jsf.html#pour-aller-plus-loin">Pour aller plus loin</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="jaxrs.html">Les API Web avec JAX-RS</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-notion-de-ressource">La notion de ressource</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#configurer-une-application-web-pour-jax-rs">Configurer une application Web pour JAX-RS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-des-ressources-avec-jax-rs">Implémenter des ressources avec JAX-RS</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#les-annotations-de-methodes">Les annotations de méthodes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#parametre-dans-le-chemin-d-uri">Paramètre dans le chemin d’URI</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#data-binding">Data binding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#injection-des-dependances">Injection des dépendances</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#exercice">Exercice</a></li>
 </ul>
 </li>
 </ul>
@@ -315,7 +282,7 @@ l’application Web.</p>
 <p class="admonition-title">Note</p>
 <p>Un attribut est une notion très vague : il s’agit simplement d’une
 instance d’une classe Java (implémentant si possible l’interface
-<a class="reference external" href="https://docs.oracle.com/javase/10/docs/api/java/io/Serializable.html">java.io.Serializable</a>).</p>
+<a class="reference external" href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/Serializable.html">java.io.Serializable</a>).</p>
 </div>
 <p>Le développeur d’application va pouvoir stocker les attributs dont il a
 besoin dans différents objets fournis par le conteneur (suivant la
@@ -380,7 +347,7 @@ reprises lorsque nous parlerons des JSP, du modèle MVC et de JSF.</p>
 requêtes émises par un même client. Cela signifie que l’application Web
 mémorise des données relatives au client constituant ainsi une session
 utilisateur. Le conteneur représente cette session grâce à une instance
-de la classe <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html">HttpSession</a> disponible depuis une instance de HttpServletRequest
+de la classe <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html">HttpSession</a> disponible depuis une instance de HttpServletRequest
 grâce à la méthode <code class="docutils literal notranslate"><span class="pre">getSession()</span></code>.</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
 <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span>
@@ -445,10 +412,10 @@ pour leurs applications.</p>
 <div class="section" id="les-attributs-de-portee-application">
 <h2>Les attributs de portée application<a class="headerlink" href="#les-attributs-de-portee-application" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Les attributs de portée application sont stockés dans une instance d’un
-objet <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a>.
-Le <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a> représente le contexte d’exécution de l’ensemble
+objet <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html">ServletContext</a>.
+Le <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html">ServletContext</a> représente le contexte d’exécution de l’ensemble
 des servlets, c’est-à-dire le contexte d’exécution de l’application Web.
-L’instance de <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html">ServletContext</a> est accessible depuis n’importe quelle
+L’instance de <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html">ServletContext</a> est accessible depuis n’importe quelle
 servlet de l’application grâce à la méthode <code class="docutils literal notranslate"><span class="pre">getServletContext()</span></code>.</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
     <span class="c1">// on stocke la date de création de la servlet</span>
@@ -471,7 +438,7 @@ mises en cache pour améliorer les performances.</p>
 </div>
 <div class="section" id="exercices">
 <h2>Exercices<a class="headerlink" href="#exercices" title="Lien permanent vers ce titre">¶</a></h2>
-<div class="hint admonition">
+<div class="exercice admonition">
 <p class="admonition-title">Implémenter un formulaire en plusieurs étapes avec session</p>
 <dl>
 <dt><strong>Objectif</strong></dt><dd><p>Réaliser une application qui permet à un utilisateur de s’inscrire
@@ -500,7 +467,7 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
 </dd>
 </dl>
 </div>
-<div class="hint admonition">
+<div class="exercice admonition">
 <p class="admonition-title">Implémenter un formulaire en plusieurs étapes sans session</p>
 <dl class="simple">
 <dt><strong>Objectif</strong></dt><dd><p>Reprenez l’exercice précédent mais cette fois-ci, implémentez le
@@ -541,11 +508,12 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright David Gayerie - david.gayerie@epsi.fr - CC-BY-SA
+        &copy; Copyright David Gayerie - david.gayerie@reseau-cd.net - CC-BY-SA
 
     </p>
   </div>
-    <div><a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip"><code class="download docutils literal notranslate"><span class="pre">Télécharger ce cours</pre></code></a></div>
+    <div>Téléchargez ce support au format <a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip">HTML</a>
+    </div>
 
 
 </footer>

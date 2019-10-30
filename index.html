@@ -84,7 +84,7 @@
 <li class="toctree-l2"><a class="reference internal" href="javaee_web/environnement_developpement.html#telechargement-des-outils">Téléchargement des outils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="javaee_web/environnement_developpement.html#installation-des-outils">Installation des outils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="javaee_web/environnement_developpement.html#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/environnement_developpement.html#integration-de-wildfly-dans-eclipse">Intégration de Wildfly dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaee_web/environnement_developpement.html#integration-de-tomcat-dans-eclipse">Intégration de Tomcat dans Eclipse</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="javaee_web/premiere_application.html">Une première application</a><ul>
@@ -104,10 +104,9 @@
 <li class="toctree-l2"><a class="reference internal" href="javaee_web/maven.html#un-premier-projet-avec-maven">Un premier projet avec Maven</a></li>
 <li class="toctree-l2"><a class="reference internal" href="javaee_web/maven.html#le-fichier-pom-xml">Le fichier pom.xml</a></li>
 <li class="toctree-l2"><a class="reference internal" href="javaee_web/maven.html#import-du-projet-maven-dans-eclipse">Import du projet Maven dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/maven.html#test-de-l-application-dans-wildfly">Test de l’application dans Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaee_web/maven.html#test-de-l-application-dans-tomcat">Test de l’application dans Tomcat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="javaee_web/maven.html#gerer-le-projet-avec-maven">Gérer le projet avec Maven</a></li>
 <li class="toctree-l2"><a class="reference internal" href="javaee_web/maven.html#execution-de-maven-dans-eclipse">Exécution de Maven dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/maven.html#exercice">Exercice</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="javaee_web/servlet.html">Les Servlets</a><ul>
@@ -139,7 +138,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="javaee_web/jsp.html">JSP : Java Server Pages</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jsp.html#developper-des-jsp-avec-wildfly">Développer des JSP avec Wildfly</a></li>
 <li class="toctree-l2"><a class="reference internal" href="javaee_web/jsp.html#exercice">Exercice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="javaee_web/jsp.html#el-expression-language">EL : Expression Language</a></li>
 <li class="toctree-l2"><a class="reference internal" href="javaee_web/jsp.html#les-operateurs-dans-l-expression-language">Les opérateurs dans l’expression language</a></li>
@@ -165,10 +163,12 @@
 <li class="toctree-l2"><a class="reference internal" href="javaee_web/jsp.html#exercices">Exercices</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="javaee_web/request_dispatcher.html">RequestDispatcher et MVC</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/request_dispatcher.html#exercice">Exercice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="javaee_web/mvc_request_dispatcher.html">MVC et RequestDispatcher</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="javaee_web/mvc_request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaee_web/mvc_request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaee_web/mvc_request_dispatcher.html#exemple-de-mvc-sans-validation">Exemple de MVC (sans validation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaee_web/mvc_request_dispatcher.html#exemple-de-mvc-avec-validation">Exemple de MVC (avec validation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaee_web/mvc_request_dispatcher.html#exercice">Exercice</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="javaee_web/web_listeners_filters.html">Web listeners et filtres</a><ul>
@@ -183,39 +183,6 @@
 <li class="toctree-l3"><a class="reference internal" href="javaee_web/web_listeners_filters.html#generation-de-log">Génération de log</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="javaee_web/jsf.html">Java Server Faces (JSF)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jsf.html#creer-un-projet-avec-jsf">Créer un projet avec JSF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jsf.html#la-vue-facelets">La vue : facelets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jsf.html#activer-le-support-de-jsf-dans-eclipse">Activer le support de JSF dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jsf.html#une-introduction-a-cdi">Une introduction à CDI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jsf.html#declarer-un-objet-avec-cdi">Déclarer un objet avec CDI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jsf.html#le-fichier-de-deploiement-beans-xml">Le fichier de déploiement beans.xml</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jsf.html#le-modele">Le modèle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jsf.html#le-controleur">Le contrôleur</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jsf.html#la-navigation">La navigation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jsf.html#la-validation-de-formulaire">La validation de formulaire</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jsf.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jsf.html#les-requetes-ajax">Les requêtes Ajax</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jsf.html#pour-aller-plus-loin">Pour aller plus loin</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="javaee_web/jaxrs.html">Les API Web avec JAX-RS</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jaxrs.html#la-notion-de-ressource">La notion de ressource</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jaxrs.html#configurer-une-application-web-pour-jax-rs">Configurer une application Web pour JAX-RS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jaxrs.html#implementer-des-ressources-avec-jax-rs">Implémenter des ressources avec JAX-RS</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="javaee_web/jaxrs.html#les-annotations-de-methodes">Les annotations de méthodes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="javaee_web/jaxrs.html#parametre-dans-le-chemin-d-uri">Paramètre dans le chemin d’URI</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jaxrs.html#data-binding">Data binding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jaxrs.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jaxrs.html#injection-des-dependances">Injection des dépendances</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javaee_web/jaxrs.html#exercice">Exercice</a></li>
 </ul>
 </li>
 </ul>
@@ -294,13 +261,11 @@
 <div class="admonition-liens-utiles admonition">
 <p class="admonition-title">Liens utiles</p>
 <dl class="simple">
-<dt>L’API Java EE</dt><dd><p><a class="reference external" href="https://docs.oracle.com/javaee/7/api/">https://docs.oracle.com/javaee/7/api/</a></p>
+<dt>L’API Java EE</dt><dd><p><a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/">https://javaee.github.io/javaee-spec/javadocs/</a></p>
 </dd>
-<dt>Tutoriels Oracle Java EE 7</dt><dd><p><a class="reference external" href="https://docs.oracle.com/javaee/7/index.html">https://docs.oracle.com/javaee/7/index.html</a></p>
+<dt>Tutoriels Oracle Java EE 8</dt><dd><p><a class="reference external" href="https://javaee.github.io/tutorial/">https://javaee.github.io/tutorial/</a></p>
 </dd>
 </dl>
-</div>
-<div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
 </div>
@@ -324,11 +289,15 @@
 <li class="toctree-l1"><a class="reference internal" href="javaee_web/conteneur_web.html">Le conteneur Web</a></li>
 <li class="toctree-l1"><a class="reference internal" href="javaee_web/attributs_web.html">Les attributs d’une application Web</a></li>
 <li class="toctree-l1"><a class="reference internal" href="javaee_web/jsp.html">JSP : Java Server Pages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="javaee_web/request_dispatcher.html">RequestDispatcher et MVC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="javaee_web/mvc_request_dispatcher.html">MVC et RequestDispatcher</a></li>
 <li class="toctree-l1"><a class="reference internal" href="javaee_web/web_listeners_filters.html">Web listeners et filtres</a></li>
-<li class="toctree-l1"><a class="reference internal" href="javaee_web/jsf.html">Java Server Faces (JSF)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="javaee_web/jaxrs.html">Les API Web avec JAX-RS</a></li>
 </ul>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
 </div>
@@ -366,11 +335,12 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright David Gayerie - david.gayerie@epsi.fr - CC-BY-SA
+        &copy; Copyright David Gayerie - david.gayerie@reseau-cd.net - CC-BY-SA
 
     </p>
   </div>
-    <div><a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip"><code class="download docutils literal notranslate"><span class="pre">Télécharger ce cours</pre></code></a></div>
+    <div>Téléchargez ce support au format <a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip">HTML</a>
+    </div>
 
 
 </footer>

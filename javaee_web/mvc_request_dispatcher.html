@@ -1,0 +1,1043 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fr" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fr" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MVC et RequestDispatcher &mdash; Documentation Java EE pour le Web </title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Web listeners et filtres" href="web_listeners_filters.html" />
+    <link rel="prev" title="JSP : Java Server Pages" href="jsp.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Java EE pour le Web
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Recherche dans les pages" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Java EE pour le Web</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="environnement_developpement.html">L’environnement de développement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#telechargement-des-outils">Téléchargement des outils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#installation-des-outils">Installation des outils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-tomcat-dans-eclipse">Intégration de Tomcat dans Eclipse</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#qu-est-ce-qu-une-application-java-ee">Qu’est-ce qu’une application Java EE ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#creation-d-un-projet-dans-eclipse">Création d’un projet dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#deploiement-depuis-eclipse-et-test-de-l-application">Déploiement depuis Eclipse et test de l’application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="premiere_application.html#le-contexte-racine-de-deploiement-root-context">Le contexte racine de déploiement (root context)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#packaging-de-l-application">Packaging de l’application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="maven.html">Introduction à Maven</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#pourquoi-utiliser-maven">Pourquoi utiliser Maven ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#caracteristiques-principales-de-maven">Caractéristiques principales de Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#installation-de-maven">Installation de Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#un-premier-projet-avec-maven">Un premier projet avec Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#le-fichier-pom-xml">Le fichier pom.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#import-du-projet-maven-dans-eclipse">Import du projet Maven dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#test-de-l-application-dans-tomcat">Test de l’application dans Tomcat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#gerer-le-projet-avec-maven">Gérer le projet avec Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#execution-de-maven-dans-eclipse">Exécution de Maven dans Eclipse</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="servlet.html">Les Servlets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#structure-d-une-servlet-http">Structure d’une servlet HTTP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#configuration-du-deploiement-d-une-servlet">Configuration du déploiement d’une servlet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="servlet.html#chemin-absolu-d-url-dans-une-application-web">Chemin absolu d’URL dans une application Web</a></li>
+<li class="toctree-l3"><a class="reference internal" href="servlet.html#motif-d-url-d-une-servlet">Motif d’URL d’une Servlet</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#utilisation-du-fichier-de-deploiement-web-xml">Utilisation du fichier de déploiement web.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="conteneur_web.html">Le conteneur Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#cycle-de-vie-des-servlets">Cycle de vie des servlets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#exercice">Exercice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#servlet-et-programmation-concurrente">Servlet et programmation concurrente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#id1">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="attributs_web.html">Les attributs d’une application Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#attribut-de-portee-requete">Attribut de portée requête</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#attribut-de-portee-session">Attribut de portée session</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="attributs_web.html#session-http-comment-cela-marche-t-il">Session HTTP : comment cela marche-t-il ?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#les-attributs-de-portee-application">Les attributs de portée application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#exercices">Exercices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jsp.html">JSP : Java Server Pages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#exercice">Exercice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#el-expression-language">EL : Expression Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-operateurs-dans-l-expression-language">Les opérateurs dans l’expression language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-objets-implicites-dans-une-jsp">Les objets implicites dans une JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#la-resolution-de-portee-des-attributs-dans-une-jsp">La résolution de portée des attributs dans une JSP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#expression-language-et-gestion-des-exceptions">Expression Language et gestion des exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-directives-de-jsp">Les directives de JSP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#la-directive-page">La directive page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#la-directive-include">La directive include</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-balises-d-action-jsp">Les balises d’action JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-taglibs-et-la-jstl">Les Taglibs et la JSTL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-core">JSTL core</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-formater">JSTL formater</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-functions">JSTL functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-sql">JSTL SQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-xml">JSTL XML</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#exercices">Exercices</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MVC et RequestDispatcher</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#le-modele-mvc">Le modèle MVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#le-request-dispatcher">Le request dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exemple-de-mvc-sans-validation">Exemple de MVC (sans validation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exemple-de-mvc-avec-validation">Exemple de MVC (avec validation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="web_listeners_filters.html">Web listeners et filtres</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#les-listeners-web">Les listeners Web</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#declaration-des-listeners-web">Déclaration des listeners Web</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#exemple-d-utilisation-d-un-listener">Exemple d’utilisation d’un listener</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#les-filtres-de-servlet">Les filtres de Servlet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#declaration-des-filtres">Déclaration des filtres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#implementation-d-un-filtre">Implémentation d’un filtre</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#cas-d-utilisation-de-filtres">Cas d’utilisation de filtres</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#gestion-de-l-utf-8">Gestion de l’UTF-8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#generation-de-log">Génération de log</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Java EE pour le Web</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Accueil</a> &raquo;</li>
+        
+      <li>MVC et RequestDispatcher</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="web_listeners_filters.html" class="btn btn-neutral float-right" title="Web listeners et filtres" accesskey="n">Suivant <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="jsp.html" class="btn btn-neutral" title="JSP : Java Server Pages" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="mvc-et-requestdispatcher">
+<h1>MVC et RequestDispatcher<a class="headerlink" href="#mvc-et-requestdispatcher" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="section" id="le-modele-mvc">
+<h2>Le modèle MVC<a class="headerlink" href="#le-modele-mvc" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le modèle <a class="reference external" href="https://fr.wikipedia.org/wiki/Mod%C3%A8le-vue-contr%C3%B4leur">MVC</a> (Modèle Vue Contrôleur) est un modèle d’architecture pour guider
+la conception d’applications qui nécessitent une interaction de l’utilisateur avec
+le système. Il définit trois grandes catégories de responsabilité :</p>
+<dl class="simple">
+<dt><strong>Le modèle</strong></dt><dd><p>Les classes appartenant à cette catégorie définissent les données applicatives
+ainsi que les logiques de traitement propres à l’application.</p>
+</dd>
+<dt><strong>La vue</strong></dt><dd><p>Les classes appartenant à cette catégorie gèrent la représentation graphique
+des données et l’interface utilisateur</p>
+</dd>
+<dt><strong>Le contrôleur</strong></dt><dd><p>Les classes appartenant à cette catégorie gèrent les interactions de
+l’utilisateur et la mise à jour des vues après la modification des données.
+Les contrôleurs assurent la cohérence entre le modèle et la vue.</p>
+</dd>
+</dl>
+<p>Pour une application Web Java</p>
+<ul class="simple">
+<li><p>le modèle peut être un simple objet Java qui encapsule la logique de
+l’application</p></li>
+<li><p>la vue est une Java Server Pages (JSP)</p></li>
+<li><p>le contrôleur est une servlet chargée de valider les paramètres de la
+requête avant de les transmettre au modèle pour le traitement. Une
+fois ce traitement terminé, la servlet transmet le résultat à la vue.</p></li>
+</ul>
+<p>L’implémentation du modèle MVC pour une application Java EE suppose que l’on puisse
+découper le traitement de la requête en plusieurs étapes : d’abord la réception
+par la servlet qui joue le rôle de contrôleur puis le traitement par le modèle
+et enfin le rendu de la vue par la JSP. Le <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/RequestDispatcher.html">RequestDispatcher</a> permet de réaliser
+ce découpage puisque la servlet va pouvoir transférer le traitement de la requête
+à une JSP.</p>
+</div>
+<div class="section" id="le-request-dispatcher">
+<h2>Le request dispatcher<a class="headerlink" href="#le-request-dispatcher" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/RequestDispatcher.html">request dispatcher</a> est un objet fourni par le conteneur Web. Il permet
+d’inclure ou de déléguer des traitements lors de la prise en charge d’une requête HTTP.</p>
+<p>Nous avons vu dans un précédent chapitre qu’il existe une classe <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html">ServletContext</a>
+permettant, notamment, de stocker les attributs de portée application. Le
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html">ServletContext</a> représente le contexte d’une application Web et est
+accessible depuis une servlet grâce à la méthode <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/GenericServlet.html#getServletContext--">getServletContext()</a>.</p>
+<p>Une instance de <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html">ServletContext</a> permet également de récupérer une
+instance de <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/RequestDispatcher.html">RequestDispatcher</a> grâce aux méthodes :</p>
+<dl>
+<dt><a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html#getRequestDispatcher-java.lang.String-">getResquestDispatcher(String path)</a></dt><dd><p>Permet de récupérer une instance de RequestDispatcher pour
+transferer le traitement à la ressource dont le chemin d’URL est
+passé en paramètre</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">RequestDispatcher</span> <span class="n">dispatcher</span> <span class="o">=</span> <span class="n">getServletContext</span><span class="o">().</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">&quot;/un/chemin&quot;</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>Selon la documentation, le chemin passé en paramètre <strong>DOIT</strong>
+commencer par <code class="docutils literal notranslate"><span class="pre">/</span></code>. Cependant, le chemin est interprété relativement au
+contexte racine de l’application.</p>
+</dd>
+<dt><a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html#getNamedDispatcher-java.lang.String-">getNamedDispatcher(String name)</a></dt><dd><p>Permet de récupérer une instance de RequestDispatcher pour
+transférer le traitement à la servlet dont le nom est passé en
+paramètre</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">RequestDispatcher</span> <span class="n">dispatcher</span> <span class="o">=</span> <span class="n">getServletContext</span><span class="o">().</span><span class="na">getNamedDispatcher</span><span class="o">(</span><span class="s">&quot;maServlet&quot;</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>Une servlet peut être nommée dans le fichier web.xml grâce à la
+balise &lt;servlet-name&gt; ou avec l’annotation <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/annotation/WebServlet.html">&#64;WebServlet</a>
+grâce à l’attribut name de l’annotation.</p>
+</dd>
+</dl>
+<p>Une fois que nous disposons d’une instance d’un RequestDispatcher nous
+pouvons appeler une de ses deux méthodes disponibles :</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/RequestDispatcher.html#include-javax.servlet.ServletRequest-javax.servlet.ServletResponse-">void RequestDispatcher.include(ServletRequest request, ServletResponse response)</a></dt><dd><p>Inclut le contenu de la ressource dans le résultat final renvoyé au
+client. Si le request dispatcher pointe sur un fichier HTML,
+l’ensemble du fichier sera inséré dans la réponse. Si le request
+dispatcher pointe sur une servlet, cette dernière est exécutée et sa
+sortie est insérée dans la réponse.</p>
+</dd>
+<dt><a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/RequestDispatcher.html#forward-javax.servlet.ServletRequest-javax.servlet.ServletResponse-">void RequestDispatcher.forward(ServletRequest request, ServletResponse response)</a></dt><dd><p>Trasfère le traitement de la requête à une nouvelle ressource. La
+différence avec la méthode <code class="docutils literal notranslate"><span class="pre">include</span></code> est que la servlet qui
+appelle <code class="docutils literal notranslate"><span class="pre">forward</span></code> ne doit pas avoir produit de contenu dans la
+réponse. C’est cette méthode qui va permettre d’implémenter le modèle <a class="reference external" href="https://fr.wikipedia.org/wiki/Mod%C3%A8le-vue-contr%C3%B4leur">MVC</a>
+dans une application Web Java EE.</p>
+</dd>
+</dl>
+<p>Avec le request dispatcher, on voit apparaître la possibilité de créer
+une chaîne de traitement pour une requête. Par exemple, une servlet peut
+être utilisée pour valider les paramètres transmis par la requête et
+effectuer un traitement propre à l’application. Puis, <em>via</em> un
+RequestDispatcher, elle peut déléguer à une autre servlet le soin de
+générer la réponse en utilisant la méthode <code class="docutils literal notranslate"><span class="pre">forward</span></code>. C’est dans ce
+modèle de traitement que les attributs de requête vont être utiles (Cf. le
+chapitre <a class="reference internal" href="attributs_web.html#attributs-web"><span class="std std-ref">Les attributs d’une application Web</span></a>). Chaque servlet impliquée dans le traitement de
+la requête exploite et produit des données qu’elle peut récupérer ou stocker
+comme attribut dans la requête.</p>
+<p>Pour l’implémentation du modèle MVC, le <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/RequestDispatcher.html">RequestDispatcher</a> est utilisé pour
+transmettre le traitement de la requête de la servlet à la JSP.</p>
+</div>
+<div class="section" id="exemple-de-mvc-sans-validation">
+<h2>Exemple de MVC (sans validation)<a class="headerlink" href="#exemple-de-mvc-sans-validation" title="Lien permanent vers ce titre">¶</a></h2>
+<p>À titre d’exemple, imaginons que nous voulons réaliser une application qui
+permet à l’utilisateur de saisir des informations personnelles : son nom et
+son âge. L’application se contente de vérifier si la personne est majeure et
+d’afficher un message en conséquence.</p>
+<p>L’interaction entre l’utilisateur et le serveur correspond à l’envoi d’une
+requête HTTP. La servlet <code class="docutils literal notranslate"><span class="pre">SaisieDonneesPersonnellesControleur</span></code> joue le rôle
+de contrôleur.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Le contrôleur</span><a class="headerlink" href="#id2" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.servlet.ServletException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.annotation.WebServlet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServlet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
+
+<span class="nd">@WebServlet</span><span class="o">(</span><span class="s">&quot;/donneespersonnelles&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SaisieDonneesPersonnellesControleur</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">VUE_FORMULAIRE</span> <span class="o">=</span> <span class="s">&quot;/WEB-INF/jsp/saisieDonneesPersonnelles.jsp&quot;</span><span class="o">;</span>
+  <span class="c1">// ...</span>
+
+<span class="hll">  <span class="nd">@Override</span>
+</span><span class="hll">  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+</span><span class="hll">    <span class="n">getServletContext</span><span class="o">().</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="n">VUE_FORMULAIRE</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>
+</span><span class="hll">  <span class="o">}</span>
+</span>
+  <span class="c1">// ...</span>
+
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>La méthode <code class="docutils literal notranslate"><span class="pre">doGet</span></code> traite les requêtes de type <strong>GET</strong>. Elle n’a pas de traitement
+particulier à réaliser sinon de rediriger vers la vue en utilisant le
+<code class="docutils literal notranslate"><span class="pre">RequestDispatcher</span></code>. La vue correspond à un fichier JSP.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Le chemin du fichier JSP est <code class="file docutils literal notranslate"><span class="pre">/WEB-INF/jsp/saisieDonneesPersonnelles.jsp</span></code>.
+Le fichier se trouve dans la partie privée de l’application puisqu’il est placé
+dans un sous-répertoire à <code class="file docutils literal notranslate"><span class="pre">/WEB-INF</span></code>. Il est possible de transférer
+le traitement à une partie privée de l’application. Cela empêche l’accès direct
+à la vue depuis un navigateur Web.</p>
+</div>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">La vue du formulaire</span><a class="headerlink" href="#id3" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-jsp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
+<span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;c&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> <span class="k">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Java EE - Exemple MVC<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;&quot;</span> <span class="na">accept-charset=</span><span class="s">&quot;utf-8&quot;</span> <span class="na">method=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;label&gt;</span>Nom :<span class="nt">&lt;/label&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;nom&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;label&gt;</span>Age :<span class="nt">&lt;/label&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;number&quot;</span> <span class="na">name=</span><span class="s">&quot;age&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/form&gt;</span>
+        <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&#39;&lt;c:url value=&quot;/&quot;/&gt;&#39;</span><span class="nt">&gt;</span>Retour à l&#39;accueil<span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>Lorsque l’utilisateur remplit le formulaire et soumet les données en cliquant
+sur le bouton, une nouvelle requête est émise vers la même adresse mais avec
+la méthode <strong>POST</strong>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Astuce</p>
+<p>En laissant vide l’attribut <code class="docutils literal notranslate"><span class="pre">action</span></code> de l’élément <code class="docutils literal notranslate"><span class="pre">form</span></code>, le navigateur
+soumettra le formulaire à l’adresse courante.</p>
+</div>
+<p>Nous pouvons compléter notre contrôleur pour gérer le traitement d’une
+requête <strong>POST</strong> :</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Le contrôleur complet</span><a class="headerlink" href="#id4" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">io.github.spoonless.mvc</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.servlet.ServletException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.annotation.WebServlet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServlet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
+
+<span class="nd">@WebServlet</span><span class="o">(</span><span class="s">&quot;/donneespersonnelles&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SaisieDonneesPersonnellesControleur</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">VUE_FORMULAIRE</span> <span class="o">=</span> <span class="s">&quot;/WEB-INF/jsp/saisieDonneesPersonnelles.jsp&quot;</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">VUE_RESULTAT</span> <span class="o">=</span> <span class="s">&quot;/WEB-INF/jsp/donneesPersonnelles.jsp&quot;</span><span class="o">;</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">getServletContext</span><span class="o">().</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="n">VUE_FORMULAIRE</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>
+  <span class="o">}</span>
+
+<span class="hll">  <span class="nd">@Override</span>
+</span><span class="hll">  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+</span><span class="hll">    <span class="n">req</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">&quot;utf-8&quot;</span><span class="o">);</span>
+</span><span class="hll">    <span class="n">String</span> <span class="n">nom</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">&quot;nom&quot;</span><span class="o">);</span>
+</span><span class="hll">    <span class="n">String</span> <span class="n">age</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">&quot;age&quot;</span><span class="o">);</span>
+</span><span class="hll">    <span class="n">DonneesPersonnelles</span> <span class="n">donneesPersonnelles</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DonneesPersonnelles</span><span class="o">(</span><span class="n">nom</span><span class="o">,</span> <span class="n">age</span><span class="o">);</span>
+</span><span class="hll">    <span class="n">req</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&quot;donneesPersonnelles&quot;</span><span class="o">,</span> <span class="n">donneesPersonnelles</span><span class="o">);</span>
+</span><span class="hll">    <span class="n">getServletContext</span><span class="o">().</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="n">VUE_RESULTAT</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>
+</span><span class="hll">  <span class="o">}</span>
+</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>À la ligne 27, le contrôleur crée un objet de type <code class="docutils literal notranslate"><span class="pre">DonneesPersonnelles</span></code> qui
+correspond au modèle. À la ligne 28, le contrôleur enregistre cet objet comme
+attribut de requête pour le rendre disponible à la vue. Et, à la ligne 29, le
+contrôleur utilise le <code class="docutils literal notranslate"><span class="pre">RequestDispatcher</span></code> pour transférer la traitement à la vue.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Le modèle</span><a class="headerlink" href="#id5" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DonneesPersonnelles</span> <span class="o">{</span>
+
+  <span class="kd">private</span> <span class="n">String</span> <span class="n">nom</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="n">Integer</span> <span class="n">age</span><span class="o">;</span>
+
+  <span class="kd">public</span> <span class="nf">DonneesPersonnelles</span><span class="o">(</span><span class="n">String</span> <span class="n">nom</span><span class="o">,</span> <span class="n">String</span> <span class="n">age</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">nom</span> <span class="o">=</span> <span class="n">nom</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">age</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getNom</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">nom</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">getAge</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">age</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isMajeur</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">age</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">age</span> <span class="o">&gt;=</span> <span class="mi">18</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>Dans notre exemple, le modèle reste très simple. Il a tout de même la responsabilité
+de transformer les données et de savoir si un utilisateur est, ou non, majeur.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">La vue après traitement du formulaire</span><a class="headerlink" href="#id6" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-jsp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
+<span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;c&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> <span class="k">%&gt;</span>
+<span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;fmt&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/fmt&quot;</span> <span class="k">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Java EE - Exemple MVC<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;div&gt;</span>Vos données personnelles<span class="ni">&amp;nbsp;</span>:<span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;ul&gt;</span>
+                <span class="nt">&lt;li&gt;</span>Nom : <span class="nt">&lt;c:out</span> <span class="na">value=</span><span class="s">&quot;${donneesPersonnelles.nom}&quot;</span><span class="nt">/&gt;&lt;/li&gt;</span>
+                <span class="nt">&lt;li&gt;</span>Age : <span class="nt">&lt;fmt:formatNumber</span> <span class="na">value=</span><span class="s">&quot;${donneesPersonnelles.age}&quot;</span><span class="nt">/&gt;&lt;/li&gt;</span>
+        <span class="nt">&lt;/ul&gt;</span>
+        <span class="nt">&lt;c:if</span> <span class="na">test=</span><span class="s">&quot;${donneesPersonnelles.majeur}&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;div&gt;</span>Vous êtes majeur(e) !<span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/c:if&gt;</span>
+        <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&#39;&lt;c:url value=&quot;/&quot;/&gt;&#39;</span><span class="nt">&gt;</span>Retour à l&#39;accueil<span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="exemple-de-mvc-avec-validation">
+<h2>Exemple de MVC (avec validation)<a class="headerlink" href="#exemple-de-mvc-avec-validation" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Nous pouvons complexifier l’exemple précédent en ajoutant une étape de validation
+des données. La plupart du temps, la validation est de la responsabilité du modèle.
+Le contrôleur se contente d’attendre le traitement du modèle pour savoir s’il
+faut transférer le traitement à une vue de succès ou à une vue d’échec. La vue
+d’échec correspond, la plupart du temps, à la vue du formulaire dans laquelle on
+affiche un ou plusieurs messages d’erreur.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Le contrôleur</span><a class="headerlink" href="#id7" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.servlet.ServletException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.annotation.WebServlet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServlet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
+
+<span class="nd">@WebServlet</span><span class="o">(</span><span class="s">&quot;/donneespersonnelles&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SaisieDonneesPersonnellesControleur</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">VUE_FORMULAIRE</span> <span class="o">=</span> <span class="s">&quot;/WEB-INF/jsp/saisieDonneesPersonnelles.jsp&quot;</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">VUE_RESULTAT</span> <span class="o">=</span> <span class="s">&quot;/WEB-INF/jsp/donneesPersonnelles.jsp&quot;</span><span class="o">;</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">getServletContext</span><span class="o">().</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="n">VUE_FORMULAIRE</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">&quot;utf-8&quot;</span><span class="o">);</span>
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="n">String</span> <span class="n">nom</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">&quot;nom&quot;</span><span class="o">);</span>
+      <span class="n">String</span> <span class="n">age</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">&quot;age&quot;</span><span class="o">);</span>
+      <span class="n">DonneesPersonnelles</span> <span class="n">donneesPersonnelles</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DonneesPersonnelles</span><span class="o">(</span><span class="n">nom</span><span class="o">,</span> <span class="n">age</span><span class="o">);</span>
+      <span class="n">req</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&quot;donneesPersonnelles&quot;</span><span class="o">,</span> <span class="n">donneesPersonnelles</span><span class="o">);</span>
+      <span class="n">getServletContext</span><span class="o">().</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="n">VUE_RESULTAT</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">DonneesInvalidesException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">req</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&quot;message&quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+      <span class="n">getServletContext</span><span class="o">().</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="n">VUE_FORMULAIRE</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">resp</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">Le modèle</span><a class="headerlink" href="#id8" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DonneesPersonnelles</span> <span class="o">{</span>
+
+  <span class="kd">private</span> <span class="n">String</span> <span class="n">nom</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="n">Integer</span> <span class="n">age</span><span class="o">;</span>
+
+  <span class="kd">public</span> <span class="nf">DonneesPersonnelles</span><span class="o">(</span><span class="n">String</span> <span class="n">nom</span><span class="o">,</span> <span class="n">String</span> <span class="n">age</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">DonneesInvalidesException</span> <span class="o">{</span>
+   <span class="k">if</span> <span class="o">(</span><span class="n">isBlank</span><span class="o">(</span><span class="n">nom</span><span class="o">)</span> <span class="o">||</span> <span class="n">isBlank</span><span class="o">(</span><span class="n">age</span><span class="o">))</span> <span class="o">{</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="n">DonneesInvalidesException</span><span class="o">(</span><span class="s">&quot;Certaines donnees ne sont pas renseignees !&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">nom</span> <span class="o">=</span> <span class="n">nom</span><span class="o">;</span>
+    <span class="k">try</span> <span class="o">{</span>
+     <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">age</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">NumberFormatException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+     <span class="k">throw</span> <span class="k">new</span> <span class="n">DonneesInvalidesException</span><span class="o">(</span><span class="s">&quot;L&#39;age n&#39;est pas un nombre !&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isBlank</span><span class="o">(</span><span class="n">String</span> <span class="n">valeur</span><span class="o">)</span> <span class="o">{</span>
+   <span class="k">return</span> <span class="n">valeur</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">valeur</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getNom</span><span class="o">()</span> <span class="o">{</span>
+   <span class="k">return</span> <span class="n">nom</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">getAge</span><span class="o">()</span> <span class="o">{</span>
+   <span class="k">return</span> <span class="n">age</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isMajeur</span><span class="o">()</span> <span class="o">{</span>
+   <span class="k">return</span> <span class="n">age</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">age</span> <span class="o">&gt;=</span> <span class="mi">18</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">L’exception pour permettre au modèle de signaler un problème</span><a class="headerlink" href="#id9" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DonneesInvalidesException</span> <span class="kd">extends</span> <span class="n">Exception</span> <span class="o">{</span>
+
+  <span class="kd">public</span> <span class="nf">DonneesInvalidesException</span><span class="o">(</span><span class="n">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>Pour la vue de formulaire, on pré-remplie le formulaire avec les données du
+l’attribut <code class="docutils literal notranslate"><span class="pre">donneesPersonnelles</span></code>. Cet attribut est passé à la vue en cas
+d’échec de la validation. Cela permet d’afficher à nouveau à l’utilisateur les
+données qu’il a saisies.</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">La vue du formulaire</span><a class="headerlink" href="#id10" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-jsp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
+<span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;c&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> <span class="k">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Java EE - Exemple MVC<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;c:out</span> <span class="na">value=</span><span class="s">&quot;${message}&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;&quot;</span> <span class="na">accept-charset=</span><span class="s">&quot;utf-8&quot;</span> <span class="na">method=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;label&gt;</span>Nom :<span class="nt">&lt;/label&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;nom&quot;</span> <span class="na">value=</span><span class="s">&#39;&lt;c:out value=&quot;${donneesPersonnelles.nom}&quot;/&gt;&#39;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;label&gt;</span>Age :<span class="nt">&lt;/label&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;number&quot;</span> <span class="na">name=</span><span class="s">&quot;age&quot;</span> <span class="na">value=</span><span class="s">&quot;${donneesPersonnelles.age}&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/form&gt;</span>
+        <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&#39;&lt;c:url value=&quot;/&quot;/&gt;&#39;</span><span class="nt">&gt;</span>Retour à l&#39;accueil<span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">La vue après traitement du formulaire</span><a class="headerlink" href="#id11" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-jsp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
+<span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;c&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> <span class="k">%&gt;</span>
+<span class="k">&lt;%@</span><span class="n">taglib</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;fmt&quot;</span> <span class="n">uri</span><span class="o">=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/fmt&quot;</span> <span class="k">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Java EE - Exemple MVC<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;div&gt;</span>Vos données personnelles<span class="ni">&amp;nbsp;</span>:<span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;ul&gt;</span>
+                <span class="nt">&lt;li&gt;</span>Nom : <span class="nt">&lt;c:out</span> <span class="na">value=</span><span class="s">&quot;${donneesPersonnelles.nom}&quot;</span><span class="nt">/&gt;&lt;/li&gt;</span>
+                <span class="nt">&lt;li&gt;</span>Age : <span class="nt">&lt;fmt:formatNumber</span> <span class="na">value=</span><span class="s">&quot;${donneesPersonnelles.age}&quot;</span><span class="nt">/&gt;&lt;/li&gt;</span>
+        <span class="nt">&lt;/ul&gt;</span>
+        <span class="nt">&lt;c:if</span> <span class="na">test=</span><span class="s">&quot;${donneesPersonnelles.majeur}&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;div&gt;</span>Vous êtes majeur(e) !<span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/c:if&gt;</span>
+        <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&#39;&lt;c:url value=&quot;/&quot;/&gt;&#39;</span><span class="nt">&gt;</span>Retour à l&#39;accueil<span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Vous pouvez télécharger le projet complet : <a class="reference download internal" download="" href="../_downloads/93ac4e5e8b01951f9c4bc72085ee41ab/exemple-mvc.zip"><code class="xref download docutils literal notranslate"><span class="pre">exemple-mvc.zip</span></code></a>.</p>
+</div>
+</div>
+<div class="section" id="exercice">
+<h2>Exercice<a class="headerlink" href="#exercice" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="exercice admonition">
+<p class="admonition-title">Formulaire MVC</p>
+<p><strong>Objectif</strong></p>
+<blockquote>
+<div><p>Reprenez l’exemple précédent et ajoutez les fonctionnalités suivantes :</p>
+<ul class="simple">
+<li><p>Dans le formulaire, l’utilisateur doit pouvoir préciser sa civilité :
+Monsieur, Madame, Mademoiselle. Le choix s’affiche sous la forme d’une
+liste (<code class="docutils literal notranslate"><span class="pre">select</span></code> en HTML). Attention, la liste des civilités ne doit
+pas être en dur dans la vue mais elle doit être fournie par un modèle. La
+civilité est affichée dans la vue après le traitement par le serveur.</p></li>
+<li><p>Dans le formulaire, l’utilisateur doit saisir un email. Le format
+de l’email est validé par le serveur. Pour faire simple, on peut se
+contenter de vérifier que le caractère <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> est présent dans l’email.</p></li>
+<li><p>Modifier l’implémentation : si l’utilisateur a fait plusieurs erreurs
+de saisie dans le formulaire, elles doivent être toutes clairement signalées
+lors de l’affichage du formulaire à côté du champ concerné.</p></li>
+</ul>
+<p>Pour réaliser ces améliorations, vous respecterez une architecture <a class="reference external" href="https://fr.wikipedia.org/wiki/Mod%C3%A8le-vue-contr%C3%B4leur">MVC</a>.</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Modèle Maven du projet à télécharger</strong></dt><dd><p><a class="reference download internal" download="" href="../_downloads/93ac4e5e8b01951f9c4bc72085ee41ab/exemple-mvc.zip"><code class="xref download docutils literal notranslate"><span class="pre">exemple-mvc.zip</span></code></a></p>
+</dd>
+<dt><strong>Mise en place du projet</strong></dt><dd><p>Éditer le fichier pom.xml du template et modifier la balise
+artifactId pour spécifier le nom de votre projet.</p>
+</dd>
+<dt><strong>Intégration du projet dans Eclipse</strong></dt><dd><p>L’intégration du projet dans Eclipse suit la même procédure que
+celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-import"><span class="std std-ref">Import du projet Maven dans Eclipse</span></a>.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="web_listeners_filters.html" class="btn btn-neutral float-right" title="Web listeners et filtres" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="jsp.html" class="btn btn-neutral float-left" title="JSP : Java Server Pages" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright David Gayerie - david.gayerie@reseau-cd.net - CC-BY-SA
+
+    </p>
+  </div>
+    <div>Téléchargez ce support au format <a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip">HTML</a>
+    </div>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -36,9 +36,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Recherche" href="../search.html" />
-    <link rel="next" title="Les API Web avec JAX-RS" href="jaxrs.html" />
-    <link rel="prev" title="Web listeners et filtres" href="web_listeners_filters.html" /> 
+    <link rel="search" title="Recherche" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -80,12 +78,12 @@
             
             
               <p class="caption"><span class="caption-text">Java EE pour le Web</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="environnement_developpement.html">L’environnement de développement</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#telechargement-des-outils">Téléchargement des outils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#installation-des-outils">Installation des outils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-wildfly-dans-eclipse">Intégration de Wildfly dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-tomcat-dans-eclipse">Intégration de Tomcat dans Eclipse</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a><ul>
@@ -105,10 +103,9 @@
 <li class="toctree-l2"><a class="reference internal" href="maven.html#un-premier-projet-avec-maven">Un premier projet avec Maven</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#le-fichier-pom-xml">Le fichier pom.xml</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#import-du-projet-maven-dans-eclipse">Import du projet Maven dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="maven.html#test-de-l-application-dans-wildfly">Test de l’application dans Wildfly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#test-de-l-application-dans-tomcat">Test de l’application dans Tomcat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#gerer-le-projet-avec-maven">Gérer le projet avec Maven</a></li>
 <li class="toctree-l2"><a class="reference internal" href="maven.html#execution-de-maven-dans-eclipse">Exécution de Maven dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="maven.html#exercice">Exercice</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="servlet.html">Les Servlets</a><ul>
@@ -140,7 +137,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jsp.html">JSP : Java Server Pages</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jsp.html#developper-des-jsp-avec-wildfly">Développer des JSP avec Wildfly</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jsp.html#exercice">Exercice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jsp.html#el-expression-language">EL : Expression Language</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jsp.html#les-operateurs-dans-l-expression-language">Les opérateurs dans l’expression language</a></li>
@@ -166,10 +162,12 @@
 <li class="toctree-l2"><a class="reference internal" href="jsp.html#exercices">Exercices</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="request_dispatcher.html">RequestDispatcher et MVC</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
-<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="request_dispatcher.html#exercice">Exercice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvc_request_dispatcher.html">MVC et RequestDispatcher</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exemple-de-mvc-sans-validation">Exemple de MVC (sans validation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exemple-de-mvc-avec-validation">Exemple de MVC (avec validation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exercice">Exercice</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="web_listeners_filters.html">Web listeners et filtres</a><ul>
@@ -184,39 +182,6 @@
 <li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#generation-de-log">Génération de log</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Java Server Faces (JSF)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#creer-un-projet-avec-jsf">Créer un projet avec JSF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#la-vue-facelets">La vue : facelets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#activer-le-support-de-jsf-dans-eclipse">Activer le support de JSF dans Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#une-introduction-a-cdi">Une introduction à CDI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#declarer-un-objet-avec-cdi">Déclarer un objet avec CDI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#le-fichier-de-deploiement-beans-xml">Le fichier de déploiement beans.xml</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#le-modele">Le modèle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#le-controleur">Le contrôleur</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#la-navigation">La navigation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#la-validation-de-formulaire">La validation de formulaire</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#les-requetes-ajax">Les requêtes Ajax</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pour-aller-plus-loin">Pour aller plus loin</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="jaxrs.html">Les API Web avec JAX-RS</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-notion-de-ressource">La notion de ressource</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#configurer-une-application-web-pour-jax-rs">Configurer une application Web pour JAX-RS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-des-ressources-avec-jax-rs">Implémenter des ressources avec JAX-RS</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#les-annotations-de-methodes">Les annotations de méthodes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxrs.html#parametre-dans-le-chemin-d-uri">Paramètre dans le chemin d’URI</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#data-binding">Data binding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#generer-une-reponse">Générer une réponse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#gerer-des-exceptions">Gérer des exceptions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#la-validation-avec-bean-validation">La validation avec Bean Validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#injection-des-dependances">Injection des dépendances</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#implementer-un-client-http">Implémenter un client HTTP</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxrs.html#exercice">Exercice</a></li>
 </ul>
 </li>
 </ul>
@@ -277,15 +242,6 @@
     
   </ul>
 
-  
-  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
-      
-        <a href="jaxrs.html" class="btn btn-neutral float-right" title="Les API Web avec JAX-RS" accesskey="n">Suivant <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="web_listeners_filters.html" class="btn btn-neutral" title="Web listeners et filtres" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
-      
-  </div>
   
   <hr/>
 </div>
@@ -679,7 +635,7 @@ continuité de service du point de vue du client. Sans aller trop loin
 dans les implications de la passivation/activation, il suffit de savoir
 que les classes annotées avec <code class="docutils literal notranslate"><span class="pre">&#64;SessionScoped</span></code> doivent implémenter
 l’interface marqueur
-<a class="reference external" href="https://docs.oracle.com/javase/10/docs/api/java/io/Serializable.html">java.io.Serializable</a>.</p>
+<a class="reference external" href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/Serializable.html">java.io.Serializable</a>.</p>
 <div class="literal-block-wrapper docutils container" id="id10">
 <div class="code-block-caption"><span class="caption-text">Une déclaration de portée session</span><a class="headerlink" href="#id10" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">fr.epsi.b3</span><span class="o">;</span>
@@ -989,25 +945,25 @@ vous reporter à ce
 <p>Il est également possible de fournir sa propre implémentation d’un
 validateur. Pour cela, il suffit de créer une classe qui implémente
 l’interface
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/faces/validator/Validator.html">javax.faces.validator.Validator</a>.
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/faces/validator/Validator.html">javax.faces.validator.Validator</a>.
 Cette interface ne contient la déclaration que d’une seule méthode :</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">validate</span><span class="o">(</span><span class="n">FacesContext</span> <span class="n">context</span><span class="o">,</span> <span class="n">UIComponent</span> <span class="n">component</span><span class="o">,</span> <span class="n">Object</span> <span class="n">value</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ValidatorException</span>
 </pre></div>
 </div>
 <p>La validation échoue si un appel à cette méthode lance une
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/faces/validator/ValidatorException.html">ValidatorException</a>.
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/faces/validator/ValidatorException.html">ValidatorException</a>.
 Le premier paramètre représente le contexte d’exécution JSF, le deuxième
 paramètre représente le composant graphique pour lequel la validation a
 été demandée. Par exemple, pour un champ de formulaire de type
 <code class="docutils literal notranslate"><span class="pre">input</span></code>, ce composant sera une instance de
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/faces/component/UIInput.html">UIInput</a>
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/faces/component/UIInput.html">UIInput</a>
 qui hérite de
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/faces/component/UIComponent.html">UIComponent</a>.
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/faces/component/UIComponent.html">UIComponent</a>.
 Enfin le troisième paramètre représente la valeur qui doit être validée.
 Selon le type de composant, cette valeur peut être de type String,
 Boolean…</p>
 <p>La classe du validateur doit également porter l’annotation
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/faces/validator/FacesValidator.html">&#64;FacesValidator</a>
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/faces/validator/FacesValidator.html">&#64;FacesValidator</a>
 indiquant le nom du validateur qui sera utilisé pour le référencer dans
 les facelets.</p>
 <p>L’exemple ci-dessous montre un exemple de validateur permettant de
@@ -1121,7 +1077,7 @@ d’ajouter des annotations directement sur le bean <code class="docutils litera
 </div>
 <p>La documentation des annotations de Bean Validation est disponible dans
 la documentation de l’API Java EE :
-<a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/validation/constraints/package-summary.html">https://docs.oracle.com/javaee/7/api/javax/validation/constraints/package-summary.html</a></p>
+<a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/validation/constraints/package-summary.html">https://javaee.github.io/javaee-spec/javadocs/javax/validation/constraints/package-summary.html</a></p>
 <p>Bean Validation est une bonne alternative aux balises JSF de validation
 si un bean doit être réutilisé comme modèle dans des facelets
 différentes.</p>
@@ -1246,25 +1202,17 @@ bibliothèques tierces comme la très impressionnante
           </div>
           <footer>
   
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="jaxrs.html" class="btn btn-neutral float-right" title="Les API Web avec JAX-RS" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="web_listeners_filters.html" class="btn btn-neutral float-left" title="Web listeners et filtres" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
-      
-    </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright David Gayerie - david.gayerie@epsi.fr - CC-BY-SA
+        &copy; Copyright David Gayerie - david.gayerie@reseau-cd.net - CC-BY-SA
 
     </p>
   </div>
-    <div><a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip"><code class="download docutils literal notranslate"><span class="pre">Télécharger ce cours</pre></code></a></div>
+    <div>Téléchargez ce support au format <a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip">HTML</a>
+    </div>
 
 
 </footer>

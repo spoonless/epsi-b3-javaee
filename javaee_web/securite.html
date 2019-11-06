@@ -1,0 +1,672 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fr" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fr" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sécurisation d’une application Web &mdash; Documentation Java EE pour le Web </title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom_rtd_theme.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="prev" title="Web listeners et filtres" href="web_listeners_filters.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Java EE pour le Web
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Recherche dans les pages" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Java EE pour le Web</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="environnement_developpement.html">L’environnement de développement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#telechargement-des-outils">Téléchargement des outils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#installation-des-outils">Installation des outils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#configuration-de-java-dans-eclipse">Configuration de Java dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environnement_developpement.html#integration-de-tomcat-dans-eclipse">Intégration de Tomcat dans Eclipse</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="premiere_application.html">Une première application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#qu-est-ce-qu-une-application-java-ee">Qu’est-ce qu’une application Java EE ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#creation-d-un-projet-dans-eclipse">Création d’un projet dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#deploiement-depuis-eclipse-et-test-de-l-application">Déploiement depuis Eclipse et test de l’application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="premiere_application.html#le-contexte-racine-de-deploiement-root-context">Le contexte racine de déploiement (root context)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="premiere_application.html#packaging-de-l-application">Packaging de l’application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="maven.html">Introduction à Maven</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#pourquoi-utiliser-maven">Pourquoi utiliser Maven ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#caracteristiques-principales-de-maven">Caractéristiques principales de Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#installation-de-maven">Installation de Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#un-premier-projet-avec-maven">Un premier projet avec Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#le-fichier-pom-xml">Le fichier pom.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#import-du-projet-maven-dans-eclipse">Import du projet Maven dans Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#test-de-l-application-dans-tomcat">Test de l’application dans Tomcat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#gerer-le-projet-avec-maven">Gérer le projet avec Maven</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maven.html#execution-de-maven-dans-eclipse">Exécution de Maven dans Eclipse</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="servlet.html">Les Servlets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#structure-d-une-servlet-http">Structure d’une servlet HTTP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#configuration-du-deploiement-d-une-servlet">Configuration du déploiement d’une servlet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="servlet.html#chemin-absolu-d-url-dans-une-application-web">Chemin absolu d’URL dans une application Web</a></li>
+<li class="toctree-l3"><a class="reference internal" href="servlet.html#motif-d-url-d-une-servlet">Motif d’URL d’une Servlet</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#utilisation-du-fichier-de-deploiement-web-xml">Utilisation du fichier de déploiement web.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servlet.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="conteneur_web.html">Le conteneur Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#cycle-de-vie-des-servlets">Cycle de vie des servlets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#exercice">Exercice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#servlet-et-programmation-concurrente">Servlet et programmation concurrente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conteneur_web.html#id1">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="attributs_web.html">Les attributs d’une application Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#attribut-de-portee-requete">Attribut de portée requête</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#attribut-de-portee-session">Attribut de portée session</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="attributs_web.html#session-http-comment-cela-marche-t-il">Session HTTP : comment cela marche-t-il ?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#les-attributs-de-portee-application">Les attributs de portée application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attributs_web.html#exercices">Exercices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jsp.html">JSP : Java Server Pages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#exercice">Exercice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#el-expression-language">EL : Expression Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-operateurs-dans-l-expression-language">Les opérateurs dans l’expression language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-objets-implicites-dans-une-jsp">Les objets implicites dans une JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#la-resolution-de-portee-des-attributs-dans-une-jsp">La résolution de portée des attributs dans une JSP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#expression-language-et-gestion-des-exceptions">Expression Language et gestion des exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-directives-de-jsp">Les directives de JSP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#la-directive-page">La directive page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#la-directive-include">La directive include</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-balises-d-action-jsp">Les balises d’action JSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#les-taglibs-et-la-jstl">Les Taglibs et la JSTL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-core">JSTL core</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-formater">JSTL formater</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-functions">JSTL functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-sql">JSTL SQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsp.html#jstl-xml">JSTL XML</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsp.html#exercices">Exercices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mvc_request_dispatcher.html">MVC et RequestDispatcher</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#le-modele-mvc">Le modèle MVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#le-request-dispatcher">Le request dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exemple-de-mvc-sans-validation">Exemple de MVC (sans validation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exemple-de-mvc-avec-validation">Exemple de MVC (avec validation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc_request_dispatcher.html#exercice">Exercice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="web_listeners_filters.html">Web listeners et filtres</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#les-listeners-web">Les listeners Web</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#declaration-des-listeners-web">Déclaration des listeners Web</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#exemple-d-utilisation-d-un-listener">Exemple d’utilisation d’un listener</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#les-filtres-de-servlet">Les filtres de Servlet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#declaration-des-filtres">Déclaration des filtres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#implementation-d-un-filtre">Implémentation d’un filtre</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_listeners_filters.html#cas-d-utilisation-de-filtres">Cas d’utilisation de filtres</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#gestion-de-l-utf-8">Gestion de l’UTF-8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="web_listeners_filters.html#generation-de-log">Génération de log</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sécurisation d’une application Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#declarer-des-contraintes-de-securite">Déclarer des contraintes de sécurité</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-de-l-authentification-dans-tomcat">Configuration de l’authentification dans Tomcat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-https-dans-tomcat">Configuration https dans Tomcat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercice">Exercice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#login-a-partir-d-un-formulaire-web">Login à partir d’un formulaire Web</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Java EE pour le Web</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Accueil</a> &raquo;</li>
+        
+      <li>Sécurisation d’une application Web</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+      
+        <a href="web_listeners_filters.html" class="btn btn-neutral" title="Web listeners et filtres" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="securisation-d-une-application-web">
+<h1>Sécurisation d’une application Web<a class="headerlink" href="#securisation-d-une-application-web" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Une application Web Java EE peut être sécurisée de manière déclarative. Cela
+signifie qu’il est possible de déclarer que certaines adresses de cette application
+sont soumises à des restrictions d’accès. Dans ce cas, le serveur doit pouvoir
+garantir la confidentialité des données grâce à une connexion sécurisée https
+et/ou l’utilisateur doit, au préalable, s’authentifier auprès du serveur.</p>
+<p>Le mécanisme d’authentification relève de la configuration du serveur. Dans le
+processus de développement, l’équipe de développement configure l’application
+pour sécuriser l’accès à certaines parties de l’application et les administrateurs
+du serveur mettent en place la configuration nécessaire pour prendre en charge
+la sécurisation.</p>
+<p>La déclaration des contraintes de sécurité est standardisée par Java EE. La
+configuration des mécanismes de sécurité est propre à chaque serveur Web Java.</p>
+<div class="section" id="declarer-des-contraintes-de-securite">
+<h2>Déclarer des contraintes de sécurité<a class="headerlink" href="#declarer-des-contraintes-de-securite" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Pour l’équipe de développement, il faut déclarer les contraintes de sécurité
+dans le fichier <code class="file docutils literal notranslate"><span class="pre">web.xml</span></code>.</p>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;web-app</span> <span class="na">xmlns=</span><span class="s">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://xmlns.jcp.org/xml/ns/javaee</span>
+<span class="s">                             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd&quot;</span>
+         <span class="na">version=</span><span class="s">&quot;3.1&quot;</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;security-constraint&gt;</span>
+    <span class="nt">&lt;web-resource-collection&gt;</span>
+      <span class="nt">&lt;web-resource-name&gt;</span>Zone privée<span class="nt">&lt;/web-resource-name&gt;</span>
+<span class="hll">      <span class="nt">&lt;url-pattern&gt;</span>/private/*<span class="nt">&lt;/url-pattern&gt;</span>
+</span>    <span class="nt">&lt;/web-resource-collection&gt;</span>
+    <span class="nt">&lt;auth-constraint&gt;</span>
+<span class="hll">      <span class="nt">&lt;role-name&gt;</span>admin<span class="nt">&lt;/role-name&gt;</span>
+</span>    <span class="nt">&lt;/auth-constraint&gt;</span>
+    <span class="nt">&lt;user-data-constraint&gt;</span>
+<span class="hll">      <span class="nt">&lt;transport-guarantee&gt;</span>CONFIDENTIAL<span class="nt">&lt;/transport-guarantee&gt;</span>
+</span>    <span class="nt">&lt;/user-data-constraint&gt;</span>
+  <span class="nt">&lt;/security-constraint&gt;</span>
+
+  <span class="nt">&lt;login-config&gt;</span>
+<span class="hll">    <span class="nt">&lt;auth-method&gt;</span>BASIC<span class="nt">&lt;/auth-method&gt;</span>
+</span>    <span class="nt">&lt;realm-name&gt;</span>Zone avec accès restreint<span class="nt">&lt;/realm-name&gt;</span>
+  <span class="nt">&lt;/login-config&gt;</span>
+
+  <span class="nt">&lt;security-role&gt;</span>
+<span class="hll">    <span class="nt">&lt;role-name&gt;</span>admin<span class="nt">&lt;/role-name&gt;</span>
+</span>  <span class="nt">&lt;/security-role&gt;</span>
+
+<span class="nt">&lt;/web-app&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p>Pour l’exemple précédent, on déclare une zone privée correspondant à toutes les
+adresses de la forme <code class="docutils literal notranslate"><span class="pre">/private/*</span></code> (ligne 10). Cette zone n’est accessible que
+pour les utilisateurs qui ont le rôle <code class="docutils literal notranslate"><span class="pre">admin</span></code> (ligne 13). Les données doivent
+être transmises de manière confidentielle, c’est-à-dire que les échanges doivent
+se faire en https (ligne 16). On déclare ensuite la configuration pour réaliser
+une étape de login. On déclare qu’il faut utiliser une <a class="reference external" href="https://fr.wikipedia.org/wiki/Authentification_HTTP">authentification HTTP</a>
+en mode <em>BASIC</em> (ligne 21). Enfin, on déclare que l’application utilise le rôle
+<code class="docutils literal notranslate"><span class="pre">admin</span></code> (ligne 26).</p>
+<p>À partir de cette configuration, le serveur doit pouvoir satisfaire l’ensemble
+de ces contraintes et garantir que les accès sont correctement sécurisés.</p>
+</div>
+<div class="section" id="configuration-de-l-authentification-dans-tomcat">
+<h2>Configuration de l’authentification dans Tomcat<a class="headerlink" href="#configuration-de-l-authentification-dans-tomcat" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Tomcat utilise la notion de <a class="reference external" href="https://tomcat.apache.org/tomcat-9.0-doc/realm-howto.html">royaumes</a> (<em>Realms</em>) pour définir des zone sécurisées.
+Cela permet de configurer différentes stratégies pour valider l’authentification
+d’un utilisateur. Ainsi Tomcat peut valider une authentification en recherchant
+le couple login/mot de passe dans une base de données, en interrogeant un serveur
+LDAP ou tout simplement en consultant un fichier de configuration. Il est également
+possible de fournir son propre mécanisme d’authentification en fournissant
+une bibliothèque Java conforme au standard JAAS (<em>Java Authentication and
+Authorization Service</em>).</p>
+<p>Par defaut, un serveur Tomcat est configuré pour consulter un fichier de configuration
+appelé <code class="file docutils literal notranslate"><span class="pre">tomcat-users.xml</span></code>. Ce fichier contient la déclaration des rôles
+et des utilisateurs.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Exemple de fichier tomcat-users.xml</span><a class="headerlink" href="#id1" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;tomcat-users</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span>
+              <span class="na">xmlns=</span><span class="s">&quot;http://tomcat.apache.org/xml&quot;</span>
+              <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+              <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://tomcat.apache.org/xml tomcat-users.xsd&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;role</span> <span class="na">rolename=</span><span class="s">&quot;admin&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;user</span> <span class="na">username=</span><span class="s">&quot;user&quot;</span> <span class="na">password=</span><span class="s">&quot;azerty&quot;</span> <span class="na">roles=</span><span class="s">&quot;admin&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/tomcat-users&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="configuration-https-dans-tomcat">
+<h2>Configuration https dans Tomcat<a class="headerlink" href="#configuration-https-dans-tomcat" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Pour activer le connecteur https dans Tomcat, il faut disposer d’un certificat
+serveur. Java fournit un outil appelé <a class="reference external" href="https://docs.oracle.com/en/java/javase/11/tools/keytool.html">keytool</a> qui est dédié à la gestion des
+certificats et à leur stockage dans un fichier sécurisé appelé un <strong>keystore</strong>.</p>
+<p>Pour disposer d’un certificat, il faut effectuer une demande de validation auprès
+d’un organisme certificateur. En effet, un certificat numérique doit toujours
+être signé numériquement par un tiers de confiance. Cependant, il est également
+possible de créer des certificats dits auto-signés, c’est-à-dire signés par
+l’émetteur. Attention, ce type de certificat ne doit pas être utilisé dans un
+environnement de production. Un navigateur Web se connectant en https sur un
+serveur présentant un certificat auto-signé, produit un message d’avertissement
+à l’utilisateur car cela constitue une faille de sécurité.</p>
+<p>Pour des raisons de simplicité, nous allons utiliser pour ce chapitre une certificat
+auto-signé.</p>
+<p>Vous pouvez récupérer un fichier <em>keystore</em> contenant un certificat auto-signé :</p>
+<blockquote>
+<div><p><a class="reference download internal" download="" href="../_downloads/5fe72d12a3510e706b7285ea87d460b0/selfsigned.keystore"><code class="xref download docutils literal notranslate"><span class="pre">selfsigned.keystore</span></code></a></p>
+</div></blockquote>
+<p>Ce fichier contient un certificat auto-signé nommé <strong>tomcat</strong> pour le domaine
+<strong>localhost</strong>. Le mot de passe qui protège le <em>keystore</em> est <strong>azerty</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Il est possible de générer votre propre certificat auto-signé grâce à l’outil
+<a class="reference external" href="https://docs.oracle.com/en/java/javase/11/tools/keytool.html">keytool</a>. Il s’agit d’un outil en ligne de commandes qui se trouve dans le
+sous-répertoire <code class="file docutils literal notranslate"><span class="pre">bin</span></code> du répertoire d’installation du JDK. Pour créer
+un certificat auto-signé, il faut utiliser la commande :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>keytool -genkey -keystore <span class="o">[</span>NOM FICHIER KEYSTORE<span class="o">]</span> -alias tomcat -keyalg RSA -keysize <span class="m">4096</span> -validity <span class="m">365</span>
+</pre></div>
+</div>
+</div>
+<p>Il faut maintenant configurer Tomcat en éditant le fichier de configuration
+principal du serveur : <code class="file docutils literal notranslate"><span class="pre">server.xml</span></code>. Ce fichier se trouve dans le *
+sous-répertoire <code class="file docutils literal notranslate"><span class="pre">conf</span></code> du répertoire d’installation de Tomcat.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Dans Eclipse, la configuration de Tomcat se trouve dans le projet nommé <strong>Servers</strong>.</p>
+</div>
+<p>Recherchez la déclaration du connecteur http dans le fichier qui ressemble à ceci :</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Connector</span> <span class="na">connectionTimeout=</span><span class="s">&quot;20000&quot;</span> <span class="na">port=</span><span class="s">&quot;8080&quot;</span> <span class="na">protocol=</span><span class="s">&quot;HTTP/1.1&quot;</span> <span class="na">redirectPort=</span><span class="s">&quot;8443&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>Ajoutez à la suite la déclaration du connecteur https :</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Connector</span> <span class="na">port=</span><span class="s">&quot;8443&quot;</span>
+           <span class="na">protocol=</span><span class="s">&quot;org.apache.coyote.http11.Http11NioProtocol&quot;</span>
+           <span class="na">maxThreads=</span><span class="s">&quot;150&quot;</span>
+           <span class="na">SSLEnabled=</span><span class="s">&quot;true&quot;</span>
+           <span class="na">scheme=</span><span class="s">&quot;https&quot;</span>
+           <span class="na">secure=</span><span class="s">&quot;true&quot;</span>
+           <span class="na">clientAuth=</span><span class="s">&quot;false&quot;</span>
+           <span class="na">sslProtocol=</span><span class="s">&quot;TLS&quot;</span>
+           <span class="na">keystoreFile=</span><span class="s">&quot;selfsigned.keystore&quot;</span>
+           <span class="na">keyAlias=</span><span class="s">&quot;tomcat&quot;</span>
+           <span class="na">keystorePass=</span><span class="s">&quot;azerty&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Faites attention à ce que l’attribut <code class="docutils literal notranslate"><span class="pre">keystoreFile</span></code> indique bien le chemin
+complet d’accès au fichier <em>keystore</em> contenant le certificat.</p>
+</div>
+</div>
+<div class="section" id="exercice">
+<h2>Exercice<a class="headerlink" href="#exercice" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="exercice admonition">
+<p class="admonition-title">Sécurisation d’une application Web</p>
+<p>Sécurisez une application Web de manière à ce que l’application demande
+une authentification HTTP et soit accessible en https.</p>
+<div class="admonition tip">
+<p class="admonition-title">Astuce</p>
+<p>Une fois connecté, les informations sur l’utilisateur (dont son login)
+sont accessibles grâce à la méthode <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html#getUserPrincipal--">HttpServletRequest.getUserPrincipal</a>.
+Il est également possible d’y accéder dans une JSP puisque l’objet implicite
+<code class="docutils literal notranslate"><span class="pre">pageContext</span></code> permet d’accéder à l’objet <a class="reference external" href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html">HttpServletRequest</a> :</p>
+<div class="highlight-jsp notranslate"><div class="highlight"><pre><span></span>${pageContext.request.userPrincipal.name}
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="login-a-partir-d-un-formulaire-web">
+<h2>Login à partir d’un formulaire Web<a class="headerlink" href="#login-a-partir-d-un-formulaire-web" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Si vous ne désirez pas utiliser l’authentification HTTP, il est possible de
+créer son propre formulaire de login et de préciser que la configuration de login
+doit se faire à partir d’un formulaire.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Configuration pour l’utilisation d’un formulaire</span><a class="headerlink" href="#id2" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;web-app</span> <span class="na">xmlns=</span><span class="s">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://xmlns.jcp.org/xml/ns/javaee</span>
+<span class="s">                             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd&quot;</span>
+         <span class="na">version=</span><span class="s">&quot;3.1&quot;</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;security-constraint&gt;</span>
+    <span class="nt">&lt;web-resource-collection&gt;</span>
+      <span class="nt">&lt;web-resource-name&gt;</span>Zone privée<span class="nt">&lt;/web-resource-name&gt;</span>
+      <span class="nt">&lt;url-pattern&gt;</span>/private/*<span class="nt">&lt;/url-pattern&gt;</span>
+    <span class="nt">&lt;/web-resource-collection&gt;</span>
+    <span class="nt">&lt;auth-constraint&gt;</span>
+      <span class="nt">&lt;role-name&gt;</span>admin<span class="nt">&lt;/role-name&gt;</span>
+    <span class="nt">&lt;/auth-constraint&gt;</span>
+    <span class="nt">&lt;user-data-constraint&gt;</span>
+      <span class="nt">&lt;transport-guarantee&gt;</span>CONFIDENTIAL<span class="nt">&lt;/transport-guarantee&gt;</span>
+    <span class="nt">&lt;/user-data-constraint&gt;</span>
+  <span class="nt">&lt;/security-constraint&gt;</span>
+
+<span class="hll">  <span class="nt">&lt;login-config&gt;</span>
+</span><span class="hll">    <span class="nt">&lt;auth-method&gt;</span>FORM<span class="nt">&lt;/auth-method&gt;</span>
+</span><span class="hll">    <span class="nt">&lt;form-login-config&gt;</span>
+</span><span class="hll">        <span class="nt">&lt;form-login-page&gt;</span>/login.html<span class="nt">&lt;/form-login-page&gt;</span>
+</span><span class="hll">        <span class="nt">&lt;form-error-page&gt;</span>/login-failed.html<span class="nt">&lt;/form-error-page&gt;</span>
+</span><span class="hll">    <span class="nt">&lt;/form-login-config&gt;</span>
+</span><span class="hll">  <span class="nt">&lt;/login-config&gt;</span>
+</span>
+  <span class="nt">&lt;security-role&gt;</span>
+    <span class="nt">&lt;role-name&gt;</span>admin<span class="nt">&lt;/role-name&gt;</span>
+  <span class="nt">&lt;/security-role&gt;</span>
+
+<span class="nt">&lt;/web-app&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>Les balises <code class="docutils literal notranslate"><span class="pre">&lt;form-login-page&gt;</span></code> et <code class="docutils literal notranslate"><span class="pre">&lt;form-error-page&gt;</span></code> indiquent les ressources
+Web à utiliser pour afficher le formulaire de login et la page d’erreur de
+connexion. Il peut s’agir de n’importe quelle ressource : page HTML, JSP,
+Servlet.</p>
+<p>La page de login doit contenir un formulaire qui soumet des données vers
+<strong>j_security_check</strong>. Les paramètres soumis doivent être <strong>j_username</strong> et
+<strong>j_password</strong>.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Le fichier login.html</span><a class="headerlink" href="#id3" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-html notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Login<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="hll"><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;POST&quot;</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;j_security_check&quot;</span> <span class="na">accept-charset</span><span class="o">=</span><span class="s">&quot;latin-1&quot;</span><span class="p">&gt;</span>
+</span>  <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>login : <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<span class="hll">  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;j_username&quot;</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+</span>  <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>mot de passe : <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<span class="hll">  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;password&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;j_password&quot;</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+</span>  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span><span class="p">&gt;</span>Connexion<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Le fichier login-failed.html</span><a class="headerlink" href="#id4" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-html notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Échec login<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>Le login ou le mot de passe est invalide !<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;POST&quot;</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;j_security_check&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>login : <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;j_username&quot;</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>mot de passe : <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;j_password&quot;</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span><span class="p">&gt;</span>Connexion<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="web_listeners_filters.html" class="btn btn-neutral float-left" title="Web listeners et filtres" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright David Gayerie - david.gayerie@reseau-cd.net - CC-BY-SA
+
+    </p>
+  </div>
+    <div>Téléchargez ce support au format <a class="reference download" href="https://github.com/spoonless/epsi-b3-javaee/archive/gh-pages.zip">HTML</a>
+    </div>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

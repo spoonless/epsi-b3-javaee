@@ -12,6 +12,7 @@
 	<ul>
 		<li>Nom : <c:out value="${donneesPersonnelles.nom}"/></li>
 		<li>Age : <fmt:formatNumber value="${donneesPersonnelles.age}"/></li>
+		<li>Email : <c:out value="${donneesPersonnelles.email}"/></li>
 	</ul>
 	<c:if test="${donneesPersonnelles.majeur}">
 		<div>Vous êtes majeur(e) !</div>

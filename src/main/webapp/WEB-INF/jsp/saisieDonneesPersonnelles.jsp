@@ -7,14 +7,30 @@
     <title>Java EE - Exemple MVC</title>
   </head>
   <body>
-  	<div>
-  		<c:out value="${message}"/>
-  	</div>
   	<form action="" accept-charset="utf-8" method="post">
+  		<label>Civilite :</label>
+  		<select name="civilite">
+  			<option>--</option>
+  			<c:forEach items="${ listeCivilites }" var="c">
+  				<option value='<c:out value="${c.id}"/>' ${c.id == param['civilite'] ? "selected" : ""}>
+  					<c:out value="${c.nom }"/>
+  				</option>
+  			</c:forEach>
+  		</select>
+  		<c:out value="${erreurs['civilite']}"/><br>
+  		<br>
   		<label>Nom :</label>
-  		<input type="text" name="nom" value='<c:out value="${donneesPersonnelles.nom}"/>'>
+  		<input type="text" name="nom" value='<c:out value="${param['nom']}"/>'>
+  		<c:out value="${erreurs['nom']}"/><br>
+  		<br>
+  		<label>Email :</label>
+  		<input type="text" name="email" value='<c:out value="${param['email']}"/>'>
+  		<c:out value="${erreurs['email']}"/><br>
+  		<br>
   		<label>Age :</label>
-  		<input type="number" name="age" value="${donneesPersonnelles.age}">
+  		<input type="number" name="age" value='<c:out value="${param['age']}"/>'>
+  		<c:out value="${erreurs['age']}"/><br>
+  		<br>
   		<input type="submit">
   	</form>
 	<div>
